@@ -24,6 +24,7 @@ class CreatePelanggansTable extends Migration {
 			$table->text('keterangan_pelanggan')->nullable();
 			$table->text('ktp')->nullable();
 			$table->boolean('status_pelanggan')->nullable();
+			
 			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
