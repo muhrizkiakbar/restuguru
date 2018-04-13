@@ -23,39 +23,25 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
                 <span class="label label-warning">
-                    <?php
-                        $hitung=0;
-
-                        if ($notification[1]['updatefinger']>0)
-                        {
-                            $hitung=$hitung+1;
-                        }
-                        if ($notification[0]['pegawaifinger']>0)
-                        {
-                            $hitung=$hitung+1;
-                        }
-                        echo $hitung;
-                    ?>
+                    4
                 </span>
                 </a>
                 <ul class="dropdown-menu">
                 <li>
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
-                    @if ($notification[0]['pegawaifinger']>0)
+                    
                     <li>
                         <a href="/alat/instansi">
-                        <i class="fa fa-users text-aqua"></i> {{$notification[0]['pegawaifinger']}} Pegawai belum ditambahkan
+                        <i class="fa fa-users text-aqua"></i> Pegawai belum ditambahkan
                         </a>
                     </li>
-                    @endif
-                    @if ($notification[1]['updatefinger']>0)
+                   
                     <li>
                         <a href="/alat/instansi/sidikjari">
-                        <i class="fa fa-users text-yellow"></i> {{$notification[1]['updatefinger']}} Pegawai sidik jari belum berubah
+                        <i class="fa fa-users text-yellow"></i>  Pegawai sidik jari belum berubah
                         </a>
                     </li>
-                    @endif
                     </ul>
                 </li>
                 <!-- <li class="footer"><a href="#">View all</a></li> -->
@@ -64,7 +50,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="{{asset('dist/img/avatarumum.png')}}" class="user-image" alt="User Image">
-                        <span class="hidden-xs">{{Auth::user()->name}}</span>
+                        <span class="hidden-xs">Tes</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -72,8 +58,8 @@
                             <img src="{{asset('dist/img/avatarumum.png')}}" class="img-circle" alt="User Image">
 
                             <p>
-                                {{Auth::user()->name}}
-                                <small>{{Auth::user()->instansi->namaInstansi}}</small>
+                                Tes
+                                <small>Tes</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
