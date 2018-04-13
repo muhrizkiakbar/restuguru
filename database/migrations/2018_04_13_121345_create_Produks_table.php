@@ -18,6 +18,8 @@ class CreateProduksTable extends Migration {
 			$table->double('harga_jual');
 			$table->boolean('hitung_luas');
 			$table->text('keterangan');
+			
+			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
 

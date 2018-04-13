@@ -14,7 +14,7 @@ class CreateSpesialpricesTable extends Migration {
 			$table->integer('pelanggan_id')->unsigned();
 			$table->integer('produk_id')->unsigned();
 			$table->double('harga_khusus');
-			$table->integer('user_id')->unsigned();
+			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
 

@@ -11,7 +11,7 @@ class CreateJenispelanggansTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 			$table->softDeletes();
-			$table->string('jenis_pelanggan', 60);
+			$table->string('jenis_pelanggan', 60)->nullable();
 		});
 	}
 

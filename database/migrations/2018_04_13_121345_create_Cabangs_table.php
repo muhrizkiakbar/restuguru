@@ -11,13 +11,13 @@ class CreateCabangsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 			$table->softDeletes();
-			$table->string('Kode_Cabang', 12);
-			$table->string('Nama_Cabang', 60);
-			$table->string('No_Telepon', 13);
-			$table->string('Email', 60);
-			$table->text('Alamat');
-			$table->string('Jenis_Cabang', 12);
-			$table->integer('user_id')->unsigned();
+			$table->string('Kode_Cabang', 12)->nullable();
+			$table->string('Nama_Cabang', 60)->nullable();
+			$table->string('No_Telepon', 13)->nullable();
+			$table->string('Email', 60)->nullable();
+			$table->text('Alamat')->nullable();
+			$table->string('Jenis_Cabang', 12)->nullable();
+			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
 

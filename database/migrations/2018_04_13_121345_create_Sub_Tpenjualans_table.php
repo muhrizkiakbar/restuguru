@@ -18,7 +18,7 @@ class CreateSubTpenjualansTable extends Migration {
 			$table->double('lebar');
 			$table->integer('banyak');
 			$table->longText('keterangan');
-			$table->integer('user_id')->unsigned();
+			$table->integer('user_id')->unsigned()->nullable();
 			$table->double('total_harga');
 			$table->double('diskon');
 		});

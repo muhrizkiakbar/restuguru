@@ -12,8 +12,19 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('kategori_id')->references('id')->on('Kategories')
 						->onDelete('restrict')
 						->onUpdate('cascade');
+			
+		});
+		Schema::table('Produks', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
 		});
 		Schema::table('Kategories', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Users', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('Users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
@@ -30,6 +41,9 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('Pelanggans', function(Blueprint $table) {
 			$table->foreign('jenispelanggan_id')->references('id')->on('Jenispelanggans')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+			$table->foreign('user_id')->references('id')->on('Users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
@@ -58,6 +72,12 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
+		Schema::table('Transaksi_Penjualans', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+
 		Schema::table('Sub_Tpenjualans', function(Blueprint $table) {
 			$table->foreign('penjualan_id')->references('id')->on('Transaksi_Penjualans')
 						->onDelete('restrict')

@@ -13,7 +13,7 @@ class CreateKategoriesTable extends Migration {
 			$table->softDeletes();
 			$table->string('Nama_Kategori', 128);
 			$table->longText('Keterangan');
-			$table->integer('user_id')->unsigned();
+			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
 

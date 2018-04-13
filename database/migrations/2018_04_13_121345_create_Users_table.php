@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration {
 			$table->string('Telepon', 13);
 			$table->float('gaji');
 			$table->text('Alamat');
+			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
 
