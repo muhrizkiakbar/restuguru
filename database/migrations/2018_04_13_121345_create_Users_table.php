@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration {
 			$table->text('Alamat');
 			$table->integer('user_id')->unsigned()->nullable();
 		});
-	}
+	} 
 
 	public function down()
 	{
