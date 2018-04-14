@@ -5,10 +5,10 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{asset('dist/img/avatarumum.png')}}" class="img-circle" alt="User Image">
+                <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <!-- <p>{{Auth::user()->name}}</p> -->
+            <p>Tes</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
@@ -17,7 +17,6 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">Navigasi Utama</li>
-            <!-- @if (Auth::user()->role->namaRole=="admin") -->
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-users"></i> <span>Pegawai</span>
@@ -95,7 +94,6 @@
                     <li><a href="/rapatundangan/admin"><i class="fa fa-circle-o"></i> Rapat Undangan</a></li>
                     <li><a href="/ijinterlambat/admin"><i class="fa fa-circle-o"></i> Ijin Terlambat</a></li>
             </li>
-            <!-- @else -->
             <li>
                 <a href="/timeline">
                     <i class="fa fa-calendar"></i> <span>Timeline</span>
@@ -152,29 +150,18 @@
                 <a href="#">
                     <i class="fa fa-bullseye"></i>
                             <span>Alat</span>
-                                <span class="pull-right-container">
-                                <!-- @if ($notification[0]['pegawaifinger']>0)
-                                    <small class="label pull-right bg-red">{{$notification[0]['pegawaifinger']}}</small>
-                                @endif
-                                @if ($notification[1]['updatefinger']>0)
-                                    <small class="label pull-right bg-blue">{{$notification[1]['updatefinger']}}</small>
-                                @endif -->
+                                <span class="pull-right-container">5
                                 </span>
                             
                 </a>
                 <ul class="treeview-menu">
                   <li><a href="/alat/instansi"><i class="fa fa-circle-o"></i> <span> Alat untuk data pegawai</span>
-                            <!-- @if ($notification[0]['pegawaifinger']>0)
-                                <small class="label pull-right bg-red">{{$notification[0]['pegawaifinger']}}</small>
-                            @endif -->
+                           5
                   </a></li>
                   <li><a href="/alat/instansi/sidikjari"><i class="fa fa-circle-o"></i> <span>Update sidik jari</span>
-                            <!-- @if ($notification[1]['updatefinger']>0)
-                                <small class="label pull-right bg-blue">{{$notification[1]['updatefinger']}}</small>
-                            @endif -->
+                            5
                   </a></li>
                 </ul>
             </li>
-            <!-- @endif -->
         </ul>
 </aside>

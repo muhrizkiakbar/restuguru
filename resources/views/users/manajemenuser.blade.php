@@ -14,7 +14,7 @@
 @endpush
 
 @section('body')
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-yellow sidebar-mini">
     <div class="wrapper">
 
       @include('layouts.header')
@@ -44,11 +44,12 @@
                                         <thead>
                                         <tr>
                                             <th>Username</th>
-                                            <th>Email</th>
                                             <th>Nama</th>
-                                            <th>Tipe</th>
-                                            <th>Instansi</th>
-                                            <th>Aksi</th>
+                                            <th>Telpon</th>
+                                            <th>Gaji</th>
+                                            <th>Alamat</th>
+                                            <th>Reff</th>
+                                            <th>Tool</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -122,9 +123,6 @@
                     </div>
                     <!-- /.modal-dialog -->
                 </div>
-                <!-- /.modal -->
-
-                {{--modal edit user--}}
                 <div class="modal modal-warning fade" id="modal_edit">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -257,7 +255,7 @@
             oTable = $('#tableaja').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('datauser')}}',
+                ajax: '#',
                 columns: [
                     { data: 'username', name: 'username' },
                     { data: 'email', name: 'email' },
@@ -308,7 +306,7 @@
         $(document).on('click','#simpanadduser',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('adduser')}}',
+                url:'#',
                 data: new FormData($('#formuseradd')[0]),
                 dataType:'json',
                 async:false,
@@ -339,7 +337,7 @@
         $(document).on('click','#simpanedituser',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('edituser')}}',
+                url:'#',
                 data: new FormData($('#formedituser')[0]),
                 dataType:'json',
                 async:false,
@@ -366,7 +364,7 @@
         $(document).on('click','#simpandeluser',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('deleteuser')}}',
+                url:'#',
                 data: new FormData($('#formdeleteuser')[0]),
                 dataType:'json',
                 async:false,
