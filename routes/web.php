@@ -24,3 +24,6 @@ Route::post('/users/postuser','UserController@store')->name('storeuser');
 Route::get('/cabang','CabangController@index');
 Route::get('/cabang/loaddatacabang','CabangController@loaddatacabang')->name('loaddatacabang');
 Route::post('/cabang/postcabang','CabangController@store')->name('storecabang');
+Route::post('/cabang/updatecabang','CabangController@update')->name('updatecabang');
+Route::post('/cabang/deletecabang','CabangController@destroy')->name('deletecabang');
+

@@ -53,6 +53,7 @@
                                             <th>Alamat</th>
                                             <th>Jenis Cabang</th>
                                             <th>User</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -137,9 +138,9 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control" id="edit_jenis_cabang" style="width: 100%;">
-                                                    <option>Kantor Pusat</option>
-                                                    <option>Kantor Cabang</option>
+                                                <select class="form-control" name="edit_jenis_cabang" id="edit_jenis_cabang" style="width: 100%;">
+                                                        <option value="Kantor Pusat">Kantor Pusat</option>
+                                                        <option value="Kantor Cabang" selected>Kantor Cabang</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -150,7 +151,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Nama Cabang</label>
-                                                <input id="edit_nama_cabang" name="edit_nama_cabang" class="form-control pull-right" type="text">>
+                                                <input id="edit_nama_cabang" name="edit_nama_cabang" class="form-control pull-right" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Nomor Telepon</label>
@@ -245,7 +246,7 @@
                     { data: 'Email', name: 'Email' },
                     { data: 'Alamat', name: 'Alamat' },
                     { data: 'Jenis_Cabang', name: 'Jenis_Cabang' },
-                    // { data: 'jumlah_user', name: 'jumlah_user' },
+                    { data: 'user_id', name: 'user_id' },
                     {data:'action'}
                 ]
             });
@@ -271,7 +272,7 @@
             $('#edit_jenis_cabang').val($(this).data('jenis'));
             $('#edit_kode_cabang').val($(this).data('kode'));
             $('#edit_nama_cabang').val($(this).data('nama'));
-            $('#edit_telepon_cabang').val('telepon');
+            $('#edit_telepon_cabang').val($(this).data('telepon'));
             $('#edit_email_cabang').val($(this).data('email'));
             $('#edit_alamat_cabang').val($(this).data('alamat'));
             $('#cabang_id').val($(this).data('id'));
@@ -350,7 +351,7 @@
         $(document).on('click','#bt_simpan_edit',function (){
             $.ajax({
                 type:'post',
-                url:'#',
+                url:'{{route('updatecabang')}}',
                 data: new FormData($('#form_edit_cabang')[0]),
                 dataType:'json',
                 async:false,
@@ -358,24 +359,28 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
+                        if ((response.errors.edit_jenis_cabang)){
+                            swal("Jenis Cabang", ""+response.errors.edit_jenis_cabang+"", "error");
+                        }
+
                         if ((response.errors.edit_kode_cabang)){
-                            swal("Kode Cabang", ""+response.errors.username+"", "error");
+                            swal("Kode Cabang", ""+response.errors.edit_kode_cabang+"", "error");
                         }
                         
                         if ((response.errors.edit_nama_cabang)){
-                            swal("Nama Cabang", ""+response.errors.nama+"", "error");
+                            swal("Nama Cabang", ""+response.errors.edit_nama_cabang+"", "error");
                         }
 
                         if ((response.errors.edit_telepon_cabang)){
-                            swal("Telepon", ""+response.errors.password+"", "error");
+                            swal("Telepon", ""+response.errors.edit_telepon_cabang+"", "error");
                         }
 
                         if ((response.errors.edit_email_cabang)){
-                            swal("Email", ""+response.errors.Telepon+"", "error");
+                            swal("Email", ""+response.errors.edit_email_cabang+"", "error");
                         }
 
                         if ((response.errors.edit_alamat_cabang)){
-                            swal("Alamat", ""+response.errors.gaji+"", "error");
+                            swal("Alamat", ""+response.errors.edit_alamat_cabang+"", "error");
                         }
                         $('#modal_edit').modal('hide');
                     }
@@ -404,7 +409,7 @@
         $(document).on('click','#bt_simpan_hapus',function (){
             $.ajax({
                 type:'post',
-                url:'#',
+                url:'{{route('deletecabang')}}',
                 data: new FormData($('#form_hapus_cabang')[0]),
                 dataType:'json',
                 async:false,

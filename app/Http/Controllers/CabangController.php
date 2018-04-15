@@ -35,8 +35,10 @@ class CabangController extends Controller
         return Datatables::of($tables)
             -> addColumn ('action', function ($tables) {
                 return  '
-                        <button type="button" class="modal_edit btn btn-danger btn-sm" data-toggle="modal" data-jenis="'.$tables->Jenis_Cabang.'" data-kode="'.$tables->Kode_Cabang.'" data-nama="'.$tables->Nama_Cabang.'" data-telepon="'.$tables->No_Telepon.'" data-email="'.$tables->Email.'" data-alamat="'.$tables->Alamat.'" data-id="'.$tables->id.'" data-target="#modal_edit"><i class="fa-edit"></i></button>
-                        <button type="button" class="modal_hapus btn btn-danger btn-sm" data-toggle="modal" data-nama="'.$tables->Nama_Cabang.'" data-id="'.$tables->id.'"  data-target="#modal_hapus"><i class="fa-trash"></i></button>
+                <div class="btn-group">
+                        <button type="button" class="modal_edit btn btn-info btn-sm" data-toggle="modal" data-jenis="'.$tables->Jenis_Cabang.'" data-kode="'.$tables->Kode_Cabang.'" data-nama="'.$tables->Nama_Cabang.'" data-telepon="'.$tables->No_Telepon.'" data-email="'.$tables->Email.'" data-alamat="'.$tables->Alamat.'" data-id="'.encrypt($tables->id).'" data-target="#modal_edit"><i class="fa fa-fw fa-edit"></i></button>
+                        <button type="button" class="modal_hapus btn btn-danger btn-sm" data-toggle="modal" data-nama="'.$tables->Nama_Cabang.'" data-id="'.encrypt($tables->id).'"  data-target="#modal_hapus"><i class="fa fa-fw fa-trash"></i></button>
+                </div>        
                         ';
             })
             ->rawColumns(['action'])
@@ -65,7 +67,7 @@ class CabangController extends Controller
             'tambah_jenis_cabang'   =>  'required',
             'tambah_kode_cabang'    =>  'required',
             'tambah_nama_cabang'    =>  'required',
-            'tambah_telepon_cabang' =>  'required | numeric',
+            'tambah_telepon_cabang' =>  'required | numeric | min:10 | max:12',
             'tambah_email_cabang'   =>  'required',
             'tambah_alamat_cabang'  =>  'required',
         );
@@ -121,9 +123,41 @@ class CabangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $rules=array(
+            'edit_jenis_cabang'   =>  'required',
+            'edit_kode_cabang'    =>  'required',
+            'edit_nama_cabang'    =>  'required',
+            'edit_telepon_cabang' =>  'required | numeric | min:10 ',
+            'edit_email_cabang'   =>  'required',
+            'edit_alamat_cabang'  =>  'required',
+        );
+
+        $validator=Validator::make(Input::all(),$rules);
+        
+        
+        if($validator->fails()){
+            return Response::json(array('errors'=>$validator->getMessageBag()->toArray()));
+        }
+        else {
+            // $
+            $table=CCabangs::where('id','=',decrypt($request->cabang_id))
+                            ->first();           
+            $table->Kode_Cabang     = $request->edit_kode_cabang;
+            $table->Nama_Cabang     = $request->edit_nama_cabang;
+            $table->No_Telepon      = $request->edit_telepon_cabang;
+            $table->Email           = $request->edit_email_cabang;
+            $table->Alamat          = $request->edit_alamat_cabang;
+            $table->Jenis_Cabang    = $request->edit_jenis_cabang;
+            
+            if ($table->save()){
+                return response()->json("Success");
+            }else{
+                return response()->json("Failed");
+            }
+        }
     }
 
     /**
@@ -132,8 +166,15 @@ class CabangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $table=CCabangs::where('id','=',decrypt($request->hapus_cabang_id))
+                            ->first();
+        if ($table->delete()){
+            return response()->json("Success");
+        }else{
+            return response()->json("Failed");
+        } 
     }
 }
