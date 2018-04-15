@@ -80,9 +80,10 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control" id="tambah_jenis_cabang" style="width: 100%;">
-                                                    <option>Kantor Pusat</option>
-                                                    <option>Kantor Cabang</option>
+                                                <label>Jenis Cabang</label>
+                                                <select class="form-control" name="tambah_jenis_cabang" id="tambah_jenis_cabang" style="width: 100%;">
+                                                    <option value="Kantor Pusat">Kantor Pusat</option>
+                                                    <option value="Kantor Cabang" selected>Kantor Cabang</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -92,7 +93,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Nama Cabang</label>
-                                                <input id="tambah_nama_cabang" name="tambah_nama_cabang" class="form-control pull-right" type="text">>
+                                                <input id="tambah_nama_cabang" name="tambah_nama_cabang" class="form-control pull-right" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Nomor Telepon</label>
@@ -236,15 +237,15 @@
             oTable = $('#tabel_cabang').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('dataalluser')}}',
+                ajax: '{{route('loaddatacabang')}}',
                 columns: [
-                    { data: 'kode_cabang', name: 'kode_cabang' },
-                    { data: 'nama_cabang', name: 'nama_cabang' },
-                    { data: 'telepon', name: 'telepon' },
-                    { data: 'email', name: 'email' },
-                    { data: 'alamat', name: 'alamat' },
-                    { data: 'jenis_cabang', name: 'jenis_cabang' },
-                    { data: 'jumlah_user', name: 'jumlah_user' },
+                    { data: 'Kode_Cabang', name: 'Kode_Cabang' },
+                    { data: 'Nama_Cabang', name: 'Nama_Cabang' },
+                    { data: 'No_Telepon', name: 'No_Telepon' },
+                    { data: 'Email', name: 'Email' },
+                    { data: 'Alamat', name: 'Alamat' },
+                    { data: 'Jenis_Cabang', name: 'Jenis_Cabang' },
+                    // { data: 'jumlah_user', name: 'jumlah_user' },
                     {data:'action'}
                 ]
             });
@@ -253,8 +254,8 @@
 
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
-        $(document).on('click','#modal_tambah',function () {
-            $('#tambah_jenis_cabang').val("");
+        $(document).on('click','#modal_tambah_cabang',function () {
+            // $('#tambah_jenis_cabang').val("");
             $('#tambah_kode_cabang').val("");
             $('#tambah_nama_cabang').val("");
             $('#tambah_telepon_cabang').val("");
@@ -267,12 +268,12 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
-            $('#edit_jenis_cabang').val($(this).data('username'));
-            $('#edit_kode_cabang').val($(this).data('email'));
+            $('#edit_jenis_cabang').val($(this).data('jenis'));
+            $('#edit_kode_cabang').val($(this).data('kode'));
             $('#edit_nama_cabang').val($(this).data('nama'));
-            $('#edit_telepon_cabang').val("");
-            $('#edit_email_cabang').val($(this).data('role'));
-            $('#edit_alamat_cabang').val($(this).data('instansi'));
+            $('#edit_telepon_cabang').val('telepon');
+            $('#edit_email_cabang').val($(this).data('email'));
+            $('#edit_alamat_cabang').val($(this).data('alamat'));
             $('#cabang_id').val($(this).data('id'));
         });
     </script>
@@ -281,7 +282,7 @@
     <script type="text/javascript">
         $(document).on('click','.modal_hapus',function () {
             $('#hapus_cabang_id').val($(this).data('id'));
-            $('.label_nama_cabang').text($(this).data('username'));
+            $('.label_nama_cabang').text($(this).data('nama'));
         });
     </script>
 
@@ -291,7 +292,7 @@
         $(document).on('click','#bt_simpan_tambah',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('storeuser')}}',
+                url:'{{route('storecabang')}}',
                 data: new FormData($('#form_tambah_cabang')[0]),
                 dataType:'json',
                 async:false,
@@ -299,34 +300,47 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        if ((response.errors.username)){
-                            swal("tambah_kode_cabang", ""+response.errors.username+"", "error");
+                        if ((response.errors.tambah_jenis_cabang)){
+                            swal("Jenis Cabang", ""+response.errors.tambah_jenis_cabang+"", "error");
+                        }
+
+                        if ((response.errors.tambah_kode_cabang)){
+                            swal("Kode Cabang", ""+response.errors.tambah_kode_cabang+"", "error");
                         }
                         
-                        if ((response.errors.nama)){
-                            swal("tambah_nama_cabang", ""+response.errors.nama+"", "error");
+                        if ((response.errors.tambah_nama_cabang)){
+                            swal("Nama Cabang", ""+response.errors.tambah_nama_cabang+"", "error");
                         }
 
-                        if ((response.errors.password)){
-                            swal("tambah_telepon_cabang", ""+response.errors.password+"", "error");
+                        if ((response.errors.tambah_telepon_cabang)){
+                            swal("Telepon", ""+response.errors.tambah_telepon_cabang+"", "error");
                         }
 
-                        if ((response.errors.Telepon)){
-                            swal("tambah_email_cabang", ""+response.errors.Telepon+"", "error");
+                        if ((response.errors.tambah_email_cabang)){
+                            swal("Email", ""+response.errors.tambah_email_cabang+"", "error");
                         }
 
-                        if ((response.errors.gaji)){
-                            swal("tambah_alamat_cabang", ""+response.errors.gaji+"", "error");
+                        if ((response.errors.tambah_alamat_cabang)){
+                            swal("Alamat", ""+response.errors.tambah_alamat_cabang+"", "error");
                         }
                         $('#modal_tambah').modal('hide');
                     }
                     else
-                    {
-                        $('.error').addClass('hidden');
-                        $('#modal_tambah').modal('hide');
-                        oTable.ajax.reload();
+                    {   if (response=="Success"){
+                            swal("Success !", "Berhasil menyimpan !", "success");
+                            $('#modal_tambah').modal('hide');
+                            oTable.ajax.reload();
+                        }
+                        else{
+                            wal("Error !", "Gagal menyimpan !", "error");
+                            $('#modal_tambah').modal('hide');
+                        }
                     }
                 },
+                error:function(){
+                            swal("Error !", "Gagal menyimpan !", "error");
+                            $('#modal_tambah').modal('hide');
+                }
             });
         });
     </script>
@@ -344,16 +358,43 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        $('.error').removeClass('hidden');
-                        $('.error').text(response.errors.name);
+                        if ((response.errors.edit_kode_cabang)){
+                            swal("Kode Cabang", ""+response.errors.username+"", "error");
+                        }
+                        
+                        if ((response.errors.edit_nama_cabang)){
+                            swal("Nama Cabang", ""+response.errors.nama+"", "error");
+                        }
+
+                        if ((response.errors.edit_telepon_cabang)){
+                            swal("Telepon", ""+response.errors.password+"", "error");
+                        }
+
+                        if ((response.errors.edit_email_cabang)){
+                            swal("Email", ""+response.errors.Telepon+"", "error");
+                        }
+
+                        if ((response.errors.edit_alamat_cabang)){
+                            swal("Alamat", ""+response.errors.gaji+"", "error");
+                        }
+                        $('#modal_edit').modal('hide');
                     }
                     else
-                    {
-                        $('.error').addClass('hidden');
-                        $('#modal_edit').modal('hide');
-                        oTable.ajax.reload();
+                    {   if (response=="Success"){
+                            swal("Success !", "Berhasil menyimpan !", "success");
+                            $('#modal_edit').modal('hide');
+                            oTable.ajax.reload();
+                        }
+                        else{
+                            wal("Error !", "Gagal menyimpan !", "error");
+                            $('#modal_edit').modal('hide');
+                        }
                     }
                 },
+                error:function(){
+                            swal("Error !", "Gagal menyimpan !", "error");
+                            $('#modal_edit').modal('hide');
+                }
             });
         });
     </script>
