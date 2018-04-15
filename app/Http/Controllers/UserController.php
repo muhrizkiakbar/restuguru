@@ -63,7 +63,7 @@ class UserController extends Controller
             'username'=>'required | min:3 | unique:Users,username',
             'nama'=>'required',
             'password'=>'required | min:8',
-            'Telepon'=>'required | numeric',
+            'Telepon'=>'required | numeric | min:10',
             'gaji'=>'required | numeric',
             'alamat'=>'required',
         );
@@ -76,7 +76,7 @@ class UserController extends Controller
             $table= new CUsers;
             $table->username=$request->username;
             $table->nama=$request->nama;
-            $table->password=brcypt($request->password);
+            $table->password=bcrypt($request->password);
             $table->Telepon=$request->Telepon;
             $table->gaji=$request->gaji;
             $table->alamat=$request->alamat;

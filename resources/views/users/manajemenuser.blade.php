@@ -7,8 +7,12 @@
 <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
 <!-- daterange picker -->
 
-<!-- sweet alert -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+<!-- Bootstrap time Picker -->
+<link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="{{asset('plugins/iCheck/all.css')}}">
 <!-- Select2 -->
 <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.min.css')}}">
 
@@ -132,6 +136,7 @@
                     </div>
                     <!-- /.modal-dialog -->
                 </div>
+
                 <div class="modal modal-warning fade" id="modal_edit">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -245,6 +250,10 @@
     <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <!-- FastClick -->
+
+    <!-- sweet alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
@@ -280,19 +289,19 @@
     </script>
 
     <script type="text/javascript">
-        $(document).on('click','#modal_add',function () {
+        $(document).on('click','#modal_add2',function () {
             $('#username').val("");
             $('#password').val("");
             $('#nama').val("");
             $('#gaji').val("");
-            $('#telepon').val("");
+            $('#Telepon').val("");
             $('#alamat').val("");
             $('#cabang_id').val("");
             $('#modal_add').modal("show");
         });
     </script>
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
             $('#username2').val($(this).data('username'));
             $('#username2').attr('disabled','true');
@@ -304,14 +313,14 @@
             $('#instansi2').val($(this).data('instansi'));
             $('#iduser').val($(this).data('id'));
         });
-    </script>
+    </script> -->
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         $(document).on('click','.modal_delete',function () {
             $('#deliduser').val($(this).data('id'));
             $('.labelusername').text($(this).data('username'));
         });
-    </script>
+    </script> -->
 
     <script type="text/javascript">
         $(document).on('click','#simpanadduser',function (){
@@ -329,37 +338,45 @@
                             swal("Username", ""+response.errors.username+"", "error");
                         }
                         
-                        if ((response.errors.nama)){
+                        else if ((response.errors.nama)){
                             swal("Nama", ""+response.errors.nama+"", "error");
                         }
 
-                        if ((response.errors.password)){
+                        else if ((response.errors.password)){
                             swal("Password", ""+response.errors.password+"", "error");
                         }
 
-                        if ((response.errors.Telepon)){
+                        else if ((response.errors.Telepon)){
                             swal("Telepon", ""+response.errors.Telepon+"", "error");
                         }
 
-                        if ((response.errors.gaji)){
+                        else if ((response.errors.gaji)){
                             swal("Gaji", ""+response.errors.gaji+"", "error");
                         }
 
-                        if ((response.errors.alamat)){
+                        else if ((response.errors.alamat)){
                             swal("Alamat", ""+response.errors.alamat+"", "error");
                         }
-                        $('#modal_add').modal('hide');
+                        // $('#modal_add').modal('hide');
                     }
                     else
                     {
-                        $('.error').addClass('hidden');
-                        $('#modal_add').modal('hide');
-                        oTable.ajax.reload();
+                        if (response=="Success"){
+                            swal("Success !", "Berhasil menyimpan !", "success");
+                            $('#modal_add').modal('hide');
+                            oTable.ajax.reload();
+                        }
+                        else{
+                            wal("Eror !", "Gagal menyimpan !", "error");
+                            $('#modal_add').modal('hide');
+                        }
+                        
                     }
                 },
             });
         });
     </script>
+    
     <script type="text/javascript">
         $(document).on('click','#simpanedituser',function (){
             $.ajax({
