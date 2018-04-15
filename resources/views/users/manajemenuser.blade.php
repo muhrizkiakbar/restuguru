@@ -255,13 +255,13 @@
             oTable = $('#tableaja').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '#',
+                ajax: '{{url('dataalluser')}}',
                 columns: [
                     { data: 'username', name: 'username' },
-                    { data: 'email', name: 'email' },
-                    { data: 'name', name: 'name' },
-                    { data: 'role.namaRole', name: 'namaRole' },
-                    { data: 'instansi.namaInstansi', name: 'namaInstansi' },
+                    { data: 'nama', name: 'nama' },
+                    { data: 'Telepon', name: 'Telepon' },
+                    { data: 'gaji', name: 'gaji' },
+                    { data: 'alamat', name: 'alamat' },
                     {data:'action'}
                 ]
             });
