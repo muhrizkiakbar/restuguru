@@ -6,6 +6,9 @@
 <!-- Ionicons -->
 <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
 <!-- daterange picker -->
+
+<!-- sweet alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- Select2 -->
 <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.min.css')}}">
 
@@ -48,7 +51,8 @@
                                             <th>Telpon</th>
                                             <th>Gaji</th>
                                             <th>Alamat</th>
-                                            <th>Reff</th>
+                                            <th>Reff User</th>
+                                            <th>Cabang</th>
                                             <th>Tool</th>
                                         </tr>
                                         </thead>
@@ -79,8 +83,8 @@
                                                 <input id="username" name="username" class="form-control pull-right" type="text">
                                             </div>
                                             <div class="form-group">
-                                                <label>Email</label>
-                                                <input id="email" name="email" class="form-control pull-right" type="email">
+                                                <label>Nama</label>
+                                                <input id="nama" name="nama" class="form-control pull-right" type="text">
                                                 {{csrf_field()}}
                                             </div>
                                             <div class="form-group">
@@ -88,25 +92,30 @@
                                                 <input id="password" name="password" class="form-control pull-right" type="password">
                                             </div>
                                             <div class="form-group">
-                                                <label>Nama</label>
-                                                <input id="nama" name="nama" class="form-control pull-right" type="text">
+                                                <label>Telepon</label>
+                                                <input id="Telepon" name="Telepon" class="form-control pull-right" type="text">
                                             </div>
-                                            <div class="form-group" >
-                                                <label>Instansi</label>
-                                                <select class="form-control select2" id="instansi" name="instansi" style="width: 100%;">
-                                                    
-                                                        <option value="tes"></option>
-                                                    
-
+                                            <div class="form-group">
+                                                <label>Gaji</label>
+                                                <input id="gaji" name="gaji" class="form-control pull-right" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Alamat</label>
+                                                <textarea id="alamat" name="alamat" class="form-control pull-right" type="text"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cabang</label>
+                                                <select class="form-control select2" id="cabang_id" name="cabang_id" style="width: 100%;">
+                                                    @foreach ($cabangs as $cabang)
+                                                        <option value="{{$cabang->id}}">{{$cabang->Nama_Cabang}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label>Level</label>
                                                 <select class="form-control select2" id="role" name="role" style="width: 100%;">
-                                                   
                                                         <option value="wwe">sdasd</option>
-                                                    
-
                                                 </select>
                                             </div>
                                             <!-- /.form-group -->
@@ -116,7 +125,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="button" id="simpanadduser" class="btn btn-primary">Save changes</button>
+                                <button type="button" id="simpanadduser" class="btn btn-success">Save</button>
                             </div>
                         </div>
                         <!-- /.modal-content -->
@@ -255,13 +264,15 @@
             oTable = $('#tableaja').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{url('dataalluser')}}',
+                ajax: '{{route('dataalluser')}}',
                 columns: [
                     { data: 'username', name: 'username' },
                     { data: 'nama', name: 'nama' },
                     { data: 'Telepon', name: 'Telepon' },
                     { data: 'gaji', name: 'gaji' },
                     { data: 'alamat', name: 'alamat' },
+                    { data: 'Users2.nama', name: 'nama' },
+                    { data: 'Cabangs.Nama_Cabang', name: 'Nama_Cabang' },
                     {data:'action'}
                 ]
             });
@@ -269,14 +280,14 @@
     </script>
 
     <script type="text/javascript">
-        $(document).on('click','#modal_add2',function () {
+        $(document).on('click','#modal_add',function () {
             $('#username').val("");
-            $('#username').removeAttr('disabled');
-            $('#email').removeAttr('disabled');
-            $('#email').val("");
-            $('#nama').val("");
             $('#password').val("");
-            $('#instansi').val("");
+            $('#nama').val("");
+            $('#gaji').val("");
+            $('#telepon').val("");
+            $('#alamat').val("");
+            $('#cabang_id').val("");
             $('#modal_add').modal("show");
         });
     </script>
@@ -306,7 +317,7 @@
         $(document).on('click','#simpanadduser',function (){
             $.ajax({
                 type:'post',
-                url:'#',
+                url:'{{route('storeuser')}}',
                 data: new FormData($('#formuseradd')[0]),
                 dataType:'json',
                 async:false,
@@ -314,13 +325,30 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        $('.error').removeClass('hidden');
-                        $('.error').text(response.errors.username);
-                        $('.error').text(response.errors.email);
-                        $('.error').text(response.errors.password);
-                        $('.error').text(response.errors.name);
-                        $('.error').text(response.errors.selectrole);
-                        $('.error').text(response.errors.selectinstansi);
+                        if ((response.errors.username)){
+                            swal("Username", ""+response.errors.username+"", "error");
+                        }
+                        
+                        if ((response.errors.nama)){
+                            swal("Nama", ""+response.errors.nama+"", "error");
+                        }
+
+                        if ((response.errors.password)){
+                            swal("Password", ""+response.errors.password+"", "error");
+                        }
+
+                        if ((response.errors.Telepon)){
+                            swal("Telepon", ""+response.errors.Telepon+"", "error");
+                        }
+
+                        if ((response.errors.gaji)){
+                            swal("Gaji", ""+response.errors.gaji+"", "error");
+                        }
+
+                        if ((response.errors.alamat)){
+                            swal("Alamat", ""+response.errors.alamat+"", "error");
+                        }
+                        $('#modal_add').modal('hide');
                     }
                     else
                     {
@@ -332,7 +360,6 @@
             });
         });
     </script>
-    {{--post edit--}}
     <script type="text/javascript">
         $(document).on('click','#simpanedituser',function (){
             $.ajax({
@@ -359,7 +386,6 @@
             });
         });
     </script>
-    {{--post delete--}}
     <script type="text/javascript">
         $(document).on('click','#simpandeluser',function (){
             $.ajax({
