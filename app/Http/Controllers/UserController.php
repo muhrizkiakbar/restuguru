@@ -84,7 +84,7 @@ class UserController extends Controller
             $table->Telepon=$request->Telepon;
             $table->gaji=$request->gaji;
             $table->Alamat=$request->alamat;
-            $table->cabang_id=($request->cabang_id);
+            $table->cabang_id=decrypt($request->cabang_id);
 
             if ($table->save()){
                 return response()->json("Success");
@@ -131,24 +131,22 @@ class UserController extends Controller
         //
         $rules=array(
             'nama2'=>'required',
-            // 'password2'=>'min:8',
             'Telepon2'=>'required | numeric | min:10',
             'gaji2'=>'required | numeric',
             'alamat2'=>'required',
         );
 
-        $niceNames = array(
-            'nama2' => 'Nama',
-            'Telepon2'=>'Telepon',
-            'gaji2'=>'Gaji',
-            'alamat2'=>'Alamat',
-        );
+        // $niceNames = array(
+        //     'nama2' => 'Nama',
+        //     'Telepon2'=>'Telepon',
+        //     'gaji2'=>'Gaji',
+        //     'alamat2'=>'Alamat',
+        // );
 
         $validator=Validator::make(Input::all(),$rules);
-        // dd($validator);
         
         if($validator->fails()){
-            $validator->setAttributeNames($niceNames); 
+            // $validator->setAttributeNames($niceNames); 
             return Response::json(array('errors'=>$validator->getMessageBag()->toArray()));
         }
         else {
@@ -157,19 +155,19 @@ class UserController extends Controller
             $table=CUsers::where('id','=',decrypt($request->iduser2))
                             ->first();
 
-            $table->nama=$request->nama;
-            if ($request->password==""){
+            $table->nama=$request->nama2;
+            if ($request->password2==""){
 
             }
             else
             {
-                $table->password=bcrypt($request->password);
+                $table->password=bcrypt($request->password2);
             }
             
-            $table->Telepon=$request->Telepon;
-            $table->gaji=$request->gaji;
-            $table->Alamat=$request->alamat;
-            $table->cabang_id=($request->cabang_id);
+            $table->Telepon=$request->Telepon2;
+            $table->gaji=$request->gaji2;
+            $table->Alamat=$request->alamat2;
+            $table->cabang_id=($request->cabang_id2);
 
             if ($table->save()){
                 return response()->json("Success");
@@ -185,8 +183,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $table=CUsers::where('id','=',decrypt($request->deliduser))
+                            ->first();
+        if ($table->delete()){
+            return response()->json("Success");
+        }else{
+            return response()->json("Failed");
+        }                    
     }
 }

@@ -214,7 +214,7 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Danger Modal</h4>
+                                <h4 class="modal-title">Hapus User</h4>
                             </div>
                             <div class="modal-body">
                                 <form id="formdeleteuser" action="" method="post" role="form" enctype="multipart/form-data">
@@ -322,12 +322,12 @@
         });
     </script>
 
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
         $(document).on('click','.modal_delete',function () {
             $('#deliduser').val($(this).data('id'));
             $('.labelusername').text($(this).data('username'));
         });
-    </script> -->
+    </script>
 
     <script type="text/javascript">
         $(document).on('click','#simpanadduser',function (){
@@ -446,7 +446,7 @@
         $(document).on('click','#simpandeluser',function (){
             $.ajax({
                 type:'post',
-                url:'#',
+                url:'{{route('deleteuser')}}',
                 data: new FormData($('#formdeleteuser')[0]),
                 dataType:'json',
                 async:false,

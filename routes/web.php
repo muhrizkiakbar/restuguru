@@ -20,3 +20,4 @@ Route::get('/users','UserController@index');
 Route::get('/users/dataalluser','UserController@dataalluser')->name('dataalluser');
 Route::post('/users/postuser','UserController@store')->name('storeuser');
 Route::post('/users/updateuser','UserController@update')->name('updateuser');
+Route::post('/users/deleteuser','UserController@destroy')->name('deleteuser');
