@@ -57,7 +57,7 @@
                                             <th>Alamat</th>
                                             <th>Reff User</th>
                                             <th>Cabang</th>
-                                            <th>Tool</th>
+                                            <th width="50px">Tool</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -111,7 +111,7 @@
                                                 <label>Cabang</label>
                                                 <select class="form-control select2" id="cabang_id" name="cabang_id" style="width: 100%;">
                                                     @foreach ($cabangs as $cabang)
-                                                        <option value="{{$cabang->id}}">{{$cabang->Nama_Cabang}}</option>
+                                                        <option value="{{encrypt($cabang->id)}}">{{$cabang->Nama_Cabang}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -149,41 +149,47 @@
                                 <div class="error alert-danger alert-dismissible">
                                 </div>
                                 <form id="formedituser" action="" method="post" role="form" enctype="multipart/form-data">
-                                    <div class="row">
+                                <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input id="username2" readonly name="username2" class="form-control pull-right" type="text">
-                                                <input class="form-control" id="iduser" name="iduser" type="hidden">
+                                                <input id="username2" name="username2" class="form-control pull-right" disabled type="text">
                                             </div>
                                             <div class="form-group">
-                                                <label>Email</label>
-                                                <input id="email2" readonly name="email2" class="form-control pull-right" type="email">
+                                                <label>Nama</label>
+                                                <input id="nama2" name="nama2" class="form-control pull-right" type="text">
                                                 {{csrf_field()}}
                                             </div>
                                             <div class="form-group">
                                                 <label>Password</label>
                                                 <input id="password2" name="password2" class="form-control pull-right" type="password">
                                             </div>
+                                            <input type="hidden" id="iduser2" name="iduser2">
                                             <div class="form-group">
-                                                <label>Nama</label>
-                                                <input id="nama2" name="nama2" class="form-control pull-right" type="text">
+                                                <label>Telepon</label>
+                                                <input id="Telepon2" name="Telepon2" class="form-control pull-right" type="text">
                                             </div>
-                                            <div class="form-group" >
-                                                <label>Instansi</label>
-                                                <select class="form-control select2" id="instansi2" name="instansi2" style="width: 100%;">
-                                                   
-                                                        <option value="asdasd">asdasdasd</option>
-                                                   
-
+                                            <div class="form-group">
+                                                <label>Gaji</label>
+                                                <input id="gaji2" name="gaji2" class="form-control pull-right" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Alamat</label>
+                                                <textarea id="alamat2" name="alamat2" class="form-control pull-right" type="text"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cabang</label>
+                                                <select class="form-control select2" id="cabang_id2" name="cabang_id2" style="width: 100%;">
+                                                    @foreach ($cabangs as $cabang)
+                                                        <option value="{{($cabang->id)}}">{{$cabang->Nama_Cabang}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label>Level</label>
                                                 <select class="form-control select2" id="role2" name="role2" style="width: 100%;">
-                                                    
-                                                        <option value="asd">asdasd</option>
-                                                    
+                                                        <option value="wwe">sdasd</option>
                                                 </select>
                                             </div>
                                             <!-- /.form-group -->
@@ -279,9 +285,9 @@
                     { data: 'nama', name: 'nama' },
                     { data: 'Telepon', name: 'Telepon' },
                     { data: 'gaji', name: 'gaji' },
-                    { data: 'alamat', name: 'alamat' },
-                    { data: 'Users2.nama', name: 'nama' },
-                    { data: 'Cabangs.Nama_Cabang', name: 'Nama_Cabang' },
+                    { data: 'Alamat', name: 'Alamat' },
+                    { data: 'username2', name: 'username2' },
+                    { data: 'Nama_Cabang', name: 'Nama_Cabang' },
                     {data:'action'}
                 ]
             });
@@ -296,24 +302,25 @@
             $('#gaji').val("");
             $('#Telepon').val("");
             $('#alamat').val("");
-            $('#cabang_id').val("");
             $('#modal_add').modal("show");
         });
     </script>
 
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            // alert($(this).data('telepon'));
             $('#username2').val($(this).data('username'));
-            $('#username2').attr('disabled','true');
-            $('#email2').attr('disabled','true');
-            $('#email2').val($(this).data('email'));
-            $('#nama2').val($(this).data('nama'));
             $('#password2').val("");
-            $('#role2').val($(this).data('role'));
-            $('#instansi2').val($(this).data('instansi'));
-            $('#iduser').val($(this).data('id'));
+            $('#nama2').val($(this).data('nama'));
+            $('#gaji2').val($(this).data('gaji'));
+            $('#Telepon2').val($(this).data('telepon'));
+            $('#alamat2').val($(this).data('alamat'));
+            // $('#cabang_id2').val($(this).data('cabang')).change();
+            // $('#cabang_id2').select2("val",$(this).data('cabang'));
+            $('#cabang_id2').select2().val($(this).data('cabang')).trigger('change');
+            $('#iduser2').val($(this).data('id'));
         });
-    </script> -->
+    </script>
 
     <!-- <script type="text/javascript">
         $(document).on('click','.modal_delete',function () {
@@ -373,6 +380,10 @@
                         
                     }
                 },
+                error:function(){
+                            swal("Eror !", "Gagal menyimpan !", "error");
+                            $('#modal_add').modal('hide');
+                }
             });
         });
     </script>
@@ -381,7 +392,7 @@
         $(document).on('click','#simpanedituser',function (){
             $.ajax({
                 type:'post',
-                url:'#',
+                url:'{{route('updateuser')}}',
                 data: new FormData($('#formedituser')[0]),
                 dataType:'json',
                 async:false,
@@ -389,17 +400,45 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        $('.error').removeClass('hidden');
-                        $('.error').text(response.errors.name);
-                        $('.error').text(response.errors.password);
+                        if ((response.errors.nama2)){
+                            swal("Nama", ""+response.errors.nama2+"", "error");
+                        }
+
+                        else if ((response.errors.password2)){
+                            swal("Password", ""+response.errors.password2+"", "error");
+                        }
+
+                        else if ((response.errors.Telepon2)){
+                            swal("Telepon", ""+response.errors.Telepon2+"", "error");
+                        }
+
+                        else if ((response.errors.gaji2)){
+                            swal("Gaji", ""+response.errors.gaji2+"", "error");
+                        }
+
+                        else if ((response.errors.alamat2)){
+                            swal("Alamat", ""+response.errors.alamat2+"", "error");
+                        }
+                        // $('#modal_add').modal('hide');
                     }
                     else
                     {
-                        $('.error').addClass('hidden');
-                        $('#modal_edit').modal('hide');
-                        oTable.ajax.reload();
+                        if (response=="Success"){
+                            swal("Success !", "Berhasil menyimpan !", "success");
+                            $('#modal_edit').modal('hide');
+                            oTable.ajax.reload();
+                        }
+                        else{
+                            wal("Eror !", "Gagal menyimpan !", "error");
+                            $('#modal_edit').modal('hide');
+                        }
+                        
                     }
                 },
+                error:function(){
+                            swal("Eror !", "Gagal menyimpan !", "error");
+                            $('#modal_edit').modal('hide');
+                }
             });
         });
     </script>
