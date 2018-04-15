@@ -101,9 +101,49 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        // 'attribute-name' => [
+        //     'rule-name' => 'custom-message',
+        // ],
+        'username'=>[
+            'required' => 'Username harus diisi !',
+            'min:3' => 'Username minimal 3 huruf !',
+            'unique' => 'Username tidak tersedia !',
         ],
+        'password'=>[
+            'required' => 'Password harus diisi !',
+            'min:8' => 'Password minimal 8 huruf !',
+        ],
+        'nama' => [
+            'required' => 'Nama harus diisi !',
+        ],
+        'Telepon'=>[
+            'required' => 'Telepon harus diisi !',
+            'numeric' => 'Telepon harus berupa nomor !',
+            'min:10'=> 'Telepon minimal 10 digit !',
+        ],
+        'gaji'=>[
+            'required' => 'Gaji harus diisi !',
+            'numeric' => 'Gaji harus berupa angka !',
+        ],
+        'alamat'=>[
+            'required'=> 'Alamat harus diisi!'
+        ],
+        'nama2' => [
+            'required' => 'Nama harus diisi !',
+        ],
+        'Telepon2'=>[
+            'required' => 'Telepon harus diisi !',
+            'numeric' => 'Telepon harus berupa nomor !',
+            'min:10'=> 'Telepon minimal 10 digit !',
+        ],
+        'gaji2'=>[
+            'required' => 'Gaji harus diisi !',
+            'numeric' => 'Gaji harus berupa angka !',
+        ],
+        'alamat2'=>[
+            'required'=> 'Alamat harus diisi!',
+        ]
+
     ],
 
     /*
