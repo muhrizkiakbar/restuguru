@@ -1,6 +1,6 @@
 <?php
 
-namespace nsUsers;
+namespace App\CUsers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

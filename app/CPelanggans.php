@@ -1,6 +1,6 @@
 <?php
 
-namespace nsPelanggans;
+namespace App\CPelanggans;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

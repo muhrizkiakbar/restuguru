@@ -1,6 +1,6 @@
 <?php
 
-namespace nsSuppliers;
+namespace App\CSuppliers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

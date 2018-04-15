@@ -1,6 +1,6 @@
 <?php
 
-namespace nsSub_Tpenjualans;
+namespace App\CSub_Tpenjualans;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

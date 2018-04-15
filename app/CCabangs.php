@@ -1,6 +1,6 @@
 <?php
 
-namespace nsCabangs;
+namespace App\CCabangs;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

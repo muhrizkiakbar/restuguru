@@ -1,6 +1,6 @@
 <?php
 
-namespace nsJenispelanggans;
+namespace App\CJenispelanggans;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
