@@ -323,6 +323,16 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
     );
 
     public static $classMap = array (
+        'App\\CCabangs' => __DIR__ . '/../..' . '/app/CCabangs.php',
+        'App\\CJeniselanggans' => __DIR__ . '/../..' . '/app/CJeniselanggans.php',
+        'App\\CKategories' => __DIR__ . '/../..' . '/app/CKategories.php',
+        'App\\CPelanggans' => __DIR__ . '/../..' . '/app/CPelanggans.php',
+        'App\\CProduks' => __DIR__ . '/../..' . '/app/CProduks.php',
+        'App\\CSpesialprices' => __DIR__ . '/../..' . '/app/CSpesialprices.php',
+        'App\\CSub_Tpenjualans' => __DIR__ . '/../..' . '/app/CSub_Tpenjualans.php',
+        'App\\CSuppliers' => __DIR__ . '/../..' . '/app/CSuppliers.php',
+        'App\\CTransaksi_Penjualans' => __DIR__ . '/../..' . '/app/CTransaksi_Penjualans.php',
+        'App\\CUsers' => __DIR__ . '/../..' . '/app/CUsers.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -331,6 +341,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
+        'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
@@ -342,7 +353,6 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
-        'App\\User' => __DIR__ . '/../..' . '/app/User.php.bal.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
