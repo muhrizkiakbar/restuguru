@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CUsers;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Facades\Datatables;
+use Datatables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -26,7 +26,7 @@ class UserController extends Controller
         $tables=CUsers::all();
         return Datatables::of($tables)
         ->addColumn('action', function ($tables) {
-            return '<button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-username="'.$users->username.'" data-nama="'.$users->nama.'" data-telepon="'.$users->telepon.'" data-gaji="'.$users->gaji.'" data-alamat="'.$users->alamat.'"  data-target="#modal_delete"><i class="fa-trash"></i></button>';
+            return '<button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-username="'.$tables->username.'" data-nama="'.$tables->nama.'" data-telepon="'.$tables->telepon.'" data-gaji="'.$tables->gaji.'" data-alamat="'.$tables->alamat.'"  data-target="#modal_delete"><i class="fa-trash"></i></button>';
             })
             ->make(true);
     }
