@@ -1,6 +1,6 @@
 <?php
 
-namespace nsKategories;
+namespace App\CKategories;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
