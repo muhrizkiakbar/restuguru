@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CUsers extends Model 
 {
-
+    // use Notifiable;
     protected $table = 'Users';
     public $timestamps = true;
 
