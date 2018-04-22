@@ -13,11 +13,11 @@ class CreateAddcabangiduserTable extends Migration
      */
     public function up()
     {
-        Schema::table('Users', function (Blueprint $table) {    
+        Schema::table('users', function (Blueprint $table) {    
             $table->integer('cabang_id')->unsigned()->nullable();
         });
 
-        Schema::table('Users', function(Blueprint $table) {
+        Schema::table('users', function(Blueprint $table) {
 			$table->foreign('cabang_id')->references('id')->on('Cabangs')
 						->onDelete('restrict')
 						->onUpdate('cascade');

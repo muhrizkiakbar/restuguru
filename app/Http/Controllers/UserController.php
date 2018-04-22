@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CUsers;
+use App\User;
 use App\CCabangs;
 use Illuminate\Http\Request;
 use Datatables;
@@ -28,9 +28,9 @@ class UserController extends Controller
     }
 
     public function dataalluser(){
-        $tables=CUsers::leftJoin('Users as Users2','Users.user_id','=','Users2.id')
-                ->leftJoin('Cabangs','Users.cabang_id','=','Cabangs.id')
-                ->select('Users.*','Users2.username as username2','Cabangs.Nama_Cabang')
+        $tables=User::leftJoin('users as users2','users.user_id','=','users2.id')
+                ->leftJoin('Cabangs','users.cabang_id','=','Cabangs.id')
+                ->select('users.*','users2.username as username2','Cabangs.Nama_Cabang')
                 ->get();
         return Datatables::of($tables)
         ->addColumn('action', function ($tables) {
@@ -64,7 +64,7 @@ class UserController extends Controller
         //
         // dd($request->cabang_id);
         $rules=array(
-            'username'=>'required | min:3 | unique:Users,username',
+            'username'=>'required | min:3 | unique:users,username',
             'nama'=>'required',
             'password'=>'required | min:8',
             'Telepon'=>'required | numeric | min:10',
@@ -77,7 +77,7 @@ class UserController extends Controller
             return Response::json(array('errors'=>$validator->getMessageBag()->toArray()));
         }
         else {
-            $table= new CUsers;
+            $table= new User;
             $table->username=$request->username;
             $table->nama=$request->nama;
             $table->password=bcrypt($request->password);
@@ -152,7 +152,7 @@ class UserController extends Controller
         else {
             // $
 
-            $table=CUsers::where('id','=',decrypt($request->iduser2))
+            $table=User::where('id','=',decrypt($request->iduser2))
                             ->first();
 
             $table->nama=$request->nama2;
@@ -186,7 +186,7 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         //
-        $table=CUsers::where('id','=',decrypt($request->deliduser))
+        $table=User::where('id','=',decrypt($request->deliduser))
                             ->first();
         if ($table->delete()){
             return response()->json("Success");

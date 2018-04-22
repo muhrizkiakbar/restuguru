@@ -141,9 +141,21 @@ return [
             'numeric' => 'Gaji harus berupa angka !',
         ],
         'alamat2'=>[
-            'required'=> 'Alamat harus diisi!',
+            'required'=> 'Alamat harus diisi !',
+        ],
+        'namerole'=>[
+            'required'=> 'Nama Role harus diisi !',
+            'unique'=> 'Nama Role sudah ada.'
+        ],
+        'displayrole'=>[
+            'required'=> 'Display Role harus diisi !',
+        ],
+        'descriptionrole'=>[
+            'required'=> 'Display Role harus diisi !',
+        ],
+        'permissionrole'=>[
+            'required'=> 'Permission harus diisi !',
         ]
-
     ],
 
     /*

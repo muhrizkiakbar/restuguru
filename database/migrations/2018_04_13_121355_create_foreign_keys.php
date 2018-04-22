@@ -15,22 +15,22 @@ class CreateForeignKeys extends Migration {
 			
 		});
 		Schema::table('Produks', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('Users')
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
 		Schema::table('Kategories', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('Users')
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
-		Schema::table('Users', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('Users')
+		Schema::table('users', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
 		Schema::table('Cabangs', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('Users')
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
@@ -39,7 +39,7 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('jenispelanggan_id')->references('id')->on('Jenispelanggans')
 						->onDelete('restrict')
 						->onUpdate('cascade');
-			$table->foreign('user_id')->references('id')->on('Users')
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
@@ -54,12 +54,12 @@ class CreateForeignKeys extends Migration {
 						->onUpdate('cascade');
 		});
 		Schema::table('Spesialprices', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('Users')
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
 		Schema::table('Suppliers', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('Users')
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
@@ -69,7 +69,7 @@ class CreateForeignKeys extends Migration {
 						->onUpdate('cascade');
 		});
 		Schema::table('Transaksi_Penjualans', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('Users')
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
@@ -85,7 +85,7 @@ class CreateForeignKeys extends Migration {
 						->onUpdate('cascade');
 		});
 		Schema::table('Sub_Tpenjualans', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('Users')
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});

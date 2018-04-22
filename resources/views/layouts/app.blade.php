@@ -11,6 +11,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
     <!-- Ionicons -->
+
+    @stack('style')
     <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
@@ -18,7 +20,6 @@
     <link rel="stylesheet" href="{{asset('plugins/iCheck/square/blue.css')}}">
     <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
 
-    @stack('style')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
