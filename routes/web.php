@@ -35,3 +35,10 @@ Route::get('/jenispelanggan/loadjenispelanggan','JenispelangganController@loadje
 Route::post('/jenispelanggan/postjenispelanggan','JenispelangganController@store')->name('storejenispelanggan');
 Route::post('/jenispelanggan/updatejenispelanggan','JenispelangganController@update')->name('updatejenispelanggan');
 Route::post('/jenispelanggan/deletejenispelanggan','JenispelangganController@destroy')->name('deletejenispelanggan');
+
+// Pelanggan Route
+Route::get('/pelanggan','PelangganController@index');
+Route::post('/pelanggan/postpelanggan','PelangganController@store')->name('storepelanggan');
+Route::get('/pelanggan/loaddatapelanggan','PelangganController@datapelanggan')->name('loaddatapelanggan');
+Route::post('/pelanggan/updatepelanggan','PelangganController@update')->name('updatepelanggan');
+Route::post('/pelanggan/deletepelanggan','PelangganController@destroy')->name('deletepelanggan');
