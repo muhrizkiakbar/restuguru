@@ -142,6 +142,19 @@ return [
         ],
         'alamat2'=>[
             'required'=> 'Alamat harus diisi!',
+        ],
+        // kategori
+        'tambah_nama_kategori'=>[
+            'required'=> 'Nama Kategori harus diisi!',
+        ],
+        'tambah_keterangan'=>[
+            'required'=> 'Keterangan harus diisi!',
+        ],
+        'edit_nama_kategori'=>[
+            'required'=> 'Nama Kategori harus diisi!',
+        ],
+        'edit_keterangan'=>[
+            'required'=> 'Keterangan harus diisi!',
         ]
 
     ],

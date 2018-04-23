@@ -35,3 +35,10 @@ Route::get('/jenispelanggan/loadjenispelanggan','JenispelangganController@loadje
 Route::post('/jenispelanggan/postjenispelanggan','JenispelangganController@store')->name('storejenispelanggan');
 Route::post('/jenispelanggan/updatejenispelanggan','JenispelangganController@update')->name('updatejenispelanggan');
 Route::post('/jenispelanggan/deletejenispelanggan','JenispelangganController@destroy')->name('deletejenispelanggan');
+
+// Kategori Route
+Route::get('/kategori','KategoriController@index');
+Route::get('/kategori/loadkategori','KategoriController@loadkategori')->name('loadkategori');
+Route::post('/kategori/postkategori','KategoriController@store')->name('storekategori');
+Route::post('/kategori/updatekategori','KategoriController@update')->name('updatekategori');
+Route::post('/kategori/deletekategori','KategoriController@destroy')->name('deletekategori');
