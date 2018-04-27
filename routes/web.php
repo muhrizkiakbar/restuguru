@@ -42,3 +42,10 @@ Route::get('/kategori/loadkategori','KategoriController@loadkategori')->name('lo
 Route::post('/kategori/postkategori','KategoriController@store')->name('storekategori');
 Route::post('/kategori/updatekategori','KategoriController@update')->name('updatekategori');
 Route::post('/kategori/deletekategori','KategoriController@destroy')->name('deletekategori');
+
+// Produk Route
+Route::get('/produk','ProdukController@index');
+Route::get('/produk/loadproduk','ProdukController@loadproduk')->name('loadproduk');
+Route::post('/produk/postproduk','ProdukController@store')->name('storeproduk');
+Route::post('/produk/updateproduk','ProdukController@update')->name('updateproduk');
+Route::post('/produk/deleteproduk','ProdukController@destroy')->name('deleteproduk');

@@ -155,7 +155,56 @@ return [
         ],
         'edit_keterangan'=>[
             'required'=> 'Keterangan harus diisi!',
-        ]
+        ],
+        // produk
+        'tambah_kategori'=>[
+            'required'=> 'Kategori Produk harus dipilih!',
+        ],
+        'tambah_nama_produk'=>[
+            'required'=> 'Nama Produk harus diisi!',
+        ],
+        'tambah_satuan'=>[
+            'required'=> 'Satuan harus diisi!',
+        ],
+        'tambah_harga_beli'=>[
+            'required'=> 'Harga Beli harus diisi!',
+            'numeric' => 'Harga Beli harus berupa nomor !',
+        ],
+        'tambah_harga_jual'=>[
+            'required'=> 'Harga Jual harus diisi!',
+            'numeric' => 'Harga Jual harus berupa nomor !',
+        ],
+        'tambah_hitung_luas'=>[
+            'required'=> 'Hitung Luas harus diisi!',
+            'numeric' => 'Hitung Luas harus memilih Ya/Tidak !',
+        ],
+        'tambah_keterangan'=>[
+            'required'=> 'Keterangan harus diisi!',
+        ],
+        'edit_kategori'=>[
+            'required'=> 'Kategori Produk harus dipilih!',
+        ],
+        'edit_nama_produk'=>[
+            'required'=> 'Nama Produk harus diisi!',
+        ],
+        'edit_satuan'=>[
+            'required'=> 'Satuan harus diisi!',
+        ],
+        'edit_harga_beli'=>[
+            'required'=> 'Harga Beli harus diisi!',
+            'numeric' => 'Harga Beli harus berupa nomor !',
+        ],
+        'edit_harga_jual'=>[
+            'required'=> 'Harga Jual harus diisi!',
+            'numeric' => 'Harga Jual harus berupa nomor !',
+        ],
+        'edit_hitung_luas'=>[
+            'required'=> 'Hitung Luas harus diisi!',
+            'numeric' => 'Hitung Luas harus memilih Ya/Tidak !',
+        ],
+        'edit_keterangan'=>[
+            'required'=> 'Keterangan harus diisi!',
+        ],
 
     ],
 

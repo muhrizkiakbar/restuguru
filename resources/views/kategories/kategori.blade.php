@@ -78,13 +78,13 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Nama Kaetgori</label>
-                                                <input id="tambah_nama_kategori" name="tambah_nama_kategori" class="form-control pull-right" type="text">
+                                                <input id="tambah_nama_kategori" name="tambah_nama_kategori" class="form-control" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Keterangan</label>
-                                                <textarea id="tambah_keterangan" name="tambah_keterangan" class="form-control pull-right" type="text"></textarea>
+                                                <textarea id="tambah_keterangan" name="tambah_keterangan" class="form-control" type="text"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -119,11 +119,11 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Nama Kategori</label>
-                                                <input id="edit_nama_kategori" name="edit_nama_kategori" class="form-control pull-right" type="text">
+                                                <input id="edit_nama_kategori" name="edit_nama_kategori" class="form-control" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
-                                                <textarea id="edit_keterangan" name="edit_keterangan" class="form-control pull-right" type="text"></textarea>
+                                                <textarea id="edit_keterangan" name="edit_keterangan" class="form-control" type="text"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +161,7 @@
                             <div class="modal-footer">
                                 {{-- Tombol Simpan-Batal --}}
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-                                <button type="button" id="bt_simpan_hapus" class="btn btn-success">Simpan</button>
+                                <button type="button" id="bt_simpan_hapus" class="btn btn-success">Hapus</button>
                             </div>
                         </div>
                     </div>
@@ -309,7 +309,7 @@
         });
     </script>
 
-    {{-- javascript simpan hapus --}}
+    {{-- javascript hapus --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_hapus',function (){
             $.ajax({
