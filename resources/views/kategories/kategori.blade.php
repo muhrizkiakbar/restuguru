@@ -77,11 +77,9 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Nama Kaetgori</label>
+                                                <label>Nama Kategori</label>
                                                 <input id="tambah_nama_kategori" name="tambah_nama_kategori" class="form-control" type="text">
                                             </div>
-                                        </div>
-                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Keterangan</label>
                                                 <textarea id="tambah_keterangan" name="tambah_keterangan" class="form-control" type="text"></textarea>
