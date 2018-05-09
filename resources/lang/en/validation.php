@@ -141,6 +141,125 @@ return [
             'numeric' => 'Gaji harus berupa angka !',
         ],
         'alamat2'=>[
+<<<<<<< HEAD
+            'required'=> 'Alamat harus diisi!',
+        ],
+        // kategori
+        'tambah_nama_kategori'=>[
+            'required'=> 'Nama Kategori harus diisi!',
+        ],
+        'tambah_keterangan'=>[
+            'required'=> 'Keterangan harus diisi!',
+        ],
+        'edit_nama_kategori'=>[
+            'required'=> 'Nama Kategori harus diisi!',
+        ],
+        'edit_keterangan'=>[
+            'required'=> 'Keterangan harus diisi!',
+        ],
+        // produk
+        'tambah_kategori'=>[
+            'required'=> 'Kategori Produk harus dipilih!',
+        ],
+        'tambah_nama_produk'=>[
+            'required'=> 'Nama Produk harus diisi!',
+        ],
+        'tambah_satuan'=>[
+            'required'=> 'Satuan harus diisi!',
+        ],
+        'tambah_harga_beli'=>[
+            'required'=> 'Harga Beli harus diisi!',
+            'numeric' => 'Harga Beli harus berupa angka !',
+        ],
+        'tambah_harga_jual'=>[
+            'required'=> 'Harga Jual harus diisi!',
+            'numeric' => 'Harga Jual harus berupa angka !',
+        ],
+        'tambah_hitung_luas'=>[
+            'required'=> 'Hitung Luas harus diisi!',
+            'numeric' => 'Hitung Luas harus memilih Ya/Tidak !',
+        ],
+        'tambah_keterangan'=>[
+            'required'=> 'Keterangan harus diisi!',
+        ],
+        'edit_kategori'=>[
+            'required'=> 'Kategori Produk harus dipilih!',
+        ],
+        'edit_nama_produk'=>[
+            'required'=> 'Nama Produk harus diisi!',
+        ],
+        'edit_satuan'=>[
+            'required'=> 'Satuan harus diisi!',
+        ],
+        'edit_harga_beli'=>[
+            'required'=> 'Harga Beli harus diisi!',
+            'numeric' => 'Harga Beli harus berupa angka !',
+        ],
+        'edit_harga_jual'=>[
+            'required'=> 'Harga Jual harus diisi!',
+            'numeric' => 'Harga Jual harus berupa angka !',
+        ],
+        'edit_hitung_luas'=>[
+            'required'=> 'Hitung Luas harus diisi!',
+            'numeric' => 'Hitung Luas harus memilih Ya/Tidak !',
+        ],
+        'edit_keterangan'=>[
+            'required'=> 'Keterangan harus diisi!',
+        ],
+        // supplier
+        'tambah_nama_supplier'=>[
+            'required'=> 'Nama Supplier harus diisi!',
+        ],
+        'tambah_pemilik_supplier'=>[
+            'required'=> 'Pemilik Supplier harus diisi!',
+        ],
+        'tambah_telpon_supplier'=>[
+            'required'=> 'Telepon Supplier harus diisi!',
+            'numeric' => 'Telepon Supplier harus berupa angka !',
+            'digits_between'=> 'Telepon Supplier minimal 10 digit !',
+        ],
+        'tambah_email_supplier'=>[
+            'required'=> 'Email Supplier harus diisi!',
+            'email'=> 'Email Supplier tidak sesuai format email!',
+        ],
+        'tambah_alamat_supplier'=>[
+            'required'=> 'Alamat Supplier harus diisi!',
+        ],
+        'tambah_rekening_suppliers'=>[
+            'required'=> 'Rekening Supplier harus diisi!',
+            'numeric' => 'Telepon Supplier harus berupa angka !',
+            'digits_between'=> 'Telepon Supplier minimal 12 digit !',
+        ],
+        'tambah_keterangan_suppliers'=>[
+            'required'=> 'Keterangan Supplier harus diisi!',
+        ],
+        'edit_nama_supplier'=>[
+            'required'=> 'Nama Supplier harus diisi!',
+        ],
+        'edit_pemilik_supplier'=>[
+            'required'=> 'Pemilik Supplier harus diisi!',
+        ],
+        'edit_telpon_supplier'=>[
+            'required'=> 'Telepon Supplier harus diisi!',
+            'numeric' => 'Telepon Supplier harus berupa angka !',
+            'digits_between'=> 'Telepon Supplier minimal 10 digit !',
+        ],
+        'edit_email_supplier'=>[
+            'required'=> 'Email Supplier harus diisi!',
+            'email'=> 'Email Supplier tidak sesuai format email!',
+        ],
+        'edit_alamat_supplier'=>[
+            'required'=> 'Alamat Supplier harus diisi!',
+        ],
+        'edit_rekening_suppliers'=>[
+            'required'=> 'Rekening Supplier harus diisi!',
+            'numeric' => 'Telepon Supplier harus berupa angka !',
+            'digits_between'=> 'Telepon Supplier minimal 12 digit !',
+        ],
+        'edit_keterangan_suppliers'=>[
+            'required'=> 'Keterangan Supplier harus diisi!',
+        ],
+=======
             'required'=> 'Alamat harus diisi !',
         ],
         'namerole'=>[
@@ -156,6 +275,7 @@ return [
         'permissionrole'=>[
             'required'=> 'Permission harus diisi !',
         ]
+>>>>>>> master
     ],
 
     /*

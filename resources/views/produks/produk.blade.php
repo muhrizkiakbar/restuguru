@@ -30,23 +30,28 @@
             <!-- Main content -->
             <section class="content">
 
-                {{-- Tabel Kategori --}}
+                {{-- Tabel Produk --}}
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box box-default">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Kategori</h3>
+                                <h3 class="box-title">Produk</h3>
                             </div>
                             <div class="box-body">
-                                <button type="button" id="modal_tambah_kategori" class="btn btn-primary" data-toggle="modal" data-target="#modal_tambah">
-                                    Tambah Kategori
+                                <button type="button" id="modal_tambah_produk" class="btn btn-primary" data-toggle="modal" data-target="#modal_tambah">
+                                    Tambah Produk
                                 </button>
                                 <hr>
                                 <div class="table-responsive">
-                                    <table id="tabel_kategori" class="table">
+                                    <table id="tabel_produk" class="table">
                                         <thead>
                                         <tr>
-                                            <th>Nama Kategori</th>
+                                            <th>Nama Produk</th>
+                                            <th>Satuan</th>
+                                            <th>Harga Beli</th>
+                                            <th>Harga Jual</th>
+                                            <th>Hitng Luas</th>
+                                            <th>Kategori</th>
                                             <th>Keterangan</th>
                                             <th>Action</th>
                                         </tr>
@@ -58,7 +63,7 @@
                     </div>
                 </div>
 
-                {{-- Modal Tambah Kategori --}}
+                {{-- Modal Tambah Produk --}}
                 <div class="modal fade" id="modal_tambah">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -66,19 +71,54 @@
                                 {{-- Tombol X --}}
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Tambah Kategori</h4>
+                                <h4 class="modal-title">Tambah Produk</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="error alert-danger alert-dismissible">
                                 </div>
                                 {{-- Form Tambah --}}
-                                <form id="form_tambah_kategori" action="" method="post" role="form" enctype="multipart/form-data">
+                                <form id="form_tambah_produk" action="" method="post" role="form" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Nama Kategori</label>
-                                                <input id="tambah_nama_kategori" name="tambah_nama_kategori" class="form-control" type="text">
+                                                <select class="form-control" placeholder="Kategori" name="tambah_kategori" id="tambah_kategori" style="width: 100%;">
+                                                        <option disabled selected>Kategori Produk</option>
+                                                    @foreach ($kategories as $kategori)
+                                                        <option value="{{encrypt($kategori->id)}}">{{$kategori->Nama_Kategori}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Nama Produk</label>
+                                                <input id="tambah_nama_produk" name="tambah_nama_produk" class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Satuan</label>
+                                                <input id="tambah_satuan" name="tambah_satuan" class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Harga Beli</label>
+                                                <input id="tambah_harga_beli" name="tambah_harga_beli" class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Harga Jual</label>
+                                                <input id="tambah_harga_jual" name="tambah_harga_jual" class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Hitung Luas</label>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="tambah_hitung_luas" id="tambah_hitung_luas_t" value="0" checked>
+                                                        Tidak
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="tambah_hitung_luas" id="tambah_hitung_luas_y" value="1">
+                                                        Ya
+                                                    </label>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
@@ -97,27 +137,62 @@
                     </div>
                 </div>
 
-                {{-- Modal Edit Kategori --}}
+                {{-- Modal Edit Produk --}}
                 <div class="modal modal-warning fade" id="modal_edit">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Edit Kategori</h4>
+                                <h4 class="modal-title">Edit Produk</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="error alert-danger alert-dismissible">
                                 </div>
                                 {{-- Form Edit --}}
-                                <form id="form_edit_kategori" action="" method="post" role="form" enctype="multipart/form-data">
+                                <form id="form_edit_produk" action="" method="post" role="form" enctype="multipart/form-data">
                                     {{csrf_field()}}
-                                    <input class="form-control" id="kategori_id" name="kategori_id" type="hidden">
+                                    <input class="form-control" id="produk_id" name="produk_id" type="hidden">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Nama Kategori</label>
-                                                <input id="edit_nama_kategori" name="edit_nama_kategori" class="form-control" type="text">
+                                                <select class="form-control" placeholder="Kategori" name="edit_kategori" id="edit_kategori" style="width: 100%;">
+                                                        <option disabled>Kategori Produk</option>
+                                                    @foreach ($kategories as $kategori)
+                                                        <option value="{{encrypt($kategori->id)}}">{{$kategori->Nama_Kategori}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Nama Produk</label>
+                                                <input id="edit_nama_produk" name="edit_nama_produk" class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Satuan</label>
+                                                <input id="edit_satuan" name="edit_satuan" class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Harga Beli</label>
+                                                <input id="edit_harga_beli" name="edit_harga_beli" class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Harga Jual</label>
+                                                <input id="edit_harga_jual" name="edit_harga_jual" class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Hitung Luas</label>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="edit_hitung_luas" id="edit_hitung_luas_t" value="0">
+                                                        Tidak
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="edit_hitung_luas" id="edit_hitung_luas_y" value="1">
+                                                        Ya
+                                                    </label>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
@@ -136,24 +211,24 @@
                     </div>
                 </div>
 
-                {{-- Modal Hapus Kategori --}}
+                {{-- Modal Hapus Produk --}}
                 <div class="modal modal-danger fade" id="modal_hapus">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Hapus Kategori</h4>
+                                <h4 class="modal-title">Hapus Produk</h4>
                             </div>
                             <div class="modal-body">
-                                <form id="form_hapus_kategori" action="" method="post" role="form" enctype="multipart/form-data">
+                                <form id="form_hapus_produk" action="" method="post" role="form" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                     <h4>
                                         <i class="icon fa fa-ban"></i>
                                         Peringatan
                                     </h4>
-                                    Yakin ingin menghapus kategori <span class="label_kategori"></span>?
-                                    <input id="hapus_kategori_id" name="hapus_kategori_id" type="hidden">
+                                    Yakin ingin menghapus produk <span class="label_produk"></span>?
+                                    <input id="hapus_produk_id" name="hapus_produk_id" type="hidden">
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -193,13 +268,18 @@
     <script type="text/javascript">
         var oTable;
         $(function() {
-            oTable = $('#tabel_kategori').DataTable({
+            oTable = $('#tabel_produk').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('loadkategori')}}',
+                ajax: '{{route('loadproduk')}}',
                 columns: [
+                    { data: 'nama_produk', name: 'nama_produk' },
+                    { data: 'satuan', name: 'satuan' },
+                    { data: 'harga_beli', name: 'harga_beli' },
+                    { data: 'harga_jual', name: 'harga_jual' },
+                    { data: 'produks.hitung_luas', name: 'hitung_luas' },
                     { data: 'Nama_Kategori', name: 'Nama_Kategori' },
-                    { data: 'Keterangan', name: 'Keterangan' },
+                    { data: 'keterangan', name: 'keterangan' },
                     { data: 'action'}
                 ]
             });
@@ -208,8 +288,13 @@
 
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
-        $(document).on('click','#modal_tambah_kategori',function () {
-            $('#tambah_nama_kategori').val("");
+        $(document).on('click','#modal_tambah_produk',function () {
+            $('#tambah_kategori :nth-child(1)').prop('selected', true);
+            $('#tambah_nama_produk').val("");
+            $('#tambah_satuan').val("");
+            $('#tambah_harga_beli').val("");
+            $('#tambah_harga_jual').val("");
+            $('#tambah_hitung_luas').val(0);
             $('#tambah_keterangan').val("");
         });
     </script>
@@ -217,17 +302,30 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
-            $('#edit_nama_kategori').val($(this).data('nama_kategori'));
+            $kategori = $(this).data('kategori');
+            $('#edit_kategori option').filter(function() {
+                return ($(this).text() == $kategori);
+            }).prop('selected', true);
+            $('#edit_nama_produk').val($(this).data('nama_produk'));
+            $('#edit_satuan').val($(this).data('satuan'));
+            $('#edit_harga_beli').val($(this).data('harga_beli'));
+            $('#edit_harga_jual').val($(this).data('harga_jual'));
+            $hitung_luas = $(this).data('hitung_luas');
+            if ($hitung_luas) {
+                $('#edit_hitung_luas_y').prop('checked',true);
+            } else {
+                $('#edit_hitung_luas_t').prop('checked',true);
+            }
             $('#edit_keterangan').val($(this).data('keterangan'));
-            $('#kategori_id').val($(this).data('id'));
+            $('#produk_id').val($(this).data('id'));
         });
     </script>
 
     {{-- javascript modal hapus --}}
     <script type="text/javascript">
         $(document).on('click','.modal_hapus',function () {
-            $('#hapus_kategori_id').val($(this).data('id'));
-            $('.label_kategori').text($(this).data('nama_kategori'));
+            $('#hapus_produk_id').val($(this).data('id'));
+            $('.label_produk').text($(this).data('nama_produk'));
         });
     </script>
 
@@ -236,18 +334,28 @@
         $(document).on('click','#bt_simpan_tambah',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('storekategori')}}',
-                data: new FormData($('#form_tambah_kategori')[0]),
+                url:'{{route('storeproduk')}}',
+                data: new FormData($('#form_tambah_produk')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        if ((response.errors.tambah_nama_kategori)){
-                            swal("Kategori", ""+response.errors.tambah_nama_kategori+"", "error");
+                        if ((response.errors.tambah_kategori)){
+                            swal("Produk", ""+response.errors.tambah_kategori+"", "error");
+                        }else if ((response.errors.tambah_nama_produk)){
+                            swal("Produk", ""+response.errors.tambah_nama_produk+"", "error");
+                        }else if ((response.errors.tambah_satuan)){
+                            swal("Produk", ""+response.errors.tambah_satuan+"", "error");
+                        }else if ((response.errors.tambah_harga_beli)){
+                            swal("Produk", ""+response.errors.tambah_harga_beli+"", "error");
+                        }else if ((response.errors.tambah_harga_jual)){
+                            swal("Produk", ""+response.errors.tambah_harga_jual+"", "error");
+                        }else if ((response.errors.tambah_hitung_luas)){
+                            swal("Produk", ""+response.errors.tambah_hitung_luas+"", "error");
                         }else if ((response.errors.tambah_keterangan)){
-                            swal("Kategori", ""+response.errors.tambah_keterangan+"", "error");
+                            swal("Produk", ""+response.errors.tambah_keterangan+"", "error");
                         }
                         // $('#modal_tambah').modal('hide');
                     }else{
@@ -261,7 +369,8 @@
                         }
                     }
                 },
-                error:function(){
+                error:function(response){
+                    console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
                     // $('#modal_tambah').modal('hide');
                 }
@@ -274,18 +383,28 @@
         $(document).on('click','#bt_simpan_edit',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('updatekategori')}}',
-                data: new FormData($('#form_edit_kategori')[0]),
+                url:'{{route('updateproduk')}}',
+                data: new FormData($('#form_edit_produk')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        if ((response.errors.edit_nama_kategori)){
-                            swal("Kategori", ""+response.errors.edit_nama_kategori+"", "error");
+                        if ((response.errors.edit_kategori)){
+                            swal("Produk", ""+response.errors.edit_kategori+"", "error");
+                        }else if ((response.errors.edit_nama_produk)){
+                            swal("Produk", ""+response.errors.edit_nama_produk+"", "error");
+                        }else if ((response.errors.edit_satuan)){
+                            swal("Produk", ""+response.errors.edit_satuan+"", "error");
+                        }else if ((response.errors.edit_harga_beli)){
+                            swal("Produk", ""+response.errors.edit_harga_beli+"", "error");
+                        }else if ((response.errors.edit_harga_jual)){
+                            swal("Produk", ""+response.errors.edit_harga_jual+"", "error");
+                        }else if ((response.errors.edit_hitung_luas)){
+                            swal("Produk", ""+response.errors.edit_hitung_luas+"", "error");
                         }else if ((response.errors.edit_keterangan)){
-                            swal("Kategori", ""+response.errors.edit_keterangan+"", "error");
+                            swal("Produk", ""+response.errors.edit_keterangan+"", "error");
                         }
                         // $('#modal_edit').modal('hide');
                     }else{
@@ -312,8 +431,8 @@
         $(document).on('click','#bt_simpan_hapus',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('deletekategori')}}',
-                data: new FormData($('#form_hapus_kategori')[0]),
+                url:'{{route('deleteproduk')}}',
+                data: new FormData($('#form_hapus_produk')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,

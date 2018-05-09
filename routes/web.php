@@ -73,3 +73,33 @@ Route::get('/jenispelanggan/loadjenispelanggan','JenispelangganController@loadje
 Route::post('/jenispelanggan/postjenispelanggan','JenispelangganController@store')->name('storejenispelanggan');
 Route::post('/jenispelanggan/updatejenispelanggan','JenispelangganController@update')->name('updatejenispelanggan');
 Route::post('/jenispelanggan/deletejenispelanggan','JenispelangganController@destroy')->name('deletejenispelanggan');
+
+<<<<<<< HEAD
+// Kategori Route
+Route::get('/kategori','KategoriController@index');
+Route::get('/kategori/loadkategori','KategoriController@loadkategori')->name('loadkategori');
+Route::post('/kategori/postkategori','KategoriController@store')->name('storekategori');
+Route::post('/kategori/updatekategori','KategoriController@update')->name('updatekategori');
+Route::post('/kategori/deletekategori','KategoriController@destroy')->name('deletekategori');
+
+// Produk Route
+Route::get('/produk','ProdukController@index');
+Route::get('/produk/loadproduk','ProdukController@loadproduk')->name('loadproduk');
+Route::post('/produk/postproduk','ProdukController@store')->name('storeproduk');
+Route::post('/produk/updateproduk','ProdukController@update')->name('updateproduk');
+Route::post('/produk/deleteproduk','ProdukController@destroy')->name('deleteproduk');
+
+// Supplier Route
+Route::get('/supplier','SupplierController@index');
+Route::get('/supplier/loadsupplier','SupplierController@loadsupplier')->name('loadsupplier');
+Route::post('/supplier/postsupplier','SupplierController@store')->name('storesupplier');
+Route::post('/supplier/updatesupplier','SupplierController@update')->name('updatesupplier');
+Route::post('/supplier/deletesupplier','SupplierController@destroy')->name('deletesupplier');
+=======
+// Pelanggan Route
+Route::get('/pelanggan','PelangganController@index');
+Route::post('/pelanggan/postpelanggan','PelangganController@store')->name('storepelanggan');
+Route::get('/pelanggan/loaddatapelanggan','PelangganController@datapelanggan')->name('loaddatapelanggan');
+Route::post('/pelanggan/updatepelanggan','PelangganController@update')->name('updatepelanggan');
+Route::post('/pelanggan/deletepelanggan','PelangganController@destroy')->name('deletepelanggan');
+>>>>>>> master
