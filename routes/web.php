@@ -74,7 +74,6 @@ Route::post('/jenispelanggan/postjenispelanggan','JenispelangganController@store
 Route::post('/jenispelanggan/updatejenispelanggan','JenispelangganController@update')->name('updatejenispelanggan');
 Route::post('/jenispelanggan/deletejenispelanggan','JenispelangganController@destroy')->name('deletejenispelanggan');
 
-<<<<<<< HEAD
 // Kategori Route
 Route::get('/kategori','KategoriController@index');
 Route::get('/kategori/loadkategori','KategoriController@loadkategori')->name('loadkategori');
@@ -95,11 +94,9 @@ Route::get('/supplier/loadsupplier','SupplierController@loadsupplier')->name('lo
 Route::post('/supplier/postsupplier','SupplierController@store')->name('storesupplier');
 Route::post('/supplier/updatesupplier','SupplierController@update')->name('updatesupplier');
 Route::post('/supplier/deletesupplier','SupplierController@destroy')->name('deletesupplier');
-=======
 // Pelanggan Route
 Route::get('/pelanggan','PelangganController@index');
 Route::post('/pelanggan/postpelanggan','PelangganController@store')->name('storepelanggan');
 Route::get('/pelanggan/loaddatapelanggan','PelangganController@datapelanggan')->name('loaddatapelanggan');
 Route::post('/pelanggan/updatepelanggan','PelangganController@update')->name('updatepelanggan');
 Route::post('/pelanggan/deletepelanggan','PelangganController@destroy')->name('deletepelanggan');
->>>>>>> master

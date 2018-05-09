@@ -141,7 +141,6 @@ return [
             'numeric' => 'Gaji harus berupa angka !',
         ],
         'alamat2'=>[
-<<<<<<< HEAD
             'required'=> 'Alamat harus diisi!',
         ],
         // kategori
@@ -259,9 +258,6 @@ return [
         'edit_keterangan_suppliers'=>[
             'required'=> 'Keterangan Supplier harus diisi!',
         ],
-=======
-            'required'=> 'Alamat harus diisi !',
-        ],
         'namerole'=>[
             'required'=> 'Nama Role harus diisi !',
             'unique'=> 'Nama Role sudah ada.'
@@ -275,7 +271,6 @@ return [
         'permissionrole'=>[
             'required'=> 'Permission harus diisi !',
         ]
->>>>>>> master
     ],
 
     /*
