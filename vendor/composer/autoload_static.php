@@ -332,7 +332,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
 
     public static $classMap = array (
         'App\\CCabangs' => __DIR__ . '/../..' . '/app/CCabangs.php',
-        'App\\CJeniselanggans' => __DIR__ . '/../..' . '/app/CJeniselanggans.php',
+        'App\\CJenispelanggans' => __DIR__ . '/../..' . '/app/CJenispelanggans.php',
         'App\\CKategories' => __DIR__ . '/../..' . '/app/CKategories.php',
         'App\\CPelanggans' => __DIR__ . '/../..' . '/app/CPelanggans.php',
         'App\\CProduks' => __DIR__ . '/../..' . '/app/CProduks.php',
@@ -350,8 +350,11 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Http\\Controllers\\CabangController' => __DIR__ . '/../..' . '/app/Http/Controllers/CabangController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\JenispelangganController' => __DIR__ . '/../..' . '/app/Http/Controllers/JenispelangganController.php',
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
+        'App\\Http\\Controllers\\ProdukController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProdukController.php',
         'App\\Http\\Controllers\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/RoleController.php',
+        'App\\Http\\Controllers\\TransaksiController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransaksiController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',

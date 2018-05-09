@@ -39,6 +39,10 @@ Route::post('/roles/delete','RoleController@destroy')->name('destroyrole');
 
 Route::get('/transaksi','TransaksiController@index');
 
+Route::get('/produk/cari','ProdukController@produkcari')->name('produkcari');
+Route::get('/produk/harga','ProdukController@produkharga')->name('produkharga');
+Route::get('/produk/data','ProdukController@dataproduk')->name('dataproduk');
+
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {

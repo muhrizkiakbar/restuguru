@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\CCabangs' => $baseDir . '/app/CCabangs.php',
-    'App\\CJeniselanggans' => $baseDir . '/app/CJeniselanggans.php',
+    'App\\CJenispelanggans' => $baseDir . '/app/CJenispelanggans.php',
     'App\\CKategories' => $baseDir . '/app/CKategories.php',
     'App\\CPelanggans' => $baseDir . '/app/CPelanggans.php',
     'App\\CProduks' => $baseDir . '/app/CProduks.php',
@@ -25,8 +25,11 @@ return array(
     'App\\Http\\Controllers\\CabangController' => $baseDir . '/app/Http/Controllers/CabangController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
+    'App\\Http\\Controllers\\JenispelangganController' => $baseDir . '/app/Http/Controllers/JenispelangganController.php',
     'App\\Http\\Controllers\\LoginController' => $baseDir . '/app/Http/Controllers/LoginController.php',
+    'App\\Http\\Controllers\\ProdukController' => $baseDir . '/app/Http/Controllers/ProdukController.php',
     'App\\Http\\Controllers\\RoleController' => $baseDir . '/app/Http/Controllers/RoleController.php',
+    'App\\Http\\Controllers\\TransaksiController' => $baseDir . '/app/Http/Controllers/TransaksiController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',

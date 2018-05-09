@@ -21,6 +21,7 @@ class CreateTransaksiPenjualansTable extends Migration {
 			$table->string('metode_pembayaran');
 			$table->double('jumlah_pembayaran');
 			$table->double('sisa_tagihan');
+			$table->string('satuanukuran')->nullable();
 			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
