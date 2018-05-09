@@ -151,6 +151,8 @@ return [
          * Package Service Providers...
          */
         
+        Yajra\DataTables\DataTablesServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -160,7 +162,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Yajra\DataTables\DataTablesServiceProvider::class,
 
     ],
 
@@ -211,6 +212,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Datatables' => Yajra\DataTables\Facades\DataTables::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 

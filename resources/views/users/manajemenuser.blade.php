@@ -453,9 +453,15 @@
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    $('.error').addClass('hidden');
-                    $('#modal_delete').modal('hide');
-                    oTable.ajax.reload();
+                        if (response=="Success"){
+                            swal("Success !", "Berhasil menghapus !", "success");
+                            $('#modal_edit').modal('hide');
+                            oTable.ajax.reload();
+                        }
+                        else{
+                            wal("Eror !", "Gagal menghapus !", "error");
+                            $('#modal_edit').modal('hide');
+                        }
                 },
             });
         });
