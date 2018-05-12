@@ -15,9 +15,13 @@ class TransaksiController extends Controller
     {
         //
         $date=date("Y-m-d");
+
         return view('transaksis.transaksi',['date'=>$date]);
     }
 
+    public function report(){
+        return view('report.invoiceprint');
+    }
     /**
      * Show the form for creating a new resource.
      *

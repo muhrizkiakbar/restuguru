@@ -115,7 +115,7 @@ class ProdukController extends Controller
         $table=CProduks::where('id','=',$request->id)
                 ->first();
 
-        return $table->harga_jual;
+        return $table;
     }
 
     public function create()

@@ -38,6 +38,7 @@ Route::put('/roles/edit/{id}','RoleController@update')->name('updaterole');
 Route::post('/roles/delete','RoleController@destroy')->name('destroyrole');
 
 Route::get('/transaksi','TransaksiController@index');
+Route::get('/transaksi/report','TransaksiController@report');
 
 Route::get('/produk/cari','ProdukController@produkcari')->name('produkcari');
 Route::get('/produk/harga','ProdukController@produkharga')->name('produkharga');

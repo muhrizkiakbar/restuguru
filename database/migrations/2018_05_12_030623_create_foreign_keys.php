@@ -12,34 +12,24 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('kategori_id')->references('id')->on('Kategories')
 						->onDelete('restrict')
 						->onUpdate('cascade');
-			
-		});
-		Schema::table('Produks', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users')
-						->onDelete('restrict')
-						->onUpdate('cascade');
 		});
 		Schema::table('Kategories', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users')
-						->onDelete('restrict')
-						->onUpdate('cascade');
-		});
-		Schema::table('users', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users')
+			$table->foreign('user_id')->references('id')->on('Users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
 		Schema::table('Cabangs', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users')
+			$table->foreign('user_id')->references('id')->on('Users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
-		
-		Schema::table('Pelanggans', function(Blueprint $table) {
-			$table->foreign('jenispelanggan_id')->references('id')->on('Jenispelanggans')
+		Schema::table('Role_users', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
-			$table->foreign('user_id')->references('id')->on('users')
+		});
+		Schema::table('Pelanggans', function(Blueprint $table) {
+			$table->foreign('jenispelanggan_id')->references('id')->on('Jenispelanggans')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
@@ -54,12 +44,12 @@ class CreateForeignKeys extends Migration {
 						->onUpdate('cascade');
 		});
 		Schema::table('Spesialprices', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users')
+			$table->foreign('user_id')->references('id')->on('Users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
 		Schema::table('Suppliers', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users')
+			$table->foreign('user_id')->references('id')->on('Users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
@@ -68,12 +58,6 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
-		Schema::table('Transaksi_Penjualans', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users')
-						->onDelete('restrict')
-						->onUpdate('cascade');
-		});
-
 		Schema::table('Sub_Tpenjualans', function(Blueprint $table) {
 			$table->foreign('penjualan_id')->references('id')->on('Transaksi_Penjualans')
 						->onDelete('restrict')
@@ -85,7 +69,32 @@ class CreateForeignKeys extends Migration {
 						->onUpdate('cascade');
 		});
 		Schema::table('Sub_Tpenjualans', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users')
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Spesialpricesgroups', function(Blueprint $table) {
+			$table->foreign('jenispelanggan_id')->references('id')->on('Jenispelanggans')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Spesialpricesgroups', function(Blueprint $table) {
+			$table->foreign('produk_id')->references('id')->on('Produks')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Spesialpricesgroups', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Angsurans', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Angsurans', function(Blueprint $table) {
+			$table->foreign('transaksipenjualan_id')->references('id')->on('Transaksi_Penjualans')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
@@ -102,7 +111,9 @@ class CreateForeignKeys extends Migration {
 		Schema::table('Cabangs', function(Blueprint $table) {
 			$table->dropForeign('Cabangs_user_id_foreign');
 		});
-		
+		Schema::table('Role_users', function(Blueprint $table) {
+			$table->dropForeign('Role_users_user_id_foreign');
+		});
 		Schema::table('Pelanggans', function(Blueprint $table) {
 			$table->dropForeign('Pelanggans_jenispelanggan_id_foreign');
 		});
@@ -129,6 +140,21 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('Sub_Tpenjualans', function(Blueprint $table) {
 			$table->dropForeign('Sub_Tpenjualans_user_id_foreign');
+		});
+		Schema::table('Spesialpricesgroups', function(Blueprint $table) {
+			$table->dropForeign('Spesialpricesgroups_jenispelanggan_id_foreign');
+		});
+		Schema::table('Spesialpricesgroups', function(Blueprint $table) {
+			$table->dropForeign('Spesialpricesgroups_produk_id_foreign');
+		});
+		Schema::table('Spesialpricesgroups', function(Blueprint $table) {
+			$table->dropForeign('Spesialpricesgroups_user_id_foreign');
+		});
+		Schema::table('Angsurans', function(Blueprint $table) {
+			$table->dropForeign('Angsurans_user_id_foreign');
+		});
+		Schema::table('Angsurans', function(Blueprint $table) {
+			$table->dropForeign('Angsurans_transaksipenjualan_id_foreign');
 		});
 	}
 }

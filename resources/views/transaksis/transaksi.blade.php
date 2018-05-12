@@ -143,7 +143,7 @@
               </div>
 
                 <div class="row">
-                  <div class="col-md-2">
+                  <div class="col-md-5">
                     <div class="box-body">
 
                       <div class="form-group">
@@ -153,12 +153,12 @@
 
                         <div class="form-group">
                           <label for="tanggal">Tanggal</label>
-                          <input type="text" class="form-control" id="tanggal" name="tanggal" value="{{$date}}" placeholder="Tanggal">
+                          <input type="text" class="form-control" id="tanggal" name="tanggal" style="max-width:100px;" value="{{$date}}" placeholder="Tanggal">
                         </div>
 
                     </div>
                   </div>
-                  <div class="col-md-10">
+                  <div class="col-md-5">
                     <div class="box-body">
 
                       <div class="form-group">
@@ -220,7 +220,7 @@
                           <div class="col-md-3">
                               <label>Total
                                   <input id="total" name="total"  value="0.00"  class="form-control" type="text">
-                                  <input id="total2" name="total2"  value="0.00"  class="form-control" type="text">
+                                  <input id="total2" name="total2"  value="0.00"  class="form-control" type="hidden">
                               </label>                                  
                           </div>
                       </div>
@@ -453,6 +453,34 @@
               <!-- /.modal-dialog -->
           </div>
 
+          <div class="modal modal-danger fade" id="modal_delete">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Hapus Item</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formdeleteuser" action="" method="post" role="form" enctype="multipart/form-data">
+                                    <h4>
+                                        <i class="icon fa fa-ban"></i>
+                                        Peringatan
+                                    </h4>
+                                    {{csrf_field()}}
+                                    Yakin ingin menghapus item <span class="labelitem"></span>?
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Keluar</button>
+                                <button type="button" id="deleteitem" class="btn btn-outline">Simpan</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
         </div>
 
         </section>
@@ -510,9 +538,11 @@
       var sisa=0;
       var bayardp=0;
       var satuan="";
+      var hitung_luas=1;
       var tdid=0;
       var subtotalawal=0;
       var tdidnow=0;
+      var subtotaldelete=0;
 
       $(function(){
 
@@ -522,6 +552,38 @@
 
 
         $("#add_harga").keydown(function (e) {
+          // Allow: backspace, delete, tab, escape, enter and .
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+              // Allow: Ctrl+A, Command+A
+              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+              // Allow: home, end, left, right, down, up
+              (e.keyCode >= 35 && e.keyCode <= 40)) {
+                  // let it happen, don't do anything
+                  return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+        });
+
+        $("#add_panjang").keydown(function (e) {
+          // Allow: backspace, delete, tab, escape, enter and .
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+              // Allow: Ctrl+A, Command+A
+              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+              // Allow: home, end, left, right, down, up
+              (e.keyCode >= 35 && e.keyCode <= 40)) {
+                  // let it happen, don't do anything
+                  return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+        });
+
+        $("#add_lebar").keydown(function (e) {
           // Allow: backspace, delete, tab, escape, enter and .
           if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
               // Allow: Ctrl+A, Command+A
@@ -598,8 +660,6 @@
             }
         });
 
-        
-
         $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
           checkboxClass: 'icheckbox_minimal-red',
           radioClass   : 'iradio_minimal-red'
@@ -646,6 +706,100 @@
                     };
                 },
                 cache: true
+            }
+        });
+
+        $("#edit_harga").keydown(function (e) {
+          // Allow: backspace, delete, tab, escape, enter and .
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+              // Allow: Ctrl+A, Command+A
+              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+              // Allow: home, end, left, right, down, up
+              (e.keyCode >= 35 && e.keyCode <= 40)) {
+                  // let it happen, don't do anything
+                  return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+        });
+
+        $("#edit_kuantitas").keydown(function (e) {
+          // Allow: backspace, delete, tab, escape, enter and .
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+              // Allow: Ctrl+A, Command+A
+              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+              // Allow: home, end, left, right, down, up
+              (e.keyCode >= 35 && e.keyCode <= 40)) {
+                  // let it happen, don't do anything
+                  return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+        });
+
+        $("#edit_panjang").keydown(function (e) {
+          // Allow: backspace, delete, tab, escape, enter and .
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+              // Allow: Ctrl+A, Command+A
+              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+              // Allow: home, end, left, right, down, up
+              (e.keyCode >= 35 && e.keyCode <= 40)) {
+                  // let it happen, don't do anything
+                  return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+        });
+
+        $("#edit_lebar").keydown(function (e) {
+          // Allow: backspace, delete, tab, escape, enter and .
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+              // Allow: Ctrl+A, Command+A
+              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+              // Allow: home, end, left, right, down, up
+              (e.keyCode >= 35 && e.keyCode <= 40)) {
+                  // let it happen, don't do anything
+                  return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+        });
+
+        $('input[type=radio][name=r2edit]').on('ifClicked',function () {
+            // alert("asd");
+            if (this.value == 'cm') {
+                
+                var harga=parseFloat($('#edit_harga').val());
+                var panjang=parseFloat($('#edit_panjang').val());
+                var lebar=parseFloat($('#edit_lebar').val());
+                var kuantitas=parseFloat($('#edit_kuantitas').val());
+                
+                // subtotal################
+                
+                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
+                satuan=this.value;
+            }
+            else if (this.value == 'm') {
+                
+                var harga=parseFloat($('#edit_harga').val());
+                var panjang=parseFloat($('#edit_panjang').val());
+                var lebar=parseFloat($('#edit_lebar').val());
+                var kuantitas=parseFloat($('#edit_kuantitas').val());
+                // var subtotal=0;
+                
+                var subtotal = ((panjang * lebar) * harga / 1000) * kuantitas;
+                $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
+                satuan=this.value;
+                
             }
         });
 
@@ -776,9 +930,6 @@
 
 
       $('#submittransaksi').click(function(){
-          // $("tbody").append(
-          //   '<p>'+$('input[name="produk[0]"]').val()+'</p>'
-          // );
           $('input[name^="produk[]"]').each(function() {
             alert($(this).val());
           });
@@ -805,13 +956,38 @@
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    $('#add_harga').val(response).trigger('mask.maskMoney');  
+                    hitung_luas=response.hitung_luas;
+                    if (hitung_luas==1)
+                    {
+                        $('#r2m').iCheck('uncheck');
+                        $('#r2cm').iCheck('uncheck');
+                        $('#r2m').iCheck('enable');
+                        $('#r2cm').iCheck('enable');
+                        $('#add_panjang').removeAttr('disabled');
+                        $('#add_lebar').removeAttr('disabled');
+                    }
+                    else
+                    {
+                        $('#r2m').iCheck('uncheck');
+                        $('#r2cm').iCheck('uncheck');
+                        $('#r2m').iCheck('disable');
+                        $('#r2cm').iCheck('disable');
+                        $('#add_panjang').attr('disabled',true);
+                        $('#add_lebar').attr('disabled',true);
+                    }
+                    
+                    $('#add_harga').val(response.harga_jual).trigger('mask.maskMoney');  
                 },
             });
 
         });
 
         $('#buttonmodal_add').click(function (){
+
+            $('#r2m').iCheck('uncheck');
+            $('#r2cm').iCheck('uncheck');
+            $('#r2m').iCheck('enable');
+            $('#r2cm').iCheck('enable');
             $('input[type=radio][name=r2]').on('ifChecked',function () {
                 // alert("asd");
                 if (this.value == 'cm') {
@@ -821,6 +997,9 @@
                     satuan=this.value;
                 }
             });
+
+            $('#add_panjang').removeAttr('disabled');
+            $('#add_lebar').removeAttr('disabled');
             $('#add_produk').val('').trigger('change');            
             $('#add_harga').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}); 
             $('#add_subtotal').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
@@ -864,53 +1043,70 @@
             $('#total').val(total).trigger('mask.maskMoney');
             tdid=tdid+1;
             $("tbody").append(
-            '<tr id="'+tdid+'"><td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+subtotal+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdid+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td></tr>'
+            '<tr id="'+tdid+'"><td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+subtotal+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-namaproduk="'+namaproduk+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdid+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td></tr>'
             );
 
             $('#modal_add').modal('hide');
         });
 
         $('#add_kuantitas').keyup(function(){
-            if ($('#r2').val() =="cm") {
-                var harga=parseFloat($('#add_harga').val());
-                var panjang=parseFloat($('#add_panjang').val());
-                var lebar=parseFloat($('#add_lebar').val());
-                var kuantitas=parseFloat($('#add_kuantitas').val());
-                
+            // alert(satuan);
+            if (hitung_luas==1){
+                if (satuan =="cm") {
+                    var harga=parseFloat($('#add_harga').val());
+                    var panjang=parseFloat($('#add_panjang').val());
+                    var lebar=parseFloat($('#add_lebar').val());
+                    var kuantitas=parseFloat($('#add_kuantitas').val());
+                    
 
-                // subtotal################
-                
-                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
-                    $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                    // subtotal################
+                    
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                        $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                }
+                else
+                {
+                    var harga=parseFloat($('#add_harga').val());
+                    var panjang=parseFloat($('#add_panjang').val());
+                    var lebar=parseFloat($('#add_lebar').val());
+                    var kuantitas=parseFloat($('#add_kuantitas').val());
+                    // var subtotal=0;
+
+                    // subtotal################
+                    
+                    var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
+                        $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                }
             }
             else
             {
-                var harga=parseFloat($('#add_harga').val());
-                var panjang=parseFloat($('#add_panjang').val());
-                var lebar=parseFloat($('#add_lebar').val());
-                var kuantitas=parseFloat($('#add_kuantitas').val());
-                // var subtotal=0;
 
-                // subtotal################
-                
-                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var harga=parseFloat($('#add_harga').val());
+                    var kuantitas=parseFloat($('#add_kuantitas').val());
+                    
+
+                    // subtotal################
+                    
+                    var subtotal = (harga) * kuantitas;
                     $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
             }
+                
         });
 
       //bagianmodal add
       
       //bagian modal edit
         
-
         $(document).on('click','.modal_edit',function () {
 
             if ($(this).data('satuan')=="cm"){
                 $('#r2editcm').iCheck('check');
+                satuan="cm";
             }
             else
             {
                 $('#r2editm').iCheck('check');
+                satuan="m";
             }
             
             var data = {
@@ -923,7 +1119,26 @@
             var newOption = new Option(data.text, data.id, false, false);
             $('#edit_produk').append(newOption).trigger('change');
             
-            tdidnow=$(this).data('tdid');            
+            tdidnow=$(this).data('tdid');     
+            
+            console.log($(this).data('hitungluas'));
+            if ($(this).data('hitungluas')==1){
+                $('#r2editm').iCheck('uncheck');
+                $('#r2editcm').iCheck('uncheck');
+                $('#r2editm').iCheck('enabled');
+                $('#r2editcm').iCheck('enabled');
+                $('#edit_panjang').removeAttr('disabled');
+                $('#edit_lebar').removeAttr('disabled');
+            }
+            else
+            {
+                $('#r2editm').iCheck('uncheck');
+                $('#r2editcm').iCheck('uncheck');
+                $('#r2editm').iCheck('disable');
+                $('#r2editcm').iCheck('disable');
+                $('#edit_panjang').attr('disabled',true);
+                $('#edit_lebar').attr('disabled',true);
+            }
 
             $('#edit_harga').val($(this).data('harga')).maskMoney({thousands:'', decimal:'.',allowZero:true}); 
             $('#edit_subtotal').val($(this).data('subtotal')).maskMoney({thousands:'', decimal:'.',allowZero:true});
@@ -936,7 +1151,6 @@
         });
 
         $('#edit_produk').on('select2:select', function (e) {
-            
             var id=e.params.data.id;
             $('#edit_produkid').val(id);
             $.ajax({
@@ -949,7 +1163,26 @@
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    $('#edit_harga').val(response).trigger('mask.maskMoney');  
+                    hitung_luas=response.hitung_luas;
+                    if (hitung_luas==1)
+                    {
+                        $('#r2editm').iCheck('uncheck');
+                        $('#r2editcm').iCheck('uncheck');
+                        $('#r2editm').iCheck('enabled');
+                        $('#r2editcm').iCheck('enabled');
+                        $('#edit_panjang').removeAttr('disabled');
+                        $('#edit_lebar').removeAttr('disabled');
+                    }
+                    else
+                    {
+                        $('#r2editm').iCheck('uncheck');
+                        $('#r2editcm').iCheck('uncheck');
+                        $('#r2editm').iCheck('disable');
+                        $('#r2editcm').iCheck('disable');
+                        $('#edit_panjang').attr('disabled',true);
+                        $('#edit_lebar').attr('disabled',true);
+                    }
+                    $('#edit_harga').val(response.harga_jual).trigger('mask.maskMoney');  
                 },
             });
 
@@ -987,17 +1220,82 @@
             $('#total2').val(total).trigger('mask.maskMoney');
             
             $('#total').val(total).trigger('mask.maskMoney');
-            var isi='<td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+subtotal+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdid+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td>';
-            $('#'+tdidnow+'').replaceWith(isi);
-
-            // $("tbody").append(
-            // '<tr id="'+tdid+'"><td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+subtotal+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdid+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td></tr>'
-            // );
-
+            var isi='<td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+subtotal+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdidnow+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdidnow+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td>';
+            $('#'+tdidnow+'').html(isi);
             $('#modal_edit').modal('hide');
         });
+
+        $('#edit_kuantitas').keyup(function(){
+            // alert(satuan);
+            if (hitung_luas==1){
+                if (satuan =="cm") {
+                    var harga=parseFloat($('#edit_harga').val());
+                    var panjang=parseFloat($('#edit_panjang').val());
+                    var lebar=parseFloat($('#edit_lebar').val());
+                    var kuantitas=parseFloat($('#edit_kuantitas').val());
+                    
+
+                    // subtotal################
+
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                        // alert(subtotal);
+                        $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
+                }
+                else
+                {
+                    var harga=parseFloat($('#edit_harga').val());
+                    var panjang=parseFloat($('#edit_panjang').val());
+                    var lebar=parseFloat($('#edit_lebar').val());
+                    var kuantitas=parseFloat($('#edit_kuantitas').val());
+                    // var subtotal=0;
+
+                    // subtotal################
+                    
+                    var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
+                        $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
+                }
+            }
+            else
+            {
+                var harga=parseFloat($('#edit_harga').val());
+                var kuantitas=parseFloat($('#edit_kuantitas').val());
+                
+
+                // subtotal################
+                
+                var subtotal = (harga) * kuantitas;
+                    // alert(subtotal);
+                $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
+            }
+            
+        });
+
       //bagian model edit
 
+      //bagian modal delete
+
+        $(document).on('click','.modal_delete',function () {
+
+            subtotaldelete=parseFloat($(this).data('subtotal'));  
+            tdidnow=$(this).data('tdid');            
+            // alert($(this).data('namaproduk'));
+            $('.labelitem').text($(this).data('namaproduk'));
+        });
+        
+        $('#deleteitem').click(function(){
+            $('#'+tdidnow+'').remove();
+            
+            total=parseFloat($('#total').val());
+            total=(total-subtotaldelete);
+            
+            $('#total2').val(total).trigger('mask.maskMoney');
+            
+            $('#total').val(total).trigger('mask.maskMoney');
+
+            $('#modal_delete').modal('hide');
+        });
+
+      // bagian modal delete
       
     </script>
     

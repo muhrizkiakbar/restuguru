@@ -8,7 +8,7 @@ class CreateTransaksiPenjualansTable extends Migration {
 	public function up()
 	{
 		Schema::create('Transaksi_Penjualans', function(Blueprint $table) {
-			$table->increments('id');
+			$table->bigIncrements('id');
 			$table->timestamps();
 			$table->softDeletes();
 			$table->string('nomor_nota', 128)->unique();
@@ -21,8 +21,6 @@ class CreateTransaksiPenjualansTable extends Migration {
 			$table->string('metode_pembayaran');
 			$table->double('jumlah_pembayaran');
 			$table->double('sisa_tagihan');
-			$table->string('satuanukuran')->nullable();
-			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
 
