@@ -18,12 +18,12 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
-		Schema::table('Cabangs', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('Users')
+		Schema::table('Users', function(Blueprint $table) {
+			$table->foreign('cabang_id')->references('id')->on('Cabangs')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
-		Schema::table('Role_users', function(Blueprint $table) {
+		Schema::table('Cabangs', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('Users')
 						->onDelete('restrict')
 						->onUpdate('cascade');
@@ -55,6 +55,16 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('Transaksi_Penjualans', function(Blueprint $table) {
 			$table->foreign('pelanggan_id')->references('id')->on('Pelanggans')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Transaksi_Penjualans', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Transaksi_Penjualans', function(Blueprint $table) {
+			$table->foreign('cabang_id')->references('id')->on('Cabangs')
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
@@ -98,6 +108,11 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
+		Schema::table('Angsurans', function(Blueprint $table) {
+			$table->foreign('cabang_id')->references('id')->on('Cabangs')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
 	}
 
 	public function down()
@@ -108,11 +123,11 @@ class CreateForeignKeys extends Migration {
 		Schema::table('Kategories', function(Blueprint $table) {
 			$table->dropForeign('Kategories_user_id_foreign');
 		});
+		Schema::table('Users', function(Blueprint $table) {
+			$table->dropForeign('Users_cabang_id_foreign');
+		});
 		Schema::table('Cabangs', function(Blueprint $table) {
 			$table->dropForeign('Cabangs_user_id_foreign');
-		});
-		Schema::table('Role_users', function(Blueprint $table) {
-			$table->dropForeign('Role_users_user_id_foreign');
 		});
 		Schema::table('Pelanggans', function(Blueprint $table) {
 			$table->dropForeign('Pelanggans_jenispelanggan_id_foreign');
@@ -131,6 +146,12 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('Transaksi_Penjualans', function(Blueprint $table) {
 			$table->dropForeign('Transaksi_Penjualans_pelanggan_id_foreign');
+		});
+		Schema::table('Transaksi_Penjualans', function(Blueprint $table) {
+			$table->dropForeign('Transaksi_Penjualans_user_id_foreign');
+		});
+		Schema::table('Transaksi_Penjualans', function(Blueprint $table) {
+			$table->dropForeign('Transaksi_Penjualans_cabang_id_foreign');
 		});
 		Schema::table('Sub_Tpenjualans', function(Blueprint $table) {
 			$table->dropForeign('Sub_Tpenjualans_penjualan_id_foreign');
@@ -155,6 +176,9 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('Angsurans', function(Blueprint $table) {
 			$table->dropForeign('Angsurans_transaksipenjualan_id_foreign');
+		});
+		Schema::table('Angsurans', function(Blueprint $table) {
+			$table->dropForeign('Angsurans_cabang_id_foreign');
 		});
 	}
 }

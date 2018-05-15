@@ -7,7 +7,7 @@ class CreateUsersTable extends Migration {
 
 	public function up()
 	{
-		Schema::create('users', function(Blueprint $table) {
+		Schema::create('Users', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
 			$table->softDeletes();
@@ -15,14 +15,14 @@ class CreateUsersTable extends Migration {
 			$table->string('username', 20)->unique();
 			$table->string('password', 255);
 			$table->string('Telepon', 13);
-			$table->double('gaji');
+			$table->float('gaji');
 			$table->text('Alamat');
-			$table->integer('user_id')->unsigned()->nullable();
+			$table->integer('cabang_id')->unsigned()->nullable();
 		});
-	} 
+	}
 
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::drop('Users');
 	}
 }

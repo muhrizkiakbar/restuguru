@@ -3,23 +3,22 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSpesialpricesTable extends Migration {
+class CreateKategoriesTable extends Migration {
 
 	public function up()
 	{
-		Schema::create('Spesialprices', function(Blueprint $table) {
+		Schema::create('Kategories', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
 			$table->softDeletes();
-			$table->integer('pelanggan_id')->unsigned();
-			$table->integer('produk_id')->unsigned();
-			$table->double('harga_khusus');
+			$table->string('Nama_Kategori', 128);
+			$table->longText('Keterangan')->nullable();
 			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
 
 	public function down()
 	{
-		Schema::drop('Spesialprices');
+		Schema::drop('Kategories');
 	}
 }

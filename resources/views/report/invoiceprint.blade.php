@@ -62,7 +62,7 @@
             <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header">
-                <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. Banjarmasin
+                <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}
                 <small class="pull-right"> </small>
                 </h2>
             </div>
@@ -73,7 +73,7 @@
             <div class="col-sm-4 invoice-col">
                 Dari
                 <address>
-                <strong>Admin</strong><br>
+                <strong>{{$transaksi->nama}}</strong><br>
                 Level<br>
                 </address>
             </div>
@@ -81,15 +81,14 @@
             <div class="col-sm-4 invoice-col">
                 Kepada
                 <address>
-                <strong>Akbar Rahardian</strong><br>
-                0811513044 (Member)
+                <strong>{{$transaksi->nama_pelanggan}}</strong><br>
+                {{$transaksi->hp_pelanggan}} (Member)
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-                <b>No. #007612</b><br>
-                <b>Order ID:</b> di transaksi<br>
-                <b>Waktu:</b> 20:00:00 20/10/2014
+                <b>No. #{{$transaksi->id}}</b><br>
+                <b>Tanggal :</b> {{date("d-m-Y",strtotime($transaksi->tanggal))}}
             </div>
             <!-- /.col -->
             </div>
@@ -97,7 +96,9 @@
 
             <!-- Table row -->
             <div class="row">
+            @if ($transaksi->sisa_tagihan==0)
                 <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
+            @endif    
             <div class="col-xs-12 table-responsive">
                 <table class="table table-striped" width="100%">
                 <thead>
@@ -113,16 +114,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($subtransaksis as $subtransaksi)
                     <tr>
-                        <td style="word-break: break-all;">Flexy 280</td>
-                        <td style="word-wrap: break-word;">Rp. 100.000</td>
-                        <td style="word-wrap: break-word;">100</td>
-                        <td style="word-wrap: break-word;">100</td>
-                        <td style="word-wrap: break-word;">1</td>
-                        <td style="word-wrap: break-word;">mata ayam</td>
-                        <td style="width: 20%;word-break: break-all;">aasdasdasdasdadsasdasdasdasdasdasdasdasdasdasdasdasdasdasdasaddaaasdasdasdasdadsasdasdasdasdasdasdasdasdasdasdasdasdasdasdasadda</td>
-                        <td style="word-wrap: break-word;">Rp. 10.100.000</td>
+                        <td style="word-break: break-all;">{{$subtransaksi->nama_produk}}</td>
+                        <td style="word-wrap: break-word;">Rp. {{number_format(floatval($subtransaksi->harga_satuan),2,',','.')}}</td>
+                        <td style="word-wrap: break-word;">{{$subtransaksi->panjang}}</td>
+                        <td style="word-wrap: break-word;">{{$subtransaksi->lebar}}</td>
+                        <td style="word-wrap: break-word;">{{$subtransaksi->banyak}}</td>
+                        <td style="word-wrap: break-word;">{{$subtransaksi->finishing}}</td>
+                        <td style="width: 20%;word-break: break-all;">{{$subtransaksi->keterangan}}</td>
+                        <td style="word-wrap: break-word;">Rp. {{number_format(floatval($subtransaksi->subtotal),2,',','.')}}</td>
                     </tr>
+                    @endforeach
                 </tbody>
                 </table>
             </div>
@@ -145,8 +148,8 @@
                         <tr><td></td><td></td></tr>
                         <tr><td></td><td></td></tr>
                         <tr>
-                            <td><center>nama Pelanggan</center></td>
-                            <td><center>Admin yg buat</center></td>
+                            <td><center>{{$transaksi->nama_pelanggan}}</center></td>
+                            <td><center>{{$transaksi->nama}}</center></td>
                         </tr>
                     </tbody>
                 </table>
@@ -158,11 +161,11 @@
                     <table class="table">
                         <tr>
                             <th>Pajak</th></th>
-                            <td>10.34%</td>
+                            <td>{{$transaksi->pajak}} %</td>
                         </tr>
                         <tr>
                             <th>Diskon:</th>
-                            <td>5.80%</td>
+                            <td>{{$transaksi->diskon}} %</td>
                         </tr>
                     </table>
                 </div>
@@ -176,20 +179,20 @@
                 <div class="table-responsive">
                     <table class="table">
                         <tr>
-                            <th style="width:50%">Subtotal:</th>
-                            <td>Rp. 250.30</td>
+                            <th style="width:50%">Total :</th>
+                            <td>Rp. {{number_format(floatval($transaksi->total_harga),2,',','.')}}</td>
                         </tr>
                         <tr>
                             <th>DP:</th>
-                            <td>Rp. 5.80</td>
+                            <td>Rp. {{number_format(floatval($transaksi->jumlah_pembayaran),2,',','.')}}</td>
                         </tr>
                         <tr>
                             <th>Sisa:</th>
-                            <td>Rp. 5.80</td>
+                            <td>Rp. {{number_format(floatval($transaksi->sisa_tagihan),2,',','.')}}</td>
                         </tr>
                         <tr>
-                            <th>Total:</th>
-                            <td>Rp. 265.24</td>
+                            <th>Pembayaran :</th>
+                            <td>{{$transaksi->metode_pembayaran}}</td>
                         </tr>
                     </table>
                 </div>

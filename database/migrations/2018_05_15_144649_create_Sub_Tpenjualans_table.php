@@ -8,19 +8,20 @@ class CreateSubTpenjualansTable extends Migration {
 	public function up()
 	{
 		Schema::create('Sub_Tpenjualans', function(Blueprint $table) {
-			$table->increments('id');
+			$table->bigIncrements('id');
 			$table->timestamps();
 			$table->softDeletes();
-			$table->integer('penjualan_id')->unsigned();
+			$table->bigInteger('penjualan_id')->unsigned();
 			$table->integer('produk_id')->unsigned();
 			$table->double('harga_satuan');
 			$table->double('panjang');
 			$table->double('lebar');
 			$table->integer('banyak');
-			$table->longText('keterangan');
-			$table->integer('user_id')->unsigned()->nullable();
-			$table->double('total_harga');
+			$table->longText('keterangan')->nullable();
+			$table->integer('user_id')->unsigned();
+			$table->double('subtotal');
 			$table->double('diskon');
+			$table->string('finishing', 100);
 		});
 	}
 
