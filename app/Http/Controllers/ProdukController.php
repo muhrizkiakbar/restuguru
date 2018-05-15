@@ -40,7 +40,7 @@ class ProdukController extends Controller
                 return  '
                 <div class="btn-group">
                         <button type="button" class="modal_edit btn btn-info btn-sm" data-toggle="modal"
-                        data-kategori="'.$tables->Nama_Kategori.'"
+                        data-kategori_id="'.$tables->kategori_id.'"
                         data-nama_produk="'.$tables->nama_produk.'"
                         data-satuan="'.$tables->satuan.'"
                         data-harga_beli="'.$tables->harga_beli.'"
@@ -80,13 +80,13 @@ class ProdukController extends Controller
 
     public function dataproduk(){
         $term = Input::get('term');
-	
+
         $results = array();
-        
+
         $queries = CProduks::where('nama_produk', 'LIKE', '%'.$term.'%')
             ->limit(10)
             ->get();
-        
+
             foreach ($queries as $query)
             {
                 $results[] = [ 'id' => encrypt($query->id), 'value' => $query->nama_produk ];
@@ -94,7 +94,7 @@ class ProdukController extends Controller
 
         return response()->json($results);
 
-    } 
+    }
 
     public function produkcari(Request $request)
     {
@@ -211,7 +211,7 @@ class ProdukController extends Controller
         } else {
             $table=CProduks::where('id','=',decrypt($request->produk_id))
                             ->first();
-            $table->kategori_id   =decrypt($request->edit_kategori);
+            $table->kategori_id   =$request->edit_kategori;
             $table->nama_produk = $request->edit_nama_produk;
             $table->satuan = $request->edit_satuan;
             $table->harga_beli = $request->edit_harga_beli;

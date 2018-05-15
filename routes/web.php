@@ -47,7 +47,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
 
-    
+
 
     // Cabang Route
     Route::get('/cabang','CabangController@index');
@@ -94,9 +94,17 @@ Route::get('/supplier/loadsupplier','SupplierController@loadsupplier')->name('lo
 Route::post('/supplier/postsupplier','SupplierController@store')->name('storesupplier');
 Route::post('/supplier/updatesupplier','SupplierController@update')->name('updatesupplier');
 Route::post('/supplier/deletesupplier','SupplierController@destroy')->name('deletesupplier');
+
 // Pelanggan Route
 Route::get('/pelanggan','PelangganController@index');
 Route::post('/pelanggan/postpelanggan','PelangganController@store')->name('storepelanggan');
 Route::get('/pelanggan/loaddatapelanggan','PelangganController@datapelanggan')->name('loaddatapelanggan');
 Route::post('/pelanggan/updatepelanggan','PelangganController@update')->name('updatepelanggan');
 Route::post('/pelanggan/deletepelanggan','PelangganController@destroy')->name('deletepelanggan');
+
+// Special Price Route
+Route::get('/specialprice','SpecialPriceController@index');
+Route::get('/specialprice/loadspecialprice','SpecialPriceController@loadspecialprice')->name('loadspecialprice');
+Route::post('/specialprice/postspecialprice','SpecialPriceController@store')->name('storespecialprice');
+Route::post('/specialprice/updatespecialprice','SpecialPriceController@update')->name('updatespecialprice');
+Route::post('/specialprice/deletespecialprice','SpecialPriceController@destroy')->name('deletespecialprice');

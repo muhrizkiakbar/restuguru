@@ -157,9 +157,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <select class="form-control" placeholder="Kategori" name="edit_kategori" id="edit_kategori" style="width: 100%;">
-                                                        <option disabled>Kategori Produk</option>
                                                     @foreach ($kategories as $kategori)
-                                                        <option value="{{encrypt($kategori->id)}}">{{$kategori->Nama_Kategori}}</option>
+                                                        <option value="{{$kategori->id}}">{{$kategori->Nama_Kategori}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -302,10 +301,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
-            $kategori = $(this).data('kategori');
-            $('#edit_kategori option').filter(function() {
-                return ($(this).text() == $kategori);
-            }).prop('selected', true);
+            $('#edit_kategori').val($(this).data('kategori_id'));
             $('#edit_nama_produk').val($(this).data('nama_produk'));
             $('#edit_satuan').val($(this).data('satuan'));
             $('#edit_harga_beli').val($(this).data('harga_beli'));
@@ -413,12 +409,14 @@
                             $('#modal_edit').modal('hide');
                             oTable.ajax.reload();
                         }else{
+                            console.log('atas');
                             wal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_edit').modal('hide');
                         }
                     }
                 },
-                error:function(){
+                error:function(response){
+                    console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
                     // $('#modal_edit').modal('hide');
                 }
