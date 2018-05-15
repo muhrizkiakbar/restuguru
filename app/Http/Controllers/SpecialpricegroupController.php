@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CJenispelanggans;
+use App\CSpesialpricesgroup;
 
 use Illuminate\Http\Request;
 use Datatables;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
-class JenispelangganController extends Controller
+class SpecialpricegroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,25 +23,10 @@ class JenispelangganController extends Controller
     public function index()
     {
         //
-        $jenispelanggans=CJenispelanggans::all();
-        return view ('pelanggans.jenispelanggan',
-                     ['jenispelanggan'=>$jenispelanggans]
-                    );
+        // $jenispelanggans=CJenispelanggans::all();
+        return view ('specialprices.specialpricegroup');
     }
 
-    public function jenispelanggancari(Request $request)
-    {
-        $term = trim($request->q);
-        if (empty($term)) {
-            return response()->json([]);
-        }
-        $tags = CJenispelanggans::where('jenis_pelanggan','LIKE','%'.$term.'%')->limit(20)->get();
-        $formatted_tags = [];
-        foreach ($tags as $tag) {
-            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->jenis_pelanggan];
-        }
-        return response()->json($formatted_tags);
-    }
 
     public function loadjenispelanggan(){
         $tables=CJenispelanggans::all();

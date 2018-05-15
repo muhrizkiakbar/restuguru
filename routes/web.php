@@ -82,6 +82,7 @@ Route::get('/jenispelanggan/loadjenispelanggan','JenispelangganController@loadje
 Route::post('/jenispelanggan/postjenispelanggan','JenispelangganController@store')->name('storejenispelanggan');
 Route::post('/jenispelanggan/updatejenispelanggan','JenispelangganController@update')->name('updatejenispelanggan');
 Route::post('/jenispelanggan/deletejenispelanggan','JenispelangganController@destroy')->name('deletejenispelanggan');
+Route::get('/jenispelanggan/cari','JenispelangganController@jenispelanggancari')->name('jenispelanggancari');
 
 // Kategori Route
 Route::get('/kategori','KategoriController@index');
@@ -109,3 +110,5 @@ Route::post('/pelanggan/postpelanggan','PelangganController@store')->name('store
 Route::get('/pelanggan/loaddatapelanggan','PelangganController@datapelanggan')->name('loaddatapelanggan');
 Route::post('/pelanggan/updatepelanggan','PelangganController@update')->name('updatepelanggan');
 Route::post('/pelanggan/deletepelanggan','PelangganController@destroy')->name('deletepelanggan');
+//SpecialPriceGroup
+Route::get('/specialpricegroup','SpecialpricegroupController@index');
