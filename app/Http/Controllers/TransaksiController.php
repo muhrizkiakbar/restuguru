@@ -39,9 +39,11 @@ class TransaksiController extends Controller
         $id=decrypt($id);
         $transaksi=CTransaksi_Penjualans::leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                     ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                    ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                    ->leftJoin('Jenispelanggans','Pelanggans.jenispelanggan_id','=','Jenispelanggans.id')
                     ->select('Transaksi_Penjualans.*','Cabangs.Kode_Cabang','Cabangs.Nama_Cabang',
                             'Cabangs.No_Telepon','Cabangs.Email','Cabangs.Alamat','Cabangs.Jenis_Cabang',
-                            'Users.nama')
+                            'Users.nama','Jenispelanggans.jenis_pelanggan')
                     ->where('Transaksi_Penjualans.id','=',$id)->first();
         $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')->where('penjualan_id','=',$id)->get();
         return view('report.invoiceprint',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
