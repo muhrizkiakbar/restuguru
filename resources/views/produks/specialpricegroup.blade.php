@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @push('style')
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
 <!-- Bootstrap Color Picker --> 
 <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
 
@@ -114,13 +112,13 @@
                                         <div class="form-group">
                                             <label>Jenis Pelanggan</label>
                                             <select id="tambah_jenispelanggan" name="tambah_jenispelanggan" class="form-control select2" style="width:100%;" type="text"></select>
-                                            <input id="tambah_jenispelangganid" name="tambah_jenispelangganid" class="form-control" type="hidden">
+                                            {{-- <input id="tambah_jenispelangganid" name="tambah_jenispelangganid" class="form-control" type="hidden"> --}}
                                             {{csrf_field()}}
                                         </div>
                                         <div class="form-group">
                                             <label>Produk</label>
                                             <select id="add_produk" name="add_produk" class="form-control select2" style="width:100%;" type="text"></select>
-                                            <input id="add_produkid" name="add_produkid" class="form-control" type="hidden">
+                                            {{-- <input id="add_produkid" name="add_produkid" class="form-control" type="hidden"> --}}
                                         </div>
                                         <div class="form-group">
                                             <label>Harga Khusus</label>
@@ -142,20 +140,24 @@
                             <div class="box-header with-border">
                                 <h3 class="box-title">Jenis Pelanggan</h3>
                             </div>
-                            <div class="box-body">
-                                <div class="table-responsive">
-                                    <table id="tabel_jenispelanggan" class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Jenis Pelanggan</th>
-                                            <th>Produk</th>
-                                            <th>Harga Khusus</th>
-                                            <th>Tanggal</th>
-                                            <th>User</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box-body">
+                                        <div class="table-responsive">
+                                            <table id="tabel_jenispelanggan" class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Jenis Pelanggan</th>
+                                                    <th>Produk</th>
+                                                    <th>Harga Khusus</th>
+                                                    <th>Tanggal</th>
+                                                    <th>User</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -256,7 +258,7 @@
                                                 <input id="add_produkid" name="add_produkid" class="form-control" type="hidden">
                                             </div>
                                             <div class="form-group">
-                                                <label>Jenis Pelanggan</label>
+                                                <label>Harga</label>
                                                 <select id="add_produk" name="add_produk" class="form-control select2" style="width:100%;" type="text"></select>
                                                 <input id="add_produkid" name="add_produkid" class="form-control" type="hidden">
                                             </div>
@@ -306,19 +308,16 @@
             oTable = $('#tabel_jenispelanggan').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('loadjenispelanggan')}}',
+                ajax: '{{route('loaddata')}}',
                 columns: [
                     { data: 'jenis_pelanggan', name: 'jenis_pelanggan' },
+                    { data: 'nama_produk', name: 'nama_produk'},
+                    { data: 'harga_khusus', name: 'harga_khusus'},
+                    { data: 'updated_at', name: 'updated_at'},
+                    { data: 'user', name: 'user'},
                     { data: 'action'}
                 ]
             });
-        });
-    </script>
-
-    {{-- javascript modal tambah --}}
-    <script type="text/javascript">
-        $(document).on('click','#modal_tambah_jenispelanggan',function () {
-            $('#tambah_jenispelanggan').val("");
         });
     </script>
 
@@ -344,8 +343,8 @@
         $(document).on('click','#bt_simpan_tambah',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('storejenispelanggan')}}',
-                data: new FormData($('#form_tambah_jenispelanggan')[0]),
+                url:'{{route('storespg')}}',
+                data: new FormData($('#form_tambah_specialpricegroup')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,
@@ -355,23 +354,19 @@
                         if ((response.errors.tambah_jenispelanggan)){
                             swal("Jenis Pelanggan", ""+response.errors.tambah_jenispelanggan+"", "error");
                         }
-                        $('#modal_tambah').modal('hide');
                     }
                     else
                     {   if (response=="Success"){
                             swal("Success !", "Berhasil menyimpan !", "success");
-                            $('#modal_tambah').modal('hide');
                             oTable.ajax.reload();
                         }
                         else{
-                            wal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_tambah').modal('hide');
+                            swal("Error !", "Gagal menyimpan !", "error");
                         }
                     }
                 },
                 error:function(){
                             swal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_tambah').modal('hide');
                 }
             });
         });
@@ -458,6 +453,7 @@
                     cache: true
                 }
             });
+
             $('#tambah_jenispelanggan').select2({
                 placeholder: "Pilih Jenis Pelanggan.",
                 minimumInputLength: 1,

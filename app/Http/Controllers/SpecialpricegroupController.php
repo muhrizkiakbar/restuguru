@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\CSpesialpricesgroup;
+use App\CProduks;
+use App\CJenispelanggans;
 
 use Illuminate\Http\Request;
 use Datatables;
@@ -24,12 +26,17 @@ class SpecialpricegroupController extends Controller
     {
         //
         // $jenispelanggans=CJenispelanggans::all();
-        return view ('specialprices.specialpricegroup');
+        return view ('produks.specialpricegroup');
     }
 
 
-    public function loadjenispelanggan(){
-        $tables=CJenispelanggans::all();
+    public function loaddatatable(){
+        $tables=CSpesialpricesgroup:: leftJoin('Produks','Spesialpricesgroup.produk_id','=','Produks.id')
+                                    ->leftJoin('Jenispelanggans','Spesialpricesgroup.jenispelanggan_id','=','Jenispelangans.id')
+                                    ->select('harga_khusus',
+                                             'Produks.nama_produk',
+                                             'Jenispelanggans.jenis_pelanggan')
+                                    ->get();
         return Datatables::of($tables)
             -> addColumn ('action', function ($tables) {
                 return  '
@@ -66,6 +73,8 @@ class SpecialpricegroupController extends Controller
         //
         $rules=array(
             'tambah_jenispelanggan'   =>  'required',
+            'add_produk'   =>  'required',
+            'harga_khusus'   =>  'required',
         );
 
         $validator=Validator::make(Input::all(),$rules);
@@ -73,8 +82,11 @@ class SpecialpricegroupController extends Controller
             return Response::json(array('errors'=>$validator->getMessageBag()->toArray()));
         }
         else{
-            $table= new CJenispelanggans;
-            $table->jenis_pelanggan = $request->tambah_jenispelanggan;
+            $table= new CSpesialpricesgroup;
+            $table->jenispelanggan_id = $request->tambah_jenispelanggan;
+            $table->produk_id = $request->add_produk;
+            $table->jenispelanggan_id = $request->tambah_jenispelanggan;
+            $table->harga_khusus = $request->harga_khusus;
 
             if ($table->save()){
                 return response()->json("Success");
