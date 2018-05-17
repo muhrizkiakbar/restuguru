@@ -37,7 +37,16 @@ Route::get('/roles/edit/{id}','RoleController@show')->name('showrole');
 Route::put('/roles/edit/{id}','RoleController@update')->name('updaterole');
 Route::post('/roles/delete','RoleController@destroy')->name('destroyrole');
 
-Route::get('/transaksi','TransaksiController@index');
+Route::get('/transaksi','TransaksiController@transaksi');
+Route::get('/transaksi/deleted','TransaksiController@transaksideleted');
+Route::get('/transaksi/report/{id}','TransaksiController@report');
+Route::get('/transaksi/piutang','TransaksiController@piutang');
+Route::get('/transaksi/piutang/angsuran','TransaksiController@angsuranpiutang');
+Route::get('/transaksi/piutang/angsuran/deleted','TransaksiController@angsuranpiutangdeleted');
+Route::get('/transaksi/pelanggan/cari','TransaksiController@pelanggancari')->name('pelanggancari');
+Route::get('/transaksi/pelanggan/cari/detail','TransaksiController@pelanggandetail')->name('pelanggandetail');
+Route::get('/transaksi/pelanggan/produk','TransaksiController@priceprodukkhusus')->name('priceprodukkhusus');
+Route::post('/transaksi/store','TransaksiController@store')->name('storetransaksi');
 
 Route::get('/produk/cari','ProdukController@produkcari')->name('produkcari');
 Route::get('/produk/harga','ProdukController@produkharga')->name('produkharga');

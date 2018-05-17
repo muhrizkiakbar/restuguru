@@ -102,7 +102,7 @@ class ProdukController extends Controller
         if (empty($term)) {
             return response()->json([]);
         }
-        $tags = CProduks::where('nama_produk','LIKE','%'.$term.'%')->limit(5)->get();
+        $tags = CProduks::where('nama_produk','LIKE','%'.$term.'%')->limit(20)->get();
         $formatted_tags = [];
         foreach ($tags as $tag) {
             $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->nama_produk];
@@ -115,7 +115,7 @@ class ProdukController extends Controller
         $table=CProduks::where('id','=',$request->id)
                 ->first();
 
-        return $table->harga_jual;
+        return $table;
     }
 
     public function create()

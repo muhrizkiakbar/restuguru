@@ -8,21 +8,22 @@ class CreateTransaksiPenjualansTable extends Migration {
 	public function up()
 	{
 		Schema::create('Transaksi_Penjualans', function(Blueprint $table) {
-			$table->increments('id');
+			$table->bigIncrements('id');
 			$table->timestamps();
 			$table->softDeletes();
 			$table->string('nomor_nota', 128)->unique();
 			$table->string('hp_pelanggan', 13);
 			$table->string('nama_pelanggan', 60);
-			$table->integer('pelanggan_id')->unsigned();
+			$table->integer('pelanggan_id')->unsigned()->nullable();
 			$table->date('tanggal');
 			$table->double('total_harga');
 			$table->double('diskon');
 			$table->string('metode_pembayaran');
 			$table->double('jumlah_pembayaran');
 			$table->double('sisa_tagihan');
-			$table->string('satuanukuran')->nullable();
-			$table->integer('user_id')->unsigned()->nullable();
+			$table->integer('user_id')->unsigned();
+			$table->integer('cabang_id')->unsigned();
+			$table->double('pajak');
 		});
 	}
 
