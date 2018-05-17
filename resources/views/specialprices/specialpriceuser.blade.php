@@ -78,7 +78,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control" placeholder="Pelanggan" name="pilih_pelanggan" id="pilih_pelanggan" style="width: 100%;">
+                                                <select class="form-control select2" placeholder="Pelanggan" name="pilih_pelanggan" id="pilih_pelanggan" style="width: 100%;">
                                                         <option disabled selected>Pilih Pelanggan</option>
                                                     @foreach ($pelanggans as $pelanggan)
                                                         <option value="{{encrypt($pelanggan->id)}}">{{$pelanggan->nama_perusahaan}}</option>
@@ -86,7 +86,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" placeholder="Produk" name="pilih_produk" id="pilih_produk" style="width: 100%;">
+                                                <select class="form-control select2" placeholder="Produk" name="pilih_produk" id="pilih_produk" style="width: 100%;">
                                                         <option disabled selected>Pilih Produk</option>
                                                     @foreach ($produks as $produk)
                                                         <option value="{{encrypt($produk->id)}}">{{$produk->nama_produk}}</option>
@@ -95,7 +95,12 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Khusus</label>
-                                                <input id="tambah_harga_khusus" name="tambah_harga_khusus" class="form-control" type="text">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        Rp
+                                                    </div>
+                                                    <input id="tambah_harga_khusus" name="tambah_harga_khusus" class="form-control" type="text" value="0">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -129,14 +134,14 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control" placeholder="Pelanggan" name="pilih_edit_pelanggan" id="pilih_edit_pelanggan" style="width: 100%;">
+                                                <select class="form-control select2" placeholder="Pelanggan" name="pilih_edit_pelanggan" id="pilih_edit_pelanggan" style="width: 100%;">
                                                     @foreach ($pelanggans as $pelanggan)
                                                         <option value="{{$pelanggan->id}}">{{$pelanggan->nama_perusahaan}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" placeholder="Produk" name="pilih_edit_produk" id="pilih_edit_produk" style="width: 100%;">
+                                                <select class="form-control select2" placeholder="Produk" name="pilih_edit_produk" id="pilih_edit_produk" style="width: 100%;">
                                                     @foreach ($produks as $produk)
                                                         <option value="{{$produk->id}}">{{$produk->nama_produk}}</option>
                                                     @endforeach
@@ -144,7 +149,12 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Khusus</label>
-                                                <input id="edit_harga_khusus" name="edit_harga_khusus" class="form-control" type="text">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        Rp
+                                                    </div>
+                                                    <input id="edit_harga_khusus" name="edit_harga_khusus" class="form-control" type="text" value="0">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -201,6 +211,8 @@
     <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+    <!-- Mask Money -->
+    <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
     <!-- DataTables -->
     <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -211,6 +223,14 @@
     <!-- AdminLTE for demo purposes -->
     {{--<script src="{{asset('dist/js/demo.js')}}"></script>--}}
     <!-- Page script -->
+
+    {{-- Init JS --}}
+    <script type="text/javascript">
+        $('#pilih_pelanggan, #pilih_produk, #pilih_edit_pelanggan, #pilih_edit_produk').select2({
+            placeholder: "Pilih Kategori."
+        });
+        $('#tambah_harga_khusus, #edit_harga_khusus').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
+    </script>
 
     {{-- javascript Tabel --}}
     <script type="text/javascript">
@@ -233,18 +253,18 @@
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_spcprice',function () {
-            $('#pilih_pelanggan :nth-child(1)').prop('selected', true);
-            $('#pilih_produk :nth-child(1)').prop('selected', true);
-            $('#tambah_harga').val("");
+            $('#pilih_pelanggan').val(0).trigger('change');
+            $('#pilih_produk').val(0).trigger('change');
+            $('#tambah_harga').val(0);
         });
     </script>
 
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
-            $('#pilih_edit_pelanggan').val($(this).data('id_pelanggan'));
-            $('#pilih_edit_produk').val($(this).data('id_produk'));
-            $('#edit_harga_khusus').val($(this).data('harga_khusus'));
+            $('#pilih_edit_pelanggan').val($(this).data('id_pelanggan')).trigger('change');
+            $('#pilih_edit_produk').val($(this).data('id_produk')).trigger('change');
+            $('#edit_harga_khusus').val($(this).data('harga_khusus')).trigger('change');
             $('#spcprice_id').val($(this).data('id'));
         });
     </script>

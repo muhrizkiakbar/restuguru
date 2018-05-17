@@ -91,7 +91,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Telepon</label>
-                                                <input id="tambah_telpon_supplier" name="tambah_telpon_supplier" class="form-control" type="text">
+                                                <input id="tambah_telpon_supplier" name="tambah_telpon_supplier" class="form-control" type="text" maxlength="15">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -103,7 +103,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Rekening</label>
-                                                <input id="tambah_rekening_suppliers" name="tambah_rekening_suppliers" class="form-control" type="text">
+                                                <input id="tambah_rekening_suppliers" name="tambah_rekening_suppliers" class="form-control" type="text" maxlength="15">
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
@@ -150,7 +150,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Telepon</label>
-                                                <input id="edit_telpon_supplier" name="edit_telpon_supplier" class="form-control" type="text">
+                                                <input id="edit_telpon_supplier" name="edit_telpon_supplier" class="form-control" type="text" maxlength="15">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -162,7 +162,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Rekening</label>
-                                                <input id="edit_rekening_suppliers" name="edit_rekening_suppliers" class="form-control" type="text">
+                                                <input id="edit_rekening_suppliers" name="edit_rekening_suppliers" class="form-control" type="text" maxlength="15">
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
@@ -233,6 +233,16 @@
     <!-- AdminLTE for demo purposes -->
     {{--<script src="{{asset('dist/js/demo.js')}}"></script>--}}
     <!-- Page script -->
+
+    {{-- Init JS --}}
+    <script type="text/javascript">
+        $(function(){
+            $('input[name="tambah_telpon_supplier"],input[name="tambah_rekening_suppliers"],input[name="edit_telpon_supplier"],input[name="edit_rekening_suppliers"]').bind('keypress', function(e){
+                var keyCode = (e.which)?e.which:event.keyCode
+                return !(keyCode>31 && (keyCode<48 || keyCode>57));
+            });
+        });
+    </script>
 
     {{-- javascript Tabel --}}
     <script type="text/javascript">

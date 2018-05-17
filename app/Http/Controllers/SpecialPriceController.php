@@ -28,7 +28,7 @@ class SpecialPriceController extends Controller
         //
         $pelanggans=CPelanggans::all();
         $produks=CProduks::all();
-        return view ('produks.specialprice',
+        return view ('specialprices.specialpriceuser',
                         ['pelanggans'=>$pelanggans,
                           'produks'=>$produks]
                     );
