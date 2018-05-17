@@ -270,6 +270,21 @@ return [
         ],
         'permissionrole'=>[
             'required'=> 'Permission harus diisi !',
+        ],
+        // special price users
+        'pilih_pelanggan'=>[
+            'required'=> 'Pelanggan harus dipilih !',
+        ],
+        'pilih_produk'=>[
+            'required'=> 'Produk harus dipilih !',
+        ],
+        'tambah_harga_khusus'=>[
+            'required'=> 'Harga Khusus harus diisi !',
+            'numeric' => 'Harga harus berupa angka !',
+        ],
+        'edit_harga_khusus'=>[
+            'required'=> 'Harga Khusus harus diisi !',
+            'numeric' => 'Harga harus berupa angka !',
         ]
     ],
 
