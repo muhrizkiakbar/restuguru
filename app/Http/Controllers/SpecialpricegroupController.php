@@ -31,9 +31,10 @@ class SpecialpricegroupController extends Controller
 
 
     public function loaddatatable(){
-        $tables=CSpesialpricesgroup:: leftJoin('Produks','Spesialpricesgroup.produk_id','=','Produks.id')
-                                    ->leftJoin('Jenispelanggans','Spesialpricesgroup.jenispelanggan_id','=','Jenispelangans.id')
-                                    ->select('harga_khusus',
+        $tables=CSpesialpricesgroup:: leftJoin('Produks','Spesialpricesgroups.produk_id','=','Produks.id')
+                                    ->leftJoin('Jenispelanggans','Spesialpricesgroups.jenispelanggan_id','=','Jenispelanggans.id')
+                                    ->select('Spesialpricesgroups.harga_khusus', 
+                                             'Spesialpricesgroups.updated_at',
                                              'Produks.nama_produk',
                                              'Jenispelanggans.jenis_pelanggan')
                                     ->get();
