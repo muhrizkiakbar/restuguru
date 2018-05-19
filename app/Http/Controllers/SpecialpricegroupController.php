@@ -24,7 +24,7 @@ class SpecialpricegroupController extends Controller
     {
         //
         // $jenispelanggans=CJenispelanggans::all();
-        return view ('specialprices.specialpricegroup');
+        return view ('produks.specialpricegroup');
     }
 
 

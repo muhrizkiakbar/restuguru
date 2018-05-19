@@ -309,6 +309,10 @@
                 ajax: '{{route('loadjenispelanggan')}}',
                 columns: [
                     { data: 'jenis_pelanggan', name: 'jenis_pelanggan' },
+                    { data: 'produk', name:'produk'},
+                    { data: 'harga_khusus', name:'harga_khusus'},
+                    { data: 'tanggal', name:'tanggal'},
+                    { data: 'user', name:'user'},
                     { data: 'action'}
                 ]
             });
