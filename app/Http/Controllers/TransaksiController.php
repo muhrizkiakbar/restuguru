@@ -27,12 +27,97 @@ class TransaksiController extends Controller
         return view('transaksis.transaksi',['date'=>$date]);
     }
 
-    public function transaksideleted()
+    public function transaksideleted(Request $request)
     {
         //
-        $date=date("Y-m-d");
+        $date=date('d-m-Y');
+        if ($request->tanggal==""){
+            $request->tanggal=$date;
+        }
 
-        return view('transaksis.transaksideleted',['date'=>$date]);
+        if ($request->periode=="hari"){
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
+                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->where('Transaksi_Penjualans.tanggal','=',$request->tanggal)
+                                        ->orderBy('created_at','desc')
+                                        ->withTrashed()                                        
+                                        ->paginate(50);
+        }
+        elseif ($request->periode=="semua"){
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
+                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->orderBy('created_at','desc')
+                                        ->withTrashed()                                        
+                                        ->paginate(50);
+        }
+        elseif ($request->periode=="bulan"){
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
+                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
+                                        ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
+                                        ->orderBy('created_at','desc')
+                                        ->withTrashed()                                        
+                                        ->paginate(50);
+        }
+        elseif ($request->periode=="tahun")
+        {
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
+                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
+                                        ->orderBy('created_at','desc')
+                                        ->withTrashed()                                        
+                                        ->paginate(50);
+        }
+        else
+        {
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')                                                    
+                                        ->orderBy('created_at','desc')
+                                        ->withTrashed()
+                                        ->paginate(50);
+        }
+        
+        
+        return view('transaksis.transaksideleted',['date'=>$date,'datas'=>$datas,
+                                                'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
+                                                'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
+                                                'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
     }
 
     public function report($id){
@@ -44,9 +129,10 @@ class TransaksiController extends Controller
                     ->select('Transaksi_Penjualans.*','Cabangs.Kode_Cabang','Cabangs.Nama_Cabang',
                             'Cabangs.No_Telepon','Cabangs.Email','Cabangs.Alamat','Cabangs.Jenis_Cabang',
                             'Users.nama','Jenispelanggans.jenis_pelanggan')
+                    ->withTrashed()
                     ->where('Transaksi_Penjualans.id','=',$id)->first();
         $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')->where('penjualan_id','=',$id)->get();
-        return view('report.invoiceprint',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
+        return view('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
     }
     /**
      * Show the form for creating a new resource.
@@ -83,7 +169,7 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         //
-        $nonow=CTransaksi_Penjualans::latest()->first();
+        $nonow=CTransaksi_Penjualans::latest()->withTrashed()->first();
 
         if ($nonow==null){
             $nonota=1;
@@ -93,7 +179,7 @@ class TransaksiController extends Controller
         {
             $nonota=$nonow->id+1;
         }
-
+        // dd($nonota);
         $transaksi= new CTransaksi_Penjualans;
         $transaksi->nomor_nota=$nonota;
         $transaksi->hp_pelanggan=$request->json('inputnomorpelanggan');
@@ -155,13 +241,18 @@ class TransaksiController extends Controller
                     $subdetail['subtotal']=$data['value'];
                 }
             }
+            foreach ($request->json('jsonsatuan') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['satuan']=$data['value'];
+                }
+            }
             array_push($detailitem,$subdetail);
         }
 
         foreach ($detailitem as $key=>$value){
             
             $subtransaksi=new CSub_Tpenjualans;
-            $subtransaksi->penjualan_id=$transaksi->id;
+            $subtransaksi->penjualan_id=$nonota;
             $subtransaksi->produk_id=$value['id'];
             $subtransaksi->harga_satuan=$value['harga'];
             $subtransaksi->panjang=$value['panjang'];
@@ -171,6 +262,7 @@ class TransaksiController extends Controller
             $subtransaksi->user_id=1;
             $subtransaksi->subtotal=$value['subtotal'];
             $subtransaksi->finishing=$value['finishing'];
+            $subtransaksi->satuan=$value['satuan'];
             $subtransaksi->diskon=$value['diskonnow'];
             
             if ($subtransaksi->save()){
@@ -193,9 +285,150 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function listtransaksi(Request $request){
+        $date=date('d-m-Y');
+        if ($request->tanggal==""){
+            $request->tanggal=$date;
+        }
+
+        if ($request->periode=="hari"){
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
+                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->where('Transaksi_Penjualans.tanggal','=',$request->tanggal)
+                                        ->orderBy('created_at','desc')
+                                        ->paginate(50);
+        }
+        elseif ($request->periode=="semua"){
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
+                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->orderBy('created_at','desc')
+                                        ->paginate(50);
+        }
+        elseif ($request->periode=="bulan"){
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
+                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
+                                        ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
+                                        ->orderBy('created_at','desc')
+                                        ->paginate(50);
+        }
+        elseif ($request->periode=="tahun")
+        {
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
+                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
+                                        ->orderBy('created_at','desc')
+                                        ->paginate(50);
+        }
+        else
+        {
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
+            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+                                        ->where('Transaksi_Penjualans.cabang_id','=','1')                                                    
+                                        ->orderBy('created_at','desc')
+                                        ->paginate(50);
+        }
+        
+        
+        return view('transaksis.transaksilist',['date'=>$date,'datas'=>$datas,
+                                                'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
+                                                'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
+                                                'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
+    }
+
+    public function datatransaksispesific(Request $request){
+        $request->id=decrypt($request->id);
+        $table=CTransaksi_Penjualans::where('id','=',$request->id)
+                    ->first();
+        $data=[];
+        $data['nonota']=$table->nomor_nota;
+        $data['nama_pelanggan']=$table->nama_pelanggan;
+
+        return $data;
+    }
+
+    public function destroytransaksi(Request $request)
+    {
+        //
+        $id=decrypt($request->json('id'));
+        // dd($id);
+        
+        $table=CTransaksi_Penjualans::where('id','=',$id)
+                    ->first();
+
+        if ($table->delete()){
+            return "{\"msg\":\"success\"}";
+        }
+        else
+        {
+            return "{\"msg\":\"failed\"}";
+        }
+
+    }
+
+    public function showsubtransaksi(Request $request){
+        $request->id=decrypt($request->id);
+        $showsubtransaksi=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
+                            ->select('Sub_Tpenjualans.*','Produks.nama_produk')
+                            ->where('penjualan_id','=',$request->id)
+                            ->get();
+        return $showsubtransaksi;                            
+    }
+
     public function show($id)
     {
         //
+
+        $date=date('Y-m-d');
+
+        $id=decrypt($id);
+        $showtransaksi=CTransaksi_Penjualans::where('id','=',$id)
+        ->first();
+        $showsubtransaksi=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
+                                ->where('penjualan_id','=',$id)
+                                ->select('Sub_Tpenjualans.*','Produks.nama_produk')
+                                ->get();
+
+        $counttransaksi=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
+        ->where('penjualan_id','=',$id)
+        ->select('Sub_Tpenjualans.*','Produks.nama_produk')
+        ->count();
+        return view('transaksis.transaksiedit',['datas'=>$showsubtransaksi,'count'=>$counttransaksi,'transaksi'=>$showtransaksi,'date'=>$date]);
     }
 
     /**
@@ -204,7 +437,7 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
     }
@@ -216,9 +449,113 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        
+        // dd($nonota);
+        $transaksi=CTransaksi_Penjualans::where('id','=',decrypt($request->json('inputtransaksiid')))
+                        ->first();
+
+        $transaksi->total_harga=$request->json('inputtotal');
+        $transaksi->diskon=$request->json('inputdiskon');
+        $transaksi->metode_pembayaran=$request->json('inputpembayaran');
+        $transaksi->jumlah_pembayaran=$request->json('inputbayardp');
+        $transaksi->sisa_tagihan=$request->json('inputsisa');
+        $transaksi->pajak=$request->json('inputpajak');        
+        $transaksi->user_id=1;
+        $transaksi->save();
+            
+
+        $detailitem=[];
+        foreach ($request->json('jsonprodukid') as $keyproduk=> $dataprodukid){
+            $subdetail=[];
+            
+            $subdetail['id']=$dataprodukid['value'];
+            // dd($request->json('jsonsubtransid'));
+            foreach ($request->json('jsonsubtransid') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['subtransid']=$data['value'];
+                }
+            }
+            foreach ($request->json('jsonharga') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['harga']=$data['value'];
+                }
+            }
+            foreach ($request->json('jsonpanjang') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['panjang']=$data['value'];
+                }
+            }
+            foreach ($request->json('jsonlebar') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['lebar']=$data['value'];
+                }
+            }
+            foreach ($request->json('jsonkuantitas') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['kuantitas']=$data['value'];
+                }
+            }
+            foreach ($request->json('jsonfinishing') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['finishing']=$data['value'];
+                }
+            }
+            foreach ($request->json('jsondiskon') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['diskonnow']=$data['value'];
+                }
+            }
+            foreach ($request->json('jsonketerangan') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['keterangan']=$data['value'];
+                }
+            }
+            foreach ($request->json('jsonsubtotal') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['subtotal']=$data['value'];
+                }
+            }
+            foreach ($request->json('jsonsatuan') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['satuan']=$data['value'];
+                }
+            }
+            array_push($detailitem,$subdetail);
+        }
+        $deletesubpenjualan=CSub_Tpenjualans::where('penjualan_id','=',decrypt($request->json('inputtransaksiid')))->forceDelete();
+
+        foreach ($detailitem as $key=>$value){
+            // dd($value['subtransid']);
+            // $subtransaksi=CSub_Tpenjualans::where('id','=',$value['subtransid'])->first();
+            $subtransaksi=new CSub_Tpenjualans;
+            $subtransaksi->penjualan_id=$transaksi->nomor_nota;
+            $subtransaksi->produk_id=$value['id'];
+            $subtransaksi->harga_satuan=$value['harga'];
+            $subtransaksi->panjang=$value['panjang'];
+            $subtransaksi->lebar=$value['lebar'];
+            $subtransaksi->banyak=$value['kuantitas'];
+            $subtransaksi->keterangan=$value['keterangan'];
+            $subtransaksi->user_id=1;
+            $subtransaksi->subtotal=$value['subtotal'];
+            $subtransaksi->finishing=$value['finishing'];
+            $subtransaksi->satuan=$value['satuan'];
+            $subtransaksi->diskon=$value['diskonnow'];
+            
+            if ($subtransaksi->save()){
+                $status="Success";
+            }else
+            {
+                $status="Failed";                
+            }
+            
+        }
+        $datareturn=[];
+        $datareturn['status']=$status;
+        $datareturn['id']=encrypt($transaksi->id);
+        return $datareturn;
     }
 
     /**
@@ -231,7 +568,8 @@ class TransaksiController extends Controller
     {
         //
     }
-
+    //catata
+    //  data listransaksi sesuai user cabang, mun kd keitu kada kawa meliat data kecual superuser
     // function khusus pencarian data
 
     public function priceprodukkhusus(Request $request){

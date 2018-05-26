@@ -75,7 +75,7 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('Sub_Tpenjualans', function(Blueprint $table) {
 			$table->foreign('produk_id')->references('id')->on('Produks')
-						->onDelete('restrict')
+						->onDelete('cascade')
 						->onUpdate('cascade');
 		});
 		Schema::table('Sub_Tpenjualans', function(Blueprint $table) {
@@ -109,6 +109,51 @@ class CreateForeignKeys extends Migration {
 						->onUpdate('cascade');
 		});
 		Schema::table('Angsurans', function(Blueprint $table) {
+			$table->foreign('cabang_id')->references('id')->on('Cabangs')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Transaksi_Pengeluarans', function(Blueprint $table) {
+			$table->foreign('jenispengeluaran_id')->references('id')->on('Jenis_Pengeluaran')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Transaksi_Pengeluarans', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Transaksi_Pengeluarans', function(Blueprint $table) {
+			$table->foreign('cabang_id')->references('id')->on('Cabangs')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Sub_Tpengeluarans', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Sub_Tpengeluarans', function(Blueprint $table) {
+			$table->foreign('transaksipengeluaran_id')->references('id')->on('Transaksi_Pengeluarans')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Sub_Tpengeluarans', function(Blueprint $table) {
+			$table->foreign('cabang_id')->references('id')->on('Cabangs')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Angsuran_Pengeluarans', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Angsuran_Pengeluarans', function(Blueprint $table) {
+			$table->foreign('transaksipengeluaran_id')->references('id')->on('Transaksi_Pengeluarans')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
+		Schema::table('Angsuran_Pengeluarans', function(Blueprint $table) {
 			$table->foreign('cabang_id')->references('id')->on('Cabangs')
 						->onDelete('restrict')
 						->onUpdate('cascade');
@@ -179,6 +224,33 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('Angsurans', function(Blueprint $table) {
 			$table->dropForeign('Angsurans_cabang_id_foreign');
+		});
+		Schema::table('Transaksi_Pengeluarans', function(Blueprint $table) {
+			$table->dropForeign('Transaksi_Pengeluarans_jenispengeluaran_id_foreign');
+		});
+		Schema::table('Transaksi_Pengeluarans', function(Blueprint $table) {
+			$table->dropForeign('Transaksi_Pengeluarans_user_id_foreign');
+		});
+		Schema::table('Transaksi_Pengeluarans', function(Blueprint $table) {
+			$table->dropForeign('Transaksi_Pengeluarans_cabang_id_foreign');
+		});
+		Schema::table('Sub_Tpengeluarans', function(Blueprint $table) {
+			$table->dropForeign('Sub_Tpengeluarans_user_id_foreign');
+		});
+		Schema::table('Sub_Tpengeluarans', function(Blueprint $table) {
+			$table->dropForeign('Sub_Tpengeluarans_transaksipengeluaran_id_foreign');
+		});
+		Schema::table('Sub_Tpengeluarans', function(Blueprint $table) {
+			$table->dropForeign('Sub_Tpengeluarans_cabang_id_foreign');
+		});
+		Schema::table('Angsuran_Pengeluarans', function(Blueprint $table) {
+			$table->dropForeign('Angsuran_Pengeluarans_user_id_foreign');
+		});
+		Schema::table('Angsuran_Pengeluarans', function(Blueprint $table) {
+			$table->dropForeign('Angsuran_Pengeluarans_transaksipengeluaran_id_foreign');
+		});
+		Schema::table('Angsuran_Pengeluarans', function(Blueprint $table) {
+			$table->dropForeign('Angsuran_Pengeluarans_cabang_id_foreign');
 		});
 	}
 }

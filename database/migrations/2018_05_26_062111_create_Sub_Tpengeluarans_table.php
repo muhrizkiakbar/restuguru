@@ -3,30 +3,29 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSubTpenjualansTable extends Migration {
+class CreateSubTpengeluaransTable extends Migration {
 
 	public function up()
 	{
-		Schema::create('Sub_Tpenjualans', function(Blueprint $table) {
+		Schema::create('Sub_Tpengeluarans', function(Blueprint $table) {
 			$table->bigIncrements('id');
 			$table->timestamps();
 			$table->softDeletes();
-			$table->bigInteger('penjualan_id')->unsigned();
-			$table->integer('produk_id')->unsigned();
+			$table->string('nama_bahanbaku', 200);
 			$table->double('harga_satuan');
 			$table->double('panjang');
 			$table->double('lebar');
-			$table->integer('banyak');
+			$table->double('kuantitas');
 			$table->longText('keterangan')->nullable();
+			$table->double('sub_totalpengeluaran');
 			$table->integer('user_id')->unsigned();
-			$table->double('subtotal');
-			$table->double('diskon');
-			$table->string('finishing', 100);
+			$table->bigInteger('transaksipengeluaran_id')->unsigned();
+			$table->integer('cabang_id')->unsigned();
 		});
 	}
 
 	public function down()
 	{
-		Schema::drop('Sub_Tpenjualans');
+		Schema::drop('Sub_Tpengeluarans');
 	}
 }

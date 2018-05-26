@@ -39,6 +39,7 @@ Route::post('/roles/delete','RoleController@destroy')->name('destroyrole');
 
 Route::get('/transaksi','TransaksiController@transaksi');
 Route::get('/transaksi/deleted','TransaksiController@transaksideleted');
+Route::post('/transaksi/deleted','TransaksiController@transaksideleted')->name('transaksideletedpost');
 Route::get('/transaksi/report/{id}','TransaksiController@report');
 Route::get('/transaksi/piutang','TransaksiController@piutang');
 Route::get('/transaksi/piutang/angsuran','TransaksiController@angsuranpiutang');
@@ -47,6 +48,30 @@ Route::get('/transaksi/pelanggan/cari','TransaksiController@pelanggancari')->nam
 Route::get('/transaksi/pelanggan/cari/detail','TransaksiController@pelanggandetail')->name('pelanggandetail');
 Route::get('/transaksi/pelanggan/produk','TransaksiController@priceprodukkhusus')->name('priceprodukkhusus');
 Route::post('/transaksi/store','TransaksiController@store')->name('storetransaksi');
+//list transaksi
+Route::get('/transaksi/list','TransaksiController@listtransaksi');
+Route::post('/transaksi/list','TransaksiController@listtransaksi')->name('transaksilist');
+Route::get('/trasaksi/list/spesific','TransaksiController@datatransaksispesific')->name('datatransaksispesific');
+Route::get('/trasaksi/list/spesific/subtransaksi','TransaksiController@showsubtransaksi')->name('showsubtransaksi');
+Route::get('/transaksi/list/edit/{id}','TransaksiController@show')->name('edittransaksi');
+Route::post('/transaksi/list/edit','TransaksiController@update')->name('updatetransaksi');
+Route::post('/trasaksi/list/destroy','TransaksiController@destroytransaksi')->name('destroytransaksi');
+
+
+###
+Route::get('/transaksi/angsuran','AngsuranPenjualanController@index');
+Route::post('/transaksi/angsuran','AngsuranPenjualanController@index')->name('angsuranpenjualan');
+Route::get('/transaksi/angsuran/show','AngsuranPenjualanController@showangsuran')->name('showangsuranpenjualan');
+Route::post('/transaksi/angsuran/add','AngsuranPenjualanController@store')->name('storeangsuran');
+Route::post('/transaksi/angsuran/delete','AngsuranPenjualanController@destroy')->name('destroyangsuran');
+Route::get('/transaksi/angsuran/report/detail/{id}','AngsuranPenjualanController@reportdetail')->name('reportdetail');
+Route::get('/transaksi/angsuran/report/{id}','AngsuranPenjualanController@reportangsuran')->name('reportangsuran');
+Route::get('/transaksi/angsuran/deleted','AngsuranPenjualanController@indexdeleted');
+Route::post('/transaksi/angsuran/deleted','AngsuranPenjualanController@indexdeleted')->name('indexdeletedpost');
+
+
+Route::get('transaksi/pengeluaran','PengeluaranController@index');
+
 
 Route::get('/produk/cari','ProdukController@produkcari')->name('produkcari');
 Route::get('/produk/harga','ProdukController@produkharga')->name('produkharga');

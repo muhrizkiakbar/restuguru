@@ -115,13 +115,13 @@
                     <div class="box-body">
 
                       <div class="form-group">
-                        <input type="text" class="form-control" id="namapelanggan" name="namapelanggan" placeholder="Nama Pelanggan">
+                        <input type="text" class="form-control" disabled id="namapelanggan" name="namapelanggan" placeholder="Nama Pelanggan">
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="nomorhandphone" name="nomorhandphone" placeholder="Nomor Handphone">
+                        <input type="text" class="form-control" disabled id="nomorhandphone" name="nomorhandphone" placeholder="Nomor Handphone">
                       </div>
                       <div class="form-group">
-                        <select id="pelanggan" name="pelanggan" class="form-control select2" style="width:100%;" type="text"></select>
+                        <select id="pelanggan" name="pelanggan" disabled class="form-control select2" style="width:100%;" type="text"></select>
                       </div>
 
 
@@ -132,7 +132,7 @@
                 
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <button type="button" id="submitpelanggan" class="btn btn-success btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
+                  <button type="button" id="submitpelanggan" disabled class="btn btn-success btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
                 </div>
             </div>
           </div>
@@ -141,7 +141,7 @@
           <div class="col-md-10">
             <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Penjualan <i class="fa  fa-shopping-cart"></i></h3>
+                <h3 class="box-title">Edit Penjualan <i class="fa  fa-shopping-cart"></i></h3>
               </div>
 
                 <div class="row">
@@ -149,13 +149,13 @@
                     <div class="box-body">
 
                       <div class="form-group">
-                        <label for="no">No. Nota : </label><span id="nonota"></span>
+                        <label for="no">No. Nota : </label><span id="nonota">{{$transaksi->nomor_nota}}</span>
                       </div>
 
 
                         <div class="form-group">
                           <label for="tanggal">Tanggal</label>
-                          <input type="text" class="form-control" id="tanggal" readonly name="tanggal" style="max-width:100px;" value="{{$date}}" placeholder="Tanggal">
+                          <input type="text" class="form-control" id="tanggal" readonly name="tanggal" disabled style="max-width:100px;" value="{{$date}}" placeholder="Tanggal">
                         </div>
 
                     </div>
@@ -164,11 +164,10 @@
                     <div class="box-body">
 
                       <div class="form-group">
-                        <label for="kepada">Kepada : </label><span id="kepadalabel"></span>
+                        <label for="kepada">Kepada : </label><span id="kepadalabel">{{$transaksi->nama_pelanggan}}</span>
                       </div>
-
                       <div class="form-group">
-                        <label for="nomor">Nomor Handphone : </label><span id="handphonelabel"></span>
+                        <label for="nomor">Nomor Handphone : </label><span id="handphonelabel">{{$transaksi->hp_pelanggan}}</span>
                       </div>
 
                     </div>
@@ -193,8 +192,26 @@
                             <th style="width: 100px">Tool</th>
                           </thead>
                           <tbody>
-                            
-                            
+                            @foreach ($datas as $key2 => $data)
+                            <tr id="{{$key2}}">
+                                <td>{{$data->nama_produk}}<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="produkid[]" value="{{$data->produk_id}}" name="produkid[]"><input type="hidden" readonly disabled id="subtransid[]" value="{{$data->id}}" name="subtransid[]"><input type="hidden" readonly disabled id="satuan[]" value="{{$data->satuan}}" name="satuan[]"></td>
+                                <td>{{number_format(floatval($data->harga_satuan),2,'.','')}}<input type="hidden" readonly disable id="harga[]" value="{{$data->harga_satuan}}" name="harga[]"></td>
+                                <td>{{number_format(floatval($data->panjang),2,'.','')}}<input type="hidden" readonly disable id="panjang[]" value="{{$data->panjang}}" name="panjang[]"></td>
+                                <td>{{number_format(floatval($data->lebar),2,'.','')}}<input type="hidden" readonly disable id="lebar[]" value="{{$data->lebar}}" name="lebar[]"></td>
+                                <td>{{number_format(floatval($data->banyak),2,'.','')}}<input type="hidden" readonly disable id="kuantitas[]" value="{{$data->banyak}}" name="kuantitas[]"></td>
+                                <td>{{$data->finishing}}<input type="hidden" readonly disable id="finishing[]" value="{{$data->finishing}}" name="finishing[]"></td>
+                                <td style="width: 170px;word-break: break-all;">{{$transaksi->keterangan}}<input type="hidden" readonly disable id="keterangan[]" value="{{$data->keterangan}}" name="keterangan[]"></td>
+                                <td>{{number_format(floatval($data->diskon),2,'.','')}}<input type="hidden" readonly disable id="diskonnow[]" value="{{$data->diskon}}" name="diskonnow[]"></td>
+                                <td>{{number_format(floatval($data->subtotal),2,'.','')}}<input type="hidden" readonly disable id="subtotal[]" value="{{$data->subtotal}}" name="subtotal[]"></td>
+                                @if ($data->satuan==null)
+                                <td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-subpenjualan="{{$data->id}}" data-satuan="3" data-diskon="{{$data->diskon}}" data-produk="{{$data->produk_id}}" data-harga="{{$data->harga_satuan}}" data-panjang="{{$data->panjang}}" data-lebar="{{$data->lebar}}" data-kuantitas="{{$data->banyak}}" data-finishing="{{$data->finishing}}" data-keterangan="{{$data->keterangan}}" data-namaproduk="{{$data->nama_produk}}" data-subtotal="{{$data->subtotal}}" data-tdid="{{$key2}}" data-hitungluas="0" data-target="#modal_edit"><i class="fa fa-edit"></i></button>
+                                <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-subpenjualan="{{$data->id}}" data-namaproduk="{{$data->nama_produk}}" data-produk="{{$data->produk_id}}" data-harga="{{$data->harga}}" data-panjang="{{$data->panjang}}" data-lebar="{{$data->lebar}}" data-tdid="{{$key2}}" data-kuantitas="{{$data->banyak}}" data-finishing="{{$data->finishing}}" data-keterangan="{{$data->keterangan}}" data-subtotal="{{$data->subtotal}}" data-tdid="{{$key2}}" data-hitungluas="1" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td>
+                                @else
+                                <td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-subpenjualan="{{$data->id}}" data-satuan="{{$data->satuan}}" data-diskon="{{$data->diskon}}" data-produk="{{$data->produk_id}}" data-harga="{{$data->harga_satuan}}" data-panjang="{{$data->panjang}}" data-lebar="{{$data->lebar}}" data-kuantitas="{{$data->banyak}}" data-finishing="{{$data->finishing}}" data-keterangan="{{$data->keterangan}}" data-namaproduk="{{$data->nama_produk}}" data-subtotal="{{$data->subtotal}}" data-tdid="{{$key2}}" data-hitungluas="1" data-target="#modal_edit"><i class="fa fa-edit"></i></button>
+                                <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-subpenjualan="{{$data->id}}" data-namaproduk="{{$data->nama_produk}}" data-produk="{{$data->produk_id}}" data-harga="{{$data->harga}}" data-panjang="{{$data->panjang}}" data-lebar="{{$data->lebar}}" data-tdid="{{$key2}}" data-kuantitas="{{$data->banyak}}" data-finishing="{{$data->finishing}}" data-keterangan="{{$data->keterangan}}" data-subtotal="{{$data->subtotal}}" data-tdid="{{$key2}}" data-hitungluas="1" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td>
+                                @endif
+                            </tr>
+                            @endforeach
                           </tbody>
                         </table>
                       </div>
@@ -206,7 +223,7 @@
                 <div class="box-footer">
                 <div class="row">
                       <div class="col-md-12">
-                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" id="buttonmodal_add" disabled data-target="#modal_add"><i class="fa fa-plus"> </i> Item</button>
+                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" id="buttonmodal_add" data-target="#modal_add"><i class="fa fa-plus"> </i> Item</button>
                       </div>
                 </div>
 
@@ -217,13 +234,14 @@
                           </div>
                           <div class="col-md-3">
                               <label>Diskon %
-                                  <input id="diskon" name="diskon" value="0.00" class="form-control" type="text">
+                                  <input id="diskon" name="diskon" class="form-control" type="text">
                               </label>                                  
                           </div>
                           <div class="col-md-3">
                               <label>Total
-                                  <input id="total" name="total"  value="0.00"  class="form-control" type="text">
-                                  <input id="total2" name="total2"  value="0.00"  class="form-control" type="text">
+                                  <input id="total" name="total"  class="form-control" readonly type="text">
+                                  <input id="transaksiid" name="transaksiid" value="{{encrypt($transaksi->id)}}" class="form-control" readonly type="hidden">
+                                  <input id="total2" name="total2"  class="form-control" readonly type="hidden">
                               </label>                                  
                           </div>
                       </div>
@@ -236,14 +254,22 @@
                           </div>
                           <div class="col-md-3">
                               <label>Pembayaran DP
-                                  <input id="bayardp" name="bayardp" value="0.00"  class="form-control" type="text">
+                                  <input id="bayardp" name="bayardp"  class="form-control" type="text">
                               </label>                                  
                           </div>
                           <div class="col-md-3">
                             <label>Pembayaran
                               <select class="form-control  pull-right"  id="pembayaran" name="pembayaran" style="width: 100%;">
-                                  <option value="Cash">Cash</option>
+                                @if ($transaksi->metode_pembayaran=="Cash")
+                                  <option value="Cash" selected>Cash</option>
+                                @else
+                                  <option value="Cash">Cash</option>  
+                                @endif            
+                                @if ($transaksi->metode_pembayaran=="Transfer")                    
+                                  <option value="Transfer" selected>Transfer</option>
+                                @else
                                   <option value="Transfer">Transfer</option>
+                                @endif
                               </select>
                             </label>           
                           </div>
@@ -257,9 +283,9 @@
                           </div>
                           <div class="col-md-3">
                                 <label>
-                                    <input type="radio" name="metode" id="metodelunas" value="lunas" class="minimal-red">
+                                    <input type="radio" name="metode" value="lunas" class="minimal-red">
                                     Lunas
-                                    <input type="radio" name="metode" id="metodedp" value="dp" class="minimal-red">
+                                    <input type="radio" name="metode" value="dp" class="minimal-red">
                                     DP 50%     
                                 </label>
                                               
@@ -273,12 +299,12 @@
                           </div>
                           <div class="col-md-3">
                                 <label>Pajak %
-                                    <input id="pajak" name="pajak"  value="0.00"  class="form-control" type="text">
+                                    <input id="pajak" name="pajak" class="form-control" type="text">
                                 </label>                     
                           </div>
                           <div class="col-md-3">
                                 <label>Sisa
-                                    <input id="sisa" name="sisa"  value="0.00"  class="form-control" type="text">
+                                    <input id="sisa" name="sisa" readonly  class="form-control" type="text">
                                 </label>  
                                               
                           </div>
@@ -288,7 +314,6 @@
                   <div class="row">
                       <div class="col-md-12">
                         <div class="btn-grp pull-right">                           
-                            <button type="button" id="transaksibaru" class="btn btn-warning btn-sm"><i class="fa fa-cart-plus"> </i> Transaksi Baru</button>
                             <button type="button" id="submittransaksi" class="btn btn-success btn-sm"><i class="fa fa-check-circle"> </i> Simpan</button> 
                         </div>
                             
@@ -371,7 +396,6 @@
                               </div>
                       </div>
                       <div class="modal-footer">
-                          
                           <button type="button" class="btn btn-default pull-left" id="closeitem" data-dismiss="modal">Keluar</button>
                           <button type="button" id="additem" class="btn btn-success">Simpan</button>
                       </div>
@@ -463,7 +487,7 @@
               <!-- /.modal-dialog -->
           </div>
 
-            <div class="modal modal-danger fade" id="modal_delete">
+          <div class="modal modal-danger fade" id="modal_delete">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -489,7 +513,7 @@
                         <!-- /.modal-content -->
                     </div>
                     <!-- /.modal-dialog -->
-            </div>
+                </div>
 
         </div>
 
@@ -535,8 +559,8 @@
     <script>
 
       var total3=0;
-      var total2=0;
-      var total=0;
+      var total2=parseFloat({{$transaksi->total_harga}}).toFixed(2);
+      var total=parseFloat({{$transaksi->total_harga}}).toFixed(2);
       var diskon=0;
       var namaproduk="";
       var totalbeforediskon=0;
@@ -549,13 +573,19 @@
       var bayardp=0;
       var satuan="";
       var hitung_luas=1;
-      var tdid=0;
+      var tdid={{$count}};
       var subtotalawal=0;
       var tdidnow=0;
       var subtotaldelete=0;
-
+      var diskon4=parseFloat({{$transaksi->diskon}}).toFixed(2);
+      var total4=parseFloat({{$transaksi->total_harga}}).toFixed(2);
+      var bayardp4=parseFloat({{$transaksi->jumlah_pembayaran}}).toFixed(2);
+      var pajak4=parseFloat({{$transaksi->pajak}}).toFixed(2);
+      var sisa4=parseFloat({{$transaksi->sisa_tagihan}}).toFixed(2);
+      var pelanggan={{$transaksi->pelanggan_id}};
+      var subpenjualan=0;
       $(function(){
-
+        
         $('input[name="tanggal"]').datepicker({
             format: "yyyy-mm-dd",
         });
@@ -852,15 +882,19 @@
             }
         });
         
-        $('#diskon').maskMoney({thousands:'', decimal:'.',allowZero:true}); 
-        $('#total').maskMoney({thousands:'', decimal:'.',allowZero:true}); 
-        $('#total2').maskMoney({thousands:'', decimal:'.',allowZero:true}); 
-        $('#bayardp').maskMoney({thousands:'', decimal:'.',allowZero:true}); 
-        $('#pajak').maskMoney({thousands:'', decimal:'.',allowZero:true}); 
-        $('#sisa').maskMoney({thousands:'', decimal:'.',allowZero:true}); 
+        $('#diskon').val((diskon4)).maskMoney({thousands:'', decimal:'.',allowZero:true}); 
+        $('#total').val((total4)).maskMoney({thousands:'', decimal:'.',allowZero:true}); 
+        $('#total2').val((total4)).maskMoney({thousands:'', decimal:'.',allowZero:true}); 
+        $('#bayardp').val((bayardp4)).maskMoney({thousands:'', decimal:'.',allowZero:true}); 
+        $('#pajak').val((pajak4)).maskMoney({thousands:'', decimal:'.',allowZero:true}); 
+        $('#sisa').val((sisa4)).maskMoney({thousands:'', decimal:'.',allowZero:true}); 
 
       });
-      
+        function backtopagelist(protocol,url){
+            var url2 = protocol+'//'+url + '/transaksi/list';
+            console.log(url2);
+            window.location=url2;
+        }
         function diskonmethod(total2,diskon,total,pajak){
             if ($('#diskon').val()=="0.00"){
             nominaldiskon=0;
@@ -937,25 +971,7 @@
             });
         });
 
-        $('#transaksibaru').click(function(){
-            $('tbody').empty();
-            $('#diskon').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
-            $('#bayardp').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
-            $('#pembayaran').removeAttr('disabled');
-            $('#pajak').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
-            $('#sisa').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
-            $('#total').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
-            $('#metode').iCheck('enable');
-            $('#metode').iCheck('uncheck');
-            $('#namapelanggan').val("").removeAttr('disabled');
-            $('#nomorhandphone').val("").removeAttr('disabled');
-            $('#pelanggan').val('').trigger('change');
-            $('#submitpelanggan').removeAttr('disabled');
-            $('#pelanggan').removeAttr('disabled');
-            $('#buttonmodal_add').attr('disabled',true);
-            $('#kepadalabel').text('');
-            $('#handphonelabel').text('');           
-        });
+        
 
         $('#diskon').blur(function(){
             total2=parseFloat($('#total2').val());
@@ -963,18 +979,10 @@
             total=parseFloat($('#total').val());
             pajak=parseFloat($('#pajak').val());          
             //   var nominaldiskon=0;
-            console.log(total2);
-            // if (total2==0)
-            // {
-            //     total2=total;
-            // }
-
             total=diskonmethod(total2,diskon,total,pajak);
-            
+
             $('#total').val(total).trigger('mask.maskMoney');
-            $('#sisa').val(total).trigger('mask.maskMoney');      
-            $('#metodelunas').iCheck('uncheck');
-            $('#metodedp').iCheck('uncheck');
+
         });
         $('#diskon').focus(function(){
             totalbeforediskon=parseFloat($('#total').val());
@@ -986,26 +994,9 @@
             pajak=parseFloat($('#pajak').val());
             total=parseFloat($('#total').val());
 
-            var sisasisa=parseFloat($('#sisa').val());
-            var total4=parseFloat($('#total').val());
-
-            // if (total2==0)
-            // {
-            //     total2=total;
-            // }
-            // if (pajak==0)
-            // {
-            //     total=total2;
-            // }
             total=pajakmethod(total2,diskon,total,pajak); 
-            console.log(total);
-            total4=total-total4;
-            $('#total').val(total).trigger('mask.maskMoney');    
-            // sisasisa=sisasisa+total4;
 
-            $('#metodelunas').iCheck('uncheck');
-            $('#metodedp').iCheck('uncheck');
-            $('#sisa').val(total).trigger('mask.maskMoney');      
+            $('#total').val(total).trigger('mask.maskMoney');          
             
         });
         $('#pajak').focus(function(){
@@ -1053,6 +1044,7 @@
             $('#metode').iCheck('disable');
             $('#submittransaksi').attr('disabled',true);
             $('#buttonmodal_add').attr('disabled',true);
+            var inputtransaksiid=$('#transaksiid').val();            
             var inputnamapelanggan=$('#namapelanggan').val();
             var inputnomorpelanggan=$('#nomorhandphone').val();
             var inputpelanggan=$('#pelanggan').val();            
@@ -1074,6 +1066,12 @@
                 item = {}
                 item ["value"] = $(this).val();
                 jsonsatuan.push(item);
+            });
+            var jsonsubtransid=[];
+            $('input[name^="subtransid[]"]').each(function() {
+                item = {}
+                item ["value"] = $(this).val();
+                jsonsubtransid.push(item);
             });
             var jsonketerangan=[];
             $('input[name^="keterangan[]"]').each(function() {
@@ -1144,12 +1142,13 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type:'POST',
-                    url:'{{route('storetransaksi')}}',
+                    url:'{{route('updatetransaksi')}}',
                     data: JSON.stringify({
                         inputnamapelanggan: inputnamapelanggan,
                         inputnomorpelanggan: inputnomorpelanggan,
                         inputpelanggan: inputpelanggan,
                         inputdiskon: inputdiskon,
+                        inputtransaksiid: inputtransaksiid,
                         inputtotal: inputtotal,
                         inputbayardp: inputbayardp,
                         inputpembayaran: inputpembayaran,
@@ -1159,12 +1158,13 @@
                         jsonharga: jsonharga,
                         jsonpanjang: jsonpanjang,
                         jsonlebar: jsonlebar,
-                        jsonsatuan: jsonsatuan,
                         jsonkuantitas: jsonkuantitas,
                         jsonfinishing: jsonfinishing,
                         jsondiskon: jsondiskon,
                         jsonketerangan: jsonketerangan,
+                        jsonsubtransid: jsonsubtransid,
                         jsonsubtotal: jsonsubtotal,
+                        jsonsatuan: jsonsatuan,
                         jsonprodukid: jsonprodukid,
                         _token : $('meta[name="csrf-token"]').attr('content')
                     }),
@@ -1175,54 +1175,14 @@
                     success:function(response){
                         if (response.status=="Success")
                         {
-                            swal({
-                                    title: "Berhasil",
-                                    text: "Cetak transaksi ?",
-                                    icon: "success",
-                                    buttons: true,
-                                    dangerMode: false,
-                                    })
-                                    .then((willPrint) => {
-                                    if (willPrint) {
-                                        var url = window.location.pathname + '/report/' + response.id;
-                                        window.open(url, '_blank');
-                                        $('tbody').empty();
-                                        $('#diskon').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
-                                        $('#bayardp').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
-                                        $('#pembayaran').removeAttr('disabled');
-                                        $('#pajak').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
-                                        $('#sisa').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
-                                        $('#total').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
-                                        $('#metode').iCheck('enable');
-                                        $('#metode').iCheck('uncheck');
-                                        $('#namapelanggan').val("").removeAttr('disabled');
-                                        $('#nomorhandphone').val("").removeAttr('disabled');
-                                        $('#pelanggan').val('').trigger('change');
-                                        $('#submitpelanggan').removeAttr('disabled');
-                                        $('#kepadalabel').text('');
-                                        $('#handphonelabel').text('');                                                                                
-                                    } else {
-                                        $('tbody').empty();
-                                        $('#diskon').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
-                                        $('#bayardp').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
-                                        $('#pembayaran').removeAttr('disabled');
-                                        $('#pajak').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
-                                        $('#sisa').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
-                                        $('#total').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
-                                        $('#metode').iCheck('enable');
-                                        $('#metode').iCheck('uncheck');
-                                        $('#namapelanggan').val("").removeAttr('disabled');
-                                        $('#nomorhandphone').val("").removeAttr('disabled');
-                                        $('#pelanggan').val('').trigger('change');
-                                        $('#submitpelanggan').removeAttr('disabled');
-                                        $('#kepadalabel').text('');
-                                        $('#handphonelabel').text('');           
-                                    }
-                                    });
+                            swal("Berhasil", "Berhasil mengedit transaksi !", "success");
+                            setTimeout(backtopagelist(location.protocol,document.domain), 3000);
+                            
                         }
                         else
                         {
-                            swal("Gagal", "Gagal menyimpan transaksi !", "error");
+                            swal("Gagal", "Gagal mengedit transaksi !", "error");
+                            setTimeout(backtopagelist(location.protocol,document.domain), 3000);                            
                         }
                     },
                 });
@@ -1239,9 +1199,8 @@
             
             var id=e.params.data.id;
             $('#add_produkid').val(id);
-            var pelanggan=$('#pelanggan').val();
             console.log(pelanggan);
-            if (pelanggan==null)
+            if ((pelanggan==null) || (pelanggan==""))
             {
                 namaproduk=e.params.data.text;
                 $.ajax({
@@ -1352,14 +1311,14 @@
             var produk=$('#add_produk').val();
 
             var produkid=$('#add_produkid').val();
-            var harga=$('#add_harga').val();
-            var panjang=$('#add_panjang').val();
-            var lebar=$('#add_lebar').val();
-            var kuantitas=$('#add_kuantitas').val();
+            var harga=parseFloat($('#add_harga').val());
+            var panjang=parseFloat($('#add_panjang').val());
+            var lebar=parseFloat($('#add_lebar').val());
+            var kuantitas=parseFloat($('#add_kuantitas').val());
             var finishing=$('#add_finishing').val();
             var keterangan=$('#add_keterangan').val();
-            var subtotal=$('#add_subtotal').val();
-            var diskonnow=$('#add_diskon').val();
+            var subtotal=parseFloat($('#add_subtotal').val());
+            var diskonnow=parseFloat($('#add_diskon').val());
 
             $('input[type=radio][name=r2]').on('ifChecked',function () {
                 // alert("asd");
@@ -1381,7 +1340,7 @@
             tdid=tdid+1;
             $('#sisa').val(total).trigger('mask.maskMoney');
             $("tbody").append(
-            '<tr id="'+tdid+'"><td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td style="width: 170px;word-break: break-all;">'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+diskonnow+'<input type="hidden" readonly disable id="diskonnow[]" value="'+diskonnow+'" name="diskonnow[]"></td><td>'+subtotal+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-diskon="'+diskonnow+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-namaproduk="'+namaproduk+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdid+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td></tr>'
+            '<tr id="'+tdid+'"><td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"><input type="hidden" readonly disabled id="subtransid[]" value="'+subpenjualan+'" name="subtransid[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"></td><td>'+harga.toFixed(2)+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang.toFixed(2)+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang.toFixed(2)+'" name="panjang[]"></td><td>'+lebar.toFixed(2)+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas.toFixed(2)+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+diskonnow.toFixed(2)+'<input type="hidden" readonly disable id="diskonnow[]" value="'+diskonnow+'" name="diskonnow[]"></td><td>'+subtotal.toFixed(2)+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdidnow+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdidnow+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td></tr>'              
             );
             $('#submittransaksi').removeAttr('disabled');
             $('#modal_add').modal('hide');
@@ -1505,37 +1464,38 @@
                     subtotal = subtotal - diskonsubtotal;
                     $('#add_subtotal').val(subtotal.toFixed(2)).trigger('mask.maskMoney');
             }
-                
         });
       //bagianmodal add
       
       //bagian modal edit
         
         $(document).on('click','.modal_edit',function () {
+            $('#edit_produk').val($(this).data('namaproduk'));
+            $('#edit_produkid').val($(this).data('produk'));
 
             if ($(this).data('satuan')=="cm"){
-                $('#r2editcm').iCheck('check');
+                $('#r2editcm').iCheck('check'); 
                 satuan="cm";
             }
-            else
+            else if ($(this).data('satuan')=="m")
             {
                 $('#r2editm').iCheck('check');
                 satuan="m";
             }
-            
             var data = {
                 id: $(this).data('produk'),
                 text: $(this).data('namaproduk')
             };
-            
+            subpenjualan=$(this).data('subpenjualan');
             subtotalawal=$(this).data('subtotal');
 
             var newOption = new Option(data.text, data.id, false, false);
             $('#edit_produk').append(newOption).trigger('change');
             
             tdidnow=$(this).data('tdid');     
-            hitung_luas=$(this).data('hitungluas');
+            console.log(subtotalawal);
             // console.log($(this).data('hitungluas'));
+            hitung_luas=$(this).data('hitungluas');
             if ($(this).data('hitungluas')==1){
                 $('#r2editm').iCheck('uncheck');
                 $('#r2editcm').iCheck('uncheck');
@@ -1544,7 +1504,7 @@
                 $('#edit_panjang').removeAttr('disabled');
                 $('#edit_lebar').removeAttr('disabled');
             }
-            else
+            else if ($(this).data('hitungluas')==0)
             {
                 $('#r2editm').iCheck('uncheck');
                 $('#r2editcm').iCheck('uncheck');
@@ -1554,22 +1514,21 @@
                 $('#edit_lebar').attr('disabled',true);
             }
 
-            $('#edit_harga').val($(this).data('harga')).maskMoney({thousands:'', decimal:'.',allowZero:true}); 
-            $('#edit_subtotal').val($(this).data('subtotal')).maskMoney({thousands:'', decimal:'.',allowZero:true});
-            $('#edit_kuantitas').val($(this).data('kuantitas')).maskMoney({thousands:'', decimal:'.',allowZero:true});
-            $('#edit_diskon').val($(this).data('diskon')).maskMoney({thousands:'', decimal:'.',allowZero:true});
-            $('#edit_panjang').val($(this).data('panjang')).maskMoney({thousands:'', decimal:'.',allowZero:true});
+            $('#edit_harga').val(parseFloat($(this).data('harga')).toFixed(2)).maskMoney({thousands:'', decimal:'.',allowZero:true}); 
+            $('#edit_subtotal').val(parseFloat($(this).data('subtotal')).toFixed(2)).maskMoney({thousands:'', decimal:'.',allowZero:true});
+            $('#edit_kuantitas').val(parseFloat($(this).data('kuantitas')).toFixed(2)).maskMoney({thousands:'', decimal:'.',allowZero:true});
+            $('#edit_diskon').val(parseFloat($(this).data('diskon')).toFixed(2)).maskMoney({thousands:'', decimal:'.',allowZero:true});
+            $('#edit_panjang').val(parseFloat($(this).data('panjang')).toFixed(2)).maskMoney({thousands:'', decimal:'.',allowZero:true});
             $('#edit_keterangan').val($(this).data('keterangan'));
-            $('#edit_lebar').val($(this).data('lebar')).maskMoney({thousands:'', decimal:'.',allowZero:true});
-            $('#edit_subtotal').val($(this).data('subtotal')).maskMoney({thousands:'', decimal:'.',allowZero:true});
+            $('#edit_lebar').val(parseFloat($(this).data('lebar')).toFixed(2)).maskMoney({thousands:'', decimal:'.',allowZero:true});
+            $('#edit_subtotal').val(parseFloat($(this).data('subtotal')).toFixed(2)).maskMoney({thousands:'', decimal:'.',allowZero:true});
 
         });
 
         $('#edit_produk').on('select2:select', function (e) {
             var id=e.params.data.id;
             $('#edit_produkid').val(id);
-            var pelanggan=$('#pelanggan').val();
-            if (pelanggan=="")
+            if ((pelanggan=="") || (pelanggan==null))
             {
                 $.ajax({
                     async: true, 
@@ -1648,14 +1607,14 @@
             var produk=$('#edit_produk').val();
 
             var produkid=$('#edit_produkid').val();
-            var harga=$('#edit_harga').val();
-            var panjang=$('#edit_panjang').val();
-            var lebar=$('#edit_lebar').val();
-            var kuantitas=$('#edit_kuantitas').val();
+            var harga=parseFloat($('#edit_harga').val());
+            var panjang=parseFloat($('#edit_panjang').val());
+            var lebar=parseFloat($('#edit_lebar').val());
+            var kuantitas=parseFloat($('#edit_kuantitas').val());
             var finishing=$('#edit_finishing').val();
             var keterangan=$('#edit_keterangan').val();
-            var subtotal=$('#edit_subtotal').val();
-            var diskonnow=$('#edit_diskon').val();
+            var subtotal=parseFloat($('#edit_subtotal').val());
+            var diskonnow=parseFloat($('#edit_diskon').val());
             
 
             $('input[type=radio][name=r2edit]').on('ifChecked',function () {
@@ -1668,7 +1627,7 @@
                 }
             });    
 
-
+            console.log(harga.toFixed(2));
 
             total=parseFloat($('#total').val());
             total=parseFloat(subtotal)+(total-subtotalawal);
@@ -1678,7 +1637,7 @@
             $('#total').val(total).trigger('mask.maskMoney');
             $('#sisa').val(total).trigger('mask.maskMoney');
             
-            var isi='<td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+diskonnow+'<input type="hidden" readonly disable id="diskonnow[]" value="'+diskonnow+'" name="diskonnow[]"></td><td>'+subtotal+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdidnow+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdidnow+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td>';
+            var isi='<td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"><input type="hidden" readonly disabled id="subtransid[]" value="'+subpenjualan+'" name="subtransid[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"></td><td>'+harga.toFixed(2)+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang.toFixed(2)+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang.toFixed(2)+'" name="panjang[]"></td><td>'+lebar.toFixed(2)+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas.toFixed(2)+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+diskonnow.toFixed(2)+'<input type="hidden" readonly disable id="diskonnow[]" value="'+diskonnow+'" name="diskonnow[]"></td><td>'+subtotal.toFixed(2)+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdidnow+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdidnow+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td>';
             $('#'+tdidnow+'').html(isi);
             $('#modal_edit').modal('hide');
         });
@@ -1777,6 +1736,7 @@
                     var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
                     subtotal = subtotal - diskonsubtotal;
+                    console.log(subtotal)
                     $('#edit_subtotal').val(subtotal.toFixed(2)).trigger('mask.maskMoney');
                 }
             }

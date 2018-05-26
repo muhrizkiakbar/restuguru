@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @push('style')
 
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- daterange picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- Bootstrap Color Picker --> 
@@ -102,28 +102,60 @@
         
         <div class="row">
           <!-- left column -->
-          <div class="col-md-3">
+          <form id="formtrans">
+          <div class="col-md-2">
             <div class="box box-danger">
               <div class="box-header with-border">
-                <h3 class="box-title">Cari</h3>
+                <h3 class="box-title">Cari Transaksi</h3>
               </div>
               <!-- /.box-header -->
               <!-- form start -->
                 <div class="row">
                   <div class="col-md-12">
                     <div class="box-body">
+                    <form action="{{route('transaksideletedpost')}}" method="post">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="nonota" name="nonota" value="{{$nonota}}" placeholder="Nomor Nota">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="namapelanggan" name="namapelanggan" value="{{$namapelanggan}}" placeholder="Nama Pelanggan">
+                      </div>
+                      
+                      <div class="form-group">
+                        <select id="pelanggan" name="pelanggan" class="form-control select2" style="width:100%;" type="text"></select>
+                      </div>
+                      <div class="form-group">
+                            <select class="form-control " id="pembayaran" name="pembayaran" style="width: 100%;">
+                               
+                                @if ($pembayaran=="Cash")
+                                    <option value="Cash" selected>Cash</option>
+                                @else
+                                    <option value="Cash">Cash</option>
+                                @endif
+                                @if ($pembayaran=="Transfer")
+                                    <option value="Transfer" selected>Transfer</option>
+                                @else
+                                    <option value="Transfer">Transfer</option>
+                                @endif
+                                
+                            </select>
+                        </label> 
+                      </div>
 
                       <div class="form-group">
-                        <input type="text" class="form-control" id="tanggal" name="tanggal" placeholder="Nama Pelanggan">
+                        <input type="text" class="form-control" id="tanggal" readonly name="tanggal" value="{{$date}}" placeholder="Tanggal">
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="namapelanggan" name="namapelanggan" placeholder="Nomor Handphone">
+                            <select class="form-control  pull-right" id="periode" name="periode" style="width: 100%;">
+                                <option value="semua" >Semua</option>
+                                <option value="hari" >Hari</option>
+                                <option value="bulan" >Bulan</option>
+                                <option value="tahu" >Tahun</option>
+                            </select>
                       </div>
-                      <div class="form-group">
-                        <select id="admin" name="admin" class="form-control select2" style="width:100%;" type="text"></select>
-                      </div>
+                      </form>  
+                                 
 
-                      @csrf
                       
                     </div>
                   </div>
@@ -131,137 +163,153 @@
                 
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <button type="button" id="submitpelanggan" class="btn btn-danger btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
+                  <button type="submit" id="submitpelanggan" class="btn btn-success btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
                 </div>
             </div>
           </div>
+          </form>
 
-          <div class="col-md-9">
+          <div class="col-md-10">
             <div class="box box-danger">
               <div class="box-header with-border">
-                <h3 class="box-title">Penjualan Yang di Hapus <i class="fa fa-trash"></i></h3>
+                <h3 class="box-title">Transaksi Penjualan <small>yang dihapus</small> <i class="fa  fa-shopping-cart"></i></h3>
               </div>
-
-              <div class="box-body">
-
-                <div class="row">
-                  <div class="col-md-12">
-                      <div class="box-body no-padding table-responsive">
-                        <table class="table table-striped table-bordered">
-                          <thead>
-                            <th>Nota/INV</th>
-                            <th>Tanggal</th>
-                            <th>Pelanggan</th>
-                            <th>Total</th>
-                            <th>DP</th>
-                            <th>Pelunasan</th>
-                            <th>Sisa</th>
-                            <th>Penerima</th>
-                            <th>Nota Angsuran</th>
-                            <th>Tool</th>
-                          </thead>
-                          <tbody>
-                            
-                            
-                          </tbody>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th>No. Nota</th>
+                                <th>Nama</th>
+                                <th>Telp.</th>
+                                <th>Tanggal</th>
+                                <th>DP</th>
+                                <th>Pembayaran</th>
+                                <th>Diskon</th>
+                                <th>Pajak</th>
+                                <th>Sisa Tagihan</th>
+                                <th>Total</th>
+                                <th>Tool</th>
+                                <th>Cabang</th>
+                                <th>Pembuat</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($datas as $key=>$data)
+                            <tr id="{{$data->nomor_nota}}">
+                                <td>#{{$data->nomor_nota}}</td>
+                                <td>{{$data->nama_pelanggan}}</td>
+                                <td>{{$data->hp_pelanggan}}</td>
+                                <td>{{$data->tanggal}}</td>
+                                <td>Rp. {{number_format(floatval($data->jumlah_pembayaran),2,',','.')}}</td>
+                                <td>{{$data->metode_pembayaran}}</td>
+                                <td>{{number_format(floatval($data->diskon),2,',','.')}} %</td>
+                                <td>Rp. {{number_format(floatval($data->pajak),2,',','.')}}</td>
+                                @if ($data->sisa_tagihan!=0)
+                                    <td><span class="badge bg-red">
+                                    Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}
+                                    </span></td>
+                                @else
+                                    <td>Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}</td>
+                                @endif
+                                <td>Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
+                                <td style="width: 150px;min-width:140px;">
+                                    <div class="btn-group">
+                                        <button type="button" class="modal_show btn btn-info btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
+                                        <button type="button" class="buttonprint btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
+                                    </div>
+                                </td>
+                                <td>{{$data->Nama_Cabang}}</td> 
+                                <td>{{$data->username}}</td>                                                               
+                            </tr>
+                            @endforeach
+                            </tbody>
                         </table>
-                      </div>
-                      
-                  </div>
+                    </div>
+                        
                 </div>
-
-              </div>
-
-                
                 
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <ul class="pagination pagination-sm no-margin pull-right">
-
+                        {{$datas->appends(['nonota'=>($nonota),'namapelanggan'=>($namapelanggan),'pelanggan'=>($pelanggan),'pembayaran'=>$pembayaran,'tanggal'=>$tanggal,'periode'=>$periode])->links()}}
                     </ul>
-                  
                 </div>
             </div>
           </div>
 
-          <div class="modal fade" id="modal_angsur">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title">Angsuran</h4>
-                      </div>
-                      <div class="modal-body">
-                              <div class="row">
-                                  <div class="col-md-12">
-                                        <div class="col-md-3">
-                                            <label>Pembayaran
-                                            <select class="form-control  pull-right" value="0.00"  id="pembayaran" name="pembayaran" style="width: 100%;">
-                                                <option value="Cash">Cash</option>
-                                                <option value="Transfer">Transfer</option>
-                                            </select>
-                                            </label>           
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Nominal</label>
-                                            <input id="nominal" name="nominal" class="form-control pull-right" type="text">
-                                        </div>
-                                        <!-- /.form-group -->
-                                    </div>
-                                </div>
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-default pull-left" id="closeitem" data-dismiss="modal">Keluar</button>
-                          <button type="button" id="lunas" class="btn btn-success"><i class="fa fa-check-circle"></i> Lunas</button>                          
-                          <button type="button" id="additem" class="btn btn-success">Simpan</button>
-                      </div>
-                  </div>
-                  <!-- /.modal-content -->
-              </div>
-              <!-- /.modal-dialog -->
-          </div>
+            <div class="modal fade " id="modal_show">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Subdetail Transaksi</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <th>Nama Barang</th>
+                                        <th style="width: 130px">Harga Satuan</th>
+                                        <th style="width: 60px">P</th>
+                                        <th style="width: 60px">L</th>
+                                        <th style="width: 60px">Kuantitas</th>
+                                        <th style="width: 170px">Finishing</th>
+                                        <th style="width: 170px">Keterangan</th>
+                                        <th style="width: 60px">Diskon</th>
+                                        <th  style="width: 130px">Subtotal</th>
+                                    </thead>
+                                    <tbody  id="showdata">
+                                        
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Keluar</button>
+                            <div class="pull-right">
+                                Total : <label id="totalshowmodal"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
 
-          <div class="modal fade" id="modal_view">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title">Rincian Penjualan</h4>
-                      </div>
-                      <div class="modal-body">
-                              <div class="row">
-                                    <div class="col-md-12">
-                                        <table class="table table-striped table-bordered">
-                                        <thead>
-                                            <th>Nama Barang</th>
-                                            <th style="width: 130px">Harga Satuan</th>
-                                            <th style="width: 60px">P</th>
-                                            <th style="width: 60px">L</th>
-                                            <th style="width: 60px">Kuantitas</th>
-                                            <th style="width: 170px">Finishing</th>
-                                            <th style="width: 170px">Keterangan</th>
-                                            <th  style="width: 130px">Subtotal</th>
-                                            <th style="width: 100px">Tool</th>
-                                        </thead>
-                                        <tbody>
-                                            
-                                            
-                                        </tbody>
-                                        </table>
-                                        <!-- /.form-group -->
-                                    </div>
-                                </div>
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-default pull-left" id="closeitem" data-dismiss="modal">Keluar</button>
-                      </div>
-                  </div>
-                  <!-- /.modal-content -->
-              </div>
-              <!-- /.modal-dialog -->
-          </div>
+
+            <div class="modal modal-danger fade" id="modal_delete">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Hapus Transaksi</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="formdeleteuser" action="" method="post" role="form" enctype="multipart/form-data">
+                                <h4>
+                                    <i class="icon fa fa-ban"></i>
+                                    Peringatan
+                                </h4>
+                                {{csrf_field()}}
+                                Yakin ingin menghapus transaksi dengan nomor nota #<span class="labelnota"></span> a.n <span class="labelpelanggan"></span>?
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Keluar</button>
+                            <button type="button" id="deleteitem" class="btn btn-outline">Simpan</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+        </div>
 
         </section>
             <!-- /.content -->
@@ -303,19 +351,26 @@
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
     <script>
+        var idtrans='';
+        var idbaris='';
 
-     
+        function gotoreport(protocol,url,id){
+            var url2 = protocol+'//'+url + '/transaksi/report/' + id;
+            window.open(url2, '_blank');
+        }
+
       $(function(){
 
         $('input[name="tanggal"]').datepicker({
-            format: "yyyy-mm-dd",
+            format: "dd-mm-yyyy",
         });
-    
-        $('#admin').select2({
-            placeholder: "Pilih Pembuat Nota.",
+
+        
+        $('#pelanggan').select2({
+            placeholder: "Pilih Pelanggan.",
             minimumInputLength: 1,
             ajax: {
-                url: '{{route('produkcari')}}',
+                url: '{{route('pelanggancari')}}',
                 dataType: 'json',
                 data: function (params) 
                 {
@@ -332,8 +387,75 @@
                 cache: true
             }
         });
-
+        
       });
+      
+
+    //   bagian form
+
+        $('#pelanggan').on('select2:select', function (e) {
+                
+            var id=e.params.data.id;
+            $.ajax({
+                async: true, 
+                type:'get',
+                url:'{{route('pelanggandetail')}}',
+                data: 'id='+id,
+                dataType:'json',
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                     $('#namapelanggan').val(response.nama_perusahaan);
+                     $('#nomorhandphone').val(response.telpon_pelanggan);
+                },
+            });
+        });
+
+
+        $(document).on('click','.buttonprint',function () {
+            id=$(this).data('id');
+            gotoreport(location.protocol,document.domain,id);
+        });
+
+        $(document).on('click','.modal_show',function () {
+            $("#showdata").empty();
+            idtrans=$(this).data('id');
+            $.ajax({
+                async: true, 
+                type:'get',
+                url:'{{route('showsubtransaksi')}}',
+                data: 'id='+idtrans,
+                dataType:'json',
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    console.log( response );
+                    $.each( response, function( key, value ) {
+                        console.log(response[key]['penjualan_id']);
+                        if (response[key]['keterangan']==null){
+                            var keterangan="";
+                        }
+                        else
+                        {
+                            var keterangan=response[key]['keterangan'];
+                        }
+                        $("#showdata").append(
+                            '<tr><td>'+response[key]['nama_produk']+'</td><td>'+response[key]['harga_satuan']+'</td><td>'+response[key]['panjang']+'</td><td>'+response[key]['lebar']+'</td><td>'+response[key]['banyak']+'</td><td>'+response[key]['finishing']+'</td><td style="width: 170px;word-break: break-all;">'+keterangan+'</td><td>'+response[key]['diskon']+'</td><td>'+response[key]['subtotal']+'</td></tr>'
+                        );
+                    });
+                    // $('.labelnota').text(response.nonota);
+                    // $('.labelpelanggan').text(response.nama_pelanggan);
+                    // idbaris=response.nonota;
+                },
+            });          
+            // alert($(this).data('namaproduk'));
+            $('#totalshowmodal').text($(this).data('total'));
+        });
+
+
+      // bagian modal delete
       
     </script>
     

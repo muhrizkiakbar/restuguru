@@ -106,7 +106,7 @@
           <div class="col-md-2">
             <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Pelanggan</h3>
+                <h3 class="box-title">Penerima</h3>
               </div>
               <!-- /.box-header -->
               <!-- form start -->
@@ -123,9 +123,13 @@
                       <div class="form-group">
                         <select id="pelanggan" name="pelanggan" class="form-control select2" style="width:100%;" type="text"></select>
                       </div>
-
-
-                      
+                      <div class="form-group">
+                            <select class="form-control select2"  id="jenispengeluaran" name="jenispengeluaran" style="width: 100%;">
+                                @foreach ($jenispengeluarans as $key => $jenispengeluaran)
+                                    <option value="{{encrypt($jenispengeluaran->id)}}">{{$jenispengeluaran->jenis_pengeluaran}}</option>
+                                @endforeach
+                            </select>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -141,7 +145,7 @@
           <div class="col-md-10">
             <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Penjualan <i class="fa  fa-shopping-cart"></i></h3>
+                <h3 class="box-title">Pengeluaran <i class="fa  fa-shopping-cart"></i></h3>
               </div>
 
                 <div class="row">
@@ -181,14 +185,12 @@
                       <div class="box-body no-padding">
                         <table class="table table-striped table-bordered">
                           <thead>
-                            <th>Nama Barang</th>
+                            <th>Pengeluaran</th>
                             <th style="width: 130px">Harga Satuan</th>
                             <th style="width: 60px">P</th>
                             <th style="width: 60px">L</th>
                             <th style="width: 60px">Kuantitas</th>
-                            <th style="width: 170px">Finishing</th>
                             <th style="width: 170px">Keterangan</th>
-                            <th style="width: 60px">Diskon</th>
                             <th  style="width: 130px">Subtotal</th>
                             <th style="width: 100px">Tool</th>
                           </thead>
@@ -216,14 +218,14 @@
                                                      
                           </div>
                           <div class="col-md-3">
-                              <label>Diskon %
-                                  <input id="diskon" name="diskon" value="0.00" class="form-control" type="text">
+                              <label>Pembayaran / DP
+                                  <input id="bayardp" name="bayardp" value="0.00"  class="form-control" type="text">
                               </label>                                  
                           </div>
                           <div class="col-md-3">
                               <label>Total
-                                  <input id="total" name="total"  value="0.00"  class="form-control" type="text">
-                                  <input id="total2" name="total2"  value="0.00"  class="form-control" type="text">
+                                  <input id="total" name="total"  value="0.00"  class="form-control" readonly type="text">
+                                  <input id="total2" name="total2"  value="0.00"  class="form-control" readonly type="hidden">
                               </label>                                  
                           </div>
                       </div>
@@ -234,34 +236,35 @@
                           <div class="col-md-6">
                                                      
                           </div>
-                          <div class="col-md-3">
-                              <label>Pembayaran DP
-                                  <input id="bayardp" name="bayardp" value="0.00"  class="form-control" type="text">
-                              </label>                                  
-                          </div>
-                          <div class="col-md-3">
+                          <div class="col-md-3">    
                             <label>Pembayaran
                               <select class="form-control  pull-right"  id="pembayaran" name="pembayaran" style="width: 100%;">
                                   <option value="Cash">Cash</option>
                                   <option value="Transfer">Transfer</option>
                               </select>
-                            </label>           
+                            </label>                     
+                          </div>
+                          <div class="col-md-3">
+                                <label>Tagihan
+                                    <input id="sisa" name="sisa"  value="0.00"  class="form-control" readonly type="text">
+                                </label>  
                           </div>
                       </div>
                   </div>
 
                   <div class="row">
                       <div class="col-md-12">
-                          <div class="col-md-9">
+                          <div class="col-md-6">
                                                      
                           </div>
                           <div class="col-md-3">
                                 <label>
                                     <input type="radio" name="metode" id="metodelunas" value="lunas" class="minimal-red">
-                                    Lunas
-                                    <input type="radio" name="metode" id="metodedp" value="dp" class="minimal-red">
-                                    DP 50%     
-                                </label>
+                                    Lunas 
+                                </label>                 
+                          </div>
+                          <div class="col-md-3">
+                                
                                               
                           </div>
                       </div>
@@ -272,14 +275,10 @@
                                                      
                           </div>
                           <div class="col-md-3">
-                                <label>Pajak %
-                                    <input id="pajak" name="pajak"  value="0.00"  class="form-control" type="text">
-                                </label>                     
+                                               
                           </div>
                           <div class="col-md-3">
-                                <label>Sisa
-                                    <input id="sisa" name="sisa"  value="0.00"  class="form-control" type="text">
-                                </label>  
+                                
                                               
                           </div>
                       </div>
@@ -829,6 +828,10 @@
                 
             }
         });
+        
+        $('#jenispengeluaran').select2();
+        
+        $('#pembayaran').select2();
 
         $('#pelanggan').select2({
             placeholder: "Pilih Pelanggan.",
