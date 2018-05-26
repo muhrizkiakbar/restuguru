@@ -82,7 +82,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control" placeholder="Kategori" name="tambah_kategori" id="tambah_kategori" style="width: 100%;">
+                                                <select class="form-control select2" placeholder="Kategori" name="tambah_kategori" id="tambah_kategori" style="width: 100%;">
                                                         <option disabled selected>Kategori Produk</option>
                                                     @foreach ($kategories as $kategori)
                                                         <option value="{{encrypt($kategori->id)}}">{{$kategori->Nama_Kategori}}</option>
@@ -99,11 +99,21 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Beli</label>
-                                                <input id="tambah_harga_beli" name="tambah_harga_beli" class="form-control" type="text">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        Rp
+                                                    </div>
+                                                    <input id="tambah_harga_beli" name="tambah_harga_beli" class="form-control" type="text" value="0">
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Jual</label>
-                                                <input id="tambah_harga_jual" name="tambah_harga_jual" class="form-control" type="text">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        Rp
+                                                    </div>
+                                                    <input id="tambah_harga_jual" name="tambah_harga_jual" class="form-control" type="text" value="0">
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Hitung Luas</label>
@@ -156,10 +166,9 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control" placeholder="Kategori" name="edit_kategori" id="edit_kategori" style="width: 100%;">
-                                                        <option disabled>Kategori Produk</option>
+                                                <select class="form-control select2" placeholder="Kategori" name="edit_kategori" id="edit_kategori" style="width: 100%;">
                                                     @foreach ($kategories as $kategori)
-                                                        <option value="{{encrypt($kategori->id)}}">{{$kategori->Nama_Kategori}}</option>
+                                                        <option value="{{$kategori->id}}">{{$kategori->Nama_Kategori}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -173,11 +182,21 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Beli</label>
-                                                <input id="edit_harga_beli" name="edit_harga_beli" class="form-control" type="text">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        Rp
+                                                    </div>
+                                                    <input id="edit_harga_beli" name="edit_harga_beli" class="form-control" type="text" value="0">
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Jual</label>
-                                                <input id="edit_harga_jual" name="edit_harga_jual" class="form-control" type="text">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        Rp
+                                                    </div>
+                                                    <input id="edit_harga_jual" name="edit_harga_jual" class="form-control" type="text" value="0">
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Hitung Luas</label>
@@ -253,6 +272,8 @@
     <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+    <!-- Mask Money -->
+    <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
     <!-- DataTables -->
     <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -263,6 +284,14 @@
     <!-- AdminLTE for demo purposes -->
     {{--<script src="{{asset('dist/js/demo.js')}}"></script>--}}
     <!-- Page script -->
+
+    {{-- Init JS --}}
+    <script type="text/javascript">
+        $('#tambah_kategori, #edit_kategori').select2({
+            placeholder: "Pilih Kategori."
+        });
+        $('#tambah_harga_beli, #tambah_harga_jual, #edit_harga_beli, #edit_harga_jual').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
+    </script>
 
     {{-- javascript Tabel --}}
     <script type="text/javascript">
@@ -289,11 +318,11 @@
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_produk',function () {
-            $('#tambah_kategori :nth-child(1)').prop('selected', true);
+            $('#tambah_kategori').val(0).trigger('change');
             $('#tambah_nama_produk').val("");
             $('#tambah_satuan').val("");
-            $('#tambah_harga_beli').val("");
-            $('#tambah_harga_jual').val("");
+            $('#tambah_harga_beli').val(0);
+            $('#tambah_harga_jual').val(0);
             $('#tambah_hitung_luas').val(0);
             $('#tambah_keterangan').val("");
         });
@@ -302,10 +331,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
-            $kategori = $(this).data('kategori');
-            $('#edit_kategori option').filter(function() {
-                return ($(this).text() == $kategori);
-            }).prop('selected', true);
+            $('#edit_kategori').val($(this).data('kategori_id')).trigger('change');
             $('#edit_nama_produk').val($(this).data('nama_produk'));
             $('#edit_satuan').val($(this).data('satuan'));
             $('#edit_harga_beli').val($(this).data('harga_beli'));

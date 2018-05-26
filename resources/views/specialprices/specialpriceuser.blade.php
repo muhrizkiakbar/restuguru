@@ -30,29 +30,25 @@
             <!-- Main content -->
             <section class="content">
 
-                {{-- Tabel Supplier --}}
+                {{-- Tabel Special Price --}}
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box box-default">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Supplier</h3>
+                                <h3 class="box-title">Special Price</h3>
                             </div>
                             <div class="box-body">
-                                <button type="button" id="modal_tambah_supplier" class="btn btn-primary" data-toggle="modal" data-target="#modal_tambah">
-                                    Tambah Supplier
+                                <button type="button" id="modal_tambah_spcprice" class="btn btn-primary" data-toggle="modal" data-target="#modal_tambah">
+                                    Tambah Special Price
                                 </button>
                                 <hr>
                                 <div class="table-responsive">
-                                    <table id="tabel_supplier" class="table">
+                                    <table id="tabel_spcprice" class="table">
                                         <thead>
                                         <tr>
-                                            <th>Nama Supplier</th>
-                                            <th>Pemilik</th>
-                                            <th>Telepon</th>
-                                            <th>Email</th>
-                                            <th>Alamat</th>
-                                            <th>Rekening</th>
-                                            <th>Keterangan</th>
+                                            <th>Pelanggan</th>
+                                            <th>Produk</th>
+                                            <th>Harga</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -63,7 +59,7 @@
                     </div>
                 </div>
 
-                {{-- Modal Tambah Supplier --}}
+                {{-- Modal Tambah Special Price --}}
                 <div class="modal fade" id="modal_tambah">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -71,43 +67,40 @@
                                 {{-- Tombol X --}}
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Tambah Supplier</h4>
+                                <h4 class="modal-title">Tambah Special Price</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="error alert-danger alert-dismissible">
                                 </div>
                                 {{-- Form Tambah --}}
-                                <form id="form_tambah_supplier" action="" method="post" role="form" enctype="multipart/form-data">
+                                <form id="form_tambah_spcprice" action="" method="post" role="form" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Nama Supplier</label>
-                                                <input id="tambah_nama_supplier" name="tambah_nama_supplier" class="form-control" type="text">
+                                                <select class="form-control select2" placeholder="Pelanggan" name="pilih_pelanggan" id="pilih_pelanggan" style="width: 100%;">
+                                                        <option disabled selected>Pilih Pelanggan</option>
+                                                    @foreach ($pelanggans as $pelanggan)
+                                                        <option value="{{encrypt($pelanggan->id)}}">{{$pelanggan->nama_perusahaan}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Pemilik</label>
-                                                <input id="tambah_pemilik_supplier" name="tambah_pemilik_supplier" class="form-control" type="text">
+                                                <select class="form-control select2" placeholder="Produk" name="pilih_produk" id="pilih_produk" style="width: 100%;">
+                                                        <option disabled selected>Pilih Produk</option>
+                                                    @foreach ($produks as $produk)
+                                                        <option value="{{encrypt($produk->id)}}">{{$produk->nama_produk}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Telepon</label>
-                                                <input id="tambah_telpon_supplier" name="tambah_telpon_supplier" class="form-control" type="text" maxlength="15">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Email</label>
-                                                <input id="tambah_email_supplier" name="tambah_email_supplier" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Alamat</label>
-                                                <textarea id="tambah_alamat_supplier" name="tambah_alamat_supplier" class="form-control" type="text"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Rekening</label>
-                                                <input id="tambah_rekening_suppliers" name="tambah_rekening_suppliers" class="form-control" type="text" maxlength="15">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Keterangan</label>
-                                                <textarea id="tambah_keterangan_suppliers" name="tambah_keterangan_suppliers" class="form-control" type="text"></textarea>
+                                                <label>Harga Khusus</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        Rp
+                                                    </div>
+                                                    <input id="tambah_harga_khusus" name="tambah_harga_khusus" class="form-control" type="text" value="0">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -122,51 +115,46 @@
                     </div>
                 </div>
 
-                {{-- Modal Edit Supplier --}}
+                {{-- Modal Edit Special Price --}}
                 <div class="modal modal-warning fade" id="modal_edit">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Edit Supplier</h4>
+                                <h4 class="modal-title">Edit Special Price</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="error alert-danger alert-dismissible">
                                 </div>
                                 {{-- Form Edit --}}
-                                <form id="form_edit_supplier" action="" method="post" role="form" enctype="multipart/form-data">
+                                <form id="form_edit_spcprice" action="" method="post" role="form" enctype="multipart/form-data">
                                     {{csrf_field()}}
-                                    <input class="form-control" id="supplier_id" name="supplier_id" type="hidden">
+                                    <input class="form-control" id="spcprice_id" name="spcprice_id" type="hidden">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Nama Supplier</label>
-                                                <input id="edit_nama_supplier" name="edit_nama_supplier" class="form-control" type="text">
+                                                <select class="form-control select2" placeholder="Pelanggan" name="pilih_edit_pelanggan" id="pilih_edit_pelanggan" style="width: 100%;">
+                                                    @foreach ($pelanggans as $pelanggan)
+                                                        <option value="{{$pelanggan->id}}">{{$pelanggan->nama_perusahaan}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Pemilik</label>
-                                                <input id="edit_pemilik_supplier" name="edit_pemilik_supplier" class="form-control" type="text">
+                                                <select class="form-control select2" placeholder="Produk" name="pilih_edit_produk" id="pilih_edit_produk" style="width: 100%;">
+                                                    @foreach ($produks as $produk)
+                                                        <option value="{{$produk->id}}">{{$produk->nama_produk}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Telepon</label>
-                                                <input id="edit_telpon_supplier" name="edit_telpon_supplier" class="form-control" type="text" maxlength="15">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Email</label>
-                                                <input id="edit_email_supplier" name="edit_email_supplier" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Alamat</label>
-                                                <textarea id="edit_alamat_supplier" name="edit_alamat_supplier" class="form-control" type="text"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Rekening</label>
-                                                <input id="edit_rekening_suppliers" name="edit_rekening_suppliers" class="form-control" type="text" maxlength="15">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Keterangan</label>
-                                                <textarea id="edit_keterangan_suppliers" name="edit_keterangan_suppliers" class="form-control" type="text"></textarea>
+                                                <label>Harga Khusus</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        Rp
+                                                    </div>
+                                                    <input id="edit_harga_khusus" name="edit_harga_khusus" class="form-control" type="text" value="0">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -181,28 +169,28 @@
                     </div>
                 </div>
 
-                {{-- Modal Hapus Supplier --}}
+                {{-- Modal Hapus Special Price --}}
                 <div class="modal modal-danger fade" id="modal_hapus">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Hapus Supplier</h4>
+                                <h4 class="modal-title">Hapus Special Price</h4>
                             </div>
                             <div class="modal-body">
-                                <form id="form_hapus_supplier" action="" method="post" role="form" enctype="multipart/form-data">
+                                <form id="form_hapus_spcprice" action="" method="post" role="form" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                     <h4>
                                         <i class="icon fa fa-ban"></i>
                                         Peringatan
                                     </h4>
-                                    Yakin ingin menghapus supplier <span class="label_supplier"></span>?
-                                    <input id="hapus_supplier_id" name="hapus_supplier_id" type="hidden">
+                                    Yakin ingin menghapus special price untuk <span class="label_spcprice"></span>?
+                                    <input id="hapus_spcprice_id" name="hapus_spcprice_id" type="hidden">
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                {{-- Tombol Hapus-Batal --}}
+                                {{-- Tombol Simpan-Batal --}}
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
                                 <button type="button" id="bt_simpan_hapus" class="btn btn-success">Hapus</button>
                             </div>
@@ -223,6 +211,8 @@
     <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+    <!-- Mask Money -->
+    <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
     <!-- DataTables -->
     <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -236,30 +226,24 @@
 
     {{-- Init JS --}}
     <script type="text/javascript">
-        $(function(){
-            $('input[name="tambah_telpon_supplier"],input[name="tambah_rekening_suppliers"],input[name="edit_telpon_supplier"],input[name="edit_rekening_suppliers"]').bind('keypress', function(e){
-                var keyCode = (e.which)?e.which:event.keyCode
-                return !(keyCode>31 && (keyCode<48 || keyCode>57));
-            });
+        $('#pilih_pelanggan, #pilih_produk, #pilih_edit_pelanggan, #pilih_edit_produk').select2({
+            placeholder: "Pilih Kategori."
         });
+        $('#tambah_harga_khusus, #edit_harga_khusus').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
     </script>
 
     {{-- javascript Tabel --}}
     <script type="text/javascript">
         var oTable;
         $(function() {
-            oTable = $('#tabel_supplier').DataTable({
+            oTable = $('#tabel_spcprice').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('loadsupplier')}}',
+                ajax: '{{route('loadspecialprice')}}',
                 columns: [
-                    { data: 'nama_supplier', name: 'nama_supplier' },
-                    { data: 'pemilik_supplier', name: 'pemilik_supplier' },
-                    { data: 'telpon_supplier', name: 'telpon_supplier' },
-                    { data: 'email_supplier', name: 'email_supplier' },
-                    { data: 'alamat_supplier', name: 'alamat_supplier' },
-                    { data: 'rekening_suppliers', name: 'rekening_suppliers' },
-                    { data: 'keterangan_suppliers', name: 'keterangan_suppliers' },
+                    { data: 'nama_perusahaan', name: 'nama_perusahaan' },
+                    { data: 'nama_produk', name: 'nama_produk' },
+                    { data: 'harga_khusus', name: 'harga_khusus' },
                     { data: 'action'}
                 ]
             });
@@ -268,36 +252,28 @@
 
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
-        $(document).on('click','#modal_tambah_supplier',function () {
-            $('#tambah_nama_supplier').val("");
-            $('#tambah_pemilik_supplier').val("");
-            $('#tambah_telpon_supplier').val("");
-            $('#tambah_email_supplier').val("");
-            $('#tambah_alamat_supplier').val("");
-            $('#tambah_rekening_suppliers').val("");
-            $('#tambah_keterangan_suppliers').val("");
+        $(document).on('click','#modal_tambah_spcprice',function () {
+            $('#pilih_pelanggan').val(0).trigger('change');
+            $('#pilih_produk').val(0).trigger('change');
+            $('#tambah_harga').val(0);
         });
     </script>
 
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
-            $('#edit_nama_supplier').val($(this).data('nama_supplier'));
-            $('#edit_pemilik_supplier').val($(this).data('pemilik_supplier'));
-            $('#edit_telpon_supplier').val($(this).data('telpon_supplier'));
-            $('#edit_email_supplier').val($(this).data('email_supplier'));
-            $('#edit_alamat_supplier').val($(this).data('alamat_supplier'));
-            $('#edit_rekening_suppliers').val($(this).data('rekening_suppliers'));
-            $('#edit_keterangan_suppliers').val($(this).data('keterangan_suppliers'));
-            $('#supplier_id').val($(this).data('id'));
+            $('#pilih_edit_pelanggan').val($(this).data('id_pelanggan')).trigger('change');
+            $('#pilih_edit_produk').val($(this).data('id_produk')).trigger('change');
+            $('#edit_harga_khusus').val($(this).data('harga_khusus')).trigger('change');
+            $('#spcprice_id').val($(this).data('id'));
         });
     </script>
 
     {{-- javascript modal hapus --}}
     <script type="text/javascript">
         $(document).on('click','.modal_hapus',function () {
-            $('#hapus_supplier_id').val($(this).data('id'));
-            $('.label_supplier').text($(this).data('nama_supplier'));
+            $('#hapus_spcprice_id').val($(this).data('id'));
+            $('.label_spcprice').text($(this).data('nama_perusahaan'));
         });
     </script>
 
@@ -306,28 +282,20 @@
         $(document).on('click','#bt_simpan_tambah',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('storesupplier')}}',
-                data: new FormData($('#form_tambah_supplier')[0]),
+                url:'{{route('storespecialprice')}}',
+                data: new FormData($('#form_tambah_spcprice')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        if ((response.errors.tambah_nama_supplier)){
-                            swal("Supplier", ""+response.errors.tambah_nama_supplier+"", "error");
-                        } else if ((response.errors.tambah_pemilik_supplier)){
-                            swal("Supplier", ""+response.errors.tambah_pemilik_supplier+"", "error");
-                        } else if ((response.errors.tambah_telpon_supplier)){
-                            swal("Supplier", ""+response.errors.tambah_telpon_supplier+"", "error");
-                        } else if ((response.errors.tambah_email_supplier)){
-                            swal("Supplier", ""+response.errors.tambah_email_supplier+"", "error");
-                        } else if ((response.errors.tambah_alamat_supplier)){
-                            swal("Supplier", ""+response.errors.tambah_alamat_supplier+"", "error");
-                        } else if ((response.errors.tambah_rekening_suppliers)){
-                            swal("Supplier", ""+response.errors.tambah_rekening_suppliers+"", "error");
-                        } else if ((response.errors.tambah_keterangan_suppliers)){
-                            swal("Supplier", ""+response.errors.tambah_keterangan_suppliers+"", "error");
+                        if ((response.errors.pilih_pelanggan)){
+                            swal("Special Price", ""+response.errors.pilih_pelanggan+"", "error");
+                        }else if ((response.errors.pilih_produk)){
+                            swal("Special Price", ""+response.errors.pilih_produk+"", "error");
+                        }else if ((response.errors.tambah_harga_khusus)){
+                            swal("Special Price", ""+response.errors.tambah_harga_khusus+"", "error");
                         }
                         // $('#modal_tambah').modal('hide');
                     }else{
@@ -341,7 +309,8 @@
                         }
                     }
                 },
-                error:function(){
+                error:function(response){
+                    console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
                     // $('#modal_tambah').modal('hide');
                 }
@@ -354,28 +323,20 @@
         $(document).on('click','#bt_simpan_edit',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('updatesupplier')}}',
-                data: new FormData($('#form_edit_supplier')[0]),
+                url:'{{route('updatespecialprice')}}',
+                data: new FormData($('#form_edit_spcprice')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        if ((response.errors.edit_nama_supplier)){
-                            swal("Supplier", ""+response.errors.edit_nama_supplier+"", "error");
-                        } else if ((response.errors.edit_pemilik_supplier)){
-                            swal("Supplier", ""+response.errors.edit_pemilik_supplier+"", "error");
-                        } else if ((response.errors.edit_telpon_supplier)){
-                            swal("Supplier", ""+response.errors.edit_telpon_supplier+"", "error");
-                        } else if ((response.errors.edit_email_supplier)){
-                            swal("Supplier", ""+response.errors.edit_email_supplier+"", "error");
-                        } else if ((response.errors.edit_alamat_supplier)){
-                            swal("Supplier", ""+response.errors.edit_alamat_supplier+"", "error");
-                        } else if ((response.errors.edit_rekening_suppliers)){
-                            swal("Supplier", ""+response.errors.edit_rekening_suppliers+"", "error");
-                        } else if ((response.errors.edit_keterangan_suppliers)){
-                            swal("Supplier", ""+response.errors.edit_keterangan_suppliers+"", "error");
+                        if ((response.errors.pilih_edit_pelanggan)){
+                            swal("Special Price", ""+response.errors.pilih_edit_pelanggan+"", "error");
+                        }else if ((response.errors.pilih_edit_produk)){
+                            swal("Special Price", ""+response.errors.pilih_edit_produk+"", "error");
+                        }else if ((response.errors.edit_harga_khusus)){
+                            swal("Special Price", ""+response.errors.edit_harga_khusus+"", "error");
                         }
                         // $('#modal_edit').modal('hide');
                     }else{
@@ -402,8 +363,8 @@
         $(document).on('click','#bt_simpan_hapus',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('deletesupplier')}}',
-                data: new FormData($('#form_hapus_supplier')[0]),
+                url:'{{route('deletespecialprice')}}',
+                data: new FormData($('#form_hapus_spcprice')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,
