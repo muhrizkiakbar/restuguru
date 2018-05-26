@@ -14,7 +14,7 @@ class CreateAngsuranPengeluaransTable extends Migration {
 			$table->date('tanggal_angsuran');
 			$table->double('nominal_angsuran');
 			$table->integer('user_id')->unsigned();
-			$table->integer('transaksipengeluaran_id')->unsigned();
+			$table->bigInteger('transaksipengeluaran_id')->unsigned();
 			$table->integer('cabang_id')->unsigned();
 			$table->string('metode_pembayaran', 10);
 		});
