@@ -82,7 +82,13 @@
                 Kepada
                 <address>
                 <strong>{{$transaksi->nama_pelanggan}}</strong><br>
-                {{$transaksi->hp_pelanggan}} (Member)
+                {{$transaksi->hp_pelanggan}} 
+                @if ($transaksi->pelanggan_id="")
+                    (Member)
+                @else
+                    ({{$transaksi->jenis_pelanggan}})
+                @endif
+                
                 </address>
             </div>
             <!-- /.col -->

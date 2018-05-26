@@ -287,9 +287,8 @@
                 <hr>
                   <div class="row">
                       <div class="col-md-12">
-                        <div class="btn-grp pull-right">
-                            <a type="button" id="cetaknota" disabled class="btn btn-danger btn-sm"><i class="fa fa-print"> </i> Cetak</a>                              
-                            <button type="button" id="transaksibaru" class="btn btn-info btn-sm"><i class="fa fa-cart-plus"> </i> Transaksi Baru</button>
+                        <div class="btn-grp pull-right">                           
+                            <button type="button" id="transaksibaru" class="btn btn-warning btn-sm"><i class="fa fa-cart-plus"> </i> Transaksi Baru</button>
                             <button type="button" id="submittransaksi" disabled class="btn btn-success   btn-sm"><i class="fa fa-check-circle"> </i> Simpan</button> 
                         </div>
                             
@@ -938,7 +937,21 @@
             });
         });
 
-        
+        $('#transaksibaru').click(function(){
+            $('tbody').empty();
+            $('#diskon').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
+            $('#bayardp').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
+            $('#pembayaran').removeAttr('disabled');
+            $('#pajak').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
+            $('#sisa').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
+            $('#total').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
+            $('#metode').iCheck('enable');
+            $('#metode').iCheck('uncheck');
+            $('#namapelanggan').val("").removeAttr('disabled');
+            $('#nomorhandphone').val("").removeAttr('disabled');
+            $('#pelanggan').val('').trigger('change');
+            $('#submitpelanggan').removeAttr('disabled');
+        });
 
         $('#diskon').blur(function(){
             total2=parseFloat($('#total2').val());
@@ -1139,10 +1152,39 @@
                                     if (willPrint) {
                                         var url = window.location.pathname + '/report/' + response.id;
                                         window.open(url, '_blank');
+                                        $('tbody').empty();
+                                        $('#diskon').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
+                                        $('#bayardp').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
+                                        $('#pembayaran').removeAttr('disabled');
+                                        $('#pajak').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
+                                        $('#sisa').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
+                                        $('#total').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
+                                        $('#metode').iCheck('enable');
+                                        $('#metode').iCheck('uncheck');
+                                        $('#namapelanggan').val("").removeAttr('disabled');
+                                        $('#nomorhandphone').val("").removeAttr('disabled');
+                                        $('#pelanggan').val('').trigger('change');
+                                        $('#submitpelanggan').removeAttr('disabled');
                                     } else {
-                                        
+                                        $('tbody').empty();
+                                        $('#diskon').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
+                                        $('#bayardp').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
+                                        $('#pembayaran').removeAttr('disabled');
+                                        $('#pajak').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true}).removeAttr('disabled');
+                                        $('#sisa').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
+                                        $('#total').val('0.00').maskMoney({thousands:'', decimal:'.',allowZero:true});
+                                        $('#metode').iCheck('enable');
+                                        $('#metode').iCheck('uncheck');
+                                        $('#namapelanggan').val("").removeAttr('disabled');
+                                        $('#nomorhandphone').val("").removeAttr('disabled');
+                                        $('#pelanggan').val('').trigger('change');
+                                        $('#submitpelanggan').removeAttr('disabled');
                                     }
                                     });
+                        }
+                        else
+                        {
+
                         }
                     },
                 });
@@ -1160,8 +1202,8 @@
             var id=e.params.data.id;
             $('#add_produkid').val(id);
             var pelanggan=$('#pelanggan').val();
-            // console.log(pelanggan=="");
-            if (pelanggan=="")
+            console.log(pelanggan);
+            if (pelanggan==null)
             {
                 namaproduk=e.params.data.text;
                 $.ajax({

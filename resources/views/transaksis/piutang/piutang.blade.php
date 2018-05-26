@@ -149,7 +149,7 @@
                       <div class="box-body no-padding table-responsive">
                         <table class="table table-striped table-bordered">
                           <thead>
-                            <th>Nota/INV</th>
+                            <th>Nota</th>
                             <th>Tanggal</th>
                             <th>Pelanggan</th>
                             <th>Total</th>
@@ -197,7 +197,7 @@
                                   <div class="col-md-12">
                                         <div class="col-md-3">
                                             <label>Pembayaran
-                                            <select class="form-control  pull-right" value="0.00"  id="pembayaran" name="pembayaran" style="width: 100%;">
+                                            <select class="form-control  pull-right"  id="pembayaran" name="pembayaran" style="width: 100%;">
                                                 <option value="Cash">Cash</option>
                                                 <option value="Transfer">Transfer</option>
                                             </select>
