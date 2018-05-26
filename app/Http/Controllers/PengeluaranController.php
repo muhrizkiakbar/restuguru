@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Jenis_Pengeluaran;
 use Illuminate\Http\Request;
 
 class PengeluaranController extends Controller
@@ -15,6 +15,8 @@ class PengeluaranController extends Controller
     {
         //
         $date=date("Y-m-d");
+        $jenispengeluaran=Jenis_Pengeluaran::all();
+        dd($jenispengeluaran);
         return view('transaksis.pengeluaran.transaksi',['date'=>$date]);
     }
 
