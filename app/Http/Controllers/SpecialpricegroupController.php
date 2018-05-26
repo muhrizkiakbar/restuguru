@@ -39,6 +39,10 @@ class SpecialpricegroupController extends Controller
                                              'Jenispelanggans.jenis_pelanggan')
                                     ->get();
         return Datatables::of($tables)
+            -> editColumn ('updated_at', function ($tables) {
+                return date("D-M-Y", $tables->update_at)
+            })
+            -> to_json();
             -> addColumn ('action', function ($tables) {
                 return  '
                 <div class="btn-group">
@@ -86,8 +90,8 @@ class SpecialpricegroupController extends Controller
             $table= new CSpesialpricesgroup;
             $table->jenispelanggan_id = $request->tambah_jenispelanggan;
             $table->produk_id = $request->add_produk;
-            $table->jenispelanggan_id = $request->tambah_jenispelanggan;
             $table->harga_khusus = $request->harga_khusus;
+            // $table->user_id = 2;
 
             if ($table->save()){
                 return response()->json("Success");
