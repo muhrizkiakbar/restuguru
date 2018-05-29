@@ -114,4 +114,5 @@ Route::post('/pelanggan/deletepelanggan','PelangganController@destroy')->name('d
 Route::get('/specialpricegroup','SpecialpricegroupController@index');
 Route::post('/specialpricegroup/postspg','SpecialpricegroupController@store')->name('storespg');
 Route::get('/specialpricegroup/loaddata','SpecialpricegroupController@loaddatatable')->name('loaddata');
-
+Route::post('/specialpricegroup/updatespg','SpecialpricegroupController@update')->name('updatespg');
+Route::post('/specialpricegroup/deletespg','SpecialpricegroupController@destroy')->name('deletespg');
