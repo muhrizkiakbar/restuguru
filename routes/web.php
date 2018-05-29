@@ -107,6 +107,7 @@ Route::get('/jenispelanggan/loadjenispelanggan','JenispelangganController@loadje
 Route::post('/jenispelanggan/postjenispelanggan','JenispelangganController@store')->name('storejenispelanggan');
 Route::post('/jenispelanggan/updatejenispelanggan','JenispelangganController@update')->name('updatejenispelanggan');
 Route::post('/jenispelanggan/deletejenispelanggan','JenispelangganController@destroy')->name('deletejenispelanggan');
+Route::get('/jenispelanggan/cari','JenispelangganController@jenispelanggancari')->name('jenispelanggancari');
 
 // Kategori Route
 Route::get('/kategori','KategoriController@index');
@@ -142,3 +143,9 @@ Route::get('/specialprice/loadspecialprice','SpecialPriceController@loadspecialp
 Route::post('/specialprice/postspecialprice','SpecialPriceController@store')->name('storespecialprice');
 Route::post('/specialprice/updatespecialprice','SpecialPriceController@update')->name('updatespecialprice');
 Route::post('/specialprice/deletespecialprice','SpecialPriceController@destroy')->name('deletespecialprice');
+//SpecialPriceGroup
+Route::get('/specialpricegroup','SpecialpricegroupController@index');
+Route::post('/specialpricegroup/postspg','SpecialpricegroupController@store')->name('storespg');
+Route::get('/specialpricegroup/loaddata','SpecialpricegroupController@loaddatatable')->name('loaddata');
+Route::post('/specialpricegroup/updatespg','SpecialpricegroupController@update')->name('updatespg');
+Route::post('/specialpricegroup/deletespg','SpecialpricegroupController@destroy')->name('deletespg');

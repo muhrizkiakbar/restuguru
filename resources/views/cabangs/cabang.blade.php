@@ -83,8 +83,8 @@
                                             <div class="form-group">
                                                 <label>Jenis Cabang</label>
                                                 <select class="form-control" name="tambah_jenis_cabang" id="tambah_jenis_cabang" style="width: 100%;">
-                                                    <option value="Kantor Pusat">Kantor Pusat</option>
-                                                    <option value="Kantor Cabang" selected>Kantor Cabang</option>
+                                                    <option value="Pusat">Kantor Pusat</option>
+                                                    <option value="Cabang" selected>Kantor Cabang</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -139,8 +139,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <select class="form-control" name="edit_jenis_cabang" id="edit_jenis_cabang" style="width: 100%;">
-                                                        <option value="Kantor Pusat">Kantor Pusat</option>
-                                                        <option value="Kantor Cabang" selected>Kantor Cabang</option>
+                                                        <option value="Pusat">Kantor Pusat</option>
+                                                        <option value="Cabang" selected>Kantor Cabang</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
