@@ -29,13 +29,9 @@ class JenispelangganController extends Controller
                     );
     }
 
-    public function jenispelanggancari(Request $request)
+    public function jenispelanggancari()
     {
-        $term = trim($request->q);
-        if (empty($term)) {
-            return response()->json([]);
-        }
-        $tags = CJenispelanggans::where('jenis_pelanggan','LIKE','%'.$term.'%')->limit(20)->get();
+        $tags = CJenispelanggans::all();
         $formatted_tags = [];
         foreach ($tags as $tag) {
             $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->jenis_pelanggan];
@@ -62,8 +58,6 @@ class JenispelangganController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
 
     public function create()
     {
