@@ -72,6 +72,12 @@ Route::post('/transaksi/angsuran/deleted','AngsuranPenjualanController@indexdele
 
 Route::get('transaksi/pengeluaran','PengeluaranController@index');
 
+// Jenis Pengeluaran
+Route::get('transaksi/pengeluaran/jenispengeluaran','PengeluaranController@jenispengeluaran_index');
+Route::get('transaksi/pengeluaran/jenispengeluaran/load','PengeluaranController@loadjenispengeluaran')->name('loadjenispengeluaran');
+Route::post('transaksi/pengeluaran/jenispengeluaran/store','PengeluaranController@storejenispengeluaran')->name('storejenispengeluaran');
+Route::post('transaksi/pengeluaran/jenispengeluaran/update','PengeluaranController@updatejenispengeluaran')->name('updatejenispengeluaran');
+Route::post('transaksi/pengeluaran/jenispengeluaran/delete','PengeluaranController@deletejenispengeluaran')->name('deletejenispengeluaran');
 
 Route::get('/produk/cari','ProdukController@produkcari')->name('produkcari');
 Route::get('/produk/harga','ProdukController@produkharga')->name('produkharga');
