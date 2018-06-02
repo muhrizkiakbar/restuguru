@@ -324,7 +324,7 @@
                         if ((response.errors.tambah_alamat_cabang)){
                             swal("Alamat", ""+response.errors.tambah_alamat_cabang+"", "error");
                         }
-                        $('#modal_tambah').modal('hide');
+                        // $('#modal_tambah').modal('hide');
                     }
                     else
                     {   if (response=="Success"){
@@ -334,13 +334,13 @@
                         }
                         else{
                             wal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_tambah').modal('hide');
+                            // $('#modal_tambah').modal('hide');
                         }
                     }
                 },
                 error:function(){
                             swal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_tambah').modal('hide');
+                            // $('#modal_tambah').modal('hide');
                 }
             });
         });

@@ -98,7 +98,7 @@ class SpecialpricegroupController extends Controller
         $rules=array(
             'tambah_jenispelanggan'   =>  'required',
             'tambah_produk'   =>  'required',
-            'tambah_harga_khusus'   =>  'required',
+            'tambah_harga_khusus'   =>  'required | numeric',
         );
         // dd(decrypt($request->tambah_jenispelanggan));
         $count=CSpesialpricesgroup::where([
@@ -162,7 +162,7 @@ class SpecialpricegroupController extends Controller
         $rules=array(
             'id_edit_jenispelanggan'   =>  'required',
             'id_edit_produk'   =>  'required',
-            'edit_harga_khusus'   =>  'required',
+            'edit_harga_khusus'   =>  'required | numeric',
         );
         $validator=Validator::make(Input::all(),$rules);
         
