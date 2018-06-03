@@ -107,6 +107,9 @@
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Cari Transaksi</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
               </div>
               <!-- /.box-header -->
               <!-- form start -->
@@ -125,8 +128,13 @@
                         <select id="pelanggan" name="pelanggan" class="form-control select2" style="width:100%;" type="text"></select>
                       </div>
                       <div class="form-group">
-                            <select class="form-control " id="pembayaran" name="pembayaran" style="width: 100%;">
+                            <select class="form-control " id="pembayaran2" name="pembayaran2" style="width: 100%;">
                                
+                                @if ($pembayaran=="semua")
+                                    <option value="semua" selected>Semua Metode Pembayaran</option>
+                                @else
+                                    <option value="semua">Semua Metode Pembayaran</option>
+                                @endif
                                 @if ($pembayaran=="Cash")
                                     <option value="Cash" selected>Cash</option>
                                 @else
@@ -143,14 +151,33 @@
                       </div>
 
                       <div class="form-group">
-                        <input type="text" class="form-control" id="tanggal" readonly name="tanggal" value="{{$date}}" placeholder="Tanggal">
+                        <input type="text" class="form-control" id="tanggal" readonly name="tanggal" value="{{$tanggal}}" placeholder="Tanggal">
                       </div>
                       <div class="form-group">
                             <select class="form-control  pull-right" id="periode" name="periode" style="width: 100%;">
-                                <option value="semua" >Semua</option>
-                                <option value="hari" >Hari</option>
-                                <option value="bulan" >Bulan</option>
-                                <option value="tahu" >Tahun</option>
+                                @if ($periode=="semua")
+                                    <option value="semua" selected>Semua</option>
+                                @else
+                                    <option value="semua" >Semua</option>
+                                @endif
+
+                                @if ($periode=="hari")
+                                    <option value="hari" selected>Hari</option>
+                                @else
+                                    <option value="hari" >Hari</option>
+                                @endif
+
+                                @if ($periode=="bulan")
+                                    <option value="bulan" selected>Bulan</option>
+                                @else
+                                    <option value="bulan" >Bulan</option>
+                                @endif
+
+                                @if ($periode=="tahun")
+                                    <option value="tahun" selected>Tahun</option>
+                                @else
+                                    <option value="tahun" >Tahun</option>
+                                @endif
                             </select>
                       </div>
                       </form>  
@@ -172,7 +199,7 @@
           <div class="col-md-10">
             <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Angsuran Transaksi Penjualan <i class="fa  fa-shopping-cart"></i></h3>
+                <h3 class="box-title">Pelunasan Angsuran Transaksi Penjualan <i class="fa  fa-shopping-cart"></i></h3>
               </div>
                 <div class="box-body">
                     <div class="table-responsive">
@@ -441,7 +468,7 @@
 
       $(function(){
 
-        $('#add_nominal').maskMoney({thousands:'', decimal:'.',allowZero:true}); 
+        $('#add_nominal').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
 
         $('input[name="tanggal"]').datepicker({
             format: "dd-mm-yyyy",
@@ -514,7 +541,7 @@
                     $.each( response, function( key, value ) {
                         
                         $("#showdata").append(
-                            '<tr id="'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idtrans+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs"  data-id="'+response[key]['id']+'" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
+                            '<tr id="'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idtrans+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id2']+'" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
                         );
                     });
                     // $('.labelnota').text(response.nonota);
@@ -541,7 +568,7 @@
         $(document).on('click','#simpanangsuran',function (){
 
             var token=$('input[name="_token"]').val();
-            var nominal=parseFloat($('#add_nominal').val());
+            var nominal=($('#add_nominal').maskMoney('unmasked')[0]);
             var metode=$('#pembayaran').val();
             
             if (nominal==0){
@@ -584,6 +611,7 @@
                                 else
                                 {
                                     $('#sisa'+datanonota).empty();
+                                    $('#'+datanonota).remove();
                                     $('#sisa'+datanonota).text('Rp. '+datasisa.format(2, 3, '.', ','));                                    
                                 }
                                 $('#modal_add').modal('hide');

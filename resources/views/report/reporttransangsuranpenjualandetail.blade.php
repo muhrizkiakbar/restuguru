@@ -39,6 +39,12 @@
         height: 40px;
 		z-index: 2;
 	}
+    .lebarkwitansi
+    {
+        width: 21cm;
+        margin: auto;
+        align: "center";
+    }
   </style>
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
@@ -54,7 +60,7 @@
 @endpush
 
 @section('body')
-    <body>
+    <body class="lebarkwitansi">
     <div class="wrapper">
         <!-- Main content -->
         <section class="invoice">
@@ -63,7 +69,7 @@
             <div class="col-xs-12">
                 <h2 class="page-header">
                 <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}
-                <small class="pull-right"> </small>
+                <small class="pull-right"> Pelunasan Transaksi Det. Penjualan</small>
                 </h2>
             </div>
             <!-- /.col -->
@@ -74,7 +80,7 @@
                 Dari
                 <address>
                 <strong>{{$transaksi->nama}}</strong><br>
-                Level<br>
+                {{$transaksi->display_name}}<br>
                 </address>
             </div>
             <!-- /.col -->
@@ -83,8 +89,7 @@
                 <address>
                 <strong>{{$transaksi->nama_pelanggan}}</strong><br>
                 {{$transaksi->hp_pelanggan}} 
-                @if ($transaksi->pelanggan_id="")
-                    (Member)
+                @if ($transaksi->pelanggan_id=="")
                 @else
                     ({{$transaksi->jenis_pelanggan}})
                 @endif
@@ -124,9 +129,9 @@
                     <tr>
                         <td style="word-break: break-all;">{{$subtransaksi->nama_produk}}</td>
                         <td style="word-wrap: break-word;">Rp. {{number_format(floatval($subtransaksi->harga_satuan),2,',','.')}}</td>
-                        <td style="word-wrap: break-word;">{{$subtransaksi->panjang}}</td>
-                        <td style="word-wrap: break-word;">{{$subtransaksi->lebar}}</td>
-                        <td style="word-wrap: break-word;">{{$subtransaksi->banyak}}</td>
+                        <td style="word-wrap: break-word;">{{number_format(floatval($subtransaksi->panjang),2,',','.')}}</td>
+                        <td style="word-wrap: break-word;">{{number_format(floatval($subtransaksi->lebar),2,',','.')}}</td>
+                        <td style="word-wrap: break-word;">{{number_format(floatval($subtransaksi->banyak),2,',','.')}}</td>
                         <td style="word-wrap: break-word;">{{$subtransaksi->finishing}}</td>
                         <td style="width: 20%;word-break: break-all;">{{$subtransaksi->keterangan}}</td>
                         <td style="word-wrap: break-word;">Rp. {{number_format(floatval($subtransaksi->subtotal),2,',','.')}}</td>
