@@ -246,7 +246,7 @@
                     { data: 'Email', name: 'Email' },
                     { data: 'Alamat', name: 'Alamat' },
                     { data: 'Jenis_Cabang', name: 'Jenis_Cabang' },
-                    { data: 'user_id', name: 'user_id' },
+                    { data: 'username', name: 'username' },
                     {data:'action'}
                 ]
             });

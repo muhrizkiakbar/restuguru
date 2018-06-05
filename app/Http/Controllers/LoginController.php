@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class LoginController extends Controller
 {
@@ -21,6 +23,38 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function  postLogin(Request $request){
+        if (Auth::attempt([
+            'username'=>$request->username,
+            'password'=>$request->password
+        ])){
+            return redirect('/home');
+          // dd(Auth::user()->role->namaRole="kadis");
+        //   if (Auth::user()->role->namaRole=="kadis"){
+        //     return redirect('/home/pegawai');
+        //   }
+        //   elseif (Auth::user()->role->namaRole=="sekda"){
+        //     return redirect('/dashboard');
+        //   }
+        //   elseif (Auth::user()->role->namaRole=="pegawai"){
+        //     return redirect('/user/pegawai');
+        //   }
+        //   elseif (Auth::user()->role->namaRole=="gubernur"){
+        //     return redirect('/dashboard/gub');
+        //   }
+        //   elseif ((Auth::user()->role->namaRole=="karu")){
+        //     return redirect('/home/ruangan');
+        //   }
+        //   else {
+        //     // dd(Auth::user()->role->namaRole="pegawai");
+        //     return redirect('/home');
+        //   }
+        }else{
+            return redirect()->back()->with('error', 'Login gagal !!');
+        }
+    }
+
     public function create()
     {
         //

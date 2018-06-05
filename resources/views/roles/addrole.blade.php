@@ -27,7 +27,7 @@
 @endpush
 
 @section('body')
-    <body class="hold-transition skin-yellow sidebar-mini">
+    <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
 
       @include('layouts.header')

@@ -31,7 +31,9 @@ class CabangController extends Controller
 
 
     public function loaddatacabang(){
-        $tables=CCabangs::all();
+        $tables=CCabangs::leftJoin('Users','Cabangs.user_id','=','Users.id')
+                ->select('Cabangs.*','Users.username')
+                ->get();
         return Datatables::of($tables)
             -> addColumn ('action', function ($tables) {
                 return  '
@@ -67,8 +69,13 @@ class CabangController extends Controller
             'tambah_jenis_cabang'   =>  'required',
             'tambah_kode_cabang'    =>  'required',
             'tambah_nama_cabang'    =>  'required',
+<<<<<<< HEAD
+            'tambah_telepon_cabang' =>  'required | numeric | min:10',
+            'tambah_email_cabang'   =>  'required',
+=======
             'tambah_telepon_cabang' =>  'required | numeric',
             'tambah_email_cabang'   =>  'required | email',
+>>>>>>> a27a5714af87bfaf60c6cd93d025753686ce28f9
             'tambah_alamat_cabang'  =>  'required',
         );
 
@@ -84,7 +91,7 @@ class CabangController extends Controller
             $table->Email           = $request->tambah_email_cabang;
             $table->Alamat          = $request->tambah_alamat_cabang;
             $table->Jenis_Cabang    = $request->tambah_jenis_cabang;
-            // $table->user_id=$request->cabang_id;
+            $table->user_id=Auth::user()->id;
 
             if ($table->save()){
                 return response()->json("Success");
@@ -151,7 +158,7 @@ class CabangController extends Controller
             $table->Email           = $request->edit_email_cabang;
             $table->Alamat          = $request->edit_alamat_cabang;
             $table->Jenis_Cabang    = $request->edit_jenis_cabang;
-            
+            $table->user_id=Auth::user()->id;
             if ($table->save()){
                 return response()->json("Success");
             }else{
