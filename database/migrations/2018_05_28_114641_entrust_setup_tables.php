@@ -39,6 +39,8 @@ class EntrustSetupTables extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->boolean('index')->nullable();
+            $table->string('urlindex')->nullable();            
             $table->timestamps();
         });
 
