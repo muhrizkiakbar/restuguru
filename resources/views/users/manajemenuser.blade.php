@@ -119,7 +119,9 @@
                                             <div class="form-group">
                                                 <label>Level</label>
                                                 <select class="form-control select2" id="role" name="role" style="width: 100%;">
-                                                        <option value="wwe">sdasd</option>
+                                                    @foreach ($roles as $role)
+                                                        <option value="{{encrypt($role->id)}}">{{$role->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <!-- /.form-group -->

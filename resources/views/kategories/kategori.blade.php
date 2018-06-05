@@ -307,7 +307,6 @@
         });
     </script>
 
-    {{-- javascript hapus --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_hapus',function (){
             $.ajax({

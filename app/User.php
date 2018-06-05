@@ -15,6 +15,8 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table='Users';
+    
     protected $fillable = [
         'nama','username','password','Telepon','Alamat','cabang_id','user_id','gaji',
     ];
@@ -27,4 +29,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function cabang(){
+        return $this->belongsTo(CCabangs::class);
+    }
+
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
 }

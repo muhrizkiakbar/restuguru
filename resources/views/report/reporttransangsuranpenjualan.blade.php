@@ -39,6 +39,12 @@
         height: 40px;
 		z-index: 2;
 	}
+    .lebarkwitansi
+    {
+        width: 21cm;
+        margin: auto;
+        align: "center";
+    }
   </style>
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
@@ -54,7 +60,7 @@
 @endpush
 
 @section('body')
-    <body>
+    <body class="lebarkwitansi">
     <div class="wrapper">
         <!-- Main content -->
         <section class="invoice">
@@ -63,7 +69,7 @@
             <div class="col-xs-12">
                 <h2 class="page-header">
                 <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}
-                <small class="pull-right"> </small>
+                <small class="pull-right"> Pelunasan Transaksi Penjualan</small>
                 </h2>
             </div>
             <!-- /.col -->
@@ -74,7 +80,7 @@
                 Dari
                 <address>
                 <strong>{{$transaksi->nama}}</strong><br>
-                Level<br>
+                {{$transaksi->display_name}}<br>
                 </address>
             </div>
             <!-- /.col -->
@@ -83,8 +89,7 @@
                 <address>
                 <strong>{{$transaksi->nama_pelanggan}}</strong><br>
                 {{$transaksi->hp_pelanggan}} 
-                @if ($transaksi->pelanggan_id="")
-                    (Member)
+                @if ($transaksi->pelanggan_id==null)
                 @else
                     ({{$transaksi->jenis_pelanggan}})
                 @endif
@@ -112,6 +117,7 @@
                         <th>No. Angsuran</th>
                         <th>Tanggal</th>
                         <th>Nominal</th>
+                        <th>Sisa Angsuran</th>
                         <th>Pembayaran</th>
                     </tr>
                 </thead>
@@ -121,6 +127,7 @@
                         <td>#{{$angsuran->id}}</td>
                         <td>{{date('d-m-Y',strtotime($angsuran->tanggal_angsuran))}}</td>                        
                         <td>Rp. {{number_format(floatval($angsuran->nominal_angsuran),2,',','.')}}</td>
+                        <td>Rp. {{number_format(floatval($angsuran->sisa_angsuran),2,',','.')}}</td>
                         <td>{{$angsuran->metode_pembayaran}}</td>                      
                     </tr>
                     @endforeach

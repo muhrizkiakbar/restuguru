@@ -10,7 +10,10 @@ use App\CSpesialpricesgroup;
 use App\CPelanggans;
 use App\CSub_Tpenjualans;
 use App\CTransaksi_Penjualans;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use PDF;
+
 
 class TransaksiController extends Controller
 {
@@ -34,6 +37,19 @@ class TransaksiController extends Controller
         if ($request->tanggal==""){
             $request->tanggal=$date;
         }
+        else
+        {
+            $request->tanggal=date('d-m-Y',strtotime($request->tanggal));
+        }
+
+        if (($request->pembayaran=="semua") || ($request->pembayaran=="")){
+            $pembayaran="";
+        }
+        else
+        {
+            $pembayaran=$request->pembayaran;
+        }
+
 
         if ($request->periode=="hari"){
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
@@ -46,7 +62,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
                                         ->where('Transaksi_Penjualans.tanggal','=',$request->tanggal)
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()                                        
+                                        ->onlyTrashed()                                        
                                         ->paginate(50);
         }
         elseif ($request->periode=="semua"){
@@ -59,7 +75,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()                                        
+                                        ->onlyTrashed()                                        
                                         ->paginate(50);
         }
         elseif ($request->periode=="bulan"){
@@ -77,8 +93,9 @@ class TransaksiController extends Controller
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()                                        
+                                        ->onlyTrashed()                                        
                                         ->paginate(50);
+                                        
         }
         elseif ($request->periode=="tahun")
         {
@@ -95,7 +112,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()                                        
+                                        ->onlyTrashed()                                        
                                         ->paginate(50);
         }
         else
@@ -109,7 +126,7 @@ class TransaksiController extends Controller
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=','1')                                                    
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()
+                                        ->onlyTrashed()
                                         ->paginate(50);
         }
         
@@ -124,15 +141,20 @@ class TransaksiController extends Controller
         $id=decrypt($id);
         $transaksi=CTransaksi_Penjualans::leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                     ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                    ->leftJoin('role_user','role_user.user_id','=','Users.id')
+                    ->leftJoin('roles','role_user.role_id','=','roles.id') 
                     ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                     ->leftJoin('Jenispelanggans','Pelanggans.jenispelanggan_id','=','Jenispelanggans.id')
                     ->select('Transaksi_Penjualans.*','Cabangs.Kode_Cabang','Cabangs.Nama_Cabang',
                             'Cabangs.No_Telepon','Cabangs.Email','Cabangs.Alamat','Cabangs.Jenis_Cabang',
-                            'Users.nama','Jenispelanggans.jenis_pelanggan')
+                            'Users.nama','Jenispelanggans.jenis_pelanggan','roles.display_name')
                     ->withTrashed()
                     ->where('Transaksi_Penjualans.id','=',$id)->first();
         $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')->where('penjualan_id','=',$id)->get();
         return view('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
+        // $pdf=PDF::loadView('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
+        // // return $pdf->setPaper('F4', 'landscape')->download('laporanharian.pdf');
+        // return $pdf->setPaper('a4', 'landscape')->stream('filename.pdf',array('Attachment'=>1));
     }
     /**
      * Show the form for creating a new resource.
@@ -192,7 +214,7 @@ class TransaksiController extends Controller
         $transaksi->jumlah_pembayaran=$request->json('inputbayardp');
         $transaksi->sisa_tagihan=$request->json('inputsisa');
         $transaksi->pajak=$request->json('inputpajak');        
-        $transaksi->user_id=1;
+        $transaksi->user_id=Auth::user()->id;
         $transaksi->cabang_id=1;
         $transaksi->save();
             
@@ -259,7 +281,7 @@ class TransaksiController extends Controller
             $subtransaksi->lebar=$value['lebar'];
             $subtransaksi->banyak=$value['kuantitas'];
             $subtransaksi->keterangan=$value['keterangan'];
-            $subtransaksi->user_id=1;
+            $subtransaksi->user_id=Auth::user()->id;
             $subtransaksi->subtotal=$value['subtotal'];
             $subtransaksi->finishing=$value['finishing'];
             $subtransaksi->satuan=$value['satuan'];
@@ -290,6 +312,18 @@ class TransaksiController extends Controller
         if ($request->tanggal==""){
             $request->tanggal=$date;
         }
+        else
+        {
+            $request->tanggal=date('d-m-Y',strtotime($request->tanggal));
+        }
+
+        if ($request->pembayaran=="semua"){
+            $pembayaran="";
+        }
+        else
+        {
+            $pembayaran=$request->pembayaran;
+        }
 
         if ($request->periode=="hari"){
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
@@ -299,7 +333,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.cabang_id','=','1')
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
-                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->where('Transaksi_Penjualans.tanggal','=',$request->tanggal)
                                         ->orderBy('created_at','desc')
                                         ->paginate(50);
@@ -312,7 +346,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.cabang_id','=','1')
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
-                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->orderBy('created_at','desc')
                                         ->paginate(50);
         }
@@ -327,7 +361,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.cabang_id','=','1')
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
-                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
                                         ->orderBy('created_at','desc')
@@ -345,7 +379,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.cabang_id','=','1')
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
-                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
                                         ->orderBy('created_at','desc')
                                         ->paginate(50);
