@@ -23,9 +23,6 @@ Route::get('/login', function () {
     return view('login');
 });
 
-
-Route::get('/transaksi/report/{id}','TransaksiController@report');
-
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
@@ -168,7 +165,6 @@ Route::group(['middleware' => 'auth'], function() {
     });
 
 });
-
 // Special Price Route
 Route::get('/specialprice','SpecialPriceController@index');
 Route::get('/specialprice/loadspecialprice','SpecialPriceController@loadspecialprice')->name('loadspecialprice');
@@ -177,3 +173,9 @@ Route::post('/specialprice/updatespecialprice','SpecialPriceController@update')-
 Route::post('/specialprice/deletespecialprice','SpecialPriceController@destroy')->name('deletespecialprice');
         
 
+//SpecialPriceGroup
+Route::get('/specialpricegroup','SpecialpricegroupController@index');
+Route::post('/specialpricegroup/postspg','SpecialpricegroupController@store')->name('storespg');
+Route::get('/specialpricegroup/loaddata','SpecialpricegroupController@loaddatatable')->name('loaddata');
+Route::post('/specialpricegroup/updatespg','SpecialpricegroupController@update')->name('updatespg');
+Route::post('/specialpricegroup/deletespg','SpecialpricegroupController@destroy')->name('deletespg');

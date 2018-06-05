@@ -139,8 +139,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <select class="form-control" name="edit_jenis_cabang" id="edit_jenis_cabang" style="width: 100%;">
-                                                        <option value="Kantor Pusat">Kantor Pusat</option>
-                                                        <option value="Kantor Cabang" selected>Kantor Cabang</option>
+                                                        <option value="Pusat">Kantor Pusat</option>
+                                                        <option value="Cabang" selected>Kantor Cabang</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -324,7 +324,7 @@
                         if ((response.errors.tambah_alamat_cabang)){
                             swal("Alamat", ""+response.errors.tambah_alamat_cabang+"", "error");
                         }
-                        $('#modal_tambah').modal('hide');
+                        // $('#modal_tambah').modal('hide');
                     }
                     else
                     {   if (response=="Success"){
@@ -334,13 +334,13 @@
                         }
                         else{
                             wal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_tambah').modal('hide');
+                            // $('#modal_tambah').modal('hide');
                         }
                     }
                 },
                 error:function(){
                             swal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_tambah').modal('hide');
+                            // $('#modal_tambah').modal('hide');
                 }
             });
         });
