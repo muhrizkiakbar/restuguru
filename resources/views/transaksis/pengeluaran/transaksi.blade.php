@@ -980,7 +980,29 @@
             $('#jenispengeluaran').select2('val',null);                        
             $('#buttonmodal_add').attr('disabled',true);
             $('#kepadalabel').text('');
-            $('#handphonelabel').text('');           
+            $('#handphonelabel').text('');    
+
+             jenismodal="";
+    
+             total3=0;
+             total2=0;
+             total=0;
+             diskon=0;
+             namaproduk="";
+             totalbeforediskon=0;
+             totalbeforepajak=0;
+             totalbeforedp=0;
+             nominaldiskon=0;
+             pajak=0;
+             nominalpajak=0;
+             sisa=0;
+             bayardp=0;
+             satuan="";
+             hitung_luas=1;
+             tdid=0;
+             subtotalawal=0;
+             tdidnow=0;
+             subtotaldelete=0;       
         });
 
         $('#bayardp').keyup(function(){
