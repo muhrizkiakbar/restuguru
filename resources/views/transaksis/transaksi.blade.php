@@ -971,7 +971,9 @@
             $('#pelanggan').removeAttr('disabled');
             $('#buttonmodal_add').attr('disabled',true);
             $('#kepadalabel').text('');
-            $('#handphonelabel').text('');           
+            $('#handphonelabel').text(''); 
+
+                  
         });
 
         $('#diskon').blur(function(){
