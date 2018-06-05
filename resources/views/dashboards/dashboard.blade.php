@@ -173,12 +173,12 @@
                                             <br>
                                             <br>
                                             <br>
-                                            <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
-                                            <li><i class="fa fa-circle-o text-green"></i> IE</li>
-                                            <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
-                                            <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
-                                            <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
-                                            <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
+                                            <li><i class="fa fa-circle-o text-red"></i> <span id="0"></span></li>
+                                            <li><i class="fa fa-circle-o text-green"></i> <span id="1"></span></li>
+                                            <li><i class="fa fa-circle-o text-yellow"></i> <span id="2"></span></li>
+                                            <li><i class="fa fa-circle-o text-aqua"></i> <span id="3"></span></li>
+                                            <li><i class="fa fa-circle-o text-light-blue"></i> <span id="4"></span></li>
+                                            {{-- <li><i class="fa fa-circle-o text-gray"></i> Navigator</li> --}}
                                         </ul>
                                     </div>
                                 </div>
@@ -226,7 +226,6 @@
             * -------
             * Here we will create a few charts using ChartJS
             */
-        // $.get()
             var areaChartData = {
             labels  : [ 'Januari', 'Februari', 'Maret',
                         'April', 'Mei', 'Juni', 'Juli',
@@ -293,78 +292,83 @@
             var lineChartOptions         = areaChartOptions
             lineChartOptions.datasetFill = false
             lineChart.Line(areaChartData, lineChartOptions)
-
-            //-------------
-            //- PIE CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-            var pieChart       = new Chart(pieChartCanvas)
-            var PieData        = [
-            {
-                value    : 700,
-                color    : '#f56954',
-                highlight: '#f56954',
-                label    : 'Chrome'
-            },
-            {
-                value    : 500,
-                color    : '#00a65a',
-                highlight: '#00a65a',
-                label    : 'IE'
-            },
-            {
-                value    : 400,
-                color    : '#f39c12',
-                highlight: '#f39c12',
-                label    : 'FireFox'
-            },
-            {
-                value    : 600,
-                color    : '#00c0ef',
-                highlight: '#00c0ef',
-                label    : 'Safari'
-            },
-            {
-                value    : 300,
-                color    : '#3c8dbc',
-                highlight: '#3c8dbc',
-                label    : 'Opera'
-            },
-            {
-                value    : 100,
-                color    : '#d2d6de',
-                highlight: '#d2d6de',
-                label    : 'Navigator'
-            }
-            ]
-            var pieOptions     = {
-            //Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke    : true,
-            //String - The colour of each segment stroke
-            segmentStrokeColor   : '#fff',
-            //Number - The width of each segment stroke
-            segmentStrokeWidth   : 2,
-            //Number - The percentage of the chart that we cut out of the middle
-            percentageInnerCutout: 50, // This is 0 for Pie charts
-            //Number - Amount of animation steps
-            animationSteps       : 100,
-            //String - Animation easing effect
-            animationEasing      : 'easeOutBounce',
-            //Boolean - Whether we animate the rotation of the Doughnut
-            animateRotate        : true,
-            //Boolean - Whether we animate scaling the Doughnut from the centre
-            animateScale         : false,
-            //Boolean - whether to make the chart responsive to window resizing
-            responsive           : true,
-            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio  : true,
-            //String - A legend template
-            legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            pieChart.Doughnut(PieData, pieOptions)
+            
+            $.get('{{route('piedata')}}', function(response)
+            {   
+                $( document ).ready(function() {
+                    var i;
+                    for (i = 0; i < response['label'].length; i++) { 
+                        $('#'+i).text(response['label'][i]);
+                    } 
+                });
+                
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieChart       = new Chart(pieChartCanvas)
+                var PieData        = [
+                {
+                    value    : response['value'][0],
+                    color    : '#f56954',
+                    highlight: '#f56954',
+                    label    : response['label'][0]
+                },
+                {
+                    value    : response['value'][1],
+                    color    : '#00a65a',
+                    highlight: '#00a65a',
+                    label    : response['label'][1]
+                },
+                {
+                    value    : response['value'][2],
+                    color    : '#f39c12',
+                    highlight: '#f39c12',
+                    label    : response['label'][2]
+                },
+                {
+                    value    : response['value'][3],
+                    color    : '#00c0ef',
+                    highlight: '#00c0ef',
+                    label    : response['label'][3]
+                },
+                {
+                    value    : response['value'][4],
+                    color    : '#3c8dbc',
+                    highlight: '#3c8dbc',
+                    label    : response['label'][4]
+                }
+                ]
+                var pieOptions     = {
+                //Boolean - Whether we should show a stroke on each segment
+                segmentShowStroke    : true,
+                //String - The colour of each segment stroke
+                segmentStrokeColor   : '#fff',
+                //Number - The width of each segment stroke
+                segmentStrokeWidth   : 2,
+                //Number - The percentage of the chart that we cut out of the middle
+                percentageInnerCutout: 50, // This is 0 for Pie charts
+                //Number - Amount of animation steps
+                animationSteps       : 100,
+                //String - Animation easing effect
+                animationEasing      : 'easeOutBounce',
+                //Boolean - Whether we animate the rotation of the Doughnut
+                animateRotate        : true,
+                //Boolean - Whether we animate scaling the Doughnut from the centre
+                animateScale         : false,
+                //Boolean - whether to make the chart responsive to window resizing
+                responsive           : true,
+                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                maintainAspectRatio  : true,
+                //String - A legend template
+                legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+                }
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                pieChart.Doughnut(PieData, pieOptions)
+                });
+            
         })
     </script>
 
