@@ -23,6 +23,70 @@ Route::get('/login', function () {
     return view('login');
 });
 
+// User Route
+Route::get('/users','UserController@index');
+Route::get('/users/dataalluser','UserController@dataalluser')->name('dataalluser');
+Route::post('/users/postuser','UserController@store')->name('storeuser');
+Route::post('/users/updateuser','UserController@update')->name('updateuser');
+Route::post('/users/deleteuser','UserController@destroy')->name('deleteuser');
+
+Route::post('/users/updateuser','UserController@update')->name('updateuser');
+Route::post('/users/deleteuser','UserController@destroy')->name('deleteuser');
+
+Route::get('/roles','RoleController@index');
+Route::get('/roles/data','RoleController@data')->name('datarole');
+Route::get('/roles/add','RoleController@create')->name('addrole');
+Route::post('/roles/add','RoleController@store')->name('storerole');
+Route::get('/roles/edit/{id}','RoleController@show')->name('showrole');
+Route::put('/roles/edit/{id}','RoleController@update')->name('updaterole');
+Route::post('/roles/delete','RoleController@destroy')->name('destroyrole');
+
+Route::get('/transaksi','TransaksiController@transaksi');
+Route::get('/transaksi/deleted','TransaksiController@transaksideleted');
+Route::post('/transaksi/deleted','TransaksiController@transaksideleted')->name('transaksideletedpost');
+Route::get('/transaksi/report/{id}','TransaksiController@report');
+Route::get('/transaksi/piutang','TransaksiController@piutang');
+Route::get('/transaksi/piutang/angsuran','TransaksiController@angsuranpiutang');
+Route::get('/transaksi/piutang/angsuran/deleted','TransaksiController@angsuranpiutangdeleted');
+Route::get('/transaksi/pelanggan/cari','TransaksiController@pelanggancari')->name('pelanggancari');
+Route::get('/transaksi/pelanggan/cari/detail','TransaksiController@pelanggandetail')->name('pelanggandetail');
+Route::get('/transaksi/pelanggan/produk','TransaksiController@priceprodukkhusus')->name('priceprodukkhusus');
+Route::post('/transaksi/store','TransaksiController@store')->name('storetransaksi');
+//list transaksi
+Route::get('/transaksi/list','TransaksiController@listtransaksi');
+Route::post('/transaksi/list','TransaksiController@listtransaksi')->name('transaksilist');
+Route::get('/trasaksi/list/spesific','TransaksiController@datatransaksispesific')->name('datatransaksispesific');
+Route::get('/trasaksi/list/spesific/subtransaksi','TransaksiController@showsubtransaksi')->name('showsubtransaksi');
+Route::get('/transaksi/list/edit/{id}','TransaksiController@show')->name('edittransaksi');
+Route::post('/transaksi/list/edit','TransaksiController@update')->name('updatetransaksi');
+Route::post('/trasaksi/list/destroy','TransaksiController@destroytransaksi')->name('destroytransaksi');
+
+
+###
+Route::get('/transaksi/angsuran','AngsuranPenjualanController@index');
+Route::post('/transaksi/angsuran','AngsuranPenjualanController@index')->name('angsuranpenjualan');
+Route::get('/transaksi/angsuran/show','AngsuranPenjualanController@showangsuran')->name('showangsuranpenjualan');
+Route::post('/transaksi/angsuran/add','AngsuranPenjualanController@store')->name('storeangsuran');
+Route::post('/transaksi/angsuran/delete','AngsuranPenjualanController@destroy')->name('destroyangsuran');
+Route::get('/transaksi/angsuran/report/detail/{id}','AngsuranPenjualanController@reportdetail')->name('reportdetail');
+Route::get('/transaksi/angsuran/report/{id}','AngsuranPenjualanController@reportangsuran')->name('reportangsuran');
+Route::get('/transaksi/angsuran/deleted','AngsuranPenjualanController@indexdeleted');
+Route::post('/transaksi/angsuran/deleted','AngsuranPenjualanController@indexdeleted')->name('indexdeletedpost');
+
+
+Route::get('transaksi/pengeluaran','PengeluaranController@index');
+
+// Jenis Pengeluaran
+Route::get('transaksi/pengeluaran/jenispengeluaran','PengeluaranController@jenispengeluaran_index');
+Route::get('transaksi/pengeluaran/jenispengeluaran/load','PengeluaranController@loadjenispengeluaran')->name('loadjenispengeluaran');
+Route::post('transaksi/pengeluaran/jenispengeluaran/store','PengeluaranController@storejenispengeluaran')->name('storejenispengeluaran');
+Route::post('transaksi/pengeluaran/jenispengeluaran/update','PengeluaranController@updatejenispengeluaran')->name('updatejenispengeluaran');
+Route::post('transaksi/pengeluaran/jenispengeluaran/delete','PengeluaranController@deletejenispengeluaran')->name('deletejenispengeluaran');
+
+Route::get('/produk/cari','ProdukController@produkcari')->name('produkcari');
+Route::get('/produk/harga','ProdukController@produkharga')->name('produkharga');
+Route::get('/produk/data','ProdukController@dataproduk')->name('dataproduk');
+
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
@@ -121,7 +185,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/cabang/updatecabang',['middleware' => ['permission:edit-cabang'], 'uses' => 'CabangController@update'])->name('updatecabang');
     Route::post('/cabang/deletecabang',['middleware' => ['permission:delete-cabang'], 'uses' => 'CabangController@destroy'])->name('deletecabang');
 
-    Route::get('/home',['middleware' => ['permission:index-home'], 'uses' => 'HomeController@index'])->name('home');
+    Route::get('/home',['middleware' => ['permission:index-home'], 'uses' => 'DashboardController@index'])->name('home');
 
     // Jenis Pelanggan Route
     Route::get('/jenispelanggan',['middleware' => ['permission:manage-pelanggan'], 'uses' => 'JenispelangganController@index'])->name('managepelangganindex');
