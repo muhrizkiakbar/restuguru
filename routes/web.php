@@ -19,6 +19,9 @@ Route::get('/login', function () {
     return view('login');
 });
 
+//Dashboard
+Route::get('/dashboard','DashboardController@index');
+
 // User Route
 Route::get('/users','UserController@index');
 Route::get('/users/dataalluser','UserController@dataalluser')->name('dataalluser');
