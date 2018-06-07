@@ -449,6 +449,25 @@ return [
             'required'=> 'Harga harus diisi !',
             'numeric'=> 'Harga berupa angka !',
         ],
+        //pengeluaran
+        'tambah_jenisPengeluaran'=>[
+            'required'=> 'Jenis Pengeluaran harus diisi !',
+        ],
+        'tambah_sifatAngsuran'=>[
+            'required'=> 'Sifat Angsuran harus diisi !',
+        ],
+        'tambah_mode'=>[
+            'required'=> 'Mode harus diisi !',
+        ],
+        'edit_jenisPengeluaran'=>[
+            'required'=> 'Jenis Pengeluaran harus diisi !',
+        ],
+        'edit_sifatAngsuran'=>[
+            'required'=> 'Sifat Angsuran harus diisi !',
+        ],
+        'edit_mode'=>[
+            'required'=> 'Mode harus diisi !',
+        ],
     ],
 
     /*

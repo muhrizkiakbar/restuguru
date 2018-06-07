@@ -187,6 +187,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/home',['middleware' => ['permission:index-home'], 'uses' => 'DashboardController@index'])->name('home');
     Route::get('/home/piedata',['middleware' => ['permission:index-home'], 'uses' => 'DashboardController@piedata'])->name('piedata');
+    Route::get('/home/linedata',['middleware' => ['permission:index-home'], 'uses' => 'DashboardController@linedata'])->name('linedata');
 
     // Jenis Pelanggan Route
     Route::get('/jenispelanggan',['middleware' => ['permission:manage-pelanggan'], 'uses' => 'JenispelangganController@index'])->name('managepelangganindex');

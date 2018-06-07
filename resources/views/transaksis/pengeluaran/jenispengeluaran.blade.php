@@ -91,6 +91,12 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
+                                                <label>Form Mode</label>
+                                                <select id="tambah_mode" name="tambah_mode" class="form-control select2" style="width:100%;" type="text">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Keterangan</label>
                                                 <textarea id="tambah_keterangan" name="tambah_keterangan" class="form-control pull-right" type="text"></textarea>
                                             </div>
@@ -131,6 +137,12 @@
                                             <div class="form-group">
                                                 <label>Angsuran</label>
                                                 <select id="edit_sifatAngsuran" name="edit_sifatAngsuran" class="form-control select2" style="width:100%;" type="text">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Form Mode</label>
+                                                <select id="edit_mode" name="edit_mode" class="form-control select2" style="width:100%;" type="text">
                                                     <option></option>
                                                 </select>
                                             </div>
@@ -220,17 +232,48 @@
             }
         ];
 
+        var mode=[
+            {
+                id:'mode_luas',
+                text:'Mode Luas'
+            },
+            {
+                id:'mode_pencairan',
+                text:'Mode Pencairan'
+            },
+            {
+                id:'mode_satuan',
+                text:'Mode Satuan'
+            }
+        ]
+
         $(function(){
-            $('.select2').select2({
+            $('#tambah_sifatAngsuran').select2({
                 placeholder: "Angsuran",
                 minimumResultsForSearch: Infinity,
                 data: data
+            });
+            $('#edit_sifatAngsuran').select2({
+                placeholder: "Angsuran",
+                minimumResultsForSearch: Infinity,
+                data: data
+            });
+            $('#tambah_mode').select2({
+                placeholder: "Form Mode",
+                minimumResultsForSearch: Infinity,
+                data: mode
+            });
+            $('#edit_mode').select2({
+                placeholder: "Form Mode",
+                minimumResultsForSearch: Infinity,
+                data: mode
             });
         });
 
         function bersihkan(){
             $("#tambah_jenisPengeluaran").val(null);
             $("#tambah_sifatAngsuran").val(null).trigger('change');
+            $("#tambah_mode").val(null).trigger('change');
             $("#tambah_keterangan").val(null);
         };
     </script>
@@ -272,10 +315,13 @@
                 success:function(response){
                     if((response.errors)){
                         if ((response.errors.tambah_jenisPengeluaran)){
-                            swal("Jenis Pelanggan", ""+response.errors.tambah_jenisPengeluaran+"", "error");
+                            swal("Jenis Pengeluaran", ""+response.errors.tambah_jenisPengeluaran+"", "error");
                         }
                         if ((response.errors.tambah_sifatAngsuran)){
-                            swal("Produk", ""+response.errors.tambah_sifatAngsuran+"", "error");
+                            swal("Sifat Angsuran", ""+response.errors.tambah_sifatAngsuran+"", "error");
+                        }
+                        if ((response.errors.tambah_mode)){
+                            swal("Form Mode", ""+response.errors.tambah_mode+"", "error");
                         }
                         // $('#modal_tambah').modal('hide');
                     }
@@ -306,6 +352,7 @@
     // Add Data to Edit Modal
         $(document).on('click','.modal_edit',function () {
             $('#edit_sifatAngsuran').val($(this).data('angsuran')).trigger('change');
+            $('#edit_mode').val($(this).data('mode')).trigger('change');
             $("#edit_jenisPengeluaran").val($(this).data('jenis'));
             $("#edit_keterangan").val($(this).data('keterangan'));
             $('#id_edit').val($(this).data('id'))
