@@ -69,13 +69,8 @@ class CabangController extends Controller
             'tambah_jenis_cabang'   =>  'required',
             'tambah_kode_cabang'    =>  'required',
             'tambah_nama_cabang'    =>  'required',
-<<<<<<< HEAD
-            'tambah_telepon_cabang' =>  'required | numeric | min:10',
-            'tambah_email_cabang'   =>  'required',
-=======
             'tambah_telepon_cabang' =>  'required | numeric',
             'tambah_email_cabang'   =>  'required | email',
->>>>>>> a27a5714af87bfaf60c6cd93d025753686ce28f9
             'tambah_alamat_cabang'  =>  'required',
         );
 
