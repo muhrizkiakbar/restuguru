@@ -270,6 +270,16 @@ return [
         ],
         'permissionrole'=>[
             'required'=> 'Permission harus diisi !',
+        ],
+        'namemenu'=>[
+            'required'=> 'Nama submenu harus diisi !',
+            'unique'=> 'Submenu sudah ada !'
+        ],
+        'icon'=>[
+            'required'=> 'Icon harus dipilih !'
+        ],
+        'page'=>[
+            'required'=> 'Halaman harus diisi !'
         ]
     ],
 

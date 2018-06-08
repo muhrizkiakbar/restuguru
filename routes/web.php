@@ -23,6 +23,14 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/menu','KategoriMenuController@index')->name('kategorimenuindex');
+Route::get('/menu/add','KategoriMenuController@create')->name('kategorimenuindex');
+Route::post('/menu/add','KategoriMenuController@store')->name('storemenu');
+Route::get('/menu/edit/{id}','KategoriMenuController@show')->name('showmenu');
+Route::put('/menu/edit/{id}','KategoriMenuController@update')->name('updatemenu');
+Route::post('/menu/delete','KategoriMenuController@destroy')->name('destroymenu');
+Route::get('/menu/data','KategoriMenuController@dataload')->name('kategorimenudataload');
+
 
 Route::get('/transaksi/report/{id}','TransaksiController@report');
 
