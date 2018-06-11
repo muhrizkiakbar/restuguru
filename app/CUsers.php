@@ -16,11 +16,11 @@ class CUsers extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function role(){
+    public function roles(){
         return $this->belongsTo(Role::class);
     }
 
-    public function cabang(){
+    public function cabangs(){
         return $this->belongsTo(CCabangs::class);
     }
 }

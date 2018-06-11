@@ -55,7 +55,6 @@
                                             <th>Telpon</th>
                                             <th>Gaji</th>
                                             <th>Alamat</th>
-                                            <th>Reff User</th>
                                             <th>Cabang</th>
                                             <th width="50px">Tool</th>
                                         </tr>
@@ -288,7 +287,6 @@
                     { data: 'Telepon', name: 'Telepon' },
                     { data: 'gaji', name: 'gaji' },
                     { data: 'Alamat', name: 'Alamat' },
-                    { data: 'username2', name: 'username2' },
                     { data: 'Nama_Cabang', name: 'Nama_Cabang' },
                     {data:'action'}
                 ]

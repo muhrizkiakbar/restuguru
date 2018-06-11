@@ -5,6 +5,7 @@ use App\Role;
 use App\Permission;
 use App\kategorimenu;
 use App\kategori_permission;
+use Illuminate\Support\Facades\Auth;
 
 use Datatables;
 use DB;
@@ -21,6 +22,7 @@ class KategoriMenuController extends Controller
     public function index()
     {
         //
+        
         return view('kategorimenu.manajemenmenu');
     }
 

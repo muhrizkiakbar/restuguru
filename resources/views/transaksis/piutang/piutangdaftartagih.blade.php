@@ -253,19 +253,15 @@
                                     <th>
                                         <input type="checkbox" id="select_all" name="select_all" class="flat-red select_all">
                                     </th>
-                                    <th>No. Nota</th>
+                                    <th>No.</th>
                                     <th>Nama</th>
+                                    <th>Sisa Piutang</th>
+                                    <!-- <th>Telat Bayar</th> -->
+                                    <th>Jatuh Tempo</th>
+                                    <th>Angsuran Mendatang</th>
                                     <th>Telp.</th>
-                                    <th>Tanggal</th>
-                                    <th width="100px">DP</th>
-                                    <th>Pembayaran</th>
-                                    <th>Diskon</th>
-                                    <th width="100px">Pajak</th>
-                                    <th width="100px">Sisa Tagihan</th>
-                                    <th style="width:400px">Total</th>
-                                    <th>Tool</th>
-                                    <th>Cabang</th>
-                                    <th>Pembuat</th>
+                                    <th>Pemilik</th>
+                                    <th>Alamat</th>
                                 </tr>
                                 </thead>
                                 <tbody>

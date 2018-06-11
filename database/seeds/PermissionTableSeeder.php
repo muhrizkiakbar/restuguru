@@ -98,7 +98,7 @@ class PermissionTableSeeder extends Seeder
             ],
             [
         		'name' => 'deleted-transaksipenjualan',
-        		'display_name' => 'Melihat Terhapus Transaksi Penjualan',
+        		'display_name' => 'Transaksi Penjualan Terhapus',
         		'description' => 'Melihat Terhapus Transaksi Penjualan',
 						'index'=>'1',
 						'urlindex'=>'transaksipenjualandeletedindex'
@@ -137,7 +137,7 @@ class PermissionTableSeeder extends Seeder
             ],
             [
         		'name' => 'deleted-angsuranpenjualan',
-        		'display_name' => 'Melihat Terhapus Angsuran Penjualan',
+        		'display_name' => 'Angsuran Penjualan Terhapus',
         		'description' => 'Melihat Terhapus Angsuran Penjualan',
 						'index'=>'1',
 						'urlindex'=>'angsuranpenjualandeletedindex'
@@ -171,8 +171,8 @@ class PermissionTableSeeder extends Seeder
 					],
 					[
         		'name' => 'deleted-transaksipengeluaran',
-        		'display_name' => 'History Terhapus Transaksi Pengeluaran',
-        		'description' => 'History Terhapus Transaksi Pengeluaran',
+        		'display_name' => 'Transaksi Pengeluaran Terhapus',
+        		'description' => 'Melihat Terhapus Transaksi Pengeluaran',
 						'index'=>'1',
 						'urlindex'=>'pengeluarandeletedindex'
         	],
@@ -207,6 +207,13 @@ class PermissionTableSeeder extends Seeder
         		'description' => 'Data Angsuran Pengeluaran',
 						'index'=>'1',
 						'urlindex'=>'listangsuranpengeluaranindex'
+					],
+					[
+        		'name' => 'deleted-angsuranpengeluaran',
+        		'display_name' => 'Angsuran Pengeluaran Terhapus',
+        		'description' => 'Data Angsuran Pengeluaran Terhapus',
+						'index'=>'1',
+						'urlindex'=>'deletedangsuranpengeluaranindex'
         	],
         	[
         		'name' => 'add-angsuranpengeluaran',

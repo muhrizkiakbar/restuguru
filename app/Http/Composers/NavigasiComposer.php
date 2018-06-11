@@ -5,7 +5,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class InstansiUserComposer {
+use App\Role;
+use App\Permission;
+use App\kategorimenu;
+use App\kategori_permission;
+
+class NavigasiComposer {
 
     /**
      * Bind data to the view.
@@ -16,47 +21,44 @@ class InstansiUserComposer {
     public function compose(View $view)
     {
         if (Auth::check()) {
-            
-            
+            $permission=Permission::leftJoin('permission_role','permissions.id','=','permission_role.permission_id')
+                        ->where('permission_role.role_id','=',Auth::user()->roles->first()->id)
+                        ->pluck('permission_role.permission_id');
+                        // ->get();
+            // dd($permission);
+            $tanpakategoris=kategorimenu::leftJoin('kategori_permission','kategori_permission.kategori_id','=','kategorimenu.id')
+                                ->whereIn('kategori_permission.permission_id',$permission)
+                                // ->groupBy('kategori_permission.kategori_id')
+                                ->distinct()
+                                ->select('kategorimenu.id','kategorimenu.namakategorimenu','kategorimenu.icon')
+                                ->get();
+            $datas=array();
+            foreach ($tanpakategoris as $key => $tanpakategori){
+                $subdata=[];
+                $subdata['id']=$tanpakategori->id;
+                $subdata['namakategorimenu']=$tanpakategori->namakategorimenu;
+                $subdata['icon']=$tanpakategori->icon;
+                    $pages=kategorimenu::leftJoin('kategori_permission','kategori_permission.kategori_id','=','kategorimenu.id')
+                                        ->leftJoin('permissions','kategori_permission.permission_id','=','permissions.id')
+                                        ->whereIn('kategori_permission.permission_id',$permission)
+                                        ->where('kategorimenu.id','=',$tanpakategori->id)
+                                        // ->groupBy('kategori_permission.kategori_id')
+                                        // ->distinct()
+                                        ->select('permissions.id','permissions.display_name','permissions.urlindex')
+                                        ->get();;
+                $subdata['page']=[];
+                    foreach ($pages as $key=>$page){
+                        $detaildata=[];
+                        $detaildata['id']=$page->id;
+                        $detaildata['display_name']=$page->display_name;
+                        $detaildata['urlindex']=$page->urlindex;
 
-            $instansi=Auth::user()->instansi_id;
-            // dd($instansi);
-            $tambahpegawai=array();
-            $datatambahpegawai=array();
-            $updatefinger=array();
-            $dataupdatefinger=array();
-            $data=array();
-
-
-            $finger=DB::raw("(SELECT pegawai_id,COUNT(pegawai_id) as finger from fingerpegawais group by pegawai_id) as fingerpegawais");
-            $tanpapegawai=hapusfingerpegawai::pluck('pegawai_id')->all();
-            $adminsidikjari=adminpegawai::pluck('pegawai_id')->all();
-
-            $table=pegawai::
-            leftJoin($finger,'fingerpegawais.pegawai_id','=','pegawais.id')
-            ->where('instansi_id','=',$instansi)
-            ->where('finger','=',2)
-            ->whereNotIn('id',$tanpapegawai)
-            ->whereNotIn('id',$adminsidikjari)
-            ->count();
-
-            $countlogpegawai=lograspberry::where('instansi_id','=',$instansi)
-                        ->where('jumlahpegawaifinger','<',$table)
-                        ->count();
-
-            $tambahpegawai['pegawaifinger']=$countlogpegawai;
-
-            array_push($data,$tambahpegawai);
-
-            $countfingerupdate=historyfingerpegawai::where('instansi_id','=',$instansi)
-                                ->where('statushapus','=',0)
-                                ->count();
-            $updatefinger['updatefinger']=$countfingerupdate;
-
-            array_push($data,$updatefinger);
-
-            // return $data;
-            $view->with('notification', $data);
+                        array_push($subdata['page'],$detaildata);
+                    }
+                array_push($datas,$subdata);
+            }
+            // dd($datas);
+            $view->with('sidebars',$datas);
         }
     }
  

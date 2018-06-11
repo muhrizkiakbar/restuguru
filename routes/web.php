@@ -18,6 +18,9 @@ Route::get('/', function () {
 Route::post('/','LoginController@postLogin');
 Route::post('/login','LoginController@postLogin');
 
+Route::post('/transaksi/angsuran/add/all','AngsuranPenjualanController@storeall')->name('angsuranpenjualanstoreall');
+
+Route::get('/transaksi/angsuran/tagihan','AngsuranPenjualanController@daftartagih')->name('penagihanpenjualanindex');
 
 Route::get('/login', function () {
     return view('login');
@@ -84,9 +87,11 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/transaksi/angsuran/list',['middleware' => ['permission:list-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@angsuranlist'])->name('listangsuranpenjualanindex');
         Route::post('/transaksi/angsuran/list',['middleware' => ['permission:list-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@angsuranlist'])->name('listangsuranpenjualan');
 
+
         Route::get('/transaksi/angsuran',['middleware' => ['permission:manage-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@index'])->name('angsuranpenjualanindex');
         Route::post('/transaksi/angsuran',['middleware' => ['permission:manage-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@index'])->name('angsuranpenjualan');
         Route::get('/transaksi/angsuran/show',['middleware' => ['permission:manage-angsuranpenjualan|manage-transaksipenjualan'], 'uses' => 'AngsuranPenjualanController@showangsuran'])->name('showangsuranpenjualan');
+
         Route::post('/transaksi/angsuran/add',['middleware' => ['permission:add-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@store'])->name('storeangsuran');
         Route::post('/transaksi/angsuran/delete',['middleware' => ['permission:delete-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@destroy'])->name('destroyangsuran');
         Route::get('/transaksi/angsuran/report/detail/{id}','AngsuranPenjualanController@reportdetail')->name('reportdetail');
@@ -121,6 +126,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/transaksi/pengeluaran/angsuran/show',['middleware' => ['permission:manage-angsuranpengeluaran|manage-transaksipengeluaran'], 'uses' => 'AngsuranPengeluaranController@showangsuran'])->name('showangsuranpengeluaran');
         Route::post('/transaksi/pengeluaran/angsuran/store',['middleware' => ['permission:add-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@store'])->name('storeangsuranpengeluaran');
         Route::post('/transaksi/pengeluaran/angsuran/delete',['middleware' => ['permission:delete-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@destroy'])->name('destroyangsuranpengeluaran');
+        Route::get('/transaksi/pengeluaran/angsuran/deleted',['middleware' => ['permission:deleted-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@angsurandeleted'])->name('deletedangsuranpengeluaranindex');
+        Route::post('/transaksi/pengeluaran/angsuran/deleted',['middleware' => ['permission:deleted-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@angsurandeleted'])->name('deletedangsuranpengeluaran');
         Route::get('/transaksi/pengeluaran/angsuran/report/{id}',['middleware' => ['permission:report-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@reportangsuran']);
         Route::get('/transaksi/pengeluaran/angsuran/report/detail/{id}',['middleware' => ['permission:report-angsuranpengeluarandetail'], 'uses' => 'AngsuranPengeluaranController@reportdetail']);
 

@@ -15,7 +15,7 @@ class CCabangs extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function user(){
+    public function users(){
         return $this->hasMany(User::class);
     }
 }
