@@ -352,6 +352,82 @@ class PermissionTableSeeder extends Seeder
         		'description' => 'Menghapus Kategori',
 						'index'=>'0'
 					],
+					[
+        		'name' => 'manage-specialprice',
+        		'display_name' => 'Manajemen Harga Khusus',
+        		'description' => 'Manajemen Harga Khusus',
+						'index'=>'1',
+						'urlindex'=>'managespecialprice'
+					],
+					[
+        		'name' => 'add-specialprice',
+        		'display_name' => 'Tambah Harga Khusus',
+        		'description' => 'Menambah Harga Khusus',
+						'index'=>'0'
+					],
+					[
+        		'name' => 'edit-specialprice',
+        		'display_name' => 'Edit Harga Khusus',
+        		'description' => 'Mengedit Harga Khusus',
+						'index'=>'0'
+					],
+					[
+        		'name' => 'delete-specialprice',
+        		'display_name' => 'Hapus Harga Khusus',
+        		'description' => 'Menghapus Harga Khusus',
+						'index'=>'0'
+					],
+					[
+        		'name' => 'manage-specialpricegroup',
+        		'display_name' => 'Manaj. Harga Khusus Group',
+        		'description' => 'Manajemen Harga Khusus',
+						'index'=>'1',
+						'urlindex'=>'managespecialpricegroup'
+					],
+					[
+        		'name' => 'add-specialpricegroup',
+        		'display_name' => 'Tambah Harga Khusus Group',
+        		'description' => 'Menambah Harga Khusus',
+						'index'=>'0'
+					],
+					[
+        		'name' => 'edit-specialpricegroup',
+        		'display_name' => 'Edit Harga Khusus Group',
+        		'description' => 'Mengedit Harga Khusus',
+						'index'=>'0'
+					],
+					[
+        		'name' => 'delete-specialpricegroup',
+        		'display_name' => 'Hapus Harga Khusus Group',
+        		'description' => 'Menghapus Harga Khusus',
+						'index'=>'0'
+					],
+					
+					'name' => 'manage-menu',
+					'display_name' => 'Manajemen Menu',
+					'description' => 'Manajemen Menu',
+					'index'=>'1',
+					'urlindex'=>'menuindex'
+				],
+				[
+					'name' => 'add-menu',
+					'display_name' => 'Tambah Menu',
+					'description' => 'Menambah Menu',
+					'index'=>'1',
+					'urlindex'=>'addmenuindex'
+				],
+				[
+					'name' => 'edit-menu',
+					'display_name' => 'Edit Menu',
+					'description' => 'Mengedit Menu',
+					'index'=>'0'
+				],
+				[
+					'name' => 'delete-menu',
+					'display_name' => 'Hapus Menu',
+					'description' => 'Menghapus Menu',
+					'index'=>'0'
+				],
         ];
 
 

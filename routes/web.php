@@ -26,14 +26,6 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/menu','KategoriMenuController@index')->name('kategorimenuindex');
-Route::get('/menu/add','KategoriMenuController@create')->name('kategorimenuindex');
-Route::post('/menu/add','KategoriMenuController@store')->name('storemenu');
-Route::get('/menu/edit/{id}','KategoriMenuController@show')->name('showmenu');
-Route::put('/menu/edit/{id}','KategoriMenuController@update')->name('updatemenu');
-Route::post('/menu/delete','KategoriMenuController@destroy')->name('destroymenu');
-Route::get('/menu/data','KategoriMenuController@dataload')->name('kategorimenudataload');
-
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
@@ -88,6 +80,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/transaksi/angsuran',['middleware' => ['permission:manage-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@index'])->name('angsuranpenjualanindex');
         Route::post('/transaksi/angsuran',['middleware' => ['permission:manage-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@index'])->name('angsuranpenjualan');
         Route::get('/transaksi/angsuran/show',['middleware' => ['permission:manage-angsuranpenjualan|manage-transaksipenjualan'], 'uses' => 'AngsuranPenjualanController@showangsuran'])->name('showangsuranpenjualan');
+
+        Route::post('/transaksi/angsuran/add/all',['middleware' => ['permission:add-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@storeall'])->name('angsuranpenjualanstoreall');
 
         Route::post('/transaksi/angsuran/add',['middleware' => ['permission:add-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@store'])->name('storeangsuran');
         Route::post('/transaksi/angsuran/delete',['middleware' => ['permission:delete-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@destroy'])->name('destroyangsuran');
@@ -172,6 +166,31 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/pelanggan/updatepelanggan',['middleware' => ['permission:edit-pelanggan'], 'uses' => 'PelangganController@update'])->name('updatepelanggan');
         Route::post('/pelanggan/deletepelanggan',['middleware' => ['permission:delete-pelanggan'], 'uses' => 'PelangganController@destroy'])->name('deletepelanggan');
 
+        // Special Price Route
+        Route::get('/specialprice',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@index'])->name('specialpriceindex');
+        Route::get('/specialprice/loadspecialprice',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@loadspecialprice'])->name('loadspecialprice');
+        Route::post('/specialprice/postspecialprice',['middleware' => ['permission:add-specialprice'], 'uses' => 'SpecialPriceController@store'])->name('storespecialprice');
+        Route::post('/specialprice/updatespecialprice',['middleware' => ['permission:edit-specialprice'], 'uses' => 'SpecialPriceController@update'])->name('updatespecialprice');
+        Route::post('/specialprice/deletespecialprice',['middleware' => ['permission:destroy-specialprice'], 'uses' => 'SpecialPriceController@destroy'])->name('deletespecialprice');
+                
+
+        //SpecialPriceGroup
+        Route::get('/specialpricegroup',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@index'])->name('specialpricegroupindex');
+        Route::post('/specialpricegroup/postspg',['middleware' => ['permission:add-specialpricegroup'], 'uses' => 'SpecialpricegroupController@store'])->name('storespg');
+        Route::get('/specialpricegroup/loaddata',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@loaddatatable'])->name('loaddata');
+        Route::post('/specialpricegroup/updatespg',['middleware' => ['permission:edit-specialpricegroup'], 'uses' => 'SpecialpricegroupController@update'])->name('updatespg');
+        Route::post('/specialpricegroup/deletespg',['middleware' => ['permission:destroy-specialpricegroup'], 'uses' => 'SpecialpricegroupController@destroy'])->name('deletespg');
+
+        //menu
+        Route::get('/menu',['middleware' => ['permission:manage-menu'], 'uses' => 'KategoriMenuController@index'])->name('menuindex');
+        Route::get('/menu/add',['middleware' => ['permission:add-menu'], 'uses' => 'KategoriMenuController@create'])->name('addmenuindex');
+        Route::post('/menu/add',['middleware' => ['permission:add-menu'], 'uses' => 'KategoriMenuController@store'])->name('storemenu');
+        Route::get('/menu/edit/{id}',['middleware' => ['permission:edit-menu'], 'uses' => 'KategoriMenuController@show'])->name('showmenuindex');
+        Route::put('/menu/edit/{id}',['middleware' => ['permission:edit-menu'], 'uses' => 'KategoriMenuController@update'])->name('updatemenu');
+        Route::post('/menu/delete',['middleware' => ['permission:delete-menu'], 'uses' => 'KategoriMenuController@destroy'])->name('destroymenu');
+        Route::get('/menu/data',['middleware' => ['permission:manage-menu'], 'uses' => 'KategoriMenuController@dataload'])->name('kategorimenudataload');
+
+
         Route::get('/ubahpassword','UserController@indexchangepassword');
         Route::post('/ubahpassword','UserController@changepassword');
         Route::get('/logout',function (){
@@ -179,17 +198,4 @@ Route::group(['middleware' => 'auth'], function() {
             return redirect('/')->with('error', 'Logout Berhasil');
         });
 });
-// Special Price Route
-Route::get('/specialprice','SpecialPriceController@index');
-Route::get('/specialprice/loadspecialprice','SpecialPriceController@loadspecialprice')->name('loadspecialprice');
-Route::post('/specialprice/postspecialprice','SpecialPriceController@store')->name('storespecialprice');
-Route::post('/specialprice/updatespecialprice','SpecialPriceController@update')->name('updatespecialprice');
-Route::post('/specialprice/deletespecialprice','SpecialPriceController@destroy')->name('deletespecialprice');
-        
 
-//SpecialPriceGroup
-Route::get('/specialpricegroup','SpecialpricegroupController@index');
-Route::post('/specialpricegroup/postspg','SpecialpricegroupController@store')->name('storespg');
-Route::get('/specialpricegroup/loaddata','SpecialpricegroupController@loaddatatable')->name('loaddata');
-Route::post('/specialpricegroup/updatespg','SpecialpricegroupController@update')->name('updatespg');
-Route::post('/specialpricegroup/deletespg','SpecialpricegroupController@destroy')->name('deletespg');
