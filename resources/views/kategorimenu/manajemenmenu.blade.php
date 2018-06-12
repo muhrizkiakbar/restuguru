@@ -37,10 +37,10 @@
                     <div class="col-xs-12">
                         <div class="box box-default">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Manajemen Role</h3>
+                                <h3 class="box-title">Manajemen Menu</h3>
                             </div>
                             <div class="box-body">
-                                <a href="{{route('addrole')}}" class="btn btn-primary" >
+                                <a href="{{route('kategorimenuindex')}}" class="btn btn-primary" >
                                     Tambah
                                 </a>
                                 <hr>
@@ -48,9 +48,9 @@
                                     <table id="tableaja" class="table">
                                         <thead>
                                         <tr>
-                                            <th>Name Role</th>
-                                            <th>Display Role</th>
-                                            <th>Description</th>
+                                            <th>Name Menu</th>
+                                            <th>Icon</th>
+                                            <th>Page</th>
                                             <th width="50px">Edit</th>
                                         </tr>
                                         </thead>
@@ -84,7 +84,7 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Hapus Role</h4>
+                                <h4 class="modal-title">Hapus Menu</h4>
                             </div>
                             <div class="modal-body">
                                 <form id="formdelete" action="#" method="post" role="form" enctype="multipart/form-data">
@@ -93,7 +93,7 @@
                                         Peringatan
                                     </h4>
                                     {{csrf_field()}}
-                                    Yakin ingin menghapus role <span class="label"></span>?
+                                    Yakin ingin menghapus menu <span class="label"></span>?
                                     <input id="delid" name="delid" type="hidden">
                                 </form>
                             </div>
@@ -149,11 +149,11 @@
             oTable = $('#tableaja').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('datarole')}}',
+                ajax: '{{route('kategorimenudataload')}}',
                 columns: [
-                    { data: 'name', name: 'name' },
-                    { data: 'display_name', name: 'nama' },
-                    { data: 'description', name: 'description' },
+                    { data: 'namakategorimenu', name: 'namakategorimenu' },
+                    { data: 'icon', name: 'icon' },
+                    { data: 'pages', name: 'pages' },
                     {data:'edit'}
                 ]
             });
@@ -172,7 +172,7 @@
         $(document).on('click','#simpandel',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('destroyrole')}}',
+                url:'{{route('destroymenu')}}',
                 data: new FormData($('#formdelete')[0]),
                 dataType:'json',
                 async:false,

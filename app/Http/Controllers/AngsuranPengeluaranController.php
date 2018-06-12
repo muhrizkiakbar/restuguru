@@ -321,6 +321,131 @@ class AngsuranPengeluaranController extends Controller
                                                 'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
     }
 
+    public function angsurandeleted(Request $request)
+    {
+        $date=date('d-m-Y');
+        if ($request->tanggal==""){
+            $request->tanggal=$date;
+        }
+        else
+        {
+            $request->tanggal=date('d-m-Y',strtotime($request->tanggal));
+        }
+
+        if (($request->jenispengeluaran=="semua") || ($request->jenispengeluaran=="")){
+            $request->jenispengeluaran="";
+        }
+        else
+        {
+            $request->jenispengeluaran=decrypt($request->jenispengeluaran);
+        }
+
+        if (($request->pembayaran2=="semua") || ($request->pembayaran2=="")){
+            $pembayaran="";
+        }
+        else
+        {
+            $pembayaran=$request->pembayaran2;
+        }
+
+        if ($request->periode=="hari"){
+            $datas=Angsuran_Pengeluarans::leftJoin('Transaksi_Pengeluarans','Angsuran_Pengeluarans.transaksipengeluaran_id','=','Transaksi_Pengeluarans.id')
+                            ->leftJoin('Users','Angsuran_Pengeluarans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Angsuran_Pengeluarans.cabang_id','=','Cabangs.id')
+                            ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
+                                    'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
+                                    ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
+                            ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
+                            ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
+                            ->where('Angsuran_Pengeluarans.tanggal_angsuran','=',$request->tanggal)
+                            ->orderBy('created_at','desc')
+                            ->onlyTrashed()
+                            ->paginate(50);
+
+            
+        }
+        elseif ($request->periode=="semua"){
+            $datas=Angsuran_Pengeluarans::leftJoin('Transaksi_Pengeluarans','Angsuran_Pengeluarans.transaksipengeluaran_id','=','Transaksi_Pengeluarans.id')
+                            ->leftJoin('Users','Angsuran_Pengeluarans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Angsuran_Pengeluarans.cabang_id','=','Cabangs.id')
+                            ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
+                                    'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
+                                    ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
+                            ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
+                            ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
+                            ->onlyTrashed()
+                            ->orderBy('created_at','desc')
+                            ->paginate(50);
+
+            
+        }
+        elseif ($request->periode=="bulan"){
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
+
+            $datas=Angsuran_Pengeluarans::leftJoin('Transaksi_Pengeluarans','Angsuran_Pengeluarans.transaksipengeluaran_id','=','Transaksi_Pengeluarans.id')
+                            ->leftJoin('Users','Angsuran_Pengeluarans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Angsuran_Pengeluarans.cabang_id','=','Cabangs.id')
+                            ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
+                                    'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
+                                    ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
+                            ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
+                            ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
+                            ->whereMonth('Angsuran_Pengeluarans.tanggal_angsuran','=',$bulan)
+                            ->whereYear('Angsuran_Pengeluarans.tanggal_angsuran','=',$tahun)
+                            ->orderBy('created_at','desc')
+                            ->onlyTrashed()
+                            ->paginate(50);
+
+        }
+        elseif ($request->periode=="tahun")
+        {
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
+            $datas=Angsuran_Pengeluarans::leftJoin('Transaksi_Pengeluarans','Angsuran_Pengeluarans.transaksipengeluaran_id','=','Transaksi_Pengeluarans.id')
+                            ->leftJoin('Users','Angsuran_Pengeluarans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Angsuran_Pengeluarans.cabang_id','=','Cabangs.id')
+                            ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
+                                    'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
+                                    ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
+                            ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
+                            ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
+                            ->whereYear('Angsuran_Pengeluarans.tanggal_angsuran','=',$tahun)
+                            ->orderBy('created_at','desc')
+                            ->onlyTrashed()
+                            ->paginate(50);
+        }
+        else
+        {
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
+            $datas=Angsuran_Pengeluarans::leftJoin('Transaksi_Pengeluarans','Angsuran_Pengeluarans.transaksipengeluaran_id','=','Transaksi_Pengeluarans.id')
+                            ->leftJoin('Users','Angsuran_Pengeluarans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Angsuran_Pengeluarans.cabang_id','=','Cabangs.id')
+                            ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
+                                    'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
+                                    ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->orderBy('created_at','desc')
+                            ->onlyTrashed()
+                            ->paginate(50);
+        }
+        // dd($datas);
+        $jenispengeluaran=Jenis_Pengeluaran::all();
+        return view('transaksis.pengeluaran.piutang.angsuranlist',['date'=>$date,'datas'=>$datas,
+                                                'datajenispengeluarans'=>$jenispengeluaran,
+                                                'jenispengeluaran'=>$request->jenispengeluaran,
+                                                'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
+                                                'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
+                                                'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
+    }
+
 
     public function showangsuran(Request $request){
         $request->id=decrypt($request->id);

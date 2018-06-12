@@ -44,15 +44,6 @@
                         <form action="/changepassword" method="post">
                             <div class="row">
                                 <div class="col-md-12">
-                                  <div class="form-group">
-                                      <label>Email</label>
-                                      <div class="input-group bootstrap-timepicker timepicker">
-                                          <div class="input-group-addon">
-                                              <i class="fa fa-key"></i>
-                                          </div>
-                                          <input id="email" name="email" class="form-control" type="text" value="{{Auth::user()->email}}">
-                                      </div>
-                                  </div>
                                     <div class="form-group">
                                         <label>Password Lama</label>
                                         <div class="input-group bootstrap-timepicker timepicker">

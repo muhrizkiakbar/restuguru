@@ -449,6 +449,16 @@ return [
             'required'=> 'Harga harus diisi !',
             'numeric'=> 'Harga berupa angka !',
         ],
+        'namemenu'=>[
+            'required'=> 'Nama submenu harus diisi !',
+            'unique'=> 'Submenu sudah ada !'
+        ],
+        'icon'=>[
+            'required'=> 'Icon harus dipilih !'
+        ],
+        'page'=>[
+            'required'=> 'Halaman harus diisi !'
+        ]
     ],
 
     /*

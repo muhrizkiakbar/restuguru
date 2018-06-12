@@ -146,7 +146,7 @@ class AngsuranPenjualanController extends Controller
         }
         // dd($request->periode);
         if ($request->periode=="hari"){
-
+            // dd("as");
             $datas=Angsuran::leftJoin('Transaksi_Penjualans','Angsurans.transaksipenjualan_id','=','Transaksi_Penjualans.id')
                             ->leftJoin('Users','Angsurans.user_id','=','Users.id')
                             ->leftJoin('Cabangs','Angsurans.cabang_id','=','Cabangs.id')
@@ -156,7 +156,7 @@ class AngsuranPenjualanController extends Controller
                             ->where('Angsurans.id','like','%'.$request->nonota.'%')
                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                             ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
-                            ->where('Angsurans.tanggal_angsuran','=',$request->tanggal)
+                            ->where('Angsurans.tanggal_angsuran','like','%'.date('Y-m-d',strtotime($request->tanggal)).'%')
                             ->orderBy('created_at','desc')
                             ->paginate(50);
 
@@ -319,7 +319,7 @@ class AngsuranPenjualanController extends Controller
                                         ->where('Transaksi_Penjualans.tanggal','=',$request->tanggal)
                                         // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()
+                                        ->onlyTrashed()
                                         ->paginate(50);
         }
         elseif ($request->periode=="semua"){
@@ -333,7 +333,7 @@ class AngsuranPenjualanController extends Controller
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
                                         // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                        
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()
+                                        ->onlyTrashed()
                                         ->paginate(50);
         }
         elseif ($request->periode=="bulan"){
@@ -352,7 +352,7 @@ class AngsuranPenjualanController extends Controller
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)  
                                         // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                              
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()
+                                        ->onlyTrashed()
                                         ->paginate(50);
         }
         elseif ($request->periode=="tahun")
@@ -371,7 +371,7 @@ class AngsuranPenjualanController extends Controller
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)  
                                         // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                              
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()
+                                        ->onlyTrashed()
                                         ->paginate(50);
         }
         else
@@ -386,7 +386,7 @@ class AngsuranPenjualanController extends Controller
                                         ->where('Transaksi_Penjualans.cabang_id','=','1')   
                                         // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                                         
                                         ->orderBy('created_at','desc')
-                                        ->withTrashed()
+                                        ->onlyTrashed()
                                         ->paginate(50);
         }
         
@@ -426,6 +426,46 @@ class AngsuranPenjualanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     //pelanggan harus didaftarkan apabila behutang yg nominal nya banyak
+     public function daftartagih(Request $request){
+         $hariini=date('Y-m-d');
+
+        $data=[];
+
+        $pelanggans=CTransaksi_Penjualans::where('sisa_tagihan','>','0')
+                    ->select('nama_pelanggan','pelanggan_id','hp_pelanggan')
+                    ->groupBy('nama_pelanggan','pelanggan_id','hp_pelanggan')
+                    ->get();
+        foreach ($pelanggans as $key=>$pelanggan)
+        {
+            $data['pelanggan']=$pelanggan->nama_pelanggan;
+            $data['hp_pelanggan']=$pelanggan->hp_pelanggan;
+
+            $totaltagihan=CTransaksi_Penjualans::where('sisa_tagihan','>','0')
+                    ->where('nama_pelanggan','=',$pelanggan->nama_pelanggan)
+                    ->where('hp_pelanggan','=',$pelanggan->hp_pelanggan)
+                    ->orWhere('pelanggan_id','=',$pelanggan->pelanggan_id)
+                    // ->where('Transaksi_Penjualans.tanggal','<',strtotime("+".'Pelanggans.tempo_pelanggan'." days",strtotime($hariini)))
+                    // ->select('Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.pelanggan_id','Transaksi_Penjualans.hp_pelanggan')
+                    // ->groupBy('Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.pelanggan_id')
+                    ->sum('Transaksi_Penjualans.total_harga');
+            $data['totaltagihan']=$totaltagihan;
+
+            if ($pelanggan->pelanggan_id=="")
+            {
+                $pelangganid=null;
+                $alamat=null;
+                $tempo="0";
+            }
+            else
+            {
+                
+            }
+
+        }
+     } 
+
+
     public function create()
     {
         //
@@ -470,6 +510,72 @@ class AngsuranPenjualanController extends Controller
         {
             return "{\"msg\":\"failed\"}";            
         }
+    }
+
+    public function storeall(Request $request)
+    {
+        $sisaangsuran=$request->json('nominalangsuran');
+        $status=false;
+        foreach ($request->json('idtrans') as $key=>$idtran)
+        {
+            $idtrans=decrypt($idtran);
+            $date=date('Y-m-d');
+            // dd($idtrans);
+    
+            $transaksi=CTransaksi_Penjualans::where('id','=',$idtrans)
+                                ->first();
+
+            if ($transaksi->sisa_tagihan >= $sisaangsuran)
+            {
+                $sisa=$transaksi->sisa_tagihan - $sisaangsuran;
+                $sisa2=$sisaangsuran;
+                $sisaangsuran=0;
+            }
+            else
+            {
+                // $sisa=$sisaangsuran-$transaksi->sisa_tagihan;
+                $sisa=0;
+                $sisa2=$transaksi->sisa_tagihan;
+                $sisaangsuran=$sisaangsuran-$transaksi->sisa_tagihan;
+            }
+            $jumlahpembayaran=$transaksi->jumlah_pembayaran + $sisa2;
+
+            $transaksi->sisa_tagihan=$sisa;
+            $transaksi->jumlah_pembayaran=$jumlahpembayaran;
+            $transaksi->save();
+            
+            
+
+
+            $table=new Angsuran;
+            $table->tanggal_angsuran=$date;
+            $table->nominal_angsuran=$sisa2;
+            $table->user_id='1';
+            $table->cabang_id='1';
+            $table->transaksipenjualan_id=$idtrans;
+            $table->metode_pembayaran=$request->json('pembayaran');
+
+            $table->sisa_angsuran=$sisa;
+            if ($table->save())
+            {
+                $status=true;
+                
+            }
+            else
+            {
+                $status=false;
+                
+            }
+        }
+        //
+        if ($status){
+            return "{\"msg\":\"success\"}";
+        }
+        else
+        {
+            return "{\"msg\":\"failed\"}";
+        }
+        
     }
 
     /**
