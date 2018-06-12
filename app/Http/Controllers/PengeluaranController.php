@@ -699,6 +699,7 @@ class PengeluaranController extends Controller
                     <button type="button" class="modal_edit btn btn-info btn-sm" data-toggle="modal" 
                         data-jenis="'.$tables->jenis_pengeluaran.'"
                         data-angsuran="'.$tables->sifat_angsuran.'"
+                        data-mode="'.$tables->form_mode.'"
                         data-keterangan="'.$tables->keterangan.'"
                         data-id="'.encrypt($tables->id).'" 
                     data-target="#modal_edit"><i class="fa fa-fw fa-edit"></i></button>
@@ -723,6 +724,7 @@ class PengeluaranController extends Controller
         $rules=array(
             'tambah_jenisPengeluaran'   =>  'required',
             'tambah_sifatAngsuran'   =>  'required',
+            'tambah_mode'   =>  'required',
         );
         // dd(decrypt($request->tambah_jenispelanggan));
         $count=Jenis_Pengeluaran::where([
@@ -740,6 +742,7 @@ class PengeluaranController extends Controller
             $table= new Jenis_Pengeluaran;
             $table->jenis_pengeluaran = $request->tambah_jenisPengeluaran;
             $table->sifat_angsuran = $request->tambah_sifatAngsuran;
+            $table->form_mode = $request->tambah_mode;
             $table->keterangan = $request->tambah_keterangan;
 
             if ($table->save()){
@@ -755,6 +758,7 @@ class PengeluaranController extends Controller
         $rules=array(
             'edit_jenisPengeluaran'   =>  'required',
             'edit_sifatAngsuran'   =>  'required',
+            'edit_mode'   =>  'required',
         );
         $validator=Validator::make(Input::all(),$rules);
         if($validator->fails()){
@@ -765,6 +769,7 @@ class PengeluaranController extends Controller
                     ->first();
             $table->jenis_pengeluaran = $request->edit_jenisPengeluaran;
             $table->sifat_angsuran = $request->edit_sifatAngsuran;
+            $table->form_mode = $request->edit_mode;
             $table->keterangan = $request->edit_keterangan;
 
             if ($table->save()){
