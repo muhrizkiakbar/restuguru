@@ -402,7 +402,7 @@ class PermissionTableSeeder extends Seeder
         		'description' => 'Menghapus Harga Khusus',
 						'index'=>'0'
 					],
-					
+				[
 					'name' => 'manage-menu',
 					'display_name' => 'Manajemen Menu',
 					'description' => 'Manajemen Menu',
@@ -427,7 +427,7 @@ class PermissionTableSeeder extends Seeder
 					'display_name' => 'Hapus Menu',
 					'description' => 'Menghapus Menu',
 					'index'=>'0'
-				],
+				]
         ];
 
 
