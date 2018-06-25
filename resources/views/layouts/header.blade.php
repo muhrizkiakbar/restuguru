@@ -3,9 +3,9 @@
     <!-- Logo -->
     <a href="/home" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>RG</b></span>
+        <span class="logo-mini"><b>RGP</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Restu Guru</b></span>
+        <span class="logo-lg"><b>RG PROMOSINDO</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -49,24 +49,24 @@
             </li>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{asset('dist/img/avatar.png')}}" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Tes</span>
+                        <img src="{{asset('dist/img/avatarrg.png')}}" class="user-image" alt="User Image">
+                        <span class="hidden-xs">{{Auth::user()->username}}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="User Image">
+                            <img src="{{asset('dist/img/avatarrg.png')}}" class="img-circle" alt="User Image">
 
                             <p>
-                                Tes
-                                <small>Tes</small>
+                            {{Auth::user()->username}} - {{Auth::user()->cabangs->Kode_Cabang}}
+                                <small>{{Auth::user()->roles->first()->display_name}}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="/changepassword" class="btn btn-default btn-flat">Edit Profil</a>
+                                <a href="/ubahpassword" class="btn btn-default btn-flat">Edit Profil</a>
                             </div>
                             <div class="pull-right">
                                 <a href="/logout" class="btn btn-default btn-flat">Sign out</a>

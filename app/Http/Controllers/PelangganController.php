@@ -97,14 +97,15 @@ class PelangganController extends Controller
         //
         $rules=array(
             'tambah_namapemilik'=>'required',
-            'tambah_ktppelanggan'=>'required',
-            'tambah_hppelanggan'=>'required',
+            'tambah_ktppelanggan'=>'required | numeric',
+            'tambah_hppelanggan'=>'required | numeric',
             'tambah_namaperusahaan'=>'required',
-            'tambah_teleponpelanggan'=>'required',
-            'tambah_emailpelanggan'=>'required',
+            'tambah_teleponpelanggan'=>'numeric',
+            'tambah_emailpelanggan'=>'required | email',
             'tambah_alamatpelanggan'=>'required',
-            'tambah_limittagihan'=>'required',
-            'tambah_rekpelanggan'=>'required',
+            'tambah_limittagihan'=>'required | numeric',
+            'tambah_rekpelanggan'=>'required | numeric',
+            'tambah_keterangan'=>'required',
         );
 
         $validator=Validator::make(Input::all(),$rules);
@@ -170,14 +171,14 @@ class PelangganController extends Controller
         $rules=array(
             'edit_jenis_pelanggan'=>'required',
             'edit_namapemilik'=>'required',
-            'edit_ktppelanggan'=>'required',
-            'edit_hppelanggan'=>'required',
+            'edit_ktppelanggan'=>'required | numeric',
+            'edit_hppelanggan'=>'required | numeric',
             'edit_namaperusahaan'=>'required',
-            'edit_teleponpelanggan'=>'required',
-            'edit_emailpelanggan'=>'required',
+            'edit_teleponpelanggan'=>'numeric',
+            'edit_emailpelanggan'=>'required | email',
             'edit_alamatpelanggan'=>'required',
-            'edit_limittagihan'=>'required',
-            'edit_rekpelanggan'=>'required',
+            'edit_limittagihan'=>'required | numeric',
+            'edit_rekpelanggan'=>'required | numeric',
         );
 
         $validator=Validator::make(Input::all(),$rules);

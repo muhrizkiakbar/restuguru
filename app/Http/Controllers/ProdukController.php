@@ -32,8 +32,8 @@ class ProdukController extends Controller
     }
 
     public function loadproduk(){
-        $tables=CProduks::leftJoin('kategories','produks.kategori_id','=','kategories.id')
-               ->select('produks.*','kategories.Nama_Kategori')
+        $tables=CProduks::leftJoin('Kategories','Produks.kategori_id','=','Kategories.id')
+               ->select('Produks.*','Kategories.Nama_Kategori')
                ->get();
         return Datatables::of($tables)
             -> addColumn ('action', function ($tables) {

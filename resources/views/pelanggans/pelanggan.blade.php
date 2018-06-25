@@ -88,7 +88,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <select class="form-control" placeholder="Jenis Pelanggan" name="tambah_jenis_pelanggan" id="tambah_jenis_pelanggan" style="width: 100%;">
-                                                        <option disabled selected>Jenis Pelanggan</option>
+                                                        <option value="null" disabled selected>Jenis Pelanggan</option>
                                                     @foreach ($jenispelanggans as $jenispelanggan)
                                                         <option value="{{encrypt($jenispelanggan->id)}}">{{$jenispelanggan->jenis_pelanggan}}</option>
                                                     @endforeach
@@ -432,7 +432,7 @@
                             swal("No Rekening", ""+response.errors.tambah_rekpelanggan+"", "error");
                         }
 
-                        $('#modal_tambah').modal('hide');
+                        // $('#modal_tambah').modal('hide');
                     }
                     else
                     {   if (response=="Success"){
@@ -511,7 +511,7 @@
                         if ((response.errors.edit_rekpelanggan)){
                             swal("No Rekening", ""+response.errors.edit_rekpelanggan+"", "error");
                         }
-                        $('#modal_edit').modal('hide');
+                        // $('#modal_edit').modal('hide');
                     }
                     else
                     {   if (response=="Success"){

@@ -21,7 +21,7 @@
 @endpush
 
 @section('body')
-    <body class="hold-transition skin-yellow sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
       @include('layouts.header')
@@ -84,7 +84,7 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Hapus User</h4>
+                                <h4 class="modal-title">Hapus Role</h4>
                             </div>
                             <div class="modal-body">
                                 <form id="formdelete" action="#" method="post" role="form" enctype="multipart/form-data">
@@ -181,12 +181,12 @@
                 success:function(response){
                         if (response=="Success"){
                             swal("Success !", "Berhasil menghapus !", "success");
-                            $('#modal_edit').modal('hide');
+                            $('#modal_delete').modal('hide');
                             oTable.ajax.reload();
                         }
                         else{
-                            wal("Eror !", "Gagal menghapus !", "error");
-                            $('#modal_edit').modal('hide');
+                            swal("Eror !", "Gagal menghapus !", "error");
+                            $('#modal_delete').modal('hide');
                         }
                 },
             });

@@ -6,6 +6,7 @@ use App\User;
 use App\CCabangs;
 use Illuminate\Http\Request;
 use Datatables;
+use App\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -24,13 +25,13 @@ class UserController extends Controller
     {
         //
         $cabangs=CCabangs::all();
-        return view('users.manajemenuser',['cabangs'=>$cabangs]);
+        $role=Role::all();
+        return view('users.manajemenuser',['cabangs'=>$cabangs,'roles'=>$role]);
     }
 
     public function dataalluser(){
-        $tables=User::leftJoin('users as users2','users.user_id','=','users2.id')
-                ->leftJoin('Cabangs','users.cabang_id','=','Cabangs.id')
-                ->select('users.*','users2.username as username2','Cabangs.Nama_Cabang')
+        $tables=User::leftJoin('Cabangs','Users.cabang_id','=','Cabangs.id')
+                ->select('Users.*','Cabangs.Nama_Cabang')
                 ->get();
         return Datatables::of($tables)
         ->addColumn('action', function ($tables) {
@@ -193,5 +194,35 @@ class UserController extends Controller
         }else{
             return response()->json("Failed");
         }                    
+    }
+
+    public function indexchangepassword(){
+        
+          return view('users.changepassword');
+        
+      }
+  
+    public function changepassword(Request $request){
+
+    // dd("asdads");
+        $this->validate($request, [
+            'password' => 'required',
+            'passwordbaru' => 'required|string|min:8',
+            'konfirmasipassword' => 'required|string|min:8|same:passwordbaru'
+        ]);
+
+        if (Hash::check($request->password,Hash::make($request->password))) {
+            // dd("berubah");
+            request()->user()->fill([
+                'password' => Hash::make(request()->input('passwordbaru'))
+            ])->save();
+
+            return redirect()->back()->with('statussucces','Password berhasil di ubah.');
+        }
+        else{
+            return redirect()->back()->with('statuserror','Password Salah');
+        }
+
+
     }
 }

@@ -29,6 +29,16 @@ class JenispelangganController extends Controller
                     );
     }
 
+    public function jenispelanggancari()
+    {
+        $tags = CJenispelanggans::all();
+        $formatted_tags = [];
+        foreach ($tags as $tag) {
+            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->jenis_pelanggan];
+        }
+        return response()->json($formatted_tags);
+    }
+
     public function loadjenispelanggan(){
         $tables=CJenispelanggans::all();
         return Datatables::of($tables)
@@ -48,8 +58,6 @@ class JenispelangganController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
 
     public function create()
     {

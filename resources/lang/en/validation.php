@@ -285,7 +285,199 @@ return [
         'edit_harga_khusus'=>[
             'required'=> 'Harga Khusus harus diisi !',
             'numeric' => 'Harga harus berupa angka !',
-        ]
+        ],
+        // cabang
+        'tambah_jenis_cabang'=>[
+            'required'=> 'Jenis Cabang harus dipilih !',
+        ],
+        'tambah_kode_cabang'=>[
+            'required'=> 'Kode Cabang harus diisi !',
+        ],
+        'tambah_nama_cabang'=>[
+            'required'=> 'Nama Cabang harus diisi !',
+        ],
+        'tambah_telepon_cabang'=>[
+            'required'=> 'Telepon Cabang harus diisi !',
+            'numeric'=> 'Nomor Telepon harus berupa angka !',
+        ],
+        'tambah_email_cabang'=>[
+            'required'=> 'Email Cabang harus diisi !',
+            'email'=> 'Email tidak sesuai format email !',
+        ],
+        'tambah_alamat_cabang'=>[
+            'required'=> 'Alamat Cabang harus diisi !',
+        ],
+        'edit_jenis_cabang'=>[
+            'required'=> 'Jenis Cabang harus dipilih !',
+        ],
+        'edit_kode_cabang'=>[
+            'required'=> 'Kode Cabang harus diisi !',
+        ],
+        'edit_nama_cabang'=>[
+            'required'=> 'Nama Cabang harus diisi !',
+        ],
+        'edit_telepon_cabang'=>[
+            'required'=> 'Telepon Cabang harus diisi !',
+            'numeric'=> 'Nomor Telepon harus berupa angka',
+        ],
+        'edit_email_cabang'=>[
+            'required'=> 'Email Cabang harus diisi !',
+            'email'=> 'Email tidak sesuai format email !',
+            
+        ],
+        'edit_alamat_cabang'=>[
+            'required'=> 'Alamat Cabang harus diisi !',
+        ],
+        // kategori
+        'tambah_nama_kategori'=>[
+            'required'=> 'Nama Kategori harus diisi !',
+        ],
+        'tambah_keterangan'=>[
+            'required'=> 'Keterangan harus diisi !',
+        ],
+        'edit_nama_kategori'=>[
+            'required'=> 'Nama Kategori harus diisi !',
+        ],
+        'edit_keterangan'=>[
+            'required'=> 'Keterangan harus diisi !',
+        ],
+        // jenis pelanggan
+        'tambah_jenispelanggan'=>[
+            'required'=> 'Jenis Pelanggan harus diisi !',
+        ],
+        'edit_jenispelanggan'=>[
+            'required'=> 'Jenis Pelanggan harus diisi !',
+        ],
+        // pelanggan
+        'tambah_namapemilik'=>[
+            'required'=> 'Nama harus diisi !',
+        ],
+        'tambah_ktppelanggan'=>[
+            'required'=> 'KTP harus diisi !',
+            'numeric'=> 'KTP harus berupa angka !',
+        ],
+        'tambah_hppelanggan'=>[
+            'required'=> 'Nomor Handphone harus diisi !',
+            'numeric'=> 'Nomor Handphone harus berupa angka !',
+        ],
+        'tambah_namaperusahaan'=>[
+            'required'=> 'Nama Perusahaan harus diisi !',
+        ],
+        'tambah_teleponpelanggan'=>[
+            'required'=> 'Telepon harus diisi !',
+            'numeric'=> 'Telepon harus berupa angka !',
+        ],
+        'tambah_emailpelanggan'=>[
+            'required'=> 'Email harus diisi !',
+            'email'=> 'Email tidak sesuai format email !'
+        ],
+        'tambah_alamatpelanggan'=>[
+            'required'=> 'Alamat harus diisi !',
+        ],
+        'tambah_jenispelanggan'=>[
+            'required'=> 'Jenis Pelanggan harus diisi !',
+        ],
+        'tambah_limittagihan'=>[
+            'required'=> 'Limit Tagihan harus diisi !',
+            'numeric'=> 'Limit Tagihan berupa angka !',
+        ],
+        'tambah_rekpelanggan'=>[
+            'required'=> 'No Rekening harus diisi !',
+            'numeric'=> 'No Rekening berupa angka !',
+        ],
+        'tambah_keterangan'=>[
+            'required'=> 'Keterangan harus diisi !',
+        ],
+        
+        'edit_namapemilik'=>[
+            'required'=> 'Nama harus diisi !',
+        ],
+        'edit_ktppelanggan'=>[
+            'required'=> 'KTP harus diisi !',
+            'numeric'=> 'KTP harus berupa angka !',
+        ],
+        'edit_hppelanggan'=>[
+            'required'=> 'Nomor Handphone harus diisi !',
+            'numeric'=> 'Nomor Handphone harus berupa angka !',
+        ],
+        'edit_namaperusahaan'=>[
+            'required'=> 'Nama Perusahaan harus diisi !',
+        ],
+        'edit_teleponpelanggan'=>[
+            'required'=> 'Telepon harus diisi !',
+            'numeric'=> 'Telepon harus berupa angka !',
+        ],
+        'edit_emailpelanggan'=>[
+            'required'=> 'Email harus diisi !',
+            'email'=> 'Email tidak sesuai format email !'
+        ],
+        'edit_alamatpelanggan'=>[
+            'required'=> 'Alamat harus diisi !',
+        ],
+        'edit_jenis_pelanggan'=>[
+            'required'=> 'Jenis Pelanggan harus diisi !',
+        ],
+        'edit_limittagihan'=>[
+            'required'=> 'Limit Tagihan harus diisi !',
+            'numeric'=> 'Limit Tagihan berupa angka !',
+        ],
+        'edit_rekpelanggan'=>[
+            'required'=> 'No Rekening harus diisi !',
+            'numeric'=> 'No Rekening berupa angka !',
+        ],
+        'edit_keterangan'=>[
+            'required'=> 'Keterangan harus diisi !',
+        ],
+        // special price group
+        'tambah_jenispelanggan'=>[
+            'required'=> 'Jenis Pelanggan harus diisi !',
+        ],
+        'tambah_produk'=>[
+            'required'=> 'Produk harus diisi !',
+        ],
+        'tambah_harga_khusus'=>[
+            'required'=> 'Harga harus diisi !',
+            'numeric'=> 'Harga berupa angka !',
+        ],
+        'id_edit_jenispelanggan'=>[
+            'required'=> 'Jenis Pelanggan harus diisi !',
+        ],
+        'id_edit_produk'=>[
+            'required'=> 'Produk harus diisi !',
+        ],
+        'edit_harga_khusus'=>[
+            'required'=> 'Harga harus diisi !',
+            'numeric'=> 'Harga berupa angka !',
+        ],
+        'namemenu'=>[
+            'required'=> 'Nama submenu harus diisi !',
+            'unique'=> 'Submenu sudah ada !'
+        ],
+        'icon'=>[
+            'required'=> 'Icon harus dipilih !'
+        ],
+        'page'=>[
+            'required'=> 'Halaman harus diisi !'
+        ],
+        //pengeluaran
+        'tambah_jenisPengeluaran'=>[
+            'required'=> 'Jenis Pengeluaran harus diisi !',
+        ],
+        'tambah_sifatAngsuran'=>[
+            'required'=> 'Sifat Angsuran harus diisi !',
+        ],
+        'tambah_mode'=>[
+            'required'=> 'Mode harus diisi !',
+        ],
+        'edit_jenisPengeluaran'=>[
+            'required'=> 'Jenis Pengeluaran harus diisi !',
+        ],
+        'edit_sifatAngsuran'=>[
+            'required'=> 'Sifat Angsuran harus diisi !',
+        ],
+        'edit_mode'=>[
+            'required'=> 'Mode harus diisi !',
+        ],
     ],
 
     /*

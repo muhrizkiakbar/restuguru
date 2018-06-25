@@ -139,7 +139,7 @@
           <div class="col-md-9">
             <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Angsuran Penjualan <i class="fa fa-money"></i></h3>
+                <h3 class="box-title"> Pelunasan Angsuran Penjualan <i class="fa fa-money"></i></h3>
               </div>
 
               <div class="box-body">
