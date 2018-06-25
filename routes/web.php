@@ -111,7 +111,7 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::get('/transaksi/pengeluaran/angsuran/list',['middleware' => ['permission:list-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@angsuranlist'])->name('listangsuranpengeluaranindex');
         Route::post('/transaksi/pengeluaran/angsuran/list',['middleware' => ['permission:list-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@angsuranlist'])->name('listangsuranpengeluaran');
-        
+
         Route::get('/transaksi/pengeluaran/angsuran',['middleware' => ['permission:manage-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@index'])->name('manageangsuranpengeluaranindex');
         Route::post('/transaksi/pengeluaran/angsuran',['middleware' => ['permission:manage-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@index'])->name('angsuranpengeluaran');
         Route::get('/transaksi/pengeluaran/angsuran/show',['middleware' => ['permission:manage-angsuranpengeluaran|manage-transaksipengeluaran'], 'uses' => 'AngsuranPengeluaranController@showangsuran'])->name('showangsuranpengeluaran');
@@ -174,7 +174,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/specialprice/postspecialprice',['middleware' => ['permission:add-specialprice'], 'uses' => 'SpecialPriceController@store'])->name('storespecialprice');
         Route::post('/specialprice/updatespecialprice',['middleware' => ['permission:edit-specialprice'], 'uses' => 'SpecialPriceController@update'])->name('updatespecialprice');
         Route::post('/specialprice/deletespecialprice',['middleware' => ['permission:destroy-specialprice'], 'uses' => 'SpecialPriceController@destroy'])->name('deletespecialprice');
-                
+
 
         //SpecialPriceGroup
         Route::get('/specialpricegroup',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@index'])->name('specialpricegroupindex');
@@ -182,6 +182,20 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/specialpricegroup/loaddata',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@loaddatatable'])->name('loaddata');
         Route::post('/specialpricegroup/updatespg',['middleware' => ['permission:edit-specialpricegroup'], 'uses' => 'SpecialpricegroupController@update'])->name('updatespg');
         Route::post('/specialpricegroup/deletespg',['middleware' => ['permission:destroy-specialpricegroup'], 'uses' => 'SpecialpricegroupController@destroy'])->name('deletespg');
+
+        // Bahan Baku Route
+        Route::get('/bahanbaku',['middleware' => ['permission:manage-bahanbaku'], 'uses' => 'BahanBakuController@index'])->name('managebahanbakuindex');
+        Route::get('/bahanbaku/loadbahanbaku',['middleware' => ['permission:manage-bahanbaku'], 'uses' => 'BahanBakuController@loadbahanbaku'])->name('loadbahanbaku');
+        Route::post('/bahanbaku/postbahanbaku',['middleware' => ['permission:add-bahanbaku'], 'uses' => 'BahanBakuController@store'])->name('storebahanbaku');
+        Route::post('/bahanbaku/updatebahanbaku',['middleware' => ['permission:edit-bahanbaku'], 'uses' => 'BahanBakuController@update'])->name('updatebahanbaku');
+        Route::post('/bahanbaku/deletebahanbaku',['middleware' => ['permission:delete-bahanbaku'], 'uses' => 'BahanBakuController@destroy'])->name('deletebahanbaku');
+
+        // Relasi Bahan Baku Route
+        Route::get('/relasibahanbaku',['middleware' => ['permission:manage-relasibahanbaku'], 'uses' => 'RelasiBahanBakuController@index'])->name('managerelasibahanbakuindex');
+        Route::get('/relasibahanbaku/loadrelasibahanbaku',['middleware' => ['permission:manage-relasibahanbaku'], 'uses' => 'RelasiBahanBakuController@loadrelasibahanbaku'])->name('loadrelasibahanbaku');
+        Route::post('/relasibahanbaku/postrelasibahanbaku',['middleware' => ['permission:add-relasibahanbaku'], 'uses' => 'RelasiBahanBakuController@store'])->name('storerelasibahanbaku');
+        Route::post('/relasibahanbaku/updaterelasibahanbaku',['middleware' => ['permission:edit-relasibahanbaku'], 'uses' => 'RelasiBahanBakuController@update'])->name('updaterelasibahanbaku');
+        Route::post('/relasibahanbaku/deleterelasibahanbaku',['middleware' => ['permission:delete-relasibahanbaku'], 'uses' => 'RelasiBahanBakuController@destroy'])->name('deleterelasibahanbaku');
 
         //menu
         Route::get('/menu',['middleware' => ['permission:manage-menu'], 'uses' => 'KategoriMenuController@index'])->name('menuindex');
@@ -200,4 +214,3 @@ Route::group(['middleware' => 'auth'], function() {
             return redirect('/')->with('error', 'Logout Berhasil');
         });
 });
-
