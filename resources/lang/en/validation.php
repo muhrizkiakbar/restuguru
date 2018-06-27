@@ -507,6 +507,27 @@ return [
             'required'=> 'Harga Jual harus diisi!',
             'numeric' => 'Harga Jual harus berupa angka !',
         ],
+        // relasi bahan baku
+        'tambah_r_produk'=>[
+            'required'=> 'Produk harus dipilih!',
+        ],
+        'tambah_r_bahan_baku'=>[
+            'required'=> 'Bahan Baku harus dipilih!',
+        ],
+        'tambah_qty_p_trans'=>[
+            'required'=> 'Quantity harus diisi!',
+            'numeric' => 'Quantity harus berupa angka !',
+        ],
+        'edit_r_produk'=>[
+            'required'=> 'Produk harus dipilih!',
+        ],
+        'edit_r_bahan_baku'=>[
+            'required'=> 'Bahan Baku harus dipilih!',
+        ],
+        'edit_qty_p_trans'=>[
+            'required'=> 'Quantity harus diisi!',
+            'numeric' => 'Quantity harus berupa angka !',
+        ],
     ],
 
     /*
