@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration {
 			$table->string('password', 255);
 			$table->string('Telepon', 13);
 			$table->float('gaji');
+            $table->rememberToken();
 			$table->text('Alamat');
 			$table->integer('cabang_id')->unsigned()->nullable();
 		});

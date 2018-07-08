@@ -5,17 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CCabangs extends Model 
+class CBahanBakus extends Model
 {
 
-    protected $table = 'Cabangs';
+    protected $table = 'bahanbakus';
     public $timestamps = true;
 
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
-    public function users(){
-        return $this->hasMany(User::class);
-    }
 }

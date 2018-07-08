@@ -30,9 +30,8 @@ class UserController extends Controller
     }
 
     public function dataalluser(){
-        $tables=User::leftJoin('users as users2','users.user_id','=','users2.id')
-                ->leftJoin('Cabangs','users.cabang_id','=','Cabangs.id')
-                ->select('users.*','users2.username as username2','Cabangs.Nama_Cabang')
+        $tables=User::leftJoin('Cabangs','Users.cabang_id','=','Cabangs.id')
+                ->select('Users.*','Cabangs.Nama_Cabang')
                 ->get();
         return Datatables::of($tables)
         ->addColumn('action', function ($tables) {

@@ -8,7 +8,7 @@ class Role extends EntrustRole
 {
     protected $table="roles";
 
-    public function user(){
+    public function users(){
         return $this->hasMany(User::class);
     }
 }
