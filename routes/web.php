@@ -185,9 +185,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/cabang/updatecabang',['middleware' => ['permission:edit-cabang'], 'uses' => 'CabangController@update'])->name('updatecabang');
     Route::post('/cabang/deletecabang',['middleware' => ['permission:delete-cabang'], 'uses' => 'CabangController@destroy'])->name('deletecabang');
 
+    //Home
     Route::get('/home',['middleware' => ['permission:index-home'], 'uses' => 'DashboardController@index'])->name('home');
     Route::get('/home/piedata',['middleware' => ['permission:index-home'], 'uses' => 'DashboardController@piedata'])->name('piedata');
     Route::get('/home/linedata',['middleware' => ['permission:index-home'], 'uses' => 'DashboardController@linedata'])->name('linedata');
+
+    //Laporan
+    Route::get('/laporan','LaporanController@index')->name('laporan');
+    Route::get('/laporan/filter','LaporanController@filter')->name('filter');
 
     // Jenis Pelanggan Route
     Route::get('/jenispelanggan',['middleware' => ['permission:manage-pelanggan'], 'uses' => 'JenispelangganController@index'])->name('managepelangganindex');
