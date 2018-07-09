@@ -107,7 +107,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/transaksi/pengeluaran/angsuran/list',['middleware' => ['permission:list-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@angsuranlist'])->name('listangsuranpengeluaranindex');
     Route::post('/transaksi/pengeluaran/angsuran/list',['middleware' => ['permission:list-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@angsuranlist'])->name('listangsuranpengeluaran');
-    
+
     Route::get('/transaksi/pengeluaran/angsuran',['middleware' => ['permission:manage-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@index'])->name('manageangsuranpengeluaranindex');
     Route::post('/transaksi/pengeluaran/angsuran',['middleware' => ['permission:manage-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@index'])->name('angsuranpengeluaran');
     Route::get('/transaksi/pengeluaran/angsuran/show',['middleware' => ['permission:manage-angsuranpengeluaran|manage-transaksipengeluaran'], 'uses' => 'AngsuranPengeluaranController@showangsuran'])->name('showangsuranpengeluaran');
@@ -317,7 +317,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/specialprice/loadspecialprice',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@loadspecialprice'])->name('loadspecialprice');
         Route::post('/specialprice/postspecialprice',['middleware' => ['permission:add-specialprice'], 'uses' => 'SpecialPriceController@store'])->name('storespecialprice');
         Route::post('/specialprice/updatespecialprice',['middleware' => ['permission:edit-specialprice'], 'uses' => 'SpecialPriceController@update'])->name('updatespecialprice');
-        Route::post('/specialprice/deletespecialprice',['middleware' => ['permission:destroy-specialprice'], 'uses' => 'SpecialPriceController@destroy'])->name('deletespecialprice');
+        Route::post('/specialprice/deletespecialprice',['middleware' => ['permission:delete-specialprice'], 'uses' => 'SpecialPriceController@destroy'])->name('deletespecialprice');
 
 
         //SpecialPriceGroup
@@ -325,7 +325,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/specialpricegroup/postspg',['middleware' => ['permission:add-specialpricegroup'], 'uses' => 'SpecialpricegroupController@store'])->name('storespg');
         Route::get('/specialpricegroup/loaddata',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@loaddatatable'])->name('loaddata');
         Route::post('/specialpricegroup/updatespg',['middleware' => ['permission:edit-specialpricegroup'], 'uses' => 'SpecialpricegroupController@update'])->name('updatespg');
-        Route::post('/specialpricegroup/deletespg',['middleware' => ['permission:destroy-specialpricegroup'], 'uses' => 'SpecialpricegroupController@destroy'])->name('deletespg');
+        Route::post('/specialpricegroup/deletespg',['middleware' => ['permission:delete-specialpricegroup'], 'uses' => 'SpecialpricegroupController@destroy'])->name('deletespg');
 
         // Bahan Baku Route
         Route::get('/bahanbaku',['middleware' => ['permission:manage-bahanbaku'], 'uses' => 'BahanBakuController@index'])->name('managebahanbakuindex');

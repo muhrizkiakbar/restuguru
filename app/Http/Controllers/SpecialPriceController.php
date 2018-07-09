@@ -54,11 +54,14 @@ class SpecialPriceController extends Controller
 
                         <button type="button" class="modal_hapus btn btn-danger btn-sm" data-toggle="modal"
                         data-nama_perusahaan="'.$tables->nama_perusahaan.'"
+                        data-nama_produk="'.$tables->nama_produk.'"
+                        data-harga_khusus="'.number_format($tables->harga_khusus, 2,",",".").'"
                         data-id="'.encrypt($tables->id).'"
                         data-target="#modal_hapus"><i class="fa fa-fw fa-trash"></i></button>
                 </div>
                         ';
             })
+            ->editColumn ('harga_khusus', 'Rp {{number_format($harga_khusus,2,",",".")}}')
             ->rawColumns(['action'])
             ->make(true);
     }
@@ -87,10 +90,16 @@ class SpecialPriceController extends Controller
             'pilih_produk' => 'required',
             'tambah_harga_khusus' => 'required|numeric',
         );
+        $count=CSpesialprices::where([
+            ['pelanggan_id', '=', decrypt($request->pilih_pelanggan)],
+            ['produk_id', '=', decrypt($request->pilih_produk)],
+        ])->count();
 
         $validator=Validator::make(Input::all(),$rules);
         if($validator->fails()){
             return Response::json(array('errors'=>$validator->getMessageBag()->toArray()));
+        }else if($count != 0){
+            return response()->json("Duplicated");
         }else{
             $table= new CSpesialprices;
             $table->pelanggan_id   =decrypt($request->pilih_pelanggan);
