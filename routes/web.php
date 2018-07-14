@@ -11,6 +11,9 @@
 |
 */
 
+Route::get('/jatuhtempo','TransaksiController@jatuhtempo')->name('jatuhtempoindex');
+Route::get('/jatuhtempo/cari','TransaksiController@jatuhtempocari')->name('jatuhtempocari');
+
 Route::get('/', function () {
     return view('login');
 });
@@ -22,9 +25,13 @@ Route::post('/transaksi/angsuran/add/all','AngsuranPenjualanController@storeall'
 
 Route::get('/transaksi/angsuran/tagihan','AngsuranPenjualanController@daftartagih')->name('penagihanpenjualanindex');
 
+
 Route::get('/login', function () {
     return view('login');
 });
+
+Route::get('/transaksi/report/{id}','TransaksiController@report');
+        
 
 Auth::routes();
 
@@ -121,6 +128,13 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/transaksi/pengeluaran/angsuran/deleted',['middleware' => ['permission:deleted-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@angsurandeleted'])->name('deletedangsuranpengeluaran');
         Route::get('/transaksi/pengeluaran/angsuran/report/{id}',['middleware' => ['permission:report-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@reportangsuran']);
         Route::get('/transaksi/pengeluaran/angsuran/report/detail/{id}',['middleware' => ['permission:report-angsuranpengeluarandetail'], 'uses' => 'AngsuranPengeluaranController@reportdetail']);
+        // Jenis Pengeluaran
+        Route::get('transaksi/pengeluaran/jenispengeluaran',['middleware'=> ['permission:manage-jenispengeluaran'],'uses' =>'PengeluaranController@jenispengeluaran_index'])->name('jenispengeluaranindex');
+        Route::get('transaksi/pengeluaran/jenispengeluaran/load',['middleware'=> ['permission:manage-jenispengeluaran'],'uses' =>'PengeluaranController@loadjenispengeluaran'])->name('loadjenispengeluaran');
+        Route::post('transaksi/pengeluaran/jenispengeluaran/store',['middleware'=> ['permission:store-jenispengeluaran'],'uses' =>'PengeluaranController@storejenispengeluaran'])->name('storejenispengeluaran');
+        Route::post('transaksi/pengeluaran/jenispengeluaran/update',['middleware'=> ['permission:edit-jenispengeluaran'],'uses' =>'PengeluaranController@updatejenispengeluaran'])->name('updatejenispengeluaran');
+        Route::post('transaksi/pengeluaran/jenispengeluaran/delete',['middleware'=> ['permission:destroy-jenispengeluaran'],'uses' =>'PengeluaranController@deletejenispengeluaran'])->name('deletejenispengeluaran');
+
 
 
         // Cabang Route
@@ -185,7 +199,10 @@ Route::group(['middleware' => 'auth'], function() {
 
         //menu
         Route::get('/menu',['middleware' => ['permission:manage-menu'], 'uses' => 'KategoriMenuController@index'])->name('menuindex');
+         Route::post('/menu',['middleware' => ['permission:manage-menu'], 'uses' => 'KategoriMenuController@index'])->name('menuindex');
+        
         Route::get('/menu/add',['middleware' => ['permission:add-menu'], 'uses' => 'KategoriMenuController@create'])->name('addmenuindex');
+
         Route::post('/menu/add',['middleware' => ['permission:add-menu'], 'uses' => 'KategoriMenuController@store'])->name('storemenu');
         Route::get('/menu/edit/{id}',['middleware' => ['permission:edit-menu'], 'uses' => 'KategoriMenuController@show'])->name('showmenuindex');
         Route::put('/menu/edit/{id}',['middleware' => ['permission:edit-menu'], 'uses' => 'KategoriMenuController@update'])->name('updatemenu');

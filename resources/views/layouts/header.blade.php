@@ -23,25 +23,21 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
                 <span class="label label-warning">
-                    4
+                    {{$jatuhtempopelanggan}}
                 </span>
                 </a>
                 <ul class="dropdown-menu">
                 <li>
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
-                    
+                     
                     <li>
-                        <a href="/alat/instansi">
-                        <i class="fa fa-users text-aqua"></i> Pegawai belum ditambahkan
+                        <a href="/jatuhtempo">
+                        <i class="fa fa-exclamation-circle text-red"></i>{{$jatuhtempopelanggan}} Pelanggan masuk jatuh tempo.
                         </a>
                     </li>
                    
-                    <li>
-                        <a href="/alat/instansi/sidikjari">
-                        <i class="fa fa-users text-yellow"></i>  Pegawai sidik jari belum berubah
-                        </a>
-                    </li>
+                    
                     </ul>
                 </li>
                 <!-- <li class="footer"><a href="#">View all</a></li> -->

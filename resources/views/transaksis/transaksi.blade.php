@@ -223,7 +223,7 @@
                           <div class="col-md-3">
                               <label>Total
                                   <input id="total" name="total" disabled value="0,00"  class="form-control" type="text">
-                                  <input id="total2" name="total2" disabled value="0,00"  class="form-control" type="hidden">
+                                  <input id="total2" name="total2" disabled hidden value="0,00" type="text">
                               </label>                                  
                           </div>
                       </div>
@@ -1059,14 +1059,93 @@
             }
             else
             {
-                $('#namapelanggan').attr('disabled',true);
-                $('#nomorhandphone').attr('disabled',true);
-                $('#pelanggan').attr('disabled',true);            
-                $('#handphonelabel').text('  '+$('#nomorhandphone').val());
-                $('#kepadalabel').text('  '+$('#namapelanggan').val());
+                var inputpelanggan=$('#pelanggan').val();
+                if (inputpelanggan != null)
+                {
+                    var url = "{{url('/jatuhtempo/cari')}}";
+                    $.get(url,{ pelanggan: inputpelanggan }, function(response) {
+                        console.log(response);
+                        if (response > 0)
+                        {
+                            swal({
+                                    title: "Perhatian",
+                                    text: "Pelanggan yang dipilih belum melakukan pelunasan, lanjutkan ?",
+                                    icon: "error",
+                                    buttons: true,
+                                    dangerMode: true,
+                                    })
+                                    .then((willcontinue) => {
+                                        if (willcontinue)
+                                        {
+                                            $('#namapelanggan').attr('disabled',true);
+                                            $('#nomorhandphone').attr('disabled',true);
+                                            $('#pelanggan').attr('disabled',true);            
+                                            $('#handphonelabel').text('  '+$('#nomorhandphone').val());
+                                            $('#kepadalabel').text('  '+$('#namapelanggan').val());
 
-                $('#buttonmodal_add').removeAttr('disabled');
-                $('#submitpelanggan').attr('disabled',true);
+                                            $('#buttonmodal_add').removeAttr('disabled');
+                                            $('#submitpelanggan').attr('disabled',true);
+                                        }
+                                        else
+                                        {
+                                            $('tbody').empty();
+                                            $('#diskon').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
+                                            $('#bayardp').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
+                                            $('#pembayaran').removeAttr('disabled');
+                                            $('#pajak').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
+                                            $('#sisa').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
+                                            $('#total').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
+                                            $('#metode').iCheck('enable');
+                                            $('#metode').iCheck('uncheck');
+                                            $('#namapelanggan').val("").removeAttr('disabled');
+                                            $('#nomorhandphone').val("").removeAttr('disabled');
+                                            $('#pelanggan').val('').trigger('change');
+                                            $('#submitpelanggan').removeAttr('disabled');
+                                            $('#pelanggan').removeAttr('disabled');
+                                            $('#buttonmodal_add').attr('disabled',true);
+                                            $('#kepadalabel').text('');
+                                            $('#handphonelabel').text(''); 
+                                             total3=0;
+                                             total2=0;
+                                             total=0;
+                                             diskon=0;
+                                             namaproduk="";
+                                             totalbeforediskon=0;
+                                             totalbeforepajak=0;
+                                             totalbeforedp=0;
+                                             nominaldiskon=0;
+                                             pajak=0;
+                                             nominalpajak=0;
+                                             sisa=0;
+                                             bayardp=0;
+                                             satuan="";
+                                             hitung_luas=1;
+                                             tdid=0;
+                                             subtotalawal=0;
+                                             tdidnow=0;
+                                             subtotaldelete=0;
+                                        }
+
+                                    });
+                        }
+
+                    }).
+                    fail(function(){
+                
+                    });
+                }
+                else
+                {
+                    $('#namapelanggan').attr('disabled',true);
+                    $('#nomorhandphone').attr('disabled',true);
+                    $('#pelanggan').attr('disabled',true);            
+                    $('#handphonelabel').text('  '+$('#nomorhandphone').val());
+                    $('#kepadalabel').text('  '+$('#namapelanggan').val());
+
+                    $('#buttonmodal_add').removeAttr('disabled');
+                    $('#submitpelanggan').attr('disabled',true);
+                }
+              
             }
 
             
@@ -1165,6 +1244,7 @@
             // var subtotal=$("#input[name='subtotal']").val();
             var token = "{{ csrf_token() }}";
 
+            
             if (inputbayardp > inputtotal){
                 swal("Gagal", "Pembayaran DP lebih dari total.", "error");
             }
