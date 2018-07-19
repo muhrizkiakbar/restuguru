@@ -22,6 +22,7 @@ class NotificationComposer {
     public function compose(View $view)
     {
         if (Auth::check()) {
+            // dd(Auth::user()->cabangs->id);
             $pelanggans=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                 ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                 ->whereNotNull('Transaksi_Penjualans.pelanggan_id')

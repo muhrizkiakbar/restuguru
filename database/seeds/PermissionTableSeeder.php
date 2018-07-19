@@ -128,13 +128,19 @@ class PermissionTableSeeder extends Seeder
         		'display_name' => 'Hapus Angsuran Penjualan',
         		'description' => 'Menghapus Angsuran Penjualan',
 						'index'=>'0'
-            ],
+						],
             [
         		'name' => 'report-angsuranpenjualan',
         		'display_name' => 'Laporan Angsuran Penjualan',
         		'description' => 'Laporan Angsuran Penjualan',
 						'index'=>'0'
-            ],
+						],
+						[
+							'name' => 'report-angsuranpenjualandetail',
+							'display_name' => 'Laporan Angsuran Penjualan Detail',
+							'description' => 'Laporan Angsuran Penjualan Detail',
+							'index'=>'0'
+							],
             [
         		'name' => 'deleted-angsuranpenjualan',
         		'display_name' => 'Angsuran Penjualan Terhapus',

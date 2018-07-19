@@ -107,7 +107,7 @@
                 <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
             @endif  
             <div class="col-xs-12 table-responsive">
-                <table class="table table-striped" width="100%">
+                <table class="table table-bordered table-striped" width="100%">
                 <thead>
                     <tr>
                         <th>No. Angsuran</th>

@@ -44,4 +44,7 @@ class User extends Authenticatable
     public function cabangs(){
         return $this->belongsTo(CCabangs::class,'cabang_id');
     }
+    // public function roles(){
+    //     return $this->belongsTo(Role::class,'cabang_id');
+    // }
 }

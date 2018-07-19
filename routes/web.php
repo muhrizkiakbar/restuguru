@@ -92,10 +92,10 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::post('/transaksi/angsuran/add',['middleware' => ['permission:add-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@store'])->name('storeangsuran');
         Route::post('/transaksi/angsuran/delete',['middleware' => ['permission:delete-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@destroy'])->name('destroyangsuran');
-        Route::get('/transaksi/angsuran/report/detail/{id}','AngsuranPenjualanController@reportdetail')->name('reportdetail');
+        Route::get('/transaksi/angsuran/report/detail/{id}',['middleware' => ['permission:report-angsuranpenjualandetail'], 'uses' => 'AngsuranPenjualanController@reportdetail'])->name('reportdetail');
         Route::get('/transaksi/angsuran/report/{id}',['middleware' => ['permission:report-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@reportangsuran'])->name('reportangsuran');
-        Route::get('/transaksi/angsuran/deleted',['middleware' => ['permission:deleted-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@indexdeleted'])->name('angsuranpenjualandeletedindex');
-        Route::post('/transaksi/angsuran/deleted',['middleware' => ['permission:deleted-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@indexdeleted'])->name('indexdeletedpost');
+        Route::get('/transaksi/angsuran/deleted',['middleware' => ['permission:deleted-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@angsurandeleted'])->name('angsuranpenjualandeletedindex');
+        Route::post('/transaksi/angsuran/deleted',['middleware' => ['permission:deleted-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@angsurandeleted'])->name('indexdeletedpost');
 
 
         Route::get('/transaksi/pengeluaran',['middleware' => ['permission:add-transaksipengeluaran'], 'uses' => 'PengeluaranController@index'])->name('addtransaksipengeluaranindex');

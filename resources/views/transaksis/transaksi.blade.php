@@ -680,7 +680,7 @@
                 
                 // subtotal################
                 
-                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                var subtotal = ((panjang * lebar) * harga) * kuantitas;
                 // $('#add_subtotal').val($('#add_subtotal').maskMoney('unmasked')[0]);
                 $('#add_subtotal').val(subtotal);
                 $('#add_subtotal').trigger('mask.maskMoney');
@@ -690,7 +690,7 @@
                 
                
                 
-                var subtotal = ((panjang * lebar) * harga / 1000) * kuantitas;
+                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                 // $('#add_subtotal').val($('#add_subtotal').maskMoney('unmasked')[0]);                
                 $('#add_subtotal').val(subtotal);
                 $('#add_subtotal').trigger('mask.maskMoney');
@@ -832,14 +832,14 @@
                 
                 // subtotal################
                 
-                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                var subtotal = ((panjang * lebar) * harga) * kuantitas;
                 $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
                 satuan=this.value;
             }
             else if (this.value == 'm') {
                 
                 
-                var subtotal = ((panjang * lebar) * harga / 1000) * kuantitas;
+                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                 $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
                 satuan=this.value;
                 
@@ -1514,7 +1514,8 @@
 
                     // subtotal################
                     
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    //var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1525,7 +1526,7 @@
                 }
                 else if (satuan =="m")
                 {
-                    var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1535,7 +1536,7 @@
                 }
                 else
                 {
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1578,8 +1579,8 @@
                 if (satuan =="cm") {
                     
                     // subtotal################
-                    
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga) * kuantitas;
+                    //var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
 
                     subtotal = subtotal - diskonsubtotal;
@@ -1593,7 +1594,7 @@
 
                     // subtotal################
                     
-                    var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
                     subtotal = subtotal - diskonsubtotal;
                     // console.log(subtotal);
@@ -1624,10 +1625,14 @@
                 $('#r2editcm').iCheck('check');
                 satuan="cm";
             }
-            else
+            else if ($(this).data('satuan')=="m")
             {
                 $('#r2editm').iCheck('check');
                 satuan="m";
+            }
+            else
+            {
+                satuan="";
             }
             
             var data = {
@@ -1805,7 +1810,7 @@
 
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1820,7 +1825,7 @@
 
                     // subtotal################
                     
-                    var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1858,7 +1863,7 @@
                     
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
 
                     subtotal = subtotal - diskonsubtotal;
@@ -1870,7 +1875,7 @@
 
                     // subtotal################
                     
-                    var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
                     subtotal = subtotal - diskonsubtotal;
                     $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');

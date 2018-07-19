@@ -31,6 +31,7 @@ class RoleTableSeeder extends Seeder
             {
                 $role->attachPermission($value->id);
             }
+
             
             $users = [
                 [

@@ -149,7 +149,7 @@
                     <div class="box-body">
 
                       <div class="form-group">
-                        <label for="no">No. Nota : </label><span id="nonota">{{$transaksi->nomor_nota}}</span>
+                        <label for="no">No. Nota : </label><span id="nonota"> {{$transaksi->nomor_nota}}</span>
                       </div>
 
 
@@ -707,14 +707,14 @@
                 
                 // subtotal################
 
-                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                var subtotal = ((panjang * lebar) * harga) * kuantitas;
                 $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
                 satuan=this.value;
             }
             else if (this.value == 'm') {
 
 
-                var subtotal = ((panjang * lebar) * harga / 1000) * kuantitas;
+                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                 $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
                 satuan=this.value;
 
@@ -846,13 +846,13 @@
                 
                 // subtotal################
 
-                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                var subtotal = ((panjang * lebar) * harga) * kuantitas;
                 $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
                 satuan=this.value;
             }
             else if (this.value == 'm') {
 
-                var subtotal = ((panjang * lebar) * harga / 1000) * kuantitas;
+                var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                 $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
                 satuan=this.value;
 
@@ -1373,7 +1373,7 @@
 
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1387,7 +1387,7 @@
 
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 1000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1439,7 +1439,7 @@
                     
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga ) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
 
                     subtotal = subtotal - diskonsubtotal;
@@ -1452,7 +1452,7 @@
                   
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
                     subtotal = subtotal - diskonsubtotal;
                     // console.log(subtotal);
@@ -1665,7 +1665,7 @@
 
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga ) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1679,7 +1679,7 @@
 
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1691,7 +1691,7 @@
                 {
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 
@@ -1730,7 +1730,7 @@
 
                     // subtotal################
 
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
 
                     subtotal = subtotal - diskonsubtotal;
@@ -1740,7 +1740,7 @@
                 {
                     
 
-                    var subtotal = ((panjang * lebar) * harga / 100) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
                     subtotal = subtotal - diskonsubtotal;
                     console.log(subtotal)

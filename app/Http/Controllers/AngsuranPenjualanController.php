@@ -5,7 +5,6 @@ use App\CKategories;
 use App\CProduks;
 use App\CCabangs;
 use App\Angsuran;
-use App\CUsers;
 use App\CSpesialprices;
 use App\CSpesialpricesgroup;
 use App\CPelanggans;
@@ -13,6 +12,8 @@ use App\CSub_Tpenjualans;
 use App\CTransaksi_Penjualans;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class AngsuranPenjualanController extends Controller
 {
@@ -46,7 +47,7 @@ class AngsuranPenjualanController extends Controller
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -60,7 +61,7 @@ class AngsuranPenjualanController extends Controller
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -76,7 +77,7 @@ class AngsuranPenjualanController extends Controller
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -95,7 +96,7 @@ class AngsuranPenjualanController extends Controller
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
+                                        ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -113,7 +114,7 @@ class AngsuranPenjualanController extends Controller
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')   
+                                        ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)   
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                                         
                                         ->orderBy('created_at','desc')
                                         ->paginate(50);
@@ -153,6 +154,7 @@ class AngsuranPenjualanController extends Controller
                             ->select('Angsurans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga'
                                     ,'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan')
+                            ->where('Angsurans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsurans.id','like','%'.$request->nonota.'%')
                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                             ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -181,6 +183,7 @@ class AngsuranPenjualanController extends Controller
                                     'Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga'
                                     ,'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan')
                             ->where('Angsurans.id','like','%'.$request->nonota.'%')
+                            ->where('Angsurans.cabang_id','=',Auth::user()->cabangs->id) 
                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                             ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->orderBy('created_at','desc')
@@ -209,6 +212,7 @@ class AngsuranPenjualanController extends Controller
                             ->select('Angsurans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga'
                                     ,'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan')
+                            ->where('Angsurans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsurans.id','like','%'.$request->nonota.'%')
                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                             ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -244,6 +248,7 @@ class AngsuranPenjualanController extends Controller
                                     'Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga'
                                     ,'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan')
                             ->where('Angsurans.id','like','%'.$request->nonota.'%')
+                            ->where('Angsurans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                             ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->whereYear('Angsurans.tanggal_angsuran','=',$tahun)
@@ -275,6 +280,7 @@ class AngsuranPenjualanController extends Controller
                             ->select('Angsurans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga'
                                     ,'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan')
+                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                             // ->where('Angsurans.id','like','%'.$request->nonota.'%')
                             // ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                             // ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -300,7 +306,7 @@ class AngsuranPenjualanController extends Controller
                                                 'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
     }
 
-    public function indexdeleted(Request $request)
+    public function angsurandeleted(Request $request)
     {
         $date=date('d-m-Y');
         if ($request->tanggal==""){
@@ -308,86 +314,116 @@ class AngsuranPenjualanController extends Controller
         }
 
         if ($request->periode=="hari"){
-            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
-                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
-                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
-                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
-                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
-                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
-                                        ->where('Transaksi_Penjualans.tanggal','=',$request->tanggal)
-                                        // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')
-                                        ->orderBy('created_at','desc')
-                                        ->onlyTrashed()
-                                        ->paginate(50);
+            
+                            
+            $datas=Angsuran::leftJoin('Transaksi_Penjualans','Angsurans.transaksipenjualan_id','=','Transaksi_Penjualans.id')
+                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                            ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Cabangs.Nama_Cabang','Users.username')
+                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                            ->where('Angsurans.id','like','%'.$request->nonota.'%')
+                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                            ->where('Angsurans.tanggal_angsuran','=',$request->tanggal)
+                            // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')
+                            ->orderBy('created_at','desc')
+                            ->onlyTrashed()
+                            ->paginate(50);
         }
         elseif ($request->periode=="semua"){
-            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
-                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
-                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
-                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
-                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
-                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
-                                        // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                        
-                                        ->orderBy('created_at','desc')
-                                        ->onlyTrashed()
-                                        ->paginate(50);
+            $datas=Angsuran::leftJoin('Transaksi_Penjualans','Angsurans.transaksipenjualan_id','=','Transaksi_Penjualans.id')
+                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                            ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Cabangs.Nama_Cabang','Users.username')
+                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                            ->where('Angsurans.id','like','%'.$request->nonota.'%')
+                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                            // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')
+                            ->orderBy('created_at','desc')
+                            ->onlyTrashed()
+                            ->paginate(50);
         }
         elseif ($request->periode=="bulan"){
             $tanggal=explode("-",$request->tanggal);
             $bulan=$tanggal[1];
             $tahun=$tanggal[2];
-            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
-                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
-                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
-                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
-                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
-                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
-                                        ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
-                                        ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)  
-                                        // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                              
-                                        ->orderBy('created_at','desc')
-                                        ->onlyTrashed()
-                                        ->paginate(50);
+            $datas=Angsuran::leftJoin('Transaksi_Penjualans','Angsurans.transaksipenjualan_id','=','Transaksi_Penjualans.id')
+                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                            ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Cabangs.Nama_Cabang','Users.username')
+                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                            ->where('Angsurans.id','like','%'.$request->nonota.'%')
+                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                            ->whereMonth('Angsurans.tanggal_angsuran','=',$bulan)
+                            ->whereYear('Angsurans.tanggal_angsuran','=',$tahun)
+                            // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')
+                            ->orderBy('created_at','desc')
+                            ->onlyTrashed()
+                            ->paginate(50);
         }
         elseif ($request->periode=="tahun")
         {
             $tanggal=explode("-",$request->tanggal);
             $bulan=$tanggal[1];
             $tahun=$tanggal[2];
-            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
-                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
-                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')
-                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
-                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
-                                        ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
-                                        ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)  
-                                        // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                              
-                                        ->orderBy('created_at','desc')
-                                        ->onlyTrashed()
-                                        ->paginate(50);
+
+            $datas=Angsuran::leftJoin('Transaksi_Penjualans','Angsurans.transaksipenjualan_id','=','Transaksi_Penjualans.id')
+                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                            ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Cabangs.Nama_Cabang','Users.username')
+                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                            ->where('Angsurans.id','like','%'.$request->nonota.'%')
+                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$request->pembayaran.'%')
+                            ->whereYear('Angsurans.tanggal_angsuran','=',$tahun)
+                            // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')
+                            ->orderBy('created_at','desc')
+                            ->onlyTrashed()
+                            ->paginate(50);
+
         }
         else
         {
             $tanggal=explode("-",$request->tanggal);
             $bulan=$tanggal[1];
             $tahun=$tanggal[2];
-            $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
-                                        ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
-                                        ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Penjualans.cabang_id','=','1')   
-                                        // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                                         
-                                        ->orderBy('created_at','desc')
-                                        ->onlyTrashed()
-                                        ->paginate(50);
+
+            $datas=Angsuran::leftJoin('Transaksi_Penjualans','Angsurans.transaksipenjualan_id','=','Transaksi_Penjualans.id')
+                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                            ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Cabangs.Nama_Cabang','Users.username')
+                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                            // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')
+                            ->orderBy('created_at','desc')
+                            ->onlyTrashed()
+                            ->paginate(50);
+
+            // $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+            //                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+            //                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+            //                             ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
+            //                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)   
+            //                             // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                                         
+            //                             ->orderBy('created_at','desc')
+            //                             ->onlyTrashed()
+            //                             ->paginate(50);
         }
         
         // dd($request->periode);
@@ -486,8 +522,8 @@ class AngsuranPenjualanController extends Controller
         $table=new Angsuran;
         $table->tanggal_angsuran=$date;
         $table->nominal_angsuran=$request->json('nominal');
-        $table->user_id='1';
-        $table->cabang_id='1';
+        $table->user_id=Auth::user()->id;
+        $table->cabang_id=Auth::user()->cabangs->id;
         $table->transaksipenjualan_id=$idtrans;
         $table->metode_pembayaran=$request->json('metode');
  
@@ -550,8 +586,8 @@ class AngsuranPenjualanController extends Controller
             $table=new Angsuran;
             $table->tanggal_angsuran=$date;
             $table->nominal_angsuran=$sisa2;
-            $table->user_id='1';
-            $table->cabang_id='1';
+            $table->user_id=Auth::user()->id;
+            $table->cabang_id=Auth::user()->cabangs->id;
             $table->transaksipenjualan_id=$idtrans;
             $table->metode_pembayaran=$request->json('pembayaran');
 
