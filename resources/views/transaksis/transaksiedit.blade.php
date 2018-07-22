@@ -1400,7 +1400,7 @@
 
                     satuan="cm";
                     console.log(satuan);
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
+                    var subtotal = ((panjang * lebar) * harga) * kuantitas;
                     if (diskon!=0){
                         var diskonsubtotal = (subtotal * diskon) / 100;
 

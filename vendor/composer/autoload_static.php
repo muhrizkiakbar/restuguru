@@ -419,6 +419,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\kategori_permission' => __DIR__ . '/../..' . '/app/kategori_permission.php',
         'App\\kategorimenu' => __DIR__ . '/../..' . '/app/kategorimenu.php',
+        'App\\transaksibahan' => __DIR__ . '/../..' . '/app/transaksibahan.php',
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',

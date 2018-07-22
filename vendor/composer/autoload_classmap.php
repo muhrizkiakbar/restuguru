@@ -65,6 +65,7 @@ return array(
     'App\\User' => $baseDir . '/app/User.php',
     'App\\kategori_permission' => $baseDir . '/app/kategori_permission.php',
     'App\\kategorimenu' => $baseDir . '/app/kategorimenu.php',
+    'App\\transaksibahan' => $baseDir . '/app/transaksibahan.php',
     'Barryvdh\\DomPDF\\Facade' => $vendorDir . '/barryvdh/laravel-dompdf/src/Facade.php',
     'Barryvdh\\DomPDF\\PDF' => $vendorDir . '/barryvdh/laravel-dompdf/src/PDF.php',
     'Barryvdh\\DomPDF\\ServiceProvider' => $vendorDir . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',
