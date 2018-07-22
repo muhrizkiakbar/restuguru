@@ -168,10 +168,7 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
-<<<<<<< HEAD
 		
-=======
->>>>>>> master
 	}
 
 	public function down()
@@ -272,9 +269,6 @@ class CreateForeignKeys extends Migration {
 		Schema::table('Angsuran_Pengeluarans', function(Blueprint $table) {
 			$table->dropForeign('Angsuran_Pengeluarans_cabang_id_foreign');
 		});
-<<<<<<< HEAD
 		
-=======
->>>>>>> master
 	}
 }
