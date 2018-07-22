@@ -376,7 +376,10 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Composers\\NavigasiComposer' => __DIR__ . '/../..' . '/app/Http/Composers/NavigasiComposer.php',
+<<<<<<< HEAD
         'App\\Http\\Composers\\NotificationComposer' => __DIR__ . '/../..' . '/app/Http/Composers/NotificationComposer.php',
+=======
+>>>>>>> f429c388a874003c88daee374029c8d741e4665f
         'App\\Http\\Controllers\\AngsuranPengeluaranController' => __DIR__ . '/../..' . '/app/Http/Controllers/AngsuranPengeluaranController.php',
         'App\\Http\\Controllers\\AngsuranPenjualanController' => __DIR__ . '/../..' . '/app/Http/Controllers/AngsuranPenjualanController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -419,7 +422,10 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\kategori_permission' => __DIR__ . '/../..' . '/app/kategori_permission.php',
         'App\\kategorimenu' => __DIR__ . '/../..' . '/app/kategorimenu.php',
+<<<<<<< HEAD
         'App\\transaksibahan' => __DIR__ . '/../..' . '/app/transaksibahan.php',
+=======
+>>>>>>> f429c388a874003c88daee374029c8d741e4665f
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',

@@ -30,27 +30,27 @@
             <!-- Main content -->
             <section class="content">
 
-                {{-- Tabel Produk --}}
+                {{-- Tabel Bahan Baku --}}
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box box-default">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Produk</h3>
+                                <h3 class="box-title">Bahan Baku</h3>
                             </div>
                             <div class="box-body">
                                 <button type="button" id="modal_tambah_produk" class="btn btn-primary" data-toggle="modal" data-target="#modal_tambah">
-                                    Tambah Produk
+                                    Tambah Bahan Baku
                                 </button>
                                 <hr>
                                 <div class="table-responsive">
-                                    <table id="tabel_produk" class="table">
+                                    <table id="tabel_bahan_baku" class="table">
                                         <thead>
                                         <tr>
-                                            <th>Nama Produk</th>
+                                            <th>Nama Bahan Baku</th>
                                             <th>Satuan</th>
-                                            <th>Harga Beli</th>
-                                            <th>Harga Jual</th>
-                                            <th>Hitng Luas</th>
+                                            <th>Harga</th>
+                                            <th>Batas Stok</th>
+                                            <th>Hitung Luas</th>
                                             <th>Kategori</th>
                                             <th>Keterangan</th>
                                             <th>Action</th>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
 
-                {{-- Modal Tambah Produk --}}
+                {{-- Modal Tambah Bahan Baku --}}
                 <div class="modal fade" id="modal_tambah">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -71,49 +71,44 @@
                                 {{-- Tombol X --}}
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Tambah Produk</h4>
+                                <h4 class="modal-title">Tambah Bahan Baku</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="error alert-danger alert-dismissible">
                                 </div>
                                 {{-- Form Tambah --}}
-                                <form id="form_tambah_produk" action="" method="post" role="form" enctype="multipart/form-data">
+                                <form id="form_tambah_bahan_baku" action="" method="post" role="form" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control select2" placeholder="Kategori" name="tambah_kategori" id="tambah_kategori" style="width: 100%;">
-                                                        <option disabled selected>Kategori Produk</option>
+                                                <select class="form-control select2" placeholder="Kategori" name="tambah_kategori_bb" id="tambah_kategori_bb" style="width: 100%;">
+                                                        <option disabled selected>Kategori Bahan Baku</option>
                                                     @foreach ($kategories as $kategori)
                                                         <option value="{{encrypt($kategori->id)}}">{{$kategori->Nama_Kategori}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Nama Produk</label>
-                                                <input id="tambah_nama_produk" name="tambah_nama_produk" class="form-control" type="text">
+                                                <label>Nama Bahan Baku</label>
+                                                <input id="tambah_nama_bahan" name="tambah_nama_bahan" class="form-control" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Satuan</label>
                                                 <input id="tambah_satuan" name="tambah_satuan" class="form-control" type="text">
                                             </div>
                                             <div class="form-group">
-                                                <label>Harga Beli</label>
+                                                <label>Harga</label>
                                                 <div class="input-group">
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input id="tambah_harga_beli" name="tambah_harga_beli" class="form-control" type="text" value="0">
+                                                    <input id="tambah_harga" name="tambah_harga" class="form-control" type="text" value="0">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label>Harga Jual</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        Rp
-                                                    </div>
-                                                    <input id="tambah_harga_jual" name="tambah_harga_jual" class="form-control" type="text" value="0">
-                                                </div>
+                                                <label>Batas Stok</label>
+                                                <input id="tambah_batas_stok" name="tambah_batas_stok" class="form-control" type="text" value="0">
                                             </div>
                                             <div class="form-group">
                                                 <label>Hitung Luas</label>
@@ -147,56 +142,51 @@
                     </div>
                 </div>
 
-                {{-- Modal Edit Produk --}}
+                {{-- Modal Edit Bahan Baku --}}
                 <div class="modal modal-warning fade" id="modal_edit">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Edit Produk</h4>
+                                <h4 class="modal-title">Edit Bahan Baku</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="error alert-danger alert-dismissible">
                                 </div>
                                 {{-- Form Edit --}}
-                                <form id="form_edit_produk" action="" method="post" role="form" enctype="multipart/form-data">
+                                <form id="form_edit_bahan_baku" action="" method="post" role="form" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                     <input class="form-control" id="produk_id" name="produk_id" type="hidden">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <select class="form-control select2" placeholder="Kategori" name="edit_kategori" id="edit_kategori" style="width: 100%;">
+                                                <select class="form-control select2" placeholder="Kategori" name="edit_kategori_bb" id="edit_kategori_bb" style="width: 100%;">
                                                     @foreach ($kategories as $kategori)
                                                         <option value="{{$kategori->id}}">{{$kategori->Nama_Kategori}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Nama Produk</label>
-                                                <input id="edit_nama_produk" name="edit_nama_produk" class="form-control" type="text">
+                                                <label>Nama Bahan Baku</label>
+                                                <input id="edit_nama_bahan" name="edit_nama_bahan" class="form-control" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Satuan</label>
                                                 <input id="edit_satuan" name="edit_satuan" class="form-control" type="text">
                                             </div>
                                             <div class="form-group">
-                                                <label>Harga Beli</label>
+                                                <label>Harga</label>
                                                 <div class="input-group">
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input id="edit_harga_beli" name="edit_harga_beli" class="form-control" type="text" value="0">
+                                                    <input id="edit_harga" name="edit_harga" class="form-control" type="text" value="0">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label>Harga Jual</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        Rp
-                                                    </div>
-                                                    <input id="edit_harga_jual" name="edit_harga_jual" class="form-control" type="text" value="0">
-                                                </div>
+                                                <label>Batas Stok</label>
+                                                <input id="edit_batas_stok" name="edit_batas_stok" class="form-control" type="text" value="0">
                                             </div>
                                             <div class="form-group">
                                                 <label>Hitung Luas</label>
@@ -230,24 +220,24 @@
                     </div>
                 </div>
 
-                {{-- Modal Hapus Produk --}}
+                {{-- Modal Hapus Bahan Baku --}}
                 <div class="modal modal-danger fade" id="modal_hapus">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Hapus Produk</h4>
+                                <h4 class="modal-title">Hapus Bahan Baku</h4>
                             </div>
                             <div class="modal-body">
-                                <form id="form_hapus_produk" action="" method="post" role="form" enctype="multipart/form-data">
+                                <form id="form_hapus_bahan_baku" action="" method="post" role="form" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                     <h4>
                                         <i class="icon fa fa-ban"></i>
                                         Peringatan
                                     </h4>
-                                    Yakin ingin menghapus produk <span class="label_produk"></span>?
-                                    <input id="hapus_produk_id" name="hapus_produk_id" type="hidden">
+                                    Yakin ingin menghapus bahan baku <span class="label_bahan_baku"></span>?
+                                    <input id="hapus_bahan_baku_id" name="hapus_bahan_baku_id" type="hidden">
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -261,7 +251,6 @@
 
             </section>
         </div>
-
         @include('layouts.footer')
     </div>
     <!-- ./wrapper -->
@@ -287,26 +276,26 @@
 
     {{-- Init JS --}}
     <script type="text/javascript">
-        $('#tambah_kategori, #edit_kategori').select2({
+        $('#tambah_kategori_bb, #edit_kategori_bb').select2({
             placeholder: "Pilih Kategori."
         });
-        $('#tambah_harga_beli, #tambah_harga_jual, #edit_harga_beli, #edit_harga_jual').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
+        $('#tambah_harga, #tambah_batas_stok, #edit_harga, #edit_batas_stok').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
     </script>
 
     {{-- javascript Tabel --}}
     <script type="text/javascript">
         var oTable;
         $(function() {
-            oTable = $('#tabel_produk').DataTable({
+            oTable = $('#tabel_bahan_baku').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('loadproduk')}}',
+                ajax: '{{route('loadbahanbaku')}}',
                 columns: [
-                    { data: 'nama_produk', name: 'nama_produk' },
+                    { data: 'nama_bahan', name: 'nama_bahan' },
                     { data: 'satuan', name: 'satuan' },
-                    { data: 'harga_beli', name: 'harga_beli' },
-                    { data: 'harga_jual', name: 'harga_jual' },
-                    { data: 'produks.hitung_luas', name: 'hitung_luas' },
+                    { data: 'harga', name: 'harga' },
+                    { data: 'batas_stok', name: 'batas_stok' },
+                    { data: 'hitung_luas', name: 'hitung_luas' },
                     { data: 'Nama_Kategori', name: 'Nama_Kategori' },
                     { data: 'keterangan', name: 'keterangan' },
                     { data: 'action'}
@@ -318,11 +307,11 @@
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_produk',function () {
-            $('#tambah_kategori').val(0).trigger('change');
-            $('#tambah_nama_produk').val("");
+            $('#tambah_kategori_bb').val(0).trigger('change');
+            $('#tambah_nama_bahan').val("");
             $('#tambah_satuan').val("");
-            $('#tambah_harga_beli').val(0);
-            $('#tambah_harga_jual').val(0);
+            $('#tambah_harga').val(0);
+            $('#tambah_batas_stok').val(0);
             $('#tambah_hitung_luas').val(0);
             $('#tambah_keterangan').val("");
         });
@@ -331,11 +320,11 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
-            $('#edit_kategori').val($(this).data('kategori_id')).trigger('change');
-            $('#edit_nama_produk').val($(this).data('nama_produk'));
+            $('#edit_kategori_bb').val($(this).data('kategori_id')).trigger('change');
+            $('#edit_nama_bahan').val($(this).data('nama_bahan'));
             $('#edit_satuan').val($(this).data('satuan'));
-            $('#edit_harga_beli').val($(this).data('harga_beli'));
-            $('#edit_harga_jual').val($(this).data('harga_jual'));
+            $('#edit_harga').val($(this).data('harga'));
+            $('#edit_batas_stok').val($(this).data('batas_stok'));
             $hitung_luas = $(this).data('hitung_luas');
             if ($hitung_luas) {
                 $('#edit_hitung_luas_y').prop('checked',true);
@@ -350,8 +339,8 @@
     {{-- javascript modal hapus --}}
     <script type="text/javascript">
         $(document).on('click','.modal_hapus',function () {
-            $('#hapus_produk_id').val($(this).data('id'));
-            $('.label_produk').text($(this).data('nama_produk'));
+            $('#hapus_bahan_baku_id').val($(this).data('id'));
+            $('.label_bahan_baku').text($(this).data('nama_bahan'));
         });
     </script>
 
@@ -360,28 +349,28 @@
         $(document).on('click','#bt_simpan_tambah',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('storeproduk')}}',
-                data: new FormData($('#form_tambah_produk')[0]),
+                url:'{{route('storebahanbaku')}}',
+                data: new FormData($('#form_tambah_bahan_baku')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        if ((response.errors.tambah_kategori)){
-                            swal("Produk", ""+response.errors.tambah_kategori+"", "error");
-                        }else if ((response.errors.tambah_nama_produk)){
-                            swal("Produk", ""+response.errors.tambah_nama_produk+"", "error");
+                        if ((response.errors.tambah_kategori_bb)){
+                            swal("Bahan Baku", ""+response.errors.tambah_kategori_bb+"", "error");
+                        }else if ((response.errors.tambah_nama_bahan)){
+                            swal("Bahan Baku", ""+response.errors.tambah_nama_bahan+"", "error");
                         }else if ((response.errors.tambah_satuan)){
-                            swal("Produk", ""+response.errors.tambah_satuan+"", "error");
-                        }else if ((response.errors.tambah_harga_beli)){
-                            swal("Produk", ""+response.errors.tambah_harga_beli+"", "error");
-                        }else if ((response.errors.tambah_harga_jual)){
-                            swal("Produk", ""+response.errors.tambah_harga_jual+"", "error");
+                            swal("Bahan Baku", ""+response.errors.tambah_satuan+"", "error");
+                        }else if ((response.errors.tambah_harga)){
+                            swal("Bahan Baku", ""+response.errors.tambah_harga+"", "error");
+                        }else if ((response.errors.tambah_batas_stok)){
+                            swal("Bahan Baku", ""+response.errors.tambah_batas_stok+"", "error");
                         }else if ((response.errors.tambah_hitung_luas)){
-                            swal("Produk", ""+response.errors.tambah_hitung_luas+"", "error");
+                            swal("Bahan Baku", ""+response.errors.tambah_hitung_luas+"", "error");
                         }else if ((response.errors.tambah_keterangan)){
-                            swal("Produk", ""+response.errors.tambah_keterangan+"", "error");
+                            swal("Bahan Baku", ""+response.errors.tambah_keterangan+"", "error");
                         }
                         // $('#modal_tambah').modal('hide');
                     }else{
@@ -409,28 +398,28 @@
         $(document).on('click','#bt_simpan_edit',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('updateproduk')}}',
-                data: new FormData($('#form_edit_produk')[0]),
+                url:'{{route('updatebahanbaku')}}',
+                data: new FormData($('#form_edit_bahan_baku')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        if ((response.errors.edit_kategori)){
-                            swal("Produk", ""+response.errors.edit_kategori+"", "error");
-                        }else if ((response.errors.edit_nama_produk)){
-                            swal("Produk", ""+response.errors.edit_nama_produk+"", "error");
+                        if ((response.errors.edit_kategori_bb)){
+                            swal("Bahan Baku", ""+response.errors.edit_kategori_bb+"", "error");
+                        }else if ((response.errors.edit_nama_bahan)){
+                            swal("Bahan Baku", ""+response.errors.edit_nama_bahan+"", "error");
                         }else if ((response.errors.edit_satuan)){
-                            swal("Produk", ""+response.errors.edit_satuan+"", "error");
-                        }else if ((response.errors.edit_harga_beli)){
-                            swal("Produk", ""+response.errors.edit_harga_beli+"", "error");
-                        }else if ((response.errors.edit_harga_jual)){
-                            swal("Produk", ""+response.errors.edit_harga_jual+"", "error");
+                            swal("Bahan Baku", ""+response.errors.edit_satuan+"", "error");
+                        }else if ((response.errors.edit_harga)){
+                            swal("Bahan Baku", ""+response.errors.edit_harga+"", "error");
+                        }else if ((response.errors.edit_batas_stok)){
+                            swal("Bahan Baku", ""+response.errors.edit_batas_stok+"", "error");
                         }else if ((response.errors.edit_hitung_luas)){
-                            swal("Produk", ""+response.errors.edit_hitung_luas+"", "error");
+                            swal("Bahan Baku", ""+response.errors.edit_hitung_luas+"", "error");
                         }else if ((response.errors.edit_keterangan)){
-                            swal("Produk", ""+response.errors.edit_keterangan+"", "error");
+                            swal("Bahan Baku", ""+response.errors.edit_keterangan+"", "error");
                         }
                         // $('#modal_edit').modal('hide');
                     }else{
@@ -459,8 +448,8 @@
         $(document).on('click','#bt_simpan_hapus',function (){
             $.ajax({
                 type:'post',
-                url:'{{route('deleteproduk')}}',
-                data: new FormData($('#form_hapus_produk')[0]),
+                url:'{{route('deletebahanbaku')}}',
+                data: new FormData($('#form_hapus_bahan_baku')[0]),
                 dataType:'json',
                 async:false,
                 processData: false,

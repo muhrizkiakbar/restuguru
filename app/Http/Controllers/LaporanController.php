@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Jenis_Pengeluaran;
 use App\CSub_Tpenjualans;
 use App\CProduks;
 use App\CTransaksi_Penjualans;
@@ -11,13 +12,19 @@ use Illuminate\Support\Facades\Auth;
 
 use DB;
 
-class DashboardController extends Controller
+class LaporanController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function filter(Request $request)
+    {
+        
+    }
+
+    
     public function piedata()
     {   
         $userId=Auth::user()->id;
@@ -44,7 +51,7 @@ class DashboardController extends Controller
         return response()->json($datapie);
     }
 
-    public function linedata()
+    public function linedatalaporan()
     {
         $userId=Auth::user()->id;
         $cabangId=Auth::user()->cabang_id;
@@ -75,6 +82,9 @@ class DashboardController extends Controller
     public function index()
     {
         //
+        $jenispengeluaran = Jenis_Pengeluaran::all();
+        // dd($jenispengeluaran);
+        return view ('laporans.laporan',['jenispengeluaran'=>$jenispengeluaran]);
         $userId=Auth::user()->id;
         $cabangId=Auth::user()->cabang_id;
         $data=array();

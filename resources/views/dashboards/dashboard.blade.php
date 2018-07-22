@@ -351,7 +351,7 @@
                 //Number - The percentage of the chart that we cut out of the middle
                 percentageInnerCutout: 50, // This is 0 for Pie charts
                 //Number - Amount of animation steps
-                animationSteps       : 100,
+                animationSteps       : 250,
                 //String - Animation easing effect
                 animationEasing      : 'easeOutBounce',
                 //Boolean - Whether we animate the rotation of the Doughnut
