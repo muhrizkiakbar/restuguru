@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBahanbakusTable extends Migration
-{
+class CreateBahanbakusTable extends Migration{
     public function up()
 	{
 		Schema::create('Bahanbakus', function(Blueprint $table) {
