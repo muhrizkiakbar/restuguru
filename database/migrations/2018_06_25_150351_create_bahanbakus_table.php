@@ -20,7 +20,11 @@ class CreateBahanbakusTable extends Migration{
 			$table->text('keterangan');
 		});
 
+<<<<<<< HEAD:database/migrations/2018_05_27_150351_create_bahanbakus_table.php
 		Schema::table('Bahanbakus', function(Blueprint $table) {
+=======
+        Schema::table('Bahanbakus', function(Blueprint $table) {
+>>>>>>> master:database/migrations/2018_06_25_150351_create_bahanbakus_table.php
 			$table->foreign('kategori_id')->references('id')->on('Kategories')
 						->onDelete('restrict')
 						->onUpdate('cascade');
@@ -30,8 +34,13 @@ class CreateBahanbakusTable extends Migration{
 	public function down()
 	{
 		Schema::drop('Bahanbakus');
+<<<<<<< HEAD:database/migrations/2018_05_27_150351_create_bahanbakus_table.php
 		
 		Schema::table('Bahanbakus', function(Blueprint $table) {
+=======
+
+        Schema::table('Bahanbakus', function(Blueprint $table) {
+>>>>>>> master:database/migrations/2018_06_25_150351_create_bahanbakus_table.php
 			$table->dropForeign('Bahanbakus_kategori_id_foreign');
 		});
 	}
