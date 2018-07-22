@@ -26,32 +26,4 @@ class Controller extends BaseController
             return response()->json("Failed");
         }
     }
-    public function updatelog($id, $log)
-    {
-        $table = CActivityLog::where('id','=',$id)
-                        ->first();
-        $table->log = $log;
-
-        if ($table->save()){
-            return response()->json("Success");
-        }else{
-            return response()->json("Failed");
-        }
-    }
-    public function deletelog($id)
-    {
-        $table = CActivityLog::where('id','=',$id)
-                        ->first();
-        if ($table->delete()){
-            return response()->json("Success");
-        }else{
-            return response()->json("Failed");
-        }
-    }
-    public function login(Request $request)
-    {
-    }
-    public function logout(Request $request)
-    {
-    }
 }

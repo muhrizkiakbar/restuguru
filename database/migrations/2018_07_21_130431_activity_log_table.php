@@ -8,7 +8,7 @@ class ActivityLogTable extends Migration {
     public function up()
     {
         Schema::create('activity_log', function(Blueprint $table) {
-			$table->increments('id');
+			$table->bigIncrements('id');
 			$table->timestamps();
 			$table->softDeletes();
 			$table->string('log', 200);
@@ -17,6 +17,6 @@ class ActivityLogTable extends Migration {
 
     public function down()
     {
-        chema::drop('activity_log');
+        Schema::drop('activity_log');
     }
 }
