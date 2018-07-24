@@ -193,6 +193,7 @@ Route::group(['middleware' => 'auth'], function() {
     //Laporan
     Route::get('/laporan','LaporanController@index')->name('laporan');
     Route::get('/laporan/filter','LaporanController@filter')->name('filter');
+    Route::get('/laporan/chart','LaporanController@linedatalaporan')->name('chartlaporan');
 
     // Jenis Pelanggan Route
     Route::get('/jenispelanggan',['middleware' => ['permission:manage-pelanggan'], 'uses' => 'JenispelangganController@index'])->name('managepelangganindex');
