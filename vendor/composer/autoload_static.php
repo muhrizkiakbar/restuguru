@@ -393,16 +393,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Http\\Controllers\\JenispelangganController' => __DIR__ . '/../..' . '/app/Http/Controllers/JenispelangganController.php',
         'App\\Http\\Controllers\\KategoriController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriController.php',
         'App\\Http\\Controllers\\KategoriMenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriMenuController.php',
-<<<<<<< HEAD
         'App\\Http\\Controllers\\LaporanController' => __DIR__ . '/../..' . '/app/Http/Controllers/LaporanController.php',
-=======
->>>>>>> master
-=======
-        'App\\Http\\Controllers\\LaporanController' => __DIR__ . '/../..' . '/app/Http/Controllers/LaporanController.php',
->>>>>>> e6149e27ba4375d3ad2782b14f0cb187763c17b8
-=======
-        'App\\Http\\Controllers\\LaporanController' => __DIR__ . '/../..' . '/app/Http/Controllers/LaporanController.php',
->>>>>>> Cabang-Cahya
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
         'App\\Http\\Controllers\\PelangganController' => __DIR__ . '/../..' . '/app/Http/Controllers/PelangganController.php',
         'App\\Http\\Controllers\\PengeluaranController' => __DIR__ . '/../..' . '/app/Http/Controllers/PengeluaranController.php',
