@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         $view->composer('*', 'App\Http\Composers\NavigasiComposer');
+        $view->composer('*', 'App\Http\Composers\NotificationComposer');
     }
 
     /**

@@ -186,13 +186,6 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            
-                                            <div class="form-group">
-                                                <label>Level</label>
-                                                <select class="form-control select2" id="role2" name="role2" style="width: 100%;">
-                                                        <option value="wwe">sdasd</option>
-                                                </select>
-                                            </div>
                                             <!-- /.form-group -->
                                         </div>
                                     </div>

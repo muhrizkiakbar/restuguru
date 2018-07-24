@@ -6,13 +6,14 @@
         
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <div class="login-logo">
-                <img src="/dist/img/logo.png" alt="">
+            <div class="login-logo" style="padding-bottom:0px;">
+                <img src="{{asset('dist/img/rg.png')}}"alt="">
             </div>
-            <div style="font-size: 35px;text-align: center;max-width: 100%;">
-                <strong>RG</strong>
-                <p style="font-size: 15px;text-align: center;max-width: 100%;"><small>Promosindo</small></p>
+            <div style="font-size: 25px;text-align: center;max-width: 100%;" style="padding-top:0px;">
+                <strong>RESTU GURU</strong>
+                <strong>PROMOSINDO</strong>
             </div>
+            <br>
             <form action="/" method="post">
                 <div class="form-group has-feedback">
                     <input type="text" id="username" name="username" class="form-control" placeholder="Email/Username/NIP">

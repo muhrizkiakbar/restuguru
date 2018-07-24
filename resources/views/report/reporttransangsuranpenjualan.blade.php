@@ -39,6 +39,15 @@
         height: 40px;
 		z-index: 2;
 	}
+
+     
+    .garis
+    {
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+
+
     .lebarkwitansi
     {
         width: 21cm;
@@ -111,7 +120,7 @@
                 <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
             @endif  
             <div class="col-xs-12 table-responsive">
-                <table class="table table-striped" width="100%">
+                <table class="table garis table-bordered table-striped" width="100%">
                 <thead>
                     <tr>
                         <th>No. Angsuran</th>
@@ -209,7 +218,7 @@
             <!-- /.row -->
         </section>
         <!-- /.content -->
-        </div>
+    </div>
     <!-- ./wrapper -->
 
     <!-- jQuery 3 -->

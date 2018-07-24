@@ -40,7 +40,7 @@
                                 <h3 class="box-title">Manajemen Menu</h3>
                             </div>
                             <div class="box-body">
-                                <a href="{{route('kategorimenuindex')}}" class="btn btn-primary" >
+                                <a href="{{route('menuindex')}}" class="btn btn-primary" >
                                     Tambah
                                 </a>
                                 <hr>
@@ -107,7 +107,7 @@
                     <!-- /.modal-dialog -->
                 </div>
                 <!-- /.modal -->
-            </section>
+          </section>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->

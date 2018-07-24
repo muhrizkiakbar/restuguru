@@ -20,6 +20,7 @@ class NavigasiComposer {
      */
     public function compose(View $view)
     {
+        // dd(Auth::user()->roles());
         if (Auth::check()) {
             $permission=Permission::leftJoin('permission_role','permissions.id','=','permission_role.permission_id')
                         ->where('permission_role.role_id','=',Auth::user()->roles->first()->id)

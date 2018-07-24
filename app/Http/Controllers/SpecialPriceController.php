@@ -35,9 +35,9 @@ class SpecialPriceController extends Controller
     }
 
     public function loadspecialprice(){
-        $tables=CSpesialprices::leftJoin('pelanggans','spesialprices.pelanggan_id','=','pelanggans.id')
-               ->leftJoin('produks','spesialprices.produk_id','=','produks.id')
-               ->select('spesialprices.*','pelanggans.nama_perusahaan','produks.nama_produk')
+        $tables=CSpesialprices::leftJoin('Pelanggans','Spesialprices.pelanggan_id','=','Pelanggans.id')
+               ->leftJoin('Produks','Spesialprices.produk_id','=','Produks.id')
+               ->select('Spesialprices.*','Pelanggans.nama_perusahaan','Produks.nama_produk')
                ->get();
         return Datatables::of($tables)
             -> addColumn ('action', function ($tables) {
@@ -105,7 +105,7 @@ class SpecialPriceController extends Controller
             $table->pelanggan_id   =decrypt($request->pilih_pelanggan);
             $table->produk_id = decrypt($request->pilih_produk);
             $table->harga_khusus = $request->tambah_harga_khusus;
-
+            $table->user_id=Auth::user()->id;
             if ($table->save()){
                 return response()->json("Success");
             }else{
@@ -161,7 +161,7 @@ class SpecialPriceController extends Controller
             $table->pelanggan_id   =$request->pilih_edit_pelanggan;
             $table->produk_id = $request->pilih_edit_produk;
             $table->harga_khusus = $request->edit_harga_khusus;
-
+            $table->user_id=Auth::user()->id;
             if ($table->save()){
                 return response()->json("Success");
             }else{

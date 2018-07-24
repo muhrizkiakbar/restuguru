@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBahanbakusTable extends Migration
-{
+class CreateBahanbakusTable extends Migration{
     public function up()
 	{
 		Schema::create('Bahanbakus', function(Blueprint $table) {
@@ -20,10 +19,20 @@ class CreateBahanbakusTable extends Migration
 			$table->tinyInteger('hitung_luas');
 			$table->text('keterangan');
 		});
+
+        Schema::table('Bahanbakus', function(Blueprint $table) {
+			$table->foreign('kategori_id')->references('id')->on('Kategories')
+						->onDelete('restrict')
+						->onUpdate('cascade');
+		});
 	}
 
 	public function down()
 	{
-		Schema::drop('bahanbakus');
+		Schema::drop('Bahanbakus');
+
+        Schema::table('Bahanbakus', function(Blueprint $table) {
+			$table->dropForeign('Bahanbakus_kategori_id_foreign');
+		});
 	}
 }

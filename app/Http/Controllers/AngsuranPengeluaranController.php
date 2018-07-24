@@ -6,6 +6,7 @@ use App\User;
 use App\Angsuran_Pengeluarans;
 use App\Transaksi_Pengeluaran;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Sub_Tpengeluaran;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,7 @@ class AngsuranPengeluaranController extends Controller
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->leftJoin('Jenis_Pengeluaran','Transaksi_Pengeluarans.jenispengeluaran_id','=','Jenis_Pengeluaran.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username as username2','Suppliers.nama_supplier','Jenis_Pengeluaran.jenis_pengeluaran')                                        
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.jenispengeluaran_id','like','%'.$request->jenispengeluaran.'%')                                                                                
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
@@ -69,7 +70,7 @@ class AngsuranPengeluaranController extends Controller
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->leftJoin('Jenis_Pengeluaran','Transaksi_Pengeluarans.jenispengeluaran_id','=','Jenis_Pengeluaran.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username as username2','Suppliers.nama_supplier','Jenis_Pengeluaran.jenis_pengeluaran')                                        
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.jenispengeluaran_id','like','%'.$request->jenispengeluaran.'%')                                                                                                                      
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
@@ -89,7 +90,7 @@ class AngsuranPengeluaranController extends Controller
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->leftJoin('Jenis_Pengeluaran','Transaksi_Pengeluarans.jenispengeluaran_id','=','Jenis_Pengeluaran.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username as username2','Suppliers.nama_supplier','Jenis_Pengeluaran.jenis_pengeluaran')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.jenispengeluaran_id','like','%'.$request->jenispengeluaran.'%')                                                                                                                      
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
@@ -112,7 +113,7 @@ class AngsuranPengeluaranController extends Controller
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->leftJoin('Jenis_Pengeluaran','Transaksi_Pengeluarans.jenispengeluaran_id','=','Jenis_Pengeluaran.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username as username2','Suppliers.nama_supplier','Jenis_Pengeluaran.jenis_pengeluaran')                                        
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.jenispengeluaran_id','like','%'.$request->jenispengeluaran.'%')                                                                                                                  
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
@@ -134,7 +135,7 @@ class AngsuranPengeluaranController extends Controller
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->leftJoin('Jenis_Pengeluaran','Transaksi_Pengeluarans.jenispengeluaran_id','=','Jenis_Pengeluaran.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username as username2','Suppliers.nama_supplier','Jenis_Pengeluaran.jenis_pengeluaran')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')                                        
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)                                        
                                         ->where('Transaksi_Pengeluarans.sisa_pengeluaran','>','0')                                                                                         
                                         ->where('Jenis_Pengeluaran.sifat_angsuran','=','1')
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
@@ -190,6 +191,7 @@ class AngsuranPengeluaranController extends Controller
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
                             ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
+                            ->where('Angsuran_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id) 
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->where('Angsuran_Pengeluarans.tanggal_angsuran','=',$request->tanggal)
@@ -221,6 +223,7 @@ class AngsuranPengeluaranController extends Controller
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
                             ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
+                            ->where('Angsuran_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id) 
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->orderBy('created_at','desc')
@@ -253,6 +256,7 @@ class AngsuranPengeluaranController extends Controller
                             ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Angsuran_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id) 
                             ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -290,6 +294,7 @@ class AngsuranPengeluaranController extends Controller
                             ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Angsuran_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id) 
                             ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -355,6 +360,7 @@ class AngsuranPengeluaranController extends Controller
                             ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -372,6 +378,7 @@ class AngsuranPengeluaranController extends Controller
                             ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -392,6 +399,7 @@ class AngsuranPengeluaranController extends Controller
                             ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -413,6 +421,7 @@ class AngsuranPengeluaranController extends Controller
                             ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsuran_Pengeluarans.id','like','%'.$request->nonota.'%')
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -432,13 +441,14 @@ class AngsuranPengeluaranController extends Controller
                             ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                             ->orderBy('created_at','desc')
                             ->onlyTrashed()
                             ->paginate(50);
         }
         // dd($datas);
         $jenispengeluaran=Jenis_Pengeluaran::all();
-        return view('transaksis.pengeluaran.piutang.angsuranlist',['date'=>$date,'datas'=>$datas,
+        return view('transaksis.pengeluaran.piutang.piutangdeleted',['date'=>$date,'datas'=>$datas,
                                                 'datajenispengeluarans'=>$jenispengeluaran,
                                                 'jenispengeluaran'=>$request->jenispengeluaran,
                                                 'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
@@ -492,7 +502,7 @@ class AngsuranPengeluaranController extends Controller
         $table->tanggal_angsuran=$date;
         $table->nominal_angsuran=$request->json('nominal');
         $table->user_id='1';
-        $table->cabang_id='1';
+        $table->cabang_id=Auth::user()->cabangs->id;
         $table->transaksipengeluaran_id=$idtrans;
         $table->metode_pembayaran=$request->json('metode');
 
@@ -586,7 +596,7 @@ class AngsuranPengeluaranController extends Controller
     public function reportangsuran($id)
     {
         $id=decrypt($id);
-
+        // dd("sad");
         $transaksi=Transaksi_Pengeluaran::leftJoin('Users','Transaksi_Pengeluarans.user_id','=','Users.id')
                     ->leftJoin('role_user','role_user.user_id','=','Users.id')
                     ->leftJoin('roles','role_user.role_id','=','roles.id')            
@@ -611,8 +621,8 @@ class AngsuranPengeluaranController extends Controller
     {
         $id=decrypt($id);
 
-        $data=Angsuran_Pengeluarans::where('id','=',$id)->first();
-        // dd($data);
+        $data=Angsuran_Pengeluarans::where('id','=',$id)->withTrashed()->first();
+        // dd($id);
         $transaksi=Transaksi_Pengeluaran::leftJoin('Users','Transaksi_Pengeluarans.user_id','=','Users.id')
                     ->leftJoin('role_user','role_user.user_id','=','Users.id')
                     ->leftJoin('roles','role_user.role_id','=','roles.id')          
@@ -625,6 +635,7 @@ class AngsuranPengeluaranController extends Controller
                             'Users.nama','roles.display_name')
                     ->withTrashed()
                     ->where('Transaksi_Pengeluarans.id','=',$data->transaksipengeluaran_id)->first();
+
         $subtransaksis=Sub_Tpengeluaran::where('transaksipengeluaran_id','=',$data->transaksipenjualan_id)->get();
         // dd($transaksi);
         $jumlahangsuran=Angsuran_Pengeluarans::where('transaksipengeluaran_id','=',$data->transaksipengeluaran_id)

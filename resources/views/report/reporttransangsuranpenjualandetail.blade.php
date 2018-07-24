@@ -32,6 +32,15 @@
         opacity: 0.5;
         transform: rotate(340deg);
 	}
+
+     
+    .garis
+    {
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+
+
     .logorg
 	{
 
@@ -111,7 +120,7 @@
                 <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
             @endif    
             <div class="col-xs-12 table-responsive">
-                <table class="table table-striped" width="100%">
+                <table class="table garis table-bordered table-striped" width="100%">
                 <thead>
                     <tr>
                         <th style="word-wrap: break-word;">Produk</th>
@@ -215,7 +224,7 @@
             <!-- /.row -->
         </section>
         <!-- /.content -->
-        </div>
+    </div>
     <!-- ./wrapper -->
 
     <!-- jQuery 3 -->
