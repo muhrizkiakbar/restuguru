@@ -394,8 +394,6 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Http\\Controllers\\KategoriController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriController.php',
         'App\\Http\\Controllers\\KategoriMenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriMenuController.php',
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         'App\\Http\\Controllers\\LaporanController' => __DIR__ . '/../..' . '/app/Http/Controllers/LaporanController.php',
 =======
 >>>>>>> master
