@@ -95,12 +95,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Khusus</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        Rp
-                                                    </div>
-                                                    <input id="tambah_harga_khusus" name="tambah_harga_khusus" class="form-control" type="text" value="0">
-                                                </div>
+                                                <input id="tambah_harga_khusus" name="tambah_harga_khusus" class="form-control pull-right" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -149,12 +144,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Khusus</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        Rp
-                                                    </div>
-                                                    <input id="edit_harga_khusus" name="edit_harga_khusus" class="form-control" type="text" value="0">
-                                                </div>
+                                                <input id="edit_harga_khusus" name="edit_harga_khusus" class="form-control pull-right" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -185,7 +175,7 @@
                                         <i class="icon fa fa-ban"></i>
                                         Peringatan
                                     </h4>
-                                    Yakin ingin menghapus special price untuk <span class="label_spcprice"></span>?
+                                    Yakin ingin menghapus Harga Khusus untuk pelanggan <b><span class="label_pelanggan"></span></b> pada produk <b><span class="label_produk"></span></b> dengan harga <b>Rp. <span class="label_harga"></span></b> ?
                                     <input id="hapus_spcprice_id" name="hapus_spcprice_id" type="hidden">
                                 </form>
                             </div>
@@ -226,10 +216,12 @@
 
     {{-- Init JS --}}
     <script type="text/javascript">
-        $('#pilih_pelanggan, #pilih_produk, #pilih_edit_pelanggan, #pilih_edit_produk').select2({
-            placeholder: "Pilih Kategori."
+        $('#pilih_pelanggan, #pilih_edit_pelanggan').select2({
+            placeholder: "Pilih Pelanggan."
         });
-        $('#tambah_harga_khusus, #edit_harga_khusus').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
+        $('#pilih_produk, #pilih_edit_produk').select2({
+            placeholder: "Pilih Produk."
+        });
     </script>
 
     {{-- javascript Tabel --}}
@@ -247,15 +239,29 @@
                     { data: 'action'}
                 ]
             });
+
+            // Mask Money
+            $("#tambah_harga_khusus").maskMoney({prefix:'Rp ', allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
+            $("#tambah_harga_khusus").maskMoney('mask',0)
+            $("#tambah_harga_khusus").on('blur',function(){
+                $("#tambah_harga_khusus").maskMoney('mask')
+            });
+            $("#edit_harga_khusus").maskMoney({prefix:'Rp ', allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
+            $("#edit_harga_khusus").maskMoney('mask',0)
+            $("#edit_harga_khusus").on('blur',function(){
+                $("#edit_harga_khusus").maskMoney('mask')
+            });
         });
+        function cleanInputModal(){
+            $('#pilih_pelanggan, #pilih_edit_pelanggan, #pilih_produk, #pilih_edit_produk').val(0).trigger('change');
+            $("#tambah_harga_khusus, #edit_harga_khusus").val(null).trigger('mask.maskMoney');
+        }
     </script>
 
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_spcprice',function () {
-            $('#pilih_pelanggan').val(0).trigger('change');
-            $('#pilih_produk').val(0).trigger('change');
-            $('#tambah_harga').val(0);
+            cleanInputModal()
         });
     </script>
 
@@ -264,7 +270,7 @@
         $(document).on('click','.modal_edit',function () {
             $('#pilih_edit_pelanggan').val($(this).data('id_pelanggan')).trigger('change');
             $('#pilih_edit_produk').val($(this).data('id_produk')).trigger('change');
-            $('#edit_harga_khusus').val($(this).data('harga_khusus')).trigger('change');
+            $('#edit_harga_khusus').val($(this).data('harga_khusus')).trigger('mask.maskMoney');
             $('#spcprice_id').val($(this).data('id'));
         });
     </script>
@@ -273,13 +279,16 @@
     <script type="text/javascript">
         $(document).on('click','.modal_hapus',function () {
             $('#hapus_spcprice_id').val($(this).data('id'));
-            $('.label_spcprice').text($(this).data('nama_perusahaan'));
+            $('.label_pelanggan').text($(this).data('nama_perusahaan'));
+            $('.label_produk').text($(this).data('nama_produk'));
+            $('.label_harga').text($(this).data('harga_khusus'));
         });
     </script>
 
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
+            $("#tambah_harga_khusus").val($("#tambah_harga_khusus").maskMoney('unmasked')[0]);
             $.ajax({
                 type:'post',
                 url:'{{route('storespecialprice')}}',
@@ -290,6 +299,7 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
+                        $("#tambah_harga_khusus").trigger('mask.maskMoney');
                         if ((response.errors.pilih_pelanggan)){
                             swal("Special Price", ""+response.errors.pilih_pelanggan+"", "error");
                         }else if ((response.errors.pilih_produk)){
@@ -303,6 +313,8 @@
                             swal("Success !", "Berhasil menyimpan !", "success");
                             $('#modal_tambah').modal('hide');
                             oTable.ajax.reload();
+                        }else if(response=="Duplicated"){
+                            swal("Error !", "Data sudah ada !", "error");
                         }else{
                             wal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_tambah').modal('hide');
@@ -321,6 +333,7 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
+            $("#edit_harga_khusus").val($("#edit_harga_khusus").maskMoney('unmasked')[0]);
             $.ajax({
                 type:'post',
                 url:'{{route('updatespecialprice')}}',
@@ -331,6 +344,7 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
+                        $("#edit_harga_khusus").trigger('mask.maskMoney');
                         if ((response.errors.pilih_edit_pelanggan)){
                             swal("Special Price", ""+response.errors.pilih_edit_pelanggan+"", "error");
                         }else if ((response.errors.pilih_edit_produk)){
@@ -344,6 +358,8 @@
                             swal("Success !", "Berhasil menyimpan !", "success");
                             $('#modal_edit').modal('hide');
                             oTable.ajax.reload();
+                        }else if(response=="Duplicated"){
+                            swal("Error !", "Data sudah ada !", "error");
                         }else{
                             wal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_edit').modal('hide');

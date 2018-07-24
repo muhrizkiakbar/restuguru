@@ -323,7 +323,7 @@ return [
         'edit_email_cabang'=>[
             'required'=> 'Email Cabang harus diisi !',
             'email'=> 'Email tidak sesuai format email !',
-            
+
         ],
         'edit_alamat_cabang'=>[
             'required'=> 'Alamat Cabang harus diisi !',
@@ -388,7 +388,7 @@ return [
         'tambah_keterangan'=>[
             'required'=> 'Keterangan harus diisi !',
         ],
-        
+
         'edit_namapemilik'=>[
             'required'=> 'Nama harus diisi !',
         ],
@@ -449,6 +449,16 @@ return [
             'required'=> 'Harga harus diisi !',
             'numeric'=> 'Harga berupa angka !',
         ],
+        'namemenu'=>[
+            'required'=> 'Nama submenu harus diisi !',
+            'unique'=> 'Submenu sudah ada !'
+        ],
+        'icon'=>[
+            'required'=> 'Icon harus dipilih !'
+        ],
+        'page'=>[
+            'required'=> 'Halaman harus diisi !'
+        ],
         //pengeluaran
         'tambah_jenisPengeluaran'=>[
             'required'=> 'Jenis Pengeluaran harus diisi !',
@@ -467,6 +477,35 @@ return [
         ],
         'edit_mode'=>[
             'required'=> 'Mode harus diisi !',
+        ],
+        // produk
+        'tambah_kategori_bb'=>[
+            'required'=> 'Kategori Bahan Baku harus dipilih!',
+        ],
+        'tambah_nama_bahan'=>[
+            'required'=> 'Nama Bahan Baku harus diisi!',
+        ],
+        'tambah_harga'=>[
+            'required'=> 'Harga harus diisi!',
+            'numeric' => 'Harga harus berupa angka !',
+        ],
+        'tambah_batas_stok'=>[
+            'required'=> 'Batas Stok harus diisi!',
+            'numeric' => 'Batas Stok harus berupa angka !',
+        ],
+        'edit_kategori_bb'=>[
+            'required'=> 'Kategori Bahan Baku harus dipilih!',
+        ],
+        'edit_nama_bahan'=>[
+            'required'=> 'Nama Bahan Baku harus diisi!',
+        ],
+        'edit_harga'=>[
+            'required'=> 'Harga Beli harus diisi!',
+            'numeric' => 'Harga Beli harus berupa angka !',
+        ],
+        'edit_batas_stok'=>[
+            'required'=> 'Harga Jual harus diisi!',
+            'numeric' => 'Harga Jual harus berupa angka !',
         ],
     ],
 

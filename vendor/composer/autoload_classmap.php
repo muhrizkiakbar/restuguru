@@ -21,6 +21,7 @@ return array(
     'App\\CUsers' => $baseDir . '/app/CUsers.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Composers\\NavigasiComposer' => $baseDir . '/app/Http/Composers/NavigasiComposer.php',
     'App\\Http\\Controllers\\AngsuranPengeluaranController' => $baseDir . '/app/Http/Controllers/AngsuranPengeluaranController.php',
     'App\\Http\\Controllers\\AngsuranPenjualanController' => $baseDir . '/app/Http/Controllers/AngsuranPenjualanController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -34,7 +35,10 @@ return array(
     'App\\Http\\Controllers\\JenispelangganController' => $baseDir . '/app/Http/Controllers/JenispelangganController.php',
     'App\\Http\\Controllers\\KategoriController' => $baseDir . '/app/Http/Controllers/KategoriController.php',
     'App\\Http\\Controllers\\KategoriMenuController' => $baseDir . '/app/Http/Controllers/KategoriMenuController.php',
+<<<<<<< HEAD
     'App\\Http\\Controllers\\LaporanController' => $baseDir . '/app/Http/Controllers/LaporanController.php',
+=======
+>>>>>>> master
     'App\\Http\\Controllers\\LoginController' => $baseDir . '/app/Http/Controllers/LoginController.php',
     'App\\Http\\Controllers\\PelangganController' => $baseDir . '/app/Http/Controllers/PelangganController.php',
     'App\\Http\\Controllers\\PengeluaranController' => $baseDir . '/app/Http/Controllers/PengeluaranController.php',
@@ -62,6 +66,8 @@ return array(
     'App\\Sub_Tpengeluaran' => $baseDir . '/app/Sub_Tpengeluaran.php',
     'App\\Transaksi_Pengeluaran' => $baseDir . '/app/Transaksi_Pengeluaran.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\kategori_permission' => $baseDir . '/app/kategori_permission.php',
+    'App\\kategorimenu' => $baseDir . '/app/kategorimenu.php',
     'Barryvdh\\DomPDF\\Facade' => $vendorDir . '/barryvdh/laravel-dompdf/src/Facade.php',
     'Barryvdh\\DomPDF\\PDF' => $vendorDir . '/barryvdh/laravel-dompdf/src/PDF.php',
     'Barryvdh\\DomPDF\\ServiceProvider' => $vendorDir . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',

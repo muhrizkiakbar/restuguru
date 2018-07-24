@@ -375,6 +375,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\CUsers' => __DIR__ . '/../..' . '/app/CUsers.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Composers\\NavigasiComposer' => __DIR__ . '/../..' . '/app/Http/Composers/NavigasiComposer.php',
         'App\\Http\\Controllers\\AngsuranPengeluaranController' => __DIR__ . '/../..' . '/app/Http/Controllers/AngsuranPengeluaranController.php',
         'App\\Http\\Controllers\\AngsuranPenjualanController' => __DIR__ . '/../..' . '/app/Http/Controllers/AngsuranPenjualanController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -388,7 +389,10 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Http\\Controllers\\JenispelangganController' => __DIR__ . '/../..' . '/app/Http/Controllers/JenispelangganController.php',
         'App\\Http\\Controllers\\KategoriController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriController.php',
         'App\\Http\\Controllers\\KategoriMenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriMenuController.php',
+<<<<<<< HEAD
         'App\\Http\\Controllers\\LaporanController' => __DIR__ . '/../..' . '/app/Http/Controllers/LaporanController.php',
+=======
+>>>>>>> master
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
         'App\\Http\\Controllers\\PelangganController' => __DIR__ . '/../..' . '/app/Http/Controllers/PelangganController.php',
         'App\\Http\\Controllers\\PengeluaranController' => __DIR__ . '/../..' . '/app/Http/Controllers/PengeluaranController.php',
@@ -416,6 +420,8 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Sub_Tpengeluaran' => __DIR__ . '/../..' . '/app/Sub_Tpengeluaran.php',
         'App\\Transaksi_Pengeluaran' => __DIR__ . '/../..' . '/app/Transaksi_Pengeluaran.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\kategori_permission' => __DIR__ . '/../..' . '/app/kategori_permission.php',
+        'App\\kategorimenu' => __DIR__ . '/../..' . '/app/kategorimenu.php',
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',
