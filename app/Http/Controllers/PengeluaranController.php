@@ -45,7 +45,7 @@ class PengeluaranController extends Controller
         return $table;
     }
 
-    public function usersearchdetail(Request $request){
+    public function Usersearchdetail(Request $request){
         $data = User::where('id','=',$request->id)
                     ->select('Telepon','nama')
                     ->first();
@@ -53,7 +53,7 @@ class PengeluaranController extends Controller
         return $data;
     }
 
-    public function userssearch(Request $request){
+    public function Userssearch(Request $request){
         $term = trim($request->q);
         if (empty($term)) {
             return response()->json([]);

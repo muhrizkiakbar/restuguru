@@ -17,7 +17,7 @@ class CreateCabangsTable extends Migration {
 			$table->string('Email', 60);
 			$table->text('Alamat');
 			$table->string('Jenis_Cabang', 12);
-			$table->integer('user_id')->unsigned();
+			$table->integer('user_id')->unsigned()->nullable();
 		});
 	}
 

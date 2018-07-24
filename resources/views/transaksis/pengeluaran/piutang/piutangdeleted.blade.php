@@ -224,47 +224,31 @@
                         <table class="table table-hover table-bordered">
                             <thead>
                             <tr>
-                                <th>No. Nota</th>
-                                <th>Nama Penerima</th>
-                                <th>Telp.</th>
+                                <th>Nota Angsuran</th>
                                 <th>Tanggal</th>
-                                <th>DP</th>
+                                <th>Nominal Angsuran</th>
                                 <th>Pembayaran</th>
-                                <th>Sisa</th>
-                                <th>Total</th>
-                                <th>Jenis Pengeluaran</th>
-                                <th>Tool</th>
+                                <th>Nota Pengeluaran</th>
                                 <th>Cabang</th>
                                 <th>Pembuat</th>
+                                <th>Tool</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($datas as $key=>$data)
                             <tr id="{{$data->id}}">
-                                <td><a href="/transaksi/pengeluaran/report/{{encrypt($data->id)}}" target="_blank">#{{$data->id}}</a></td>
-                                <td>{{$data->namapenerima}}</td>
-                                <td>{{$data->hppenerima}}</td>
-                                <td>{{$data->tanggal_pengeluaran}}</td>
-                                <td>Rp. {{number_format(floatval($data->pembayaran_pengeluaran),2,',','.')}}</td>
+                                <td><a href="/transaksi/pengeluaran/angsuran/report/{{encrypt($data->id)}}" target="_blank">#{{$data->id}}</a></td>
+                                <td>{{$data->tanggal_angsuran}}</td>
+                                <td>Rp. {{number_format(floatval($data->nominal_angsuran),2,',','.')}}</td>
                                 <td>{{$data->metode_pembayaran}}</td>
-                                @if ($data->sisa_pengeluaran!=0)
-                                    <td id="sisa{{$data->id}}"><span class="badge bg-red">
-                                    Rp. {{number_format(floatval($data->sisa_pengeluaran),2,',','.')}}
-                                    </span></td>
-                                @else
-                                    <td id="sisa{{$data->id}}">Rp. {{number_format(floatval($data->sisa_pengeluaran),2,',','.')}}</td>                 
-                                @endif
-                                <td>{{$data->jenis_pengeluaran}}</td>                                
-                                <td>Rp. {{number_format(floatval($data->total_pengeluaran),2,',','.')}}</td>
+                                <td><a href="/transaksi/pengeluaran/report/{{encrypt($data->idtrans)}}" target="_blank">#{{$data->idtrans}}</td>
+                                <td>{{$data->Nama_Cabang}}</td>                                
+                                <td>{{$data->username}}</td>                                
                                 <td style="width: 150px;min-width:140px;">
                                     <div class="btn-group">
-                                        <button type="button" class="modal_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_pengeluaran}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
                                         <button type="button" class="buttonprint btn btn-danger btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>                                        
-                                        <button type="button" id="simpantombol{{$data->id}}" class="modal_add btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-nonota="{{$data->id}}" data-sisa="{{$data->sisa_pengeluaran}}" data-total="{{$data->total_pengeluaran}}" data-target="#modal_add"><i class="fa fa-plus"></i> Angsuran</button>
                                     </div>
-                                </td>
-                                <td>{{$data->Nama_Cabang}}</td> 
-                                <td>{{$data->username}}</td>                                                               
+                                </td>                                                            
                             </tr>
                             @endforeach
                             </tbody>

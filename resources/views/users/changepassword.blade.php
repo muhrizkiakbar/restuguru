@@ -41,9 +41,24 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form action="/changepassword" method="post">
+                        <form action="/ubahpassword" method="post">
                             <div class="row">
                                 <div class="col-md-12">
+                                    @if (Auth::user()->roles->first()->name=="owner")
+                                    <div class="form-group">
+                                        <label>Ubah Cabang</label>
+                                        <div class="input-group bootstrap-timepicker timepicker">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-briefcase"></i>
+                                            </div>
+                                            <select class="form-control select2" id="cabang_id" name="cabang_id" style="width: 100%;">
+                                                @foreach ($cabangs as $cabang)
+                                                    <option value="{{($cabang->id)}}">{{$cabang->Nama_Cabang}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    @endif
                                     <div class="form-group">
                                         <label>Password Lama</label>
                                         <div class="input-group bootstrap-timepicker timepicker">

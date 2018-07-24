@@ -20,7 +20,6 @@ class CabangTableSeeder extends Seeder
         		'Email' => 'muhrizkiakbar@live.com',
                 'Alamat' => 'Jl. Gt. Paikat, Komplek. Buana Permai No. Blok B',
                 'Jenis_Cabang' => 'Pusat',
-        		'user_id' =>'1',
             ],
         ];
         foreach ($users as $key => $value) {

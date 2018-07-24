@@ -128,13 +128,19 @@ class PermissionTableSeeder extends Seeder
         		'display_name' => 'Hapus Angsuran Penjualan',
         		'description' => 'Menghapus Angsuran Penjualan',
 						'index'=>'0'
-            ],
+						],
             [
         		'name' => 'report-angsuranpenjualan',
         		'display_name' => 'Laporan Angsuran Penjualan',
         		'description' => 'Laporan Angsuran Penjualan',
 						'index'=>'0'
-            ],
+						],
+						[
+							'name' => 'report-angsuranpenjualandetail',
+							'display_name' => 'Laporan Angsuran Penjualan Detail',
+							'description' => 'Laporan Angsuran Penjualan Detail',
+							'index'=>'0'
+							],
             [
         		'name' => 'deleted-angsuranpenjualan',
         		'display_name' => 'Angsuran Penjualan Terhapus',
@@ -225,14 +231,39 @@ class PermissionTableSeeder extends Seeder
         		'name' => 'delete-angsuranpengeluaran',
         		'display_name' => 'Hapus Angsuran Pengeluaran',
         		'description' => 'Menghapus Angsuran Pengeluaran',
-						'index'=>'0'
+				'index'=>'0'
             ],
+            [
+                'name' => 'manage-jenispengeluaran',
+                'display_name' => 'Manaj. Jenis Pengeluaran',
+                'description' => 'Manajemen Jenis Pengeluaran',
+                'index' => '1',
+                'urlindex' => 'jenispengeluaranindex'
+            ],
+            [
+                'name' => 'store-jenispengeluaran',
+                'display_name' => 'Tambah Jenis Pengeluaran',
+                'description' => 'Menambah Jenis Pengeluaran',
+                'index' => '0'
+            ],       
+            [
+                'name' => 'edit-jenispengeluaran',
+                'display_name' => 'Edit Jenis Pengeluaran',
+                'description' => 'Mengedit Jenis Pengeluaran',
+                'index' => '0'
+            ], 
+            [
+                'name' => 'destroy-jenispengeluaran',
+                'display_name' => 'Hapus Jenis Pengeluaran',
+                'description' => 'Menghapus Jenis Pengeluaran',
+                'index' => '0'
+            ], 
             [
         		'name' => 'manage-cabang',
         		'display_name' => 'Manajemen Cabang',
         		'description' => 'Manajemen Cabang',
-						'index'=>'1',
-						'urlindex'=>'managecabangindex'
+				'index'=>'1',
+				'urlindex'=>'managecabangindex'
             ],
             [
         		'name' => 'add-cabang',

@@ -168,11 +168,6 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('cascade');
 		});
-		Schema::table('Bahanbakus', function(Blueprint $table) {
-			$table->foreign('kategori_id')->references('id')->on('Kategories')
-						->onDelete('restrict')
-						->onUpdate('cascade');
-		});
 	}
 
 	public function down()
@@ -272,9 +267,6 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('Angsuran_Pengeluarans', function(Blueprint $table) {
 			$table->dropForeign('Angsuran_Pengeluarans_cabang_id_foreign');
-		});
-		Schema::table('Bahanbakus', function(Blueprint $table) {
-			$table->dropForeign('Bahanbakus_kategori_id_foreign');
 		});
 	}
 }

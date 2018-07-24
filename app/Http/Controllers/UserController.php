@@ -7,6 +7,7 @@ use App\CCabangs;
 use Illuminate\Http\Request;
 use Datatables;
 use App\Role;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -26,7 +27,7 @@ class UserController extends Controller
         //
         $cabangs=CCabangs::all();
         $role=Role::all();
-        return view('users.manajemenuser',['cabangs'=>$cabangs,'roles'=>$role]);
+        return view('Users.manajemenuser',['cabangs'=>$cabangs,'roles'=>$role]);
     }
 
     public function dataalluser(){
@@ -65,7 +66,7 @@ class UserController extends Controller
         //
         // dd($request->cabang_id);
         $rules=array(
-            'username'=>'required | min:3 | unique:users,username',
+            'username'=>'required | min:3 | unique:Users,username',
             'nama'=>'required',
             'password'=>'required | min:8',
             'Telepon'=>'required | numeric | min:10',
@@ -88,6 +89,7 @@ class UserController extends Controller
             $table->cabang_id=decrypt($request->cabang_id);
 
             if ($table->save()){
+                $table->attachRole(decrypt($request->role));
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -197,8 +199,8 @@ class UserController extends Controller
     }
 
     public function indexchangepassword(){
-        
-          return view('users.changepassword');
+        $cabangs=CCabangs::all();
+        return view('Users.changepassword',['cabangs'=>$cabangs]);
         
       }
   
@@ -211,11 +213,24 @@ class UserController extends Controller
             'konfirmasipassword' => 'required|string|min:8|same:passwordbaru'
         ]);
 
+
+
         if (Hash::check($request->password,Hash::make($request->password))) {
             // dd("berubah");
-            request()->user()->fill([
-                'password' => Hash::make(request()->input('passwordbaru'))
-            ])->save();
+            if ($request->cabang_id!=null)
+            {
+                request()->user()->fill([
+                    'password' => Hash::make(request()->input('passwordbaru')),
+                    'cabang_id'=>$request->cabang_id
+                ])->save();
+            }
+            else
+            {
+                request()->user()->fill([
+                    'password' => Hash::make(request()->input('passwordbaru'))
+                ])->save();
+            }
+            
 
             return redirect()->back()->with('statussucces','Password berhasil di ubah.');
         }

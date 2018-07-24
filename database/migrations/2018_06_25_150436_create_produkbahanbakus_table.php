@@ -20,6 +20,6 @@ class CreateProdukbahanbakusTable extends Migration
 
 	public function down()
 	{
-		Schema::drop('produkbahanbakus');
+		Schema::drop('Produkbahanbakus');
 	}
 }
