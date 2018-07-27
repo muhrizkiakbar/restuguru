@@ -90,6 +90,12 @@ class UserController extends Controller
 
             if ($table->save()){
                 $table->attachRole(decrypt($request->role));
+
+                $cabang=CCabangs::where('id','=',$table->cabang_id)->first();
+
+                $isi=Auth::user()->username." telah menambahakan username bernama ".$table->username." di cabang ".$cabang->Nama_Cabang.".";
+                $save=$this->createlog($isi);
+
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -173,6 +179,12 @@ class UserController extends Controller
             $table->cabang_id=($request->cabang_id2);
 
             if ($table->save()){
+
+                $cabang=CCabangs::where('id','=',$table->cabang_id)->first();
+                
+                $isi=Auth::user()->username." telah mengedit username bernama ".$table->username." di cabang ".$cabang->Nama_Cabang.".";
+                $save=$this->createlog($isi);
+
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -192,6 +204,10 @@ class UserController extends Controller
         $table=User::where('id','=',decrypt($request->deliduser))
                             ->first();
         if ($table->delete()){
+           
+            $isi=Auth::user()->username." telah menghapus username bernama ".$table->username.".";
+            $save=$this->createlog($isi);
+
             return response()->json("Success");
         }else{
             return response()->json("Failed");
@@ -231,6 +247,8 @@ class UserController extends Controller
                 ])->save();
             }
             
+            $isi=Auth::user()->username." telah mengubah password.";
+            $save=$this->createlog($isi);
 
             return redirect()->back()->with('statussucces','Password berhasil di ubah.');
         }

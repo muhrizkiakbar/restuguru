@@ -19,11 +19,6 @@ class Controller extends BaseController
     {
         $table = new CActivityLog;
         $table->log = $log;
-
-        if ($table->save()){
-            return response()->json("Success");
-        }else{
-            return response()->json("Failed");
-        }
+        return $table->save();
     }
 }

@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Angsuran' => $baseDir . '/app/Angsuran.php',
     'App\\Angsuran_Pengeluarans' => $baseDir . '/app/Angsuran_Pengeluarans.php',
+    'App\\CActivityLog' => $baseDir . '/app/CActivityLog.php',
     'App\\CBahanBakus' => $baseDir . '/app/CBahanBakus.php',
     'App\\CCabangs' => $baseDir . '/app/CCabangs.php',
     'App\\CJenispelanggans' => $baseDir . '/app/CJenispelanggans.php',
@@ -49,6 +50,7 @@ return array(
     'App\\Http\\Controllers\\SpecialPriceController' => $baseDir . '/app/Http/Controllers/SpecialPriceController.php',
     'App\\Http\\Controllers\\SpecialpricegroupController' => $baseDir . '/app/Http/Controllers/SpecialpricegroupController.php',
     'App\\Http\\Controllers\\SupplierController' => $baseDir . '/app/Http/Controllers/SupplierController.php',
+    'App\\Http\\Controllers\\TransaksiBahanBakuController' => $baseDir . '/app/Http/Controllers/TransaksiBahanBakuController.php',
     'App\\Http\\Controllers\\TransaksiController' => $baseDir . '/app/Http/Controllers/TransaksiController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
@@ -70,10 +72,7 @@ return array(
     'App\\User' => $baseDir . '/app/User.php',
     'App\\kategori_permission' => $baseDir . '/app/kategori_permission.php',
     'App\\kategorimenu' => $baseDir . '/app/kategorimenu.php',
-<<<<<<< HEAD
-    'App\\transaksibahan' => $baseDir . '/app/transaksibahan.php',
-=======
->>>>>>> f429c388a874003c88daee374029c8d741e4665f
+    'App\\transaksibahanbaku' => $baseDir . '/app/transaksibahanbaku.php',
     'Barryvdh\\DomPDF\\Facade' => $vendorDir . '/barryvdh/laravel-dompdf/src/Facade.php',
     'Barryvdh\\DomPDF\\PDF' => $vendorDir . '/barryvdh/laravel-dompdf/src/PDF.php',
     'Barryvdh\\DomPDF\\ServiceProvider' => $vendorDir . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',

@@ -458,7 +458,90 @@ class PermissionTableSeeder extends Seeder
 					'display_name' => 'Hapus Menu',
 					'description' => 'Menghapus Menu',
 					'index'=>'0'
-				]
+				],
+				[
+					'name' => 'manage-bahanbaku',
+					'display_name' => 'Manajemen Bahan Baku',
+					'description' => 'Manajemen Bahan Baku',
+					'index'=>'1',
+					'urlindex'=> 'managebahanbakuindex'
+				],
+				[
+					'name' => 'add-bahanbaku',
+					'display_name' => 'Tambah Bahan Baku',
+					'description' => 'Tambah Bahan Baku',
+					'index'=>'0'
+				],
+				[
+					'name' => 'edit-bahanbaku',
+					'display_name' => 'Edit Bahan Baku',
+					'description' => 'Edit Bahan Baku',
+					'index'=>'0'
+				],
+				[
+					'name' => 'delete-bahanbaku',
+					'display_name' => 'Hapus Bahan Baku',
+					'description' => 'Hapus Bahan Baku',
+					'index'=>'0'
+				],
+				[
+					'name' => 'manage-relasibahanbaku',
+					'display_name' => 'Manajemen Aturan Bahan Baku',
+					'description' => 'Manajemen Aturan Bahan Baku',
+					'index'=>'1',
+					'urlindex'=> 'managerelasibahanbakuindex'
+				],
+				[
+					'name' => 'add-relasibahanbaku',
+					'display_name' => 'Tambah Aturan Bahan Baku',
+					'description' => 'Tambah Aturan Bahan Baku',
+					'index'=>'0'
+				],
+				[
+					'name' => 'edit-relasibahanbaku',
+					'display_name' => 'Edit Aturan Bahan Baku',
+					'description' => 'Edit Aturan Bahan Baku',
+					'index'=>'0'
+				],
+				[
+					'name' => 'delete-relasibahanbaku',
+					'display_name' => 'Hapus Aturan Bahan Baku',
+					'description' => 'Hapus Aturan Bahan Baku',
+					'index'=>'0'
+				],
+				[
+					'name' => 'manage-transaksibahanbaku',
+					'display_name' => 'Manajemen Transaksi Bahan Baku',
+					'description' => 'Manajemen Transaksi Bahan Baku',
+					'index'=>'1',
+					'urlindex'=> 'indextransaksibahanbaku'
+				],
+				[
+					'name' => 'add-transaksibahanbaku',
+					'display_name' => 'Tambah Transaksi Bahan Baku',
+					'description' => 'Tambah Transaksi Bahan Baku',
+					'index'=>'0'
+				],
+				[
+					'name' => 'edit-transaksibahanbaku',
+					'display_name' => 'Edit Transaksi Bahan Baku',
+					'description' => 'Edit Transaksi Bahan Baku',
+					'index'=>'0'
+				],
+				[
+					'name' => 'delete-transaksibahanbaku',
+					'display_name' => 'Hapus Transaksi Bahan Baku',
+					'description' => 'Hapus Transaksi Bahan Baku',
+					'index'=>'0'
+				],
+				[
+					'name' => 'index-transaksibahanbakudeleted',
+					'display_name' => 'Transaksi Bahan Baku Terhapus',
+					'description' => 'Transaksi Bahan Baku Terhapus',
+					'index'=>'1',
+					'urlindex'=> 'indexdeletedtransaksibahanbaku'
+				],
+
         ];
 
 

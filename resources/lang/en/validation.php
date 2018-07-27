@@ -507,6 +507,18 @@ return [
             'required'=> 'Harga Jual harus diisi!',
             'numeric' => 'Harga Jual harus berupa angka !',
         ],
+        'bahanbaku_transaksibahanbaku'=>[
+            'required'=> 'Pilih bahan baku!'
+        ],
+        'cabangtujuan_transaksibahanbaku'=>[
+            'required'=> 'Pilih cabang tujuan!'
+        ],
+        'banyak_transaksibahanbaku'=>[
+            'required'=> 'Tentukan banyak bahan baku!',
+            'numeric'=> 'Harus angka!'
+        ],
+        
+
     ],
 
     /*

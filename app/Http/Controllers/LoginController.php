@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\CCabangs;
 
 class LoginController extends Controller
 {
@@ -29,6 +29,9 @@ class LoginController extends Controller
             'username'=>$request->username,
             'password'=>$request->password
         ])){
+
+            $isi=Auth::user()->username." telah login di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi);
             return redirect('/home');
           // dd(Auth::user()->role->namaRole="kadis");
         //   if (Auth::user()->role->namaRole=="kadis"){

@@ -289,6 +289,9 @@ class TransaksiController extends Controller
             $subtransaksi->diskon=$value['diskonnow'];
             
             if ($subtransaksi->save()){
+
+                $isi=Auth::user()->username." telah menginput transaksi penjualan dengan No. ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi);
                 $status="Success";
             }else
             {
@@ -427,6 +430,8 @@ class TransaksiController extends Controller
                     ->first();
 
         if ($table->delete()){
+            $isi=Auth::user()->username." telah menghapus transaksi penjualan dengan No. ".$id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi);
             return "{\"msg\":\"success\"}";
         }
         else
@@ -580,6 +585,9 @@ class TransaksiController extends Controller
             $subtransaksi->diskon=$value['diskonnow'];
             
             if ($subtransaksi->save()){
+
+                $isi=Auth::user()->username." telah mengedit transaksi penjualan dengan No. ".decrypt($request->json('inputtransaksiid'))." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi);
                 $status="Success";
             }else
             {

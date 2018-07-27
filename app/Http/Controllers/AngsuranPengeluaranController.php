@@ -501,7 +501,7 @@ class AngsuranPengeluaranController extends Controller
         $table=new Angsuran_Pengeluarans;
         $table->tanggal_angsuran=$date;
         $table->nominal_angsuran=$request->json('nominal');
-        $table->user_id='1';
+        $table->user_id=Auth::user()->id;
         $table->cabang_id=Auth::user()->cabangs->id;
         $table->transaksipengeluaran_id=$idtrans;
         $table->metode_pembayaran=$request->json('metode');
@@ -519,6 +519,8 @@ class AngsuranPengeluaranController extends Controller
         $table->sisa_angsuran=$sisa;
         if ($table->save())
         {
+            $isi=Auth::user()->username." telah menambah angsuran pengeluaran dengan No. Angsuran ".$table->id."pada No. Transaksi Penjualan ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi);
             return "{\"msg\":\"success\"}";
         }
         else
@@ -585,6 +587,8 @@ class AngsuranPengeluaranController extends Controller
 
         if ($tableangsuran->delete())
         {
+            $isi=Auth::user()->username." telah menghapus angsuran pengeluaran dengan No. Angsuran ".$tableangsuran->id."pada No. Transaksi Penjualan ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi);
             return "{\"msg\":\"success\"}";
         }
         else
