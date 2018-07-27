@@ -458,6 +458,13 @@ class PermissionTableSeeder extends Seeder
 					'display_name' => 'Hapus Menu',
 					'description' => 'Menghapus Menu',
 					'index'=>'0'
+				],
+				[
+					'name' => 'view-laporan',
+					'display_name' => 'Laporan',
+					'description' => 'Laporan',
+					'index'=>'1',
+					'urlindex'=>'laporan'
 				]
         ];
 
