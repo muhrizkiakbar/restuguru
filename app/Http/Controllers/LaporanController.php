@@ -84,15 +84,19 @@ class LaporanController extends Controller
 
         //Detail
         //Penjualan yang tidak berhutang
-        $c_Pembayaran_Penjualan=CTransaksi_Penjualans::where('cabang_id',$cabangId)
-                                                    ->where('metode_pembayaran', 'Cash')
-                                                    ->whereBetween('tanggal', [$request->startDate, $request->endDate])
-                                                    ->sum('jumlah_pembayaran');
+        $c_Pembayaran_Penjualan=CTransaksi_Penjualans::leftJoin('Angsurans', 'Transaksi_Penjualans.id', '=', 'Angsurans.transaksipenjualan_id')
+                                                    ->select(DB::raw('jumlah_pembayaran - SUM( if (Angsurans.nominal_angsuran is not null,Angsurans.nominal_angsuran,0)) as total'))
+                                                    ->whereBetween('Transaksi_Penjualans.tanggal', [$request->startDate, $request->endDate])
+                                                    ->where('Transaksi_Penjualans.metode_pembayaran', 'Cash')
+                                                    ->groupBy('Transaksi_Penjualans.id')
+                                                    ->get();                                           
 
-        $t_Pembayaran_Penjualan=CTransaksi_Penjualans::where('cabang_id',$cabangId)
-                                                    ->where('metode_pembayaran', 'Transfer')
-                                                    ->whereBetween('tanggal', [$request->startDate, $request->endDate])
-                                                    ->sum('jumlah_pembayaran');
+        $t_Pembayaran_Penjualan=CTransaksi_Penjualans::leftJoin('Angsurans', 'Transaksi_Penjualans.id', '=', 'Angsurans.transaksipenjualan_id')
+                                                    ->select(DB::raw('jumlah_pembayaran - SUM( if (Angsurans.nominal_angsuran is not null,Angsurans.nominal_angsuran,0)) as total'))
+                                                    ->whereBetween('Transaksi_Penjualans.tanggal', [$request->startDate, $request->endDate])
+                                                    ->where('Transaksi_Penjualans.metode_pembayaran', 'Transfer')
+                                                    ->groupBy('Transaksi_Penjualans.id')
+                                                    ->get();
 
         //Pembeli Yang Bayar Hutang pada tanggal xxxx - xxxx
         $c_Pencairan_Piutang=Angsuran::where('cabang_id',$cabangId)
@@ -208,8 +212,8 @@ class LaporanController extends Controller
             'Hutang_Pengeluaran'        => $Hutang_Pengeluaran,
             'Pencairan_Piutang'         => $Pencairan_Piutang,
             'Pembayaran_Hutang'         => $Pembayaran_Hutang,
-            'c_Pembayaran_Penjualan'    => $c_Pembayaran_Penjualan,
-            't_Pembayaran_Penjualan'    => $t_Pembayaran_Penjualan,
+            'c_Pembayaran_Penjualan'    => $c_Pembayaran_Penjualan->sum('total'),
+            't_Pembayaran_Penjualan'    => $t_Pembayaran_Penjualan->sum('total'),
             'c_Pencairan_Piutang'       => $c_Pencairan_Piutang,
             't_Pencairan_Piutang'       => $t_Pencairan_Piutang,
             'c_Pembayaran_Hutang'       => $c_Pembayaran_Hutang,
