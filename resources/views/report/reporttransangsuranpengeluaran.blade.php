@@ -4,7 +4,7 @@
 
   <!-- daterange picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
-  <!-- Bootstrap Color Picker --> 
+  <!-- Bootstrap Color Picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
 
   <!-- bootstrap datepicker -->
@@ -12,14 +12,14 @@
   <!-- Bootstrap time Picker -->
   <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
-  
+
   <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- daterange picker -->
   <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css"> -->
   <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"> -->
- 
+
   <style>
 	.status
 	{
@@ -88,8 +88,8 @@
                 Kepada
                 <address>
                 <strong>{{$transaksi->namapenerima}}</strong><br>
-                {{$transaksi->hppenerima}} 
-                
+                {{$transaksi->hppenerima}}
+
                 </address>
             </div>
             <!-- /.col -->
@@ -105,9 +105,9 @@
             <div class="row">
             @if ($transaksi->sisa_pengeluaran==0)
                 <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
-            @endif  
+            @endif
             <div class="col-xs-12 table-responsive">
-                <table class="table table-bordered table-striped" width="100%">
+                <table class="table table-bordered table-striped strong" width="100%">
                 <thead>
                     <tr>
                         <th>No. Angsuran</th>
@@ -121,10 +121,10 @@
                     @foreach ($angsurans as $angsuran)
                     <tr>
                         <td>#{{$angsuran->id}}</td>
-                        <td>{{date('d-m-Y',strtotime($angsuran->tanggal_angsuran))}}</td>                        
+                        <td>{{date('d-m-Y',strtotime($angsuran->tanggal_angsuran))}}</td>
                         <td>Rp. {{number_format(floatval($angsuran->nominal_angsuran),2,',','.')}}</td>
                         <td>Rp. {{number_format(floatval($angsuran->sisa_angsuran),2,',','.')}}</td>
-                        <td>{{$angsuran->metode_pembayaran}}</td>                      
+                        <td>{{$angsuran->metode_pembayaran}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -135,9 +135,9 @@
             <!-- /.row -->
 
             <div class="row">
-            
+
             <div class="col-xs-4">
-                
+
                 <table class="table no-border">
                     <thead>
                         <th><center>Penerima</center></th>
@@ -187,7 +187,7 @@
                 </div>
             </div>
 
-            
+
             <!-- /.col -->
             </div>
             <!-- /.row -->
@@ -223,7 +223,7 @@
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
-    
+
 
     </body>
 @endsection

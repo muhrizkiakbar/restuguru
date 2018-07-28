@@ -168,7 +168,7 @@ class PermissionTableSeeder extends Seeder
         		'description' => 'Mengubah Transaksi Pengeluaran',
 						'index'=>'0'
             ],
-            
+
         	[
         		'name' => 'delete-transaksipengeluaran',
         		'display_name' => 'Hapus Transaksi Pengeluaran',
@@ -245,19 +245,19 @@ class PermissionTableSeeder extends Seeder
                 'display_name' => 'Tambah Jenis Pengeluaran',
                 'description' => 'Menambah Jenis Pengeluaran',
                 'index' => '0'
-            ],       
+            ],
             [
                 'name' => 'edit-jenispengeluaran',
                 'display_name' => 'Edit Jenis Pengeluaran',
                 'description' => 'Mengedit Jenis Pengeluaran',
                 'index' => '0'
-            ], 
+            ],
             [
                 'name' => 'destroy-jenispengeluaran',
                 'display_name' => 'Hapus Jenis Pengeluaran',
                 'description' => 'Menghapus Jenis Pengeluaran',
                 'index' => '0'
-            ], 
+            ],
             [
         		'name' => 'manage-cabang',
         		'display_name' => 'Manajemen Cabang',
@@ -457,6 +457,19 @@ class PermissionTableSeeder extends Seeder
 					'name' => 'delete-menu',
 					'display_name' => 'Hapus Menu',
 					'description' => 'Menghapus Menu',
+					'index'=>'0'
+				],
+                [
+                    'name' => 'manage-menuname',
+                    'display_name' => 'Manajemen Nama Menu',
+                    'description' => 'Manajemen Nama Menu',
+                    'index'=>'1',
+                    'urlindex'=>'menuindex'
+                ],
+				[
+					'name' => 'edit-menuname',
+					'display_name' => 'Edit Nama Menu',
+					'description' => 'Mengedit Nama Menu',
 					'index'=>'0'
 				],
 				[

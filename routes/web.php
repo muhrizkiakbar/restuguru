@@ -35,7 +35,7 @@ Route::post('/login','LoginController@postLogin');
 
 
 Route::get('/transaksi/report/{id}','TransaksiController@report');
-        
+
 
 Auth::routes();
 
@@ -224,7 +224,7 @@ Route::group(['middleware' => 'auth'], function() {
     //menu
     Route::get('/menu',['middleware' => ['permission:manage-menu'], 'uses' => 'KategoriMenuController@index'])->name('menuindex');
     Route::post('/menu',['middleware' => ['permission:manage-menu'], 'uses' => 'KategoriMenuController@index'])->name('menuindex');
-    
+
     Route::get('/menu/add',['middleware' => ['permission:add-menu'], 'uses' => 'KategoriMenuController@create'])->name('addmenuindex');
 
     Route::post('/menu/add',['middleware' => ['permission:add-menu'], 'uses' => 'KategoriMenuController@store'])->name('storemenu');
@@ -233,6 +233,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/menu/delete',['middleware' => ['permission:delete-menu'], 'uses' => 'KategoriMenuController@destroy'])->name('destroymenu');
     Route::get('/menu/data',['middleware' => ['permission:manage-menu'], 'uses' => 'KategoriMenuController@dataload'])->name('kategorimenudataload');
 
+    // Menu Name Route
+    Route::get('/menuname',['middleware' => ['permission:manage-menuname'], 'uses' => 'MenuNameController@index'])->name('managemenunameindex');
+    Route::get('/menuname/loadmenuname',['middleware' => ['permission:manage-menuname'], 'uses' => 'MenuNameController@loadmenuname'])->name('loadmenuname');
+    Route::post('/menuname/updatemenuname',['middleware' => ['permission:edit-menuname'], 'uses' => 'MenuNameController@update'])->name('updatemenuname');
 
     Route::get('/ubahpassword','UserController@indexchangepassword');
     Route::post('/ubahpassword','UserController@changepassword');

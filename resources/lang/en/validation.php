@@ -507,6 +507,9 @@ return [
             'required'=> 'Harga Jual harus diisi!',
             'numeric' => 'Harga Jual harus berupa angka !',
         ],
+        'edit_nama_menu'=>[
+            'required'=> 'Nama Menu harus diisi!',
+        ],
     ],
 
     /*
