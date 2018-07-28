@@ -312,7 +312,11 @@
                                   <div class="col-md-12">
                                       <div class="form-group ui-widget">
                                           <label>Produk</label>
-                                          <select id="add_produk" name="add_produk" class="form-control select2" style="width:100%;" type="text"></select>
+                                          <select id="add_produk" name="add_produk" class="form-control select2" style="width:100%;" type="text">
+                                                @foreach ($produks as $produk)
+                                                <option value="{{$produk->id}}">{{$produk->nama_produk}}</option>
+                                                @endforeach
+                                          </select>
                                           <input id="add_produkid" name="add_produkid" class="form-control" type="hidden">
 
                                       </div>
@@ -394,7 +398,11 @@
                                   <div class="col-md-12">
                                       <div class="form-group ui-widget">
                                           <label>Produk</label>
-                                          <select id="edit_produk" name="edit_produk"  class="form-control select2" style="width:100%;" type="text"></select>
+                                          <select id="edit_produk" name="edit_produk"  class="form-control select2" style="width:100%;" type="text">
+                                                @foreach ($produks as $produk))
+                                                    <option value="{{$produk->id}}">{{$produk->nama_produk}}</option>
+                                                @endforeach
+                                          </select>
                                           <input id="edit_produkid" name="edit_produkid" readonly class="form-control" type="hidden">
                                           <input id="edit_subtotalawal" name="edit_subtotalawal" readonly class="form-control" type="hidden">
                                       </div>
@@ -711,49 +719,53 @@
           radioClass   : 'iradio_minimal-red'
         });
     
-        $('#add_produk').select2({
-            placeholder: "Pilih Produk.",
-            minimumInputLength: 1,
-            ajax: {
-                url: '{{route('produkcari')}}',
-                dataType: 'json',
-                data: function (params) 
-                {
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) 
-                {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
-            }
-        });
+        $('#add_produk').select2();
 
-        $('#edit_produk').select2({
-            placeholder: "Pilih Produk.",
-            minimumInputLength: 1,
-            ajax: {
-                url: '{{route('produkcari')}}',
-                dataType: 'json',
-                data: function (params) 
-                {
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) 
-                {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
-            }
-        });
+        // $('#add_produk').select2({
+        //     placeholder: "Pilih Produk.",
+        //     minimumInputLength: 1,
+        //     ajax: {
+        //         url: '{{route('produkcari')}}',
+        //         dataType: 'json',
+        //         data: function (params) 
+        //         {
+        //             return {
+        //                 q: $.trim(params.term)
+        //             };
+        //         },
+        //         processResults: function (data) 
+        //         {
+        //             return {
+        //                 results: data
+        //             };
+        //         },
+        //         cache: true
+        //     }
+        // });
+
+        // $('#edit_produk').select2({
+        //     placeholder: "Pilih Produk.",
+        //     minimumInputLength: 1,
+        //     ajax: {
+        //         url: '{{route('produkcari')}}',
+        //         dataType: 'json',
+        //         data: function (params) 
+        //         {
+        //             return {
+        //                 q: $.trim(params.term)
+        //             };
+        //         },
+        //         processResults: function (data) 
+        //         {
+        //             return {
+        //                 results: data
+        //             };
+        //         },
+        //         cache: true
+        //     }
+        // });
+
+        $('#edit_produk').select2();
 
         $("#edit_harga").keydown(function (e) {
           // Allow: backspace, delete, tab, escape, enter and .
@@ -1347,7 +1359,8 @@
 
         $('#add_produk').on('select2:select', function (e) {
             // alert($('add_produk').select2('val'));
-            
+            // console.log(e.params.data.id);
+            // var id=e.params.data.id;
             var id=e.params.data.id;
             $('#add_produkid').val(id);
             var pelanggan=$('#pelanggan').val();
@@ -1485,7 +1498,7 @@
 
             total=$('#total').maskMoney('unmasked')[0];
             total=(subtotal)+total;
-            
+            console.log(satuan);
             $('#total2').val(total).trigger('mask.maskMoney');
             
             $('#total').val(total).trigger('mask.maskMoney');
@@ -1620,20 +1633,7 @@
       //bagian modal edit
         
         $(document).on('click','.modal_edit',function () {
-
-            if ($(this).data('satuan')=="cm"){
-                $('#r2editcm').iCheck('check');
-                satuan="cm";
-            }
-            else if ($(this).data('satuan')=="m")
-            {
-                $('#r2editm').iCheck('check');
-                satuan="m";
-            }
-            else
-            {
-                satuan="";
-            }
+            
             
             var data = {
                 id: $(this).data('produk'),
@@ -1642,15 +1642,45 @@
             
             subtotalawal=$(this).data('subtotal');
 
-            var newOption = new Option(data.text, data.id, false, false);
-            $('#edit_produk').append(newOption).trigger('change');
-            
+            // var newOption = new Option(data.text, data.id, false, false);
+            // $('#edit_produk').append(newOption).trigger('change');
+
+            var $search = $('#edit_produk').data('select2').dropdown.$search || $('#edit_produk').data('select2').selection.$search;
+            $('#edit_produk').on("select2:selecting", function(e) {
+                $search.val(e.params.args.data.text);
+            });
+
+
             tdidnow=$(this).data('tdid');     
             hitung_luas=$(this).data('hitungluas');
             // console.log($(this).data('hitungluas'));
             if ($(this).data('hitungluas')==1){
+
                 $('#r2editm').iCheck('uncheck');
                 $('#r2editcm').iCheck('uncheck');
+                if ($(this).data('satuan')=="cm"){
+                console.log($(this).data('satuan'));
+
+                $('#r2editm').iCheck('uncheck');
+                $('#r2editcm').iCheck('check');
+                // $('#r2editcm').prop('checked',true).iCheck('update');
+                satuan="cm";
+                }
+                else if ($(this).data('satuan')=="m")
+                {
+                    console.log($(this).data('satuan'));
+
+                    $('#r2editcm').iCheck('uncheck');
+                    $('#r2editm').iCheck('check');
+                    // $('#r2editm').prop('checked',true).iCheck('update');
+                    satuan="m";
+                }
+                else
+                {
+                    console.log($(this).data('satuan'));
+
+                    satuan="";
+                }
                 $('#r2editm').iCheck('enabled');
                 $('#r2editcm').iCheck('enabled');
                 $('#edit_panjang').removeAttr('disabled');
@@ -1658,6 +1688,7 @@
             }
             else
             {
+                
                 $('#r2editm').iCheck('uncheck');
                 $('#r2editcm').iCheck('uncheck');
                 $('#r2editm').iCheck('disable');
@@ -1666,14 +1697,14 @@
                 $('#edit_lebar').attr('disabled',true);
             }
 
-            $('#edit_harga').val($(this).data('harga')).maskMoney({thousands:'.', decimal:',',allowZero:true}); 
-            $('#edit_subtotal').val($(this).data('subtotal')).maskMoney({thousands:'.', decimal:',',allowZero:true});
-            $('#edit_kuantitas').val($(this).data('kuantitas')).maskMoney({thousands:'.', decimal:',',allowZero:true});
-            $('#edit_diskon').val($(this).data('diskon')).maskMoney({thousands:'.', decimal:',',allowZero:true});
-            $('#edit_panjang').val($(this).data('panjang')).maskMoney({thousands:'.', decimal:',',allowZero:true});
+            $('#edit_harga').val($(this).data('harga')).maskMoney({thousands:'.', decimal:',',allowZero:true}).trigger('mask.maskMoney'); 
+            $('#edit_subtotal').val($(this).data('subtotal')).maskMoney({thousands:'.', decimal:',',allowZero:true}).trigger('mask.maskMoney');
+            $('#edit_kuantitas').val($(this).data('kuantitas')).maskMoney({thousands:'.', decimal:',',allowZero:true}).trigger('mask.maskMoney');
+            $('#edit_diskon').val($(this).data('diskon')).maskMoney({thousands:'.', decimal:',',allowZero:true}).trigger('mask.maskMoney');
+            $('#edit_panjang').val($(this).data('panjang')).maskMoney({thousands:'.', decimal:',',allowZero:true}).trigger('mask.maskMoney');
             $('#edit_keterangan').val($(this).data('keterangan'));
-            $('#edit_lebar').val($(this).data('lebar')).maskMoney({thousands:'.', decimal:',',allowZero:true});
-            $('#edit_subtotal').val($(this).data('subtotal')).maskMoney({thousands:'.', decimal:',',allowZero:true});
+            $('#edit_lebar').val($(this).data('lebar')).maskMoney({thousands:'.', decimal:',',allowZero:true}).trigger('mask.maskMoney');
+            $('#edit_subtotal').val($(this).data('subtotal')).maskMoney({thousands:'.', decimal:',',allowZero:true}).trigger('mask.maskMoney');
 
         });
 

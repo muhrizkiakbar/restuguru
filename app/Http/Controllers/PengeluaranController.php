@@ -678,6 +678,10 @@ class PengeluaranController extends Controller
                     ->first();
 
         if ($table->delete()){
+            
+            $tableangsuran=Angsuran_Pengeluarans::where('transaksipengeluaran_id','=',$id)
+                        ->delete();
+
             $isi=Auth::user()->username." telah menghapus transaksi pengeluaran dengan Nota ".$table->id." di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
             $save=$this->createlog($isi);
             return "{\"msg\":\"success\"}";

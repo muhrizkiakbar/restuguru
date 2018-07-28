@@ -154,6 +154,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        App\Providers\DropboxFilesystemServiceProvider::class,
         /*
          * Application Service Providers...
          */

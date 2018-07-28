@@ -255,6 +255,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 
         Route::get('/transaksi/pengeluaran',['middleware' => ['permission:add-transaksipengeluaran'], 'uses' => 'PengeluaranController@index'])->name('addtransaksipengeluaranindex');
+        Route::get('/transaksi/pengeluaran/bahanbaku',['middleware' => ['permission:add-transaksipengeluaran'], 'uses' => 'BahanBakuController@bahanbakucari'])->name('bahanbakucari');
+
         Route::get('/transaksi/pengeluaran/searchjenispengeluaran',['middleware' => ['permission:manage-transaksipengeluaran|add-transaksipengeluaran|edit-transaksipengeluaran'], 'uses' => 'PengeluaranController@jenispengeluaransearch'])->name('jenispengeluaransearch');
         Route::get('/transaksi/pengeluaran/users/search',['middleware' => ['permission:manage-transaksipengeluaran|add-transaksipengeluaran|edit-transaksipengeluaran'], 'uses' => 'PengeluaranController@userssearch'])->name('searchusers');
         Route::get('/transaksi/pengeluaran/users/search/detail',['middleware' => ['permission:manage-transaksipengeluaran|add-transaksipengeluaran|edit-transaksipengeluaran'], 'uses' => 'PengeluaranController@usersearchdetail'])->name('searchdetailusers');

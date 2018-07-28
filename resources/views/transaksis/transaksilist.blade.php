@@ -280,7 +280,7 @@
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
-                                        <th>Nama Barang</th>
+                                        <th style="width: 450px">Nama Barang</th>
                                         <th style="width: 130px">Harga Satuan</th>
                                         <th style="width: 60px">P</th>
                                         <th style="width: 60px">L</th>
@@ -535,7 +535,7 @@
                             var keterangan=response[key]['keterangan'];
                         }
                         $("#showdata").append(
-                            '<tr><td>'+response[key]['nama_produk']+'</td><td>'+response[key]['harga_satuan']+'</td><td>'+response[key]['panjang']+'</td><td>'+response[key]['lebar']+'</td><td>'+response[key]['banyak']+'</td><td>'+response[key]['finishing']+'</td><td style="width: 170px;word-break: break-all;">'+keterangan+'</td><td>'+response[key]['diskon']+'</td><td>'+response[key]['subtotal']+'</td></tr>'
+                            '<tr><td>'+response[key]['nama_produk']+'</td><td>'+response[key]['harga_satuan'].format(2, 3, '.', ',')+'</td><td>'+response[key]['panjang'].format(2, 3, '.', ',')+'</td><td>'+response[key]['lebar'].format(2, 3, '.', ',')+'</td><td>'+response[key]['banyak'].format(2, 3, '.', ',')+'</td><td>'+response[key]['finishing']+'</td><td style="width: 170px;word-break: break-all;">'+keterangan+'</td><td>'+response[key]['diskon'].format(2, 3, '.', ',')+'</td><td>'+response[key]['subtotal'].format(2, 3, '.', ',')+'</td></tr>'
                         );
                     });
                     // $('.labelnota').text(response.nonota);
@@ -568,7 +568,7 @@
                     $.each( response, function( key, value ) {
                         
                         $("#showdata2").append(
-                            '<tr id="'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+response[key]['id2']+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id2']+'" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
+                            '<tr id="'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+response[key]['id2']+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id2']+'" data-nominal="'+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'"><i class="fa fa-print"></i></button></div></td></tr>'
                         );
                     });
                     // $('.labelnota').text(response.nonota);

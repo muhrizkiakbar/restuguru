@@ -9,6 +9,7 @@ use App\CSpesialpricesgroup;
 use App\CPelanggans;
 use App\CSub_Tpenjualans;
 use App\CTransaksi_Penjualans;
+use App\Angsuran;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,8 +27,9 @@ class TransaksiController extends Controller
     {
         //
         $date=date("Y-m-d");
+        $produks=CProduks::all();
 
-        return view('transaksis.transaksi',['date'=>$date]);
+        return view('transaksis.transaksi',['date'=>$date,'produks'=>$produks]);
     }
 
     public function transaksideleted(Request $request)
@@ -430,6 +432,9 @@ class TransaksiController extends Controller
                     ->first();
 
         if ($table->delete()){
+            $tableangsuran=Angsuran::where('transaksipenjualan_id','=',$id)
+                        ->delete();
+
             $isi=Auth::user()->username." telah menghapus transaksi penjualan dengan No. ".$id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
             $save=$this->createlog($isi);
             return "{\"msg\":\"success\"}";
@@ -468,7 +473,10 @@ class TransaksiController extends Controller
         ->where('penjualan_id','=',$id)
         ->select('Sub_Tpenjualans.*','Produks.nama_produk')
         ->count();
-        return view('transaksis.transaksiedit',['datas'=>$showsubtransaksi,'count'=>$counttransaksi,'transaksi'=>$showtransaksi,'date'=>$date]);
+
+        $produks=CProduks::all();
+
+        return view('transaksis.transaksiedit',['datas'=>$showsubtransaksi,'count'=>$counttransaksi,'transaksi'=>$showtransaksi,'date'=>$date,'produks'=>$produks]);
     }
 
     /**

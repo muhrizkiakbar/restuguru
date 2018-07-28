@@ -25,6 +25,20 @@ class BahanBakuController extends Controller
                     );
     }
 
+    public function bahanbakucari(Request $request)
+    {
+        $term = trim($request->q);
+        if (empty($term)) {
+            return response()->json([]);
+        }
+        $tags = CBahanBakus::where('nama_bahan','LIKE','%'.$term.'%')->limit(20)->get();
+        $formatted_tags = [];
+        foreach ($tags as $tag) {
+            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->nama_bahan];
+        }
+        return response()->json($formatted_tags);
+    }
+
     public function loadbahanbaku(){
         $tables=CBahanBakus::leftJoin('Kategories','Bahanbakus.kategori_id','=','Kategories.id')
                ->select('Bahanbakus.*','Kategories.Nama_Kategori')

@@ -532,7 +532,7 @@
                             var satuan2=response[key]['satuan'];
                         }
                         $("#showdata").append(
-                            '<tr><td>'+response[key]['nama_bahanbaku']+'</td><td>'+response[key]['harga_satuan']+'</td><td>'+response[key]['panjang']+'</td><td>'+response[key]['lebar']+'</td><td>'+satuan2+'</td><td>'+response[key]['kuantitas']+'</td><td style="width: 170px;word-break: break-all;">'+keterangan+'</td><td>'+response[key]['sub_totalpengeluaran']+'</td></tr>'
+                            '<tr><td>'+response[key]['nama_bahanbaku']+'</td><td>Rp. '+response[key]['harga_satuan'].format(2, 3, '.', ',')+'</td><td>'+response[key]['panjang'].format(2, 3, '.', ',')+'</td><td>'+response[key]['lebar'].format(2, 3, '.', ',')+'</td><td>'+satuan2+'</td><td>'+response[key]['kuantitas'].format(2, 3, '.', ',')+'</td><td style="width: 170px;word-break: break-all;">'+keterangan+'</td><td>Rp. '+response[key]['sub_totalpengeluaran'].format(2, 3, '.', ',')+'</td></tr>'
                         );
                     });
                     // $('.labelnota').text(response.nonota);
@@ -564,7 +564,7 @@
                     $.each( response, function( key, value ) {
                         
                         $("#showdata2").append(
-                            '<tr id="baris'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idtrans+'" target="_blank">#'+response[key]['transaksipengeluaran_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id2']+'"  data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
+                            '<tr id="baris'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idtrans+'" target="_blank">#'+response[key]['transaksipengeluaran_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id2']+'"  data-nominal="'+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'"><i class="fa fa-print"></i></button></div></td></tr>'
                         );
                     });
                     // $('.labelnota').text(response.nonota);
