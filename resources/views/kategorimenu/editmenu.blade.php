@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
 <!-- daterange picker -->
 
+    
+
+
 <!-- bootstrap datepicker -->
 <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <!-- Bootstrap time Picker -->
@@ -74,13 +77,13 @@
                       @if ($errors->has('icon'))
                       <div class="form-group has-error">
                         <label for="displayrole">Icon</label>
-                        <input type="text" class="form-control" multiple id="icon" name="icon" value="{{$kategorimenu->icon}}" placeholder="Display Role">
+                        <input type="text" id="icon" name="icon" value="{{$kategorimenu->icon}}" class="input input1 form-control">                        
                         <span class="help-block">{{$errors->first('icon')}}</span>
                       </div>
                       @else
                       <div class="form-group">
                         <label for="displayrole">Icon</label>
-                        <input type="text" class="form-control" multiple id="icon" name="icon" value="{{$kategorimenu->icon}}" placeholder="Display Role">
+                        <input type="text" id="icon" name="icon" value="{{$kategorimenu->icon}}" class="input input1 form-control">                        
                       </div>
                       @endif
 
@@ -89,7 +92,7 @@
                         <select class="form-control select2" id="page[]" name="page[]" multiple="multiple" data-placeholder="Pilih Permission"
                         style="width: 100%;">
                           @foreach ($permissions as $permission)
-                            <option value="{{$permission->id}}">{{$permission->name}}</option>
+                            <option value="{{$permission->id}}">{{$permission->display_name}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -146,6 +149,15 @@
     <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <!-- FastClick -->
+
+    <link rel="stylesheet" href="{{asset('bower_components/jquery-iconpicker/simple-iconpicker.min.css')}}">
+    <script src="{{asset('bower_components/jquery-iconpicker/simple-iconpicker.min.js')}}"></script>
+
+    <script>
+      $(document).ready(function(){
+        $('.input1').iconpicker(".input1");
+      });
+    </script>
 
     <!-- iCheck 1.0.1 -->
     <script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
