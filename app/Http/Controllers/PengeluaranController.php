@@ -141,7 +141,7 @@ class PengeluaranController extends Controller
         $transaksi->save();
 
         $isi=Auth::user()->username." telah menambahakan transaksi pengeluaran dengan Nota ".$transaksi->id." di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-        $save=$this->createlog($isi);
+        $save=$this->createlog($isi,"add");
             
 
         $detailitem=[];
@@ -570,7 +570,7 @@ class PengeluaranController extends Controller
             
         // dd($request->json('jsonsubtotal'));
         $isi=Auth::user()->username." telah mengubah/mengedit transaksi pengeluaran dengan Nota ".$transaksi->id." di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-        $save=$this->createlog($isi);
+        $save=$this->createlog($isi,"edit");
 
         $detailitem=[];
         foreach ($request->json('jsonproduk') as $keyproduk=> $dataprodukid){
@@ -683,7 +683,7 @@ class PengeluaranController extends Controller
                         ->delete();
 
             $isi=Auth::user()->username." telah menghapus transaksi pengeluaran dengan Nota ".$table->id." di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi);
+            $save=$this->createlog($isi,"delete");
             return "{\"msg\":\"success\"}";
         }
         else
@@ -758,7 +758,7 @@ class PengeluaranController extends Controller
 
             if ($table->save()){
                 $isi=Auth::user()->username." telah menambah jenis pengeluaran di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-                $save=$this->createlog($isi);
+                $save=$this->createlog($isi,"add");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -788,7 +788,7 @@ class PengeluaranController extends Controller
 
             if ($table->save()){
                 $isi=Auth::user()->username." telah mengubah/mengedit jenis pengeluaran".$table->jenis_pengeluaran." di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-                $save=$this->createlog($isi);
+                $save=$this->createlog($isi,"edit");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -802,7 +802,7 @@ class PengeluaranController extends Controller
                             ->first();
         if ($table->delete()){
             $isi=Auth::user()->username." telah menghapus jenis pengeluaran".$table->jenis_pengeluaran." di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi);
+            $save=$this->createlog($isi,"delete");
             return response()->json("Success");
         }else{
             return response()->json("Failed");

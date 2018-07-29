@@ -292,8 +292,8 @@ class TransaksiController extends Controller
             
             if ($subtransaksi->save()){
 
-                $isi=Auth::user()->username." telah menginput transaksi penjualan dengan No. ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-                $save=$this->createlog($isi);
+                $isi=Auth::user()->username." telah menambah transaksi penjualan dengan No. ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"add");
                 $status="Success";
             }else
             {
@@ -436,7 +436,7 @@ class TransaksiController extends Controller
                         ->delete();
 
             $isi=Auth::user()->username." telah menghapus transaksi penjualan dengan No. ".$id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi);
+            $save=$this->createlog($isi,"delete");
             return "{\"msg\":\"success\"}";
         }
         else
@@ -595,7 +595,7 @@ class TransaksiController extends Controller
             if ($subtransaksi->save()){
 
                 $isi=Auth::user()->username." telah mengedit transaksi penjualan dengan No. ".decrypt($request->json('inputtransaksiid'))." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-                $save=$this->createlog($isi);
+                $save=$this->createlog($isi,"edit");
                 $status="Success";
             }else
             {

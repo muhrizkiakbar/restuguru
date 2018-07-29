@@ -15,10 +15,11 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function createlog($log)
+    public function createlog($log,$category)
     {
         $table = new CActivityLog;
         $table->log = $log;
+        $table->category = $category;
         return $table->save();
     }
 }

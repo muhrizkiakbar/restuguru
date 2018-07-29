@@ -98,7 +98,7 @@ class TransaksiBahanBakuController extends Controller
         // dd($request->permissionrole)
         if ($table->save()){
             $isi=Auth::user()->username." telah menambah transaksi bahan baku dengan No. ".$table->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi);
+            $save=$this->createlog($isi,"add");
             return redirect()->back()->with('success','Berhasil menyimpan transaki bahan baku.');
         }
         else
@@ -145,7 +145,7 @@ class TransaksiBahanBakuController extends Controller
         // dd($request->permissionrole)
         if ($table->save()){
             $isi=Auth::user()->username." telah mengubah transaksi bahan baku dengan No. ".$table->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi);
+            $save=$this->createlog($isi,"edit");
             return redirect('/transaksi/bahan')->with('success','Berhasil mengubah transaki bahan baku.');
         }
         else
@@ -159,7 +159,7 @@ class TransaksiBahanBakuController extends Controller
         $table=transaksibahanbaku::where('id','=',decrypt($id))->first();
         if ($table->delete()){
             $isi=Auth::user()->username." telah menghapus transaksi bahan baku dengan No. ".decrypt($id)." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi);
+            $save=$this->createlog($isi,"delete");
             return redirect('/transaksi/bahan')->with('success','Berhasil menghapus transaki bahan baku.');
         }
         else

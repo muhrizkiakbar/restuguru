@@ -595,7 +595,7 @@ class AngsuranPenjualanController extends Controller
             if ($table->save())
             {
                 $isi=Auth::user()->username." telah menambah angsuran penjualan dengan No. Angsuran ".$table->id."pada No. Transaksi Penjualan ".$idtrans." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-                $save=$this->createlog($isi);
+                $save=$this->createlog($isi,"add");
                 $status=true;
                 
             }
@@ -675,7 +675,7 @@ class AngsuranPenjualanController extends Controller
         if ($tableangsuran->delete())
         {
             $isi=Auth::user()->username." telah menghapus angsuran penjualan dengan No. Angsuran ".$tableangsuran->id."pada No. Transaksi Penjualan ".$idtrans." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi);
+            $save=$this->createlog($isi,"delete");
             return "{\"msg\":\"success\"}";
         }
         else
