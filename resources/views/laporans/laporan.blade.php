@@ -92,7 +92,7 @@
                     <div class="col-md-9">
 
                         <div class="row">
-                            <div class="col-lg-6 col-xs-6">
+                            <div class="col-lg-6 col-xs-6"><!--Penjualan -->
                                 <div class="box box-solid bg-green-gradient">
                                     <div class="box-header ui-sortable-handle" style="cursor: move;">
                                         <i class="fa fa-fw fa-cart-arrow-down"></i>
@@ -110,31 +110,31 @@
                                             <div class="col-sm-12">
                                                 <!-- Progress bars -->
                                                 <div class="clearfix">
-                                                    <span class="pull-left">DP Penjualan</span>
-                                                    <small class="pull-right">Rp. 286.154.000</small>
+                                                    <span class="pull-left">Pembayaran Penjualan</span>
+                                                    <small  class="pull-right" id="Pembayaran_Penjualan">Rp. 0</small>
                                                 </div>
                                                 <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-green" style="width: 57.23%;"></div>
+                                                    <div id="Progress_Pembayaran_Penjualan" class="progress-bar progress-bar-green" style="width: 0%;"></div>
                                                 </div>
                             
                                                 <div class="clearfix">
-                                                    <span class="pull-left">Piutang</span>
-                                                    <small class="pull-right">Rp. 213.846.000</small>
+                                                    <span class="pull-left">Piutang Penjualan</span>
+                                                    <small id="Piutang_Penjualan" class="pull-right">Rp. 0</small>
                                                 </div>
                                                 <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-green" style="width: 42.76%;"></div>
+                                                    <div id="Progress_Piutang_Penjualan" class="progress-bar progress-bar-green" style="width: 0%;"></div>
                                                 </div>
 
                                                 <div class="clearfix">
                                                     <span class="pull-left">Total</span>
-                                                    <small class="pull-right">Rp. 500.000.000</small>
+                                                    <small id="Total_Penjualan" class="pull-right">Rp. 0</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-xs-6">
+                            <div class="col-lg-6 col-xs-6"><!--Pengeluaran -->
                                 <div class="box box-solid bg-red-gradient">
                                     <div class="box-header ui-sortable-handle" style="cursor: move;">
                                         <i class="fa fa-fw fa-cart-plus"></i>
@@ -152,24 +152,24 @@
                                             <div class="col-sm-12">
                                                 <!-- Progress bars -->
                                                 <div class="clearfix">
-                                                    <span class="pull-left">Pembayaran Pengeluaran</span>
-                                                    <small class="pull-right">Rp. 286.154.000</small>
+                                                    <span  class="pull-left">Pembayaran Pengeluaran</span>
+                                                    <small id="Pembayaran_Pengeluaran" class="pull-right">Rp. 0</small>
                                                 </div>
                                                 <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-red" style="width: 57.23%;"></div>
+                                                    <div id="Progress_Pembayaran_Pengeluaran" class="progress-bar progress-bar-red" style="width: 0%;"></div>
                                                 </div>
                             
                                                 <div class="clearfix">
                                                     <span class="pull-left">Hutang</span>
-                                                    <small class="pull-right">Rp. 213.846.000</small>
+                                                    <small id="Hutang_Pengeluaran" class="pull-right">Rp. 0</small>
                                                 </div>
                                                 <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-red" style="width: 42.76%;"></div>
+                                                    <div id="Progress_Hutang_Pengeluaran" class="progress-bar progress-bar-red" style="width: 0%;"></div>
                                                 </div>
 
                                                 <div class="clearfix">
                                                     <span class="pull-left">Total</span>
-                                                    <small class="pull-right">Rp. 500.000.000</small>
+                                                    <small id="Total_Pengeluaran" class="pull-right">Rp. 0</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -184,7 +184,7 @@
                                     <div class="box-header ui-sortable-handle" style="cursor: move;">
                                         <i class="fa fa-fw fa-btc"></i>
                         
-                                        <h3 class="box-title">Pencairan utang</h3>
+                                        <h3 class="box-title">Pencairan Piutang</h3>
                                         <div class="pull-right box-tools">
                                             <button type="button" class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
                                             </button>
@@ -197,7 +197,7 @@
                                             <div class="col-sm-12">
                                                 <div class="clearfix">
                                                     <span class="pull-left">Total</span>
-                                                    <small class="pull-right">Rp. 500.000.000</small>
+                                                    <small id="Pencairan_Piutang" class="pull-right">Rp. 0</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -222,7 +222,7 @@
                                             <div class="col-sm-12">
                                                 <div class="clearfix">
                                                     <span class="pull-left">Total</span>
-                                                    <small class="pull-right">Rp. 500.000.000</small>
+                                                    <small id="Pembayaran_Hutang" class="pull-right">Rp. 0</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,29 +236,29 @@
                                 <div class="box box-widget widget-user-2">
                                     <div class="widget-user-header bg-yellow">
                                         <div class="widget-user-image">
-                                        <img class="img-square" src="{{asset('bower_components/custom_icons/cash-payment-icon-5.png')}}" alt="User Avatar">
+                                        <img class="img-square" src="{{asset('bower_components/custom_icons/3_purse.svg')}}" alt="User Avatar">
                                         </div>
                                         <h3 class="widget-user-username">Cash</h3>
                                         <h5 class="widget-user-desc">Pembayaran Tunai</h5>
                                     </div>
                                     <div class="box-footer no-padding">
                                         <ul class="nav nav-stacked">
-                                            <li><a href="#">Kas Masuk <span class="pull-right badge bg-blue">Rp. 500.000.000,-</span></a></li>
+                                            <li><a href="#">Kas Masuk <span id="c_Kas_Masuk" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
                                             <li>
                                                 <ul class="nav nav-stacked">
-                                                    <li><a href="#"> - DP Penjualan<span class="pull-right badge bg-blue">Rp. 500.000.000,-</span></a></li>
-                                                    <li><a href="#"> - Pencairan Hutang<span class="pull-right badge bg-blue">Rp. 500.000.000,-</span></a></li>
+                                                    <li><a href="#"> - Pembayaran Penjualan<span id="c_Pembayaran_Penjualan" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang<span id="c_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
                                                 </ul>
-                                            <li><a href="#">Kas Keluar <span class="pull-right badge bg-red">5</span></a></li>
+                                            <li><a href="#">Kas Keluar <span id="c_Kas_Keluar" class="pull-right badge bg-blue">5</span></a></li>
                                             <li>
                                                 <ul class="nav nav-stacked">
-                                                @foreach ($jenispengeluaran as $jpengeluaran)
-                                                    <li><a href="#"> - {{$jpengeluaran->jenis_pengeluaran}}<span class="pull-right badge bg-red">Rp. 500.000.000,-</span></a></li>
+                                                @foreach ($data[0] as $jpengeluaran)
+                                                    <li><a href="#"> - {{$jpengeluaran->jenis_pengeluaran}}<span id="c_{{str_replace(' ','_',$jpengeluaran->jenis_pengeluaran)}}" class="pull-right badge bg-blue">Rp. 0,-</span></a></li>
                                                 @endforeach
-                                                    <li><a href="#"> - Pembayaran Hutang<span class="pull-right badge bg-red">Rp. 500.000.000,-</span></a></li>
+                                                    <li><a href="#"> - Pembayaran Hutang<span id="c_Pembayaran_Hutang" class="pull-right badge bg-blue">Rp. 0,-</span></a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">Total <span class="pull-right badge bg-green">12</span></a></li>
+                                            <li><a href="#">Total <span id="c_Total" class="pull-right badge">12</span></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -267,103 +267,58 @@
                                 <div class="box box-widget widget-user-2">
                                     <div class="widget-user-header bg-yellow">
                                         <div class="widget-user-image">
-                                        <img class="img-square" src="{{asset('bower_components/custom_icons/Payment-Methods-Card-in-use-icon.png')}}" alt="User Avatar">
+                                        <img class="img-square" src="{{asset('bower_components/custom_icons/17_cards.svg')}}" alt="User Avatar">
                                         </div>
                                         <h3 class="widget-user-username">Transfer</h3>
                                         <h5 class="widget-user-desc">Pembayaran Transfer</h5>
                                     </div>
                                     <div class="box-footer no-padding">
                                         <ul class="nav nav-stacked">
-                                            <li><a href="#">Kas Masuk <span class="pull-right badge bg-blue">Rp. 500.000.000,-</span></a></li>
+                                            <li><a href="#">Kas Masuk <span id="t_Kas_Masuk" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
                                             <li>
                                                 <ul class="nav nav-stacked">
-                                                    <li><a href="#"> - DP Penjualan<span class="pull-right badge bg-blue">Rp. 500.000.000,-</span></a></li>
-                                                    <li><a href="#"> - Pencairan Hutang<span class="pull-right badge bg-blue">Rp. 500.000.000,-</span></a></li>
+                                                    <li><a href="#"> - Pembayaran Penjualan<span id="t_Pembayaran_Penjualan" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang<span id="t_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
                                                 </ul>
-                                            <li><a href="#">Kas Keluar <span class="pull-right badge bg-red">5</span></a></li>
+                                            <li><a href="#">Kas Keluar <span id="t_Kas_Keluar" class="pull-right badge bg-blue">Rp. 0,-</span></a></li>
                                             <li>
                                                 <ul class="nav nav-stacked">
-                                                @foreach ($jenispengeluaran as $jpengeluaran)
-                                                    <li><a href="#"> - {{$jpengeluaran->jenis_pengeluaran}}<span class="pull-right badge bg-red">Rp. 500.000.000,-</span></a></li>
+                                                @foreach ($data[0] as $jpengeluaran)
+                                                    <li><a href="#"> - {{$jpengeluaran->jenis_pengeluaran}}<span id="t_{{str_replace(' ','_',$jpengeluaran->jenis_pengeluaran)}}" class="pull-right badge bg-blue">Rp. 0,-</span></a></li>
                                                 @endforeach
-                                                    <li><a href="#"> - Pembayaran Hutang<span class="pull-right badge bg-red">Rp. 500.000.000,-</span></a></li>
+                                                    <li><a href="#"> - Pembayaran Hutang<span id="t_Pembayaran_Hutang" class="pull-right badge bg-blue">Rp. 0,-</span></a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">Total <span class="pull-right badge bg-green">12</span></a></li>
+                                            <li><a href="#">Total <span id="t_Total" class="pull-right badge">Rp. 0,-</span></a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row"> <!--Grafik-->
                             <div class="col-md-12">
                                 <div class="box">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Penjualan vs Pengeluaran</h3>
-                        
+                                        <h3 class="box-title">Grafik Pemasukan, Penjualan, Piutang dan Hutang</h3>                   
                                         <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                         </button>
-                                        </div>
+                                    </div>
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
                                         <div class="row">
                                         <div class="col-md-12">
-                                            <p class="text-center">
-                                            <strong>{{date('Y')}}</strong>
-                                            </p>
                         
                                             <div class="chart">
                                             <!-- Sales Chart Canvas -->
-                                                <canvas id="salesChart" style="height: 300px; width: 158px;" width="158" height="300"></canvas>
+                                                <canvas id="salesChart" style="height: 500px; width: 158px;"></canvas>
                                             </div>
                                             <!-- /.chart-responsive -->
                                         </div>
                                         <!-- /.col -->
-                                        {{-- <div class="col-md-4">
-                                            <p class="text-center">
-                                            <strong>Goal Completion</strong>
-                                            </p>
-                        
-                                            <div class="progress-group">
-                                            <span class="progress-text">Penjualan</span>
-                                            <span class="progress-number"><b>160</b>/200</span>
-                        
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
-                                            </div>
-                                            </div>
-                                            <!-- /.progress-group -->
-                                            <div class="progress-group">
-                                            <span class="progress-text">Pengeluaran</span>
-                                            <span class="progress-number"><b>310</b>/400</span>
-                        
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-red" style="width: 80%"></div>
-                                            </div>
-                                            </div>
-                                            <!-- /.progress-group -->
-                                            <div class="progress-group">
-                                            <span class="progress-text">Sisa Piutang</span>
-                                            <span class="progress-number"><b>480</b>/800</span>
-                        
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-green" style="width: 80%"></div>
-                                            </div>
-                                            </div>
-                                            <!-- /.progress-group -->
-                                            <div class="progress-group">
-                                            <span class="progress-text">Sisa Hutang</span>
-                                            <span class="progress-number"><b>Rp. 500.000.000</b>/Rp. 500.000.000</span>
-                        
-                                            <div class="progress sm">
-                                                <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
-                                            </div>
-                                            </div>
-                                            <!-- /.progress-group -->
-                                        </div> --}}
+                                        
                                         <!-- /.col -->
                                         </div>
                                         <!-- /.row -->
@@ -371,19 +326,23 @@
                                     <!-- ./box-body -->
                                     <div class="box-footer">
                                         <div class="row">
+                                            <h4 id="judul_footer" class="box-title text-center"></h4>
+                                        </div>
+                                        <div class="row">
+                                        
                                         <div class="col-sm-3 col-xs-6">
                                             <div class="description-block border-right">
-                                            <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
-                                            <h5 class="description-header">Rp. 500.000.000</h5>
-                                            <span class="description-text">Penjualan</span>
+                                            <span id="persentase_pemasukan_footer" class="description-percentage text-yellow"><i id="panah_pemasukan" class="fa fa-caret-left"></i> 0%</span>
+                                            <h5 id="nilai_pemasukan_footer" class="description-header">Rp. 0</h5>
+                                            <span class="description-text">Pemasukan</span>
                                             </div>
                                             <!-- /.description-block -->
                                         </div>
                                         <!-- /.col -->
                                         <div class="col-sm-3 col-xs-6">
                                             <div class="description-block border-right">
-                                            <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
-                                            <h5 class="description-header">Rp. 500.000.000</h5>
+                                            <span id="persentase_pengeluaran_footer" class="description-percentage text-yellow"><i id="panah_pengeluaran" class="fa fa-caret-left"></i> 0%</span>
+                                            <h5 id="nilai_pengeluaran_footer" class="description-header">Rp. 0</h5>
                                             <span class="description-text">Pengeluaran</span>
                                             </div>
                                             <!-- /.description-block -->
@@ -391,8 +350,8 @@
                                         <!-- /.col -->
                                         <div class="col-sm-3 col-xs-6">
                                             <div class="description-block border-right">
-                                            <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
-                                            <h5 class="description-header">Rp. 500.000.000</h5>
+                                            <span id="persentase_piutang_footer" class="description-percentage text-yellow"><i id="panah_piutang" class="fa fa-caret-left"></i> 0%</span>
+                                            <h5 id="nilai_piutang_footer" class="description-header">Rp. 0</h5>
                                             <span class="description-text">Sisa Piutang</span>
                                             </div>
                                             <!-- /.description-block -->
@@ -400,8 +359,8 @@
                                         <!-- /.col -->
                                         <div class="col-sm-3 col-xs-6">
                                             <div class="description-block">
-                                            <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
-                                            <h5 class="description-header">Rp. 500.000.000</h5>
+                                            <span id="persentase_hutang_footer" class="description-percentage text-yellow"><i id="panah_hutang" class="fa fa-caret-left"></i> 0%</span>
+                                            <h5 id="nilai_hutang_footer" class="description-header">Rp.0 </h5>
                                             <span class="description-text">Sisa Hutang</span>
                                             </div>
                                             <!-- /.description-block -->
@@ -440,7 +399,8 @@
     <script src="{{asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
     <script src="{{asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script> --}}
     <!-- ChartJS -->
-    <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
+    {{-- <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
     <!-- MaskMoney -->
     <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
     <!-- date-range-picker -->
@@ -454,40 +414,251 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset('dist/js/demo.js')}}"></script>
     <script>
-        // $(function() {
-        //     $('#periode').daterangepicker({
-        //         opens: 'right'
-        //     }, function(ev, picker) {
-        //         alert("A new date selection was made: " + val(picker.startDate.format('MM-DD-YYYY')) + ' to ' + val(picker.endDate.format('MM-DD-YYYY')));
-        //         // $.ajax({
-        //         //     type        :'POST',
-        //         //     url         :'{{route('filter')}}',
-        //         //     data        :{
-        //         //                 'startDate' : start.format('MM-DD-YYYY'),
-        //         //                 'endDate'   : end.format('MM-DD-YYYY')
-        //         //     }
-        //         //     dataType    :'json',
-        //         //     async       :false,
-        //         //     processData : false,
-        //         //     contentType : false,
-        //         //     success:function(response){
-        //         //         if (response['msg']=="success"){
-        //         //             swal("Berhasil !");
-        //         //         }
-        //         //         else{
-        //         //             swal("Error !");                            
-        //         //         }
-        //         //     }
-        //         //     error:function(response){
-        //         //         swal("Error !", "Gagal menghapus transaksi !", "error");
-        //         //         $('#modal_delete').modal('hide');
-        //         //     }
-        //         // })
-        //     });
-        // })
+        Number.prototype.format = function(n, x, s, c) {
+            var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+                num = this.toFixed(Math.max(0, ~~n));
+            
+            return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+        };
+
+        function footer(idnilai, idpersentase, value){
+            //hitung jumlah perubahan
+            var nilai_sebelum = value[value.length-2]*1000000;
+            var nilai_sesudah = value[value.length-1]*1000000;
+            var perubahan = nilai_sesudah - nilai_sebelum;
+            var persentase_perubahan = ((perubahan) / nilai_sebelum) * 100;
+            
+            if (persentase_perubahan == 0) {
+                document.getElementById(idpersentase).className = "description-percentage text-yellow";
+                document.getElementById(idpersentase).innerHTML = '<i class="fa fa-caret-left"></i> ' + persentase_perubahan.format(2, 0, ',', '') + '%';
+                document.getElementById(idnilai).tinnerHTMLext  = "Rp. " + perubahan.format(2, 3, '.', ',');
+            }else if (persentase_perubahan  < 0){
+                persentase_perubahan = persentase_perubahan * -1;
+                perubahan = perubahan * -1;
+                document.getElementById(idpersentase).className = "description-percentage text-red";
+                document.getElementById(idpersentase).innerHTML = '<i class="fa fa-caret-down"></i> ' + persentase_perubahan.format(2, 0, ',', '') + '%';
+                document.getElementById(idnilai).innerHTML      = "Rp. " + perubahan.format(2, 3, '.', ',');
+            }else if(persentase_perubahan > 0){
+                if (persentase_perubahan == Infinity){
+                    persentase_perubahan = 100;
+                }
+                document.getElementById(idpersentase).className = "description-percentage text-green";
+                document.getElementById(idpersentase).innerHTML = '<i class="fa fa-caret-up"></i> ' + persentase_perubahan.format(2, 0, ',', '') + '%';
+                document.getElementById(idnilai).innerHTML      = "Rp. " + perubahan.format(2, 3, '.', ',');
+            }
+        };
+
+        function setData(
+                Pembayaran_Penjualan,
+                Piutang_Penjualan,
+                Pembayaran_Pengeluaran,
+                Hutang_Pengeluaran,
+                Pencairan_Piutang,
+                Pembayaran_Hutang,
+                //array label
+                label_Jenis_Pengeluaran,
+                //Cash In
+                c_Pembayaran_Penjualan,
+                c_Pencairan_Piutang,
+                //Cash Out
+                c_Pembayaran_Hutang,
+                c_value_Jenis_Pengeluaran,
+                //Tansfer In
+                t_Pembayaran_Penjualan,
+                t_Pencairan_Piutang,
+                //Transfer Out
+                t_Pembayaran_Hutang,
+                t_value_Jenis_Pengeluaran
+            ){
+                var persentasePembayaran_Penjualan      = 100 * (Pembayaran_Penjualan / (Pembayaran_Penjualan+Piutang_Penjualan));
+                var persentasePiutang_Penjualan         = 100 * (Piutang_Penjualan / (Pembayaran_Penjualan+Piutang_Penjualan));
+                var persentasePembayaran_Pengeluaran    = 100 * (Pembayaran_Pengeluaran / (Pembayaran_Pengeluaran + Hutang_Pengeluaran))
+                var persentaseHutang_Pengeluaran        = 100 * (Hutang_Pengeluaran / (Pembayaran_Pengeluaran + Hutang_Pengeluaran))
+
+                var Total_c_Pengeluaran = 0;
+                var Total_t_Pengeluaran = 0;
+
+                $('#Pembayaran_Penjualan').text('Rp. '+Pembayaran_Penjualan.format(2, 3, '.', ','));
+                $('#Piutang_Penjualan').text('Rp. '+Piutang_Penjualan.format(2, 3, '.', ','));
+                $('#Total_Penjualan').text('Rp. '+ (Pembayaran_Penjualan+Piutang_Penjualan).format(2, 3, '.', ','));
+                document.getElementById('Progress_Pembayaran_Penjualan').style.width= persentasePembayaran_Penjualan+'%';
+                document.getElementById('Progress_Piutang_Penjualan').style.width=persentasePiutang_Penjualan+'%';
+
+                $('#Pembayaran_Pengeluaran').text('Rp. '+Pembayaran_Pengeluaran.format(2, 3, '.', ','));
+                $('#Hutang_Pengeluaran').text('Rp. '+Hutang_Pengeluaran.format(2, 3, '.', ','));
+                $('#Total_Pengeluaran').text('Rp. '+ (Pembayaran_Pengeluaran + Hutang_Pengeluaran).format(2, 3, '.', ','));
+                document.getElementById('Progress_Pembayaran_Pengeluaran').style.width= persentasePembayaran_Pengeluaran+'%';
+                document.getElementById('Progress_Hutang_Pengeluaran').style.width=persentaseHutang_Pengeluaran+'%';
+                
+                $('#Pencairan_Piutang').text('Rp. '+Pencairan_Piutang.format(2, 3, '.', ','));
+                $('#Pembayaran_Hutang').text('Rp. '+Pembayaran_Hutang.format(2, 3, '.', ','));
+                
+                //Detail Cash
+                $('#c_Kas_Masuk').text('Rp. '+(c_Pembayaran_Penjualan + c_Pencairan_Piutang).format(2, 3, '.', ','));
+                $('#c_Pembayaran_Penjualan').text('Rp. '+c_Pembayaran_Penjualan.format(2, 3, '.', ','));
+                $('#c_Pencairan_Piutang').text('Rp. '+c_Pencairan_Piutang.format(2, 3, '.', ','));
+                
+                $('#c_Pembayaran_Hutang').text('Rp. '+c_Pembayaran_Hutang.format(2, 3, '.', ','));
+                for (i = 0; i < label_Jenis_Pengeluaran.length; i++) {
+                    $('#c_'+label_Jenis_Pengeluaran[i].replace(' ','_')).text('Rp. '+c_value_Jenis_Pengeluaran[i].format(2, 3, '.', ','));
+                    Total_c_Pengeluaran = Total_c_Pengeluaran + c_value_Jenis_Pengeluaran[i];
+                };
+                $('#c_Kas_Keluar').text('Rp. '+(c_Pembayaran_Hutang + Total_c_Pengeluaran).format(2, 3, '.', ','));
+                $('#c_Total').text('Rp. '+(c_Pembayaran_Penjualan + c_Pencairan_Piutang - Total_c_Pengeluaran).format(2, 3, '.', ','))
+                if (((c_Pembayaran_Penjualan + c_Pencairan_Piutang) - Total_c_Pengeluaran) < 0){
+                    document.getElementById('c_Total').className = "pull-right badge bg-red";
+                }else if (((c_Pembayaran_Penjualan + c_Pencairan_Piutang) - Total_c_Pengeluaran) > 0){
+                    document.getElementById('c_Total').className = "pull-right badge bg-green";
+                };
+
+                //Detail Transfer
+                $('#t_Kas_Masuk').text('Rp. '+(t_Pembayaran_Penjualan + t_Pencairan_Piutang).format(2, 3, '.', ','));
+                $('#t_Pembayaran_Penjualan').text('Rp. '+t_Pembayaran_Penjualan.format(2, 3, '.', ','));
+                $('#t_Pencairan_Piutang').text('Rp. '+t_Pencairan_Piutang.format(2, 3, '.', ','));
+                
+                $('#t_Pembayaran_Hutang').text('Rp. '+t_Pembayaran_Hutang.format(2, 3, '.', ','));
+                for (i = 0; i < label_Jenis_Pengeluaran.length; i++) {
+                    $('#t_'+label_Jenis_Pengeluaran[i].replace(' ','_')).text('Rp. '+t_value_Jenis_Pengeluaran[i].format(2, 3, '.', ','));
+                    Total_t_Pengeluaran = Total_t_Pengeluaran + t_value_Jenis_Pengeluaran[i];
+                };
+                $('#t_Kas_Keluar').text('Rp. '+(t_Pembayaran_Hutang + Total_t_Pengeluaran).format(2, 3, '.', ','));
+                $('#t_Total').text('Rp. '+(t_Pembayaran_Penjualan + t_Pencairan_Piutang - Total_t_Pengeluaran).format(2, 3, '.', ','))
+                if (((t_Pembayaran_Penjualan + t_Pencairan_Piutang) - Total_t_Pengeluaran) < 0){
+                    document.getElementById('t_Total').className = "pull-right badge bg-red";
+                }else if (((t_Pembayaran_Penjualan + t_Pencairan_Piutang) - Total_t_Pengeluaran) > 0){
+                    document.getElementById('t_Total').className = "pull-right badge bg-green";
+                };
+        };
+        //Line chart
+        var areaChartCanvas = document.getElementById('salesChart').getContext('2d');
+        window.myBar = new Chart(areaChartCanvas);
+
+        function setchart(charttitle ,chartLabel, Pemasukan, Pengeluaran, Piutang, Hutang) {
+            window.myBar.destroy();
+            window.myBar = new Chart(areaChartCanvas, {
+                type : 'line',
+                data:{
+                    labels  : chartLabel,
+                    datasets: [
+                        {
+                        label               : 'Pemasukan',
+                        backgroundColor     : 'rgba(17, 115, 17, 0.2)',
+                        borderColor         : 'rgba(17, 115, 17, 1)',
+                        data                : Pemasukan
+                        },
+                        {
+                        label               : 'Pengeluaran',
+                        backgroundColor     : 'rgba(199, 39, 24, 0.2)',
+                        borderColor         : 'rgba(199, 39, 24, 1)',
+                        data                : Pengeluaran
+                        },
+                        {
+                        label               : 'Piutang',
+                        backgroundColor     : 'rgba(24, 97, 199, 0.2)',
+                        borderColor         : 'rgba(24, 97, 199, 1)',
+                        data                : Piutang
+                        },
+                        {
+                        label               : 'Hutang',
+                        backgroundColor     : 'rgba(219, 236, 28, 0.2)',
+                        borderColor         : 'rgba(219, 236, 28, 1)',
+                        data                : Hutang
+                        }
+                    ]
+                },
+                options: {
+                    responsive  : true,
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Bulan',
+                                fontStyle: 'bold',
+                                fontSize: 16
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Juta',
+                                fontStyle: 'bold',
+                                fontSize: 16
+                            }
+                        }]
+				    },
+                    legend      :{
+                        position: 'top',
+                    },
+                    title       :{
+                        display : true,
+                        fontSize: 20,
+                        text    : charttitle
+                    },
+                    tooltips    :{
+                        enabled : true,
+                        mode    : 'index',
+                        intersect : false
+                    }
+                }
+            });
+        };
+
+        $(function(){
+            $.get('{{route('filter')}}', {startDate : "{{date('Y/m/d')}}", endDate : "{{date('Y/m/d')}}"} , function(response)
+            {
+
+                setData(
+                    response['Pembayaran_Penjualan'],
+                    response['Piutang_Penjualan'],
+                    response['Pembayaran_Pengeluaran'],
+                    response['Hutang_Pengeluaran'],
+                    response['Pencairan_Piutang'],
+                    response['Pembayaran_Hutang'],
+                    response['jenispengeluaran'],
+                    response['c_Pembayaran_Penjualan'],
+                    response['c_Pencairan_Piutang'],
+                    response['c_Pembayaran_Hutang'],
+                    response['cvalue_jenispengeluaran'],
+                    response['t_Pembayaran_Penjualan'],
+                    response['t_Pencairan_Piutang'],
+                    response['t_Pembayaran_Hutang'],
+                    response['tvalue_jenispengeluaran']
+                );
+                setchart(
+                    response['charttitle'],
+                    response['datachartMonth'],
+                    response['datachartPemasukan'],
+                    response['datachartPengeluaran'],
+                    response['datachartPiutang'],
+                    response['datachartHutang']
+                );
+                footer(
+                    'nilai_pemasukan_footer',
+                    'persentase_pemasukan_footer',
+                    response['datachartPemasukan']
+                );
+                footer(
+                    'nilai_pengeluaran_footer',
+                    'persentase_pengeluaran_footer',
+                    response['datachartPengeluaran']
+                );
+                footer(
+                    'nilai_piutang_footer',
+                    'persentase_piutang_footer',
+                    response['datachartPiutang']
+                );
+                footer(
+                    'nilai_hutang_footer',
+                    'persentase_hutang_footer',
+                    response['datachartHutang']
+                );
+                document.getElementById('judul_footer').innerHTML = 'Perbandingan Bulan ' + response['datachartMonth'][response['datachartMonth'].length-2] + ' ' +{{date('Y')}} + ' - ' + response['datachartMonth'][response['datachartMonth'].length-1] + ' ' + {{date('Y')}};
+            });
+        })
             
         $(function() {
-
             $('input[name="periode"]').daterangepicker({
                 opens: 'right',
                 autoUpdateInput: false,
@@ -497,6 +668,7 @@
                 }
             });
 
+
             $('input[name="periode"]').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
                 $('#labelTanggal').text(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
@@ -504,9 +676,33 @@
                     async : true,
                     type : 'get',
                     url: '{{route('filter')}}',
-                    data: {startDate: picker.startDate.format('DD/MM/YYYY'), endDate: picker.endDate.format('DD/MM/YYYY')},
+                    data: {startDate: picker.startDate.format('YYYY/MM/DD'), endDate: picker.endDate.format('YYYY/MM/DD')},
                 }).done(function(response){
-                    console.log(response);
+                    setData(
+                        response['Pembayaran_Penjualan'],
+                        response['Piutang_Penjualan'],
+                        response['Pembayaran_Pengeluaran'],
+                        response['Hutang_Pengeluaran'],
+                        response['Pencairan_Piutang'],
+                        response['Pembayaran_Hutang'],
+                        response['jenispengeluaran'],
+                        response['c_Pembayaran_Penjualan'],
+                        response['c_Pencairan_Piutang'],
+                        response['c_Pembayaran_Hutang'],
+                        response['cvalue_jenispengeluaran'],
+                        response['t_Pembayaran_Penjualan'],
+                        response['t_Pencairan_Piutang'],
+                        response['t_Pembayaran_Hutang'],
+                        response['tvalue_jenispengeluaran']
+                    );
+                    setchart(
+                        response['charttitle'],
+                        response['datachartMonth'],
+                        response['datachartPemasukan'],
+                        response['datachartPengeluaran'],
+                        response['datachartPiutang'],
+                        response['datachartHutang']
+                    );
                 }).fail(function (error) {
                     console.log(error);
                 });
@@ -518,159 +714,7 @@
 
         });
 
-        $(function () {
-            
-            /* ChartJS
-            * -------
-            * Here we will create a few charts using ChartJS
-            */
-            $.get('{{route('linedata')}}', function(response)
-            {   
-                var areaChartData = {
-                    labels  : response['label'],
-                    datasets: [
-                        {
-                        label               : 'Penjualan',
-                        fillColor           : 'rgba(210, 214, 222, 1)',
-                        strokeColor         : 'rgba(210, 214, 222, 1)',
-                        pointColor          : 'rgba(210, 214, 222, 1)',
-                        pointStrokeColor    : '#c1c7d1',
-                        pointHighlightFill  : '#fff',
-                        pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data                : response['value']
-                        }
-                    ]
-                }
-            
-                var areaChartOptions = {
-                //Boolean - If we should show the scale at all
-                showScale               : true,
-                //Boolean - Whether grid lines are shown across the chart
-                scaleShowGridLines      : false,
-                //String - Colour of the grid lines
-                scaleGridLineColor      : 'rgba(0,0,0,.05)',
-                //Number - Width of the grid lines
-                scaleGridLineWidth      : 1,
-                //Boolean - Whether to show horizontal lines (except X axis)
-                scaleShowHorizontalLines: true,
-                //Boolean - Whether to show vertical lines (except Y axis)
-                scaleShowVerticalLines  : true,
-                //Boolean - Whether the line is curved between points
-                bezierCurve             : true,
-                //Number - Tension of the bezier curve between points
-                bezierCurveTension      : 0.3,
-                //Boolean - Whether to show a dot for each point
-                pointDot                : false,
-                //Number - Radius of each point dot in pixels
-                pointDotRadius          : 4,
-                //Number - Pixel width of point dot stroke
-                pointDotStrokeWidth     : 1,
-                //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-                pointHitDetectionRadius : 20,
-                //Boolean - Whether to show a stroke for datasets
-                datasetStroke           : true,
-                //Number - Pixel width of dataset stroke
-                datasetStrokeWidth      : 2,
-                //Boolean - Whether to fill the dataset with a color
-                datasetFill             : true,
-                //String - A legend template
-                legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-                //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-                maintainAspectRatio     : true,
-                //Boolean - whether to make the chart responsive to window resizing
-                responsive              : true
-                }
-                var areaChartCanvas = $('#salesChart').get(0).getContext('2d')
-                // This will get the first returned node in the jQuery collection.
-                var areaChart       = new Chart(areaChartCanvas)
-
-                areaChart.Line(areaChartData, areaChartOptions)
-                // //-------------
-                // //- LINE CHART -
-                // //--------------
-                // var lineChartCanvas          = $('#salesChart').get(0).getContext('2d')
-                // var lineChart                = new Chart(lineChartCanvas)
-                // var lineChartOptions         = areaChartOptions
-                // lineChartOptions.datasetFill = false
-                // lineChart.Line(areaChartData, lineChartOptions)
-            });
-        // $.get('{{route('piedata')}}', function(response)
-        // {   
-        //     $( document ).ready(function() {
-        //         var i;
-        //         for (i = 0; i < response['label'].length; i++) { 
-        //             $('#'+i).text(response['label'][i]);
-        //         } 
-        //     });
-                
-        //         //-------------
-        //         //- PIE CHART -
-        //         //-------------
-        //         // Get context with jQuery - using jQuery's .get() method.
-        //         var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-        //         var pieChart       = new Chart(pieChartCanvas)
-        //         var PieData        = [
-        //         {
-        //             value    : response['value'][0],
-        //             color    : '#f56954',
-        //             highlight: '#f56954',
-        //             label    : response['label'][0]
-        //         },
-        //         {
-        //             value    : response['value'][1],
-        //             color    : '#00a65a',
-        //             highlight: '#00a65a',
-        //             label    : response['label'][1]
-        //         },
-        //         {
-        //             value    : response['value'][2],
-        //             color    : '#f39c12',
-        //             highlight: '#f39c12',
-        //             label    : response['label'][2]
-        //         },
-        //         {
-        //             value    : response['value'][3],
-        //             color    : '#00c0ef',
-        //             highlight: '#00c0ef',
-        //             label    : response['label'][3]
-        //         },
-        //         {
-        //             value    : response['value'][4],
-        //             color    : '#3c8dbc',
-        //             highlight: '#3c8dbc',
-        //             label    : response['label'][4]
-        //         }
-        //         ]
-        //         var pieOptions     = {
-        //         //Boolean - Whether we should show a stroke on each segment
-        //         segmentShowStroke    : true,
-        //         //String - The colour of each segment stroke
-        //         segmentStrokeColor   : '#fff',
-        //         //Number - The width of each segment stroke
-        //         segmentStrokeWidth   : 2,
-        //         //Number - The percentage of the chart that we cut out of the middle
-        //         percentageInnerCutout: 50, // This is 0 for Pie charts
-        //         //Number - Amount of animation steps
-        //         animationSteps       : 250,
-        //         //String - Animation easing effect
-        //         animationEasing      : 'easeOutBounce',
-        //         //Boolean - Whether we animate the rotation of the Doughnut
-        //         animateRotate        : true,
-        //         //Boolean - Whether we animate scaling the Doughnut from the centre
-        //         animateScale         : false,
-        //         //Boolean - whether to make the chart responsive to window resizing
-        //         responsive           : true,
-        //         // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-        //         maintainAspectRatio  : true,
-        //         //String - A legend template
-        //         legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-        //         }
-        //         //Create pie or douhnut chart
-        //         // You can switch between pie and douhnut using the method below.
-        //         pieChart.Doughnut(PieData, pieOptions)
-        //         });
-            
-        })
+        
     </script>
 </body>
 @endsection

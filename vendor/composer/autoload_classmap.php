@@ -40,7 +40,14 @@ return array(
     'App\\Http\\Controllers\\JenispelangganController' => $baseDir . '/app/Http/Controllers/JenispelangganController.php',
     'App\\Http\\Controllers\\KategoriController' => $baseDir . '/app/Http/Controllers/KategoriController.php',
     'App\\Http\\Controllers\\KategoriMenuController' => $baseDir . '/app/Http/Controllers/KategoriMenuController.php',
+<<<<<<< HEAD
+<<<<<<< HEAD
     'App\\Http\\Controllers\\LaporanController' => $baseDir . '/app/Http/Controllers/LaporanController.php',
+=======
+>>>>>>> master
+=======
+    'App\\Http\\Controllers\\LaporanController' => $baseDir . '/app/Http/Controllers/LaporanController.php',
+>>>>>>> e6149e27ba4375d3ad2782b14f0cb187763c17b8
     'App\\Http\\Controllers\\LoginController' => $baseDir . '/app/Http/Controllers/LoginController.php',
     'App\\Http\\Controllers\\PelangganController' => $baseDir . '/app/Http/Controllers/PelangganController.php',
     'App\\Http\\Controllers\\PengeluaranController' => $baseDir . '/app/Http/Controllers/PengeluaranController.php',

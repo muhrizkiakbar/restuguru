@@ -4,7 +4,7 @@
 
   <!-- daterange picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
-  <!-- Bootstrap Color Picker --> 
+  <!-- Bootstrap Color Picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
 
   <!-- bootstrap datepicker -->
@@ -12,14 +12,14 @@
   <!-- Bootstrap time Picker -->
   <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
-  
+
   <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- daterange picker -->
   <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css"> -->
   <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"> -->
- 
+
   <style>
 	.status
 	{
@@ -33,7 +33,7 @@
         transform: rotate(340deg);
 	}
 
-     
+
     .garis
     {
         border-collapse: collapse;
@@ -97,12 +97,12 @@
                 Kepada
                 <address>
                 <strong>{{$transaksi->nama_pelanggan}}</strong><br>
-                {{$transaksi->hp_pelanggan}} 
+                {{$transaksi->hp_pelanggan}}
                 @if ($transaksi->pelanggan_id=="")
                 @else
                     ({{$transaksi->jenis_pelanggan}})
                 @endif
-                
+
                 </address>
             </div>
             <!-- /.col -->
@@ -118,9 +118,9 @@
             <div class="row">
             @if ($transaksi->sisa_tagihan==0)
                 <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
-            @endif    
+            @endif
             <div class="col-xs-12 table-responsive">
-                <table class="table garis table-bordered table-striped" width="100%">
+                <table class="table garis table-bordered table-striped strong" width="100%">
                 <thead>
                     <tr>
                         <th style="word-wrap: break-word;">Produk</th>
@@ -154,9 +154,9 @@
             <!-- /.row -->
 
             <div class="row">
-            
+
             <div class="col-xs-4">
-                
+
                 <table class="table no-border">
                     <thead>
                         <th><center>Penerima</center></th>
@@ -218,7 +218,7 @@
                 </div>
             </div>
 
-            
+
             <!-- /.col -->
             </div>
             <!-- /.row -->
@@ -254,7 +254,7 @@
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
-    
+
 
     </body>
 @endsection

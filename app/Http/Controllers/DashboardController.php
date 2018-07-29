@@ -46,7 +46,6 @@ class DashboardController extends Controller
 
     public function linedata()
     {
-        $userId=Auth::user()->id;
         $cabangId=Auth::user()->cabang_id;
         $monthText = array( 'Null', 'Januari', 'Februari', 'Maret',
                             'April', 'Mei', 'Juni', 'Juli',
@@ -54,22 +53,45 @@ class DashboardController extends Controller
                             'November', 'Desember');
 
         $monthLabel=array();
-        $monthValue=array();
-        $dataline=array();
+        $monthPemasukan=array();
+        $monthPengeluaran=array();
+        $monthPiutang=array();
+        $monthHutang=array();
         
         for ($x = 1; $x <= date('n'); $x++) {
             $jumlahPemasukan=CTransaksi_Penjualans::whereMonth('tanggal',$x)
-                                                ->where('user_id',$userId)
-                                                ->where('cabang_id',$cabangId)                                    
-                                                ->whereYear('tanggal',date('Y'))
-                                                ->sum('jumlah_pembayaran');
+                                                    ->where('cabang_id',$cabangId)                                    
+                                                    ->whereYear('tanggal',date('Y'))
+                                                    ->sum('jumlah_pembayaran')/1000000;
+
+            $jumlahPengeluaran=Transaksi_Pengeluaran::whereMonth('tanggal_pengeluaran',$x)
+                                                    ->where('cabang_id',$cabangId)                                    
+                                                    ->whereYear('tanggal_pengeluaran',date('Y'))
+                                                    ->sum('pembayaran_pengeluaran')/1000000;
+
+            $jumlahPiutang=CTransaksi_Penjualans::whereMonth('tanggal',$x)
+                                                    ->where('cabang_id',$cabangId)                                    
+                                                    ->whereYear('tanggal',date('Y'))
+                                                    ->sum('sisa_tagihan')/1000000;
+
+            $jumlahHutang=Transaksi_Pengeluaran::whereMonth('tanggal_pengeluaran',$x)
+                                                    ->where('cabang_id',$cabangId)                                    
+                                                    ->whereYear('tanggal_pengeluaran',date('Y'))
+                                                    ->sum('sisa_pengeluaran')/1000000;
+
             array_push($monthLabel,$monthText[$x]);
-            array_push($monthValue,$jumlahPemasukan);
+            array_push($monthPemasukan,floatval(number_format($jumlahPemasukan,2,'.',' ')));
+            array_push($monthPengeluaran,floatval(number_format($jumlahPengeluaran,2,'.',' ')));
+            array_push($monthPiutang,floatval(number_format($jumlahPiutang,2,'.',' ')));
+            array_push($monthHutang,floatval(number_format($jumlahHutang,2,'.',' ')));
         }
-        
-        $dataline['label']=$monthLabel;
-        $dataline['value']=$monthValue;
-        return response()->json($dataline);
+        return response()->json([
+            'labelBulan'    => $monthLabel,     
+            'Pemasukan'     => $monthPemasukan,
+            'Pengeluaran'   => $monthPengeluaran,
+            'Piutang'       => $monthPiutang,
+            'Hutang'        => $monthHutang
+        ]);
     }
 
     public function index()
@@ -94,7 +116,7 @@ class DashboardController extends Controller
         array_push($data,$jumlahTransaksi,$jumlahMasukan,$jumlahPengeluaran,$pendapatanBersih);
                                                 // ->count() AS count;
                                                 // ->get();
-        // dd($data);
+        // dd($cabangId);
         return view ('dashboards.dashboard',['data'=>$data]);
     }
 

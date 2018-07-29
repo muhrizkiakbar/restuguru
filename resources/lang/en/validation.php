@@ -519,6 +519,9 @@ return [
         ],
         
 
+        'edit_nama_menu'=>[
+            'required'=> 'Nama Menu harus diisi!',
+        ],
     ],
 
     /*
