@@ -249,7 +249,7 @@
                               <label>Total
                                   <input id="total" name="total" class="form-control" readonly type="text">
                                   <input id="transaksiid" name="transaksiid" value="{{encrypt($transaksi->id)}}" class="form-control" readonly type="hidden">
-                                  <input id="total2" name="total2"  class="form-control" readonly type="hidden">
+                                  <input id="total2" name="total2"  class="form-control" readonly type="text">
                               </label>
                           </div>
                       </div>
@@ -928,8 +928,8 @@
             if ($('#diskon').maskMoney('unmasked')[0]=="0,00"){
             nominaldiskon=0;
             total=total2 + nominaldiskon + nominalpajak;
-            $('#bayardp').val('0').trigger('mask.maskMoney');
-            $('#sisa').val('0').trigger('mask.maskMoney');
+            // $('#bayardp').val('0').trigger('mask.maskMoney');
+            // $('#sisa').val('0').trigger('mask.maskMoney');
             return total;
 
             }
@@ -937,8 +937,8 @@
             {
             nominaldiskon=(total2 * (diskon)) /100;
             total=total2 - nominaldiskon + nominalpajak;
-            $('#bayardp').val('0').trigger('mask.maskMoney');
-            $('#sisa').val('0').trigger('mask.maskMoney');
+            // $('#bayardp').val('0').trigger('mask.maskMoney');
+            // $('#sisa').val('0').trigger('mask.maskMoney');
             return total;
 
             }
@@ -949,16 +949,16 @@
             {
                 nominalpajak=0;
                 total=total2 + nominalpajak - nominaldiskon;
-                $('#bayardp').val('0').trigger('mask.maskMoney');
-                $('#sisa').val('0').trigger('mask.maskMoney');
+                // $('#bayardp').val('0').trigger('mask.maskMoney');
+                // $('#sisa').val('0').trigger('mask.maskMoney');
                 return total;
             }
             else
             {
                 nominalpajak=(total2 * (pajak)) /100;
                 total=total2 + nominalpajak - nominaldiskon;
-                $('#bayardp').val('0').trigger('mask.maskMoney');
-                $('#sisa').val('0').trigger('mask.maskMoney');
+                // $('#bayardp').val('0').trigger('mask.maskMoney');
+                // $('#sisa').val('0').trigger('mask.maskMoney');
                 return total;
 
             }
