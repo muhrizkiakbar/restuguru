@@ -21,7 +21,7 @@ class CreatePelanggansTable extends Migration {
 			$table->integer('tempo_pelanggan');
 			$table->double('limit_pelanggan');
 			$table->string('norek_pelanggan', 50);
-			$table->text('keterangan_pelanggan');
+			$table->text('keterangan_pelanggan')->nullable();
 			$table->text('ktp');
 			$table->boolean('status_pelanggan');
 		});

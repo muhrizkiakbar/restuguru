@@ -17,7 +17,7 @@ class CreateProduksTable extends Migration {
 			$table->double('harga_beli');
 			$table->double('harga_jual');
 			$table->boolean('hitung_luas');
-			$table->text('keterangan');
+			$table->text('keterangan')->nullable();
 		});
 	}
 

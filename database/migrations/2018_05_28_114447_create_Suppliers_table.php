@@ -17,7 +17,7 @@ class CreateSuppliersTable extends Migration {
 			$table->string('email_supplier', 160);
 			$table->text('alamat_supplier');
 			$table->string('rekening_suppliers', 30);
-			$table->mediumText('keterangan_suppliers');
+			$table->mediumText('keterangan_suppliers')->nullable();
 			$table->integer('user_id')->unsigned();
 		});
 	}

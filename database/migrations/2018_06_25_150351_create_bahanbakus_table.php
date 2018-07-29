@@ -17,7 +17,7 @@ class CreateBahanbakusTable extends Migration{
 			$table->double('harga');
 			$table->integer('batas_stok');
 			$table->tinyInteger('hitung_luas');
-			$table->text('keterangan');
+			$table->text('keterangan')->nullable();
 		});
 
         Schema::table('Bahanbakus', function(Blueprint $table) {
