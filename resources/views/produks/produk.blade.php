@@ -321,8 +321,9 @@
             $('#tambah_kategori').val(0).trigger('change');
             $('#tambah_nama_produk').val("");
             $('#tambah_satuan').val("");
-            $('#tambah_harga_beli').val(0);
-            $('#tambah_harga_jual').val(0);
+            $('#tambah_harga_beli, #tambah_harga_jual').maskMoney({ allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
+            $('#tambah_harga_beli').val(0).maskMoney('mask');
+            $('#tambah_harga_jual').val(0).maskMoney('mask');
             $('#tambah_hitung_luas').val(0);
             $('#tambah_keterangan').val("");
         });
@@ -334,8 +335,9 @@
             $('#edit_kategori').val($(this).data('kategori_id')).trigger('change');
             $('#edit_nama_produk').val($(this).data('nama_produk'));
             $('#edit_satuan').val($(this).data('satuan'));
-            $('#edit_harga_beli').val($(this).data('harga_beli'));
-            $('#edit_harga_jual').val($(this).data('harga_jual'));
+            $('#edit_harga_beli, #edit_harga_jual').maskMoney({ allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
+            $('#edit_harga_beli').val($(this).data('harga_beli')).maskMoney('mask');
+            $('#edit_harga_jual').val($(this).data('harga_jual')).maskMoney('mask');
             $hitung_luas = $(this).data('hitung_luas');
             if ($hitung_luas) {
                 $('#edit_hitung_luas_y').prop('checked',true);
