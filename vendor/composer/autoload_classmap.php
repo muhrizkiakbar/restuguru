@@ -14,6 +14,7 @@ return array(
     'App\\CJenispelanggans' => $baseDir . '/app/CJenispelanggans.php',
     'App\\CKategories' => $baseDir . '/app/CKategories.php',
     'App\\CPelanggans' => $baseDir . '/app/CPelanggans.php',
+    'App\\CPermissions' => $baseDir . '/app/CPermissions.php',
     'App\\CProduks' => $baseDir . '/app/CProduks.php',
     'App\\CRelasiBahanBakus' => $baseDir . '/app/CRelasiBahanBakus.php',
     'App\\CSpesialprices' => $baseDir . '/app/CSpesialprices.php',
@@ -26,6 +27,7 @@ return array(
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Composers\\NavigasiComposer' => $baseDir . '/app/Http/Composers/NavigasiComposer.php',
     'App\\Http\\Composers\\NotificationComposer' => $baseDir . '/app/Http/Composers/NotificationComposer.php',
+    'App\\Http\\Controllers\\ActivityLogController' => $baseDir . '/app/Http/Controllers/ActivityLogController.php',
     'App\\Http\\Controllers\\AngsuranPengeluaranController' => $baseDir . '/app/Http/Controllers/AngsuranPengeluaranController.php',
     'App\\Http\\Controllers\\AngsuranPenjualanController' => $baseDir . '/app/Http/Controllers/AngsuranPenjualanController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -40,15 +42,9 @@ return array(
     'App\\Http\\Controllers\\JenispelangganController' => $baseDir . '/app/Http/Controllers/JenispelangganController.php',
     'App\\Http\\Controllers\\KategoriController' => $baseDir . '/app/Http/Controllers/KategoriController.php',
     'App\\Http\\Controllers\\KategoriMenuController' => $baseDir . '/app/Http/Controllers/KategoriMenuController.php',
-<<<<<<< HEAD
-<<<<<<< HEAD
     'App\\Http\\Controllers\\LaporanController' => $baseDir . '/app/Http/Controllers/LaporanController.php',
-=======
->>>>>>> master
-=======
-    'App\\Http\\Controllers\\LaporanController' => $baseDir . '/app/Http/Controllers/LaporanController.php',
->>>>>>> e6149e27ba4375d3ad2782b14f0cb187763c17b8
     'App\\Http\\Controllers\\LoginController' => $baseDir . '/app/Http/Controllers/LoginController.php',
+    'App\\Http\\Controllers\\MenuNameController' => $baseDir . '/app/Http/Controllers/MenuNameController.php',
     'App\\Http\\Controllers\\PelangganController' => $baseDir . '/app/Http/Controllers/PelangganController.php',
     'App\\Http\\Controllers\\PengeluaranController' => $baseDir . '/app/Http/Controllers/PengeluaranController.php',
     'App\\Http\\Controllers\\ProdukController' => $baseDir . '/app/Http/Controllers/ProdukController.php',
@@ -87,7 +83,9 @@ return array(
     'CabangTableSeeder' => $baseDir . '/database/seeds/CabangTableSeeder.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'Carbon\\CarbonInterval' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
+    'Carbon\\CarbonPeriod' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonPeriod.php',
     'Carbon\\Exceptions\\InvalidDateException' => $vendorDir . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
+    'Carbon\\Laravel\\ServiceProvider' => $vendorDir . '/nesbot/carbon/src/Carbon/Laravel/ServiceProvider.php',
     'Carbon\\Translator' => $vendorDir . '/nesbot/carbon/src/Carbon/Translator.php',
     'Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
     'Cron\\AbstractField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
@@ -1686,6 +1684,7 @@ return array(
     'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => $vendorDir . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
     'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => $vendorDir . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
     'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => $vendorDir . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
+    'JsonSerializable' => $vendorDir . '/nesbot/carbon/src/JsonSerializable.php',
     'Laravel\\Tinker\\ClassAliasAutoloader' => $vendorDir . '/laravel/tinker/src/ClassAliasAutoloader.php',
     'Laravel\\Tinker\\Console\\TinkerCommand' => $vendorDir . '/laravel/tinker/src/Console/TinkerCommand.php',
     'Laravel\\Tinker\\TinkerCaster' => $vendorDir . '/laravel/tinker/src/TinkerCaster.php',

@@ -20,6 +20,8 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::get('/timeline','ActivityLogController@index');
+
 
 Route::post('/','LoginController@postLogin');
 Route::post('/login','LoginController@postLogin');

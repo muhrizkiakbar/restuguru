@@ -128,7 +128,6 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'C' => 
         array (
             'Cron\\' => 5,
-            'Carbon\\' => 7,
         ),
         'B' => 
         array (
@@ -347,10 +346,6 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
-        'Carbon\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
-        ),
         'Barryvdh\\DomPDF\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src',
@@ -359,6 +354,10 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+    );
+
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
     public static $prefixesPsr0 = array (
@@ -420,6 +419,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\CJenispelanggans' => __DIR__ . '/../..' . '/app/CJenispelanggans.php',
         'App\\CKategories' => __DIR__ . '/../..' . '/app/CKategories.php',
         'App\\CPelanggans' => __DIR__ . '/../..' . '/app/CPelanggans.php',
+        'App\\CPermissions' => __DIR__ . '/../..' . '/app/CPermissions.php',
         'App\\CProduks' => __DIR__ . '/../..' . '/app/CProduks.php',
         'App\\CRelasiBahanBakus' => __DIR__ . '/../..' . '/app/CRelasiBahanBakus.php',
         'App\\CSpesialprices' => __DIR__ . '/../..' . '/app/CSpesialprices.php',
@@ -432,6 +432,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Composers\\NavigasiComposer' => __DIR__ . '/../..' . '/app/Http/Composers/NavigasiComposer.php',
         'App\\Http\\Composers\\NotificationComposer' => __DIR__ . '/../..' . '/app/Http/Composers/NotificationComposer.php',
+        'App\\Http\\Controllers\\ActivityLogController' => __DIR__ . '/../..' . '/app/Http/Controllers/ActivityLogController.php',
         'App\\Http\\Controllers\\AngsuranPengeluaranController' => __DIR__ . '/../..' . '/app/Http/Controllers/AngsuranPengeluaranController.php',
         'App\\Http\\Controllers\\AngsuranPenjualanController' => __DIR__ . '/../..' . '/app/Http/Controllers/AngsuranPenjualanController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -448,6 +449,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\Http\\Controllers\\KategoriMenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriMenuController.php',
         'App\\Http\\Controllers\\LaporanController' => __DIR__ . '/../..' . '/app/Http/Controllers/LaporanController.php',
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
+        'App\\Http\\Controllers\\MenuNameController' => __DIR__ . '/../..' . '/app/Http/Controllers/MenuNameController.php',
         'App\\Http\\Controllers\\PelangganController' => __DIR__ . '/../..' . '/app/Http/Controllers/PelangganController.php',
         'App\\Http\\Controllers\\PengeluaranController' => __DIR__ . '/../..' . '/app/Http/Controllers/PengeluaranController.php',
         'App\\Http\\Controllers\\ProdukController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProdukController.php',
@@ -486,7 +488,9 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'CabangTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CabangTableSeeder.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
+        'Carbon\\CarbonPeriod' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonPeriod.php',
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
+        'Carbon\\Laravel\\ServiceProvider' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Laravel/ServiceProvider.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
@@ -2085,6 +2089,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
+        'JsonSerializable' => __DIR__ . '/..' . '/nesbot/carbon/src/JsonSerializable.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',
@@ -4194,6 +4199,7 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit4db0f252e22f6b885143c54f85af8c38::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit4db0f252e22f6b885143c54f85af8c38::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit4db0f252e22f6b885143c54f85af8c38::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit4db0f252e22f6b885143c54f85af8c38::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit4db0f252e22f6b885143c54f85af8c38::$classMap;
 

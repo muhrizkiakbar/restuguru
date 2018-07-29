@@ -14,7 +14,8 @@
         "spatie/laravel-backup": "^5.9",
         "srmklive/flysystem-dropbox-v2": "^1.0",
         "yajra/laravel-datatables-oracle": "^8.0",
-        "zizaco/entrust": "5.2.x-dev"
+        "zizaco/entrust": "5.2.x-dev",
+        "nesbot/carbon": "1.32.0 as 1.25.0"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
