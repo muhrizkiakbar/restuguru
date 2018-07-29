@@ -561,6 +561,13 @@ class PermissionTableSeeder extends Seeder
 					'description' => 'Laporan',
 					'index'=>'1',
 					'urlindex'=>'laporan'
+				],
+				[
+					'name' => 'index-timeline',
+					'display_name' => 'Aktifitas Pengguna',
+					'description' => 'Aktifitas Pengguna',
+					'index'=>'1',
+					'urlindex'=>'timeline'
 				]
         ];
 
