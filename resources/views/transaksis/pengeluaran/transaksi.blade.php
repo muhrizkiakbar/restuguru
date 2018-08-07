@@ -553,8 +553,29 @@
           }
           // Ensure that it is a number and stop the keypress
           if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-              e.preventDefault();
+            //   console.log(e.preventDefault())
+            
+            e.preventDefault();
           }
+        //   console.log(e.target.value)
+        //   console.log($('#add_harga').val());
+            if ($('#add_harga').val()=="0")
+            {
+                $('#add_harga').val("");
+            }   
+
+        });
+
+        $('#add_harga').keyup(function (e) {
+            if (($('#add_harga').val()).length > 3)
+            {
+                $('#add_harga').val(numeral($('#add_harga').val()).format('0,0'));
+            }
+
+            if ($('#add_harga').val()=="")
+            {
+                $('#add_harga').val("0");
+            }   
         });
 
         $("#add_panjang").keydown(function (e) {
