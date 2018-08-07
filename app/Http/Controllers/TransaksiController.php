@@ -152,7 +152,9 @@ class TransaksiController extends Controller
                             'Users.nama','Jenispelanggans.jenis_pelanggan','roles.display_name')
                     ->withTrashed()
                     ->where('Transaksi_Penjualans.id','=',$id)->first();
-        $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')->where('penjualan_id','=',$id)->get();
+        $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
+                        ->select('Sub_Tpenjualans.*','Produks.nama_produk')
+                        ->where('penjualan_id','=',$id)->get();
         return view('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
         // $pdf=PDF::loadView('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
         // // return $pdf->setPaper('F4', 'landscape')->download('laporanharian.pdf');

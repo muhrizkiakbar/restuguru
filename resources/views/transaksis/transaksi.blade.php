@@ -530,8 +530,10 @@
     <script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
 
-    <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
+    <!-- <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> -->
     <!-- <script src="{{asset('bower_components/jquery-number/jquery.number.js')}}"></script> -->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
     <!-- sweet alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -568,6 +570,71 @@
             
             return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
         };
+
+        function diskonmethod(total2,diskon,total,pajak){
+            if ($('#diskon').val()=="0"){
+            nominaldiskon=0;
+            total=total2 + nominaldiskon + nominalpajak;
+            // $('#bayardp').val('0').trigger('mask.maskMoney');
+            // $('#sisa').val('0').trigger('mask.maskMoney');
+            return total;
+            
+            }
+            else
+            {
+            nominaldiskon=(total2 * (diskon)) /100;
+            total=total2 - nominaldiskon + nominalpajak;
+            // $('#bayardp').val('0').trigger('mask.maskMoney');
+            // $('#sisa').val('0').trigger('mask.maskMoney');
+            return total;
+                
+            }
+        }
+
+        function pajakmethod(total2,diskon,total,pajak){
+            if ($('#pajak').val()=="0")
+            {
+                nominalpajak=0;
+                total=total2 + nominalpajak - nominaldiskon;
+                // $('#bayardp').val('0').trigger('mask.maskMoney');
+                // $('#sisa').val('0').trigger('mask.maskMoney');
+                return total;
+            }
+            else
+            {
+                nominalpajak=(total2 * (pajak)) /100;
+                total=total2 + nominalpajak - nominaldiskon;
+                // $('#bayardp').val('0').trigger('mask.maskMoney');
+                // $('#sisa').val('0').trigger('mask.maskMoney');
+                return total;
+                
+            }
+        }
+
+        function unformat(value)
+        {
+            value=value.replace('.','');
+
+            value=value.replace(',','.');
+
+            return value;
+        }
+
+        function bayardpmethod(bayardp,total,total2,bayardp){
+            if (bayardp > total){
+            bayardp=0;
+            sisa=0;
+            $('#bayardp').val(bayardp.format(2, 3, '.', ','));
+            $('#sisa').val(sisa.format(2, 3, '.', ','));
+            }
+            else
+            {
+                bayardp=$('#bayardp').val();
+                sisa=total-bayardp;
+                $('#bayardp').val(bayardp.format(2, 3, '.', ','));
+                $('#sisa').val(sisa.format(2, 3, '.', ','));
+            }
+        }
 
       $(function(){
 
@@ -691,7 +758,7 @@
                 var subtotal = ((panjang * lebar) * harga) * kuantitas;
                 // $('#add_subtotal').val($('#add_subtotal').maskMoney('unmasked')[0]);
                 $('#add_subtotal').val(subtotal);
-                $('#add_subtotal').trigger('mask.maskMoney');
+                // $('#add_subtotal').trigger('mask.maskMoney');
                 satuan=this.value;
             }
             else if (this.value == 'm') {
@@ -701,7 +768,7 @@
                 var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
                 // $('#add_subtotal').val($('#add_subtotal').maskMoney('unmasked')[0]);                
                 $('#add_subtotal').val(subtotal);
-                $('#add_subtotal').trigger('mask.maskMoney');
+                // $('#add_subtotal').trigger('mask.maskMoney');
                 satuan=this.value;
                 
             }
@@ -720,50 +787,6 @@
         });
     
         $('#add_produk').select2();
-
-        // $('#add_produk').select2({
-        //     placeholder: "Pilih Produk.",
-        //     minimumInputLength: 1,
-        //     ajax: {
-        //         url: '{{route('produkcari')}}',
-        //         dataType: 'json',
-        //         data: function (params) 
-        //         {
-        //             return {
-        //                 q: $.trim(params.term)
-        //             };
-        //         },
-        //         processResults: function (data) 
-        //         {
-        //             return {
-        //                 results: data
-        //             };
-        //         },
-        //         cache: true
-        //     }
-        // });
-
-        // $('#edit_produk').select2({
-        //     placeholder: "Pilih Produk.",
-        //     minimumInputLength: 1,
-        //     ajax: {
-        //         url: '{{route('produkcari')}}',
-        //         dataType: 'json',
-        //         data: function (params) 
-        //         {
-        //             return {
-        //                 q: $.trim(params.term)
-        //             };
-        //         },
-        //         processResults: function (data) 
-        //         {
-        //             return {
-        //                 results: data
-        //             };
-        //         },
-        //         cache: true
-        //     }
-        // });
 
         $('#edit_produk').select2();
 
@@ -797,6 +820,7 @@
           if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
               e.preventDefault();
           }
+
         });
 
         $("#edit_panjang").keydown(function (e) {
@@ -880,71 +904,14 @@
             }
         });
         
-        $('#diskon').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
-        $('#total').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
-        $('#total2').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
-        $('#bayardp').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
-        $('#pajak').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
-        $('#sisa').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
+        // $('#diskon').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
+        // $('#total').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
+        // $('#total2').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
+        // $('#bayardp').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
+        // $('#pajak').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
+        // $('#sisa').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
 
       });
-        
-      
-        function diskonmethod(total2,diskon,total,pajak){
-            if ($('#diskon').maskMoney('unmasked')[0]=="0,00"){
-            nominaldiskon=0;
-            total=total2 + nominaldiskon + nominalpajak;
-            // $('#bayardp').val('0').trigger('mask.maskMoney');
-            // $('#sisa').val('0').trigger('mask.maskMoney');
-            return total;
-            
-            }
-            else
-            {
-            nominaldiskon=(total2 * (diskon)) /100;
-            total=total2 - nominaldiskon + nominalpajak;
-            // $('#bayardp').val('0').trigger('mask.maskMoney');
-            // $('#sisa').val('0').trigger('mask.maskMoney');
-            return total;
-                
-            }
-        }
-
-        function pajakmethod(total2,diskon,total,pajak){
-            if ($('#pajak').maskMoney('unmasked')[0]=="0,00")
-            {
-                nominalpajak=0;
-                total=total2 + nominalpajak - nominaldiskon;
-                // $('#bayardp').val('0').trigger('mask.maskMoney');
-                // $('#sisa').val('0').trigger('mask.maskMoney');
-                return total;
-            }
-            else
-            {
-                nominalpajak=(total2 * (pajak)) /100;
-                total=total2 + nominalpajak - nominaldiskon;
-                // $('#bayardp').val('0').trigger('mask.maskMoney');
-                // $('#sisa').val('0').trigger('mask.maskMoney');
-                return total;
-                
-            }
-        }
-
-        function bayardpmethod(bayardp,total,total2,bayardp){
-            if (bayardp > total){
-            bayardp=0;
-            sisa=0;
-            $('#bayardp').val(bayardp).trigger('mask.maskMoney');
-            $('#sisa').val(sisa).trigger('mask.maskMoney');
-            }
-            else
-            {
-                bayardp=$('#bayardp').maskMoney('unmasked')[0];
-                sisa=total-bayardp;
-                $('#bayardp').val(bayardp).trigger('mask.maskMoney');
-                $('#sisa').val(sisa).trigger('mask.maskMoney');
-            }
-        }
 
     //   bagian form
         $('#pelanggan').on('select2:select', function (e) {
@@ -968,23 +935,21 @@
 
         $('#transaksibaru').click(function(){
             $('tbody').empty();
-            $('#diskon').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
-            $('#bayardp').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
+            $('#diskon').val('0').removeAttr('disabled');
+            $('#bayardp').val('0').removeAttr('disabled');
             $('#pembayaran').removeAttr('disabled');
-            $('#pajak').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
-            $('#sisa').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
-            $('#total').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
+            $('#pajak').val('0').removeAttr('disabled');
+            $('#sisa').val('0');
+            $('#total').val('0');
             $('#metode').iCheck('enable');
             $('#metode').iCheck('uncheck');
             $('#namapelanggan').val("").removeAttr('disabled');
             $('#nomorhandphone').val("").removeAttr('disabled');
             $('#pelanggan').val('').trigger('change');
             $('#submitpelanggan').removeAttr('disabled');
-            $('#pelanggan').removeAttr('disabled');
-            $('#buttonmodal_add').attr('disabled',true);
             $('#kepadalabel').text('');
-            $('#handphonelabel').text(''); 
-              total3=0;
+            $('#handphonelabel').text('');  
+             total3=0;
              total2=0;
              total=0;
              diskon=0;
@@ -1006,31 +971,32 @@
         });
 
         $('#diskon').blur(function(){
-            total2=$('#total2').maskMoney('unmasked')[0];
-            diskon=$('#diskon').maskMoney('unmasked')[0];
-            total=$('#total').maskMoney('unmasked')[0];
-            pajak=$('#pajak').maskMoney('unmasked')[0];          
+            total2=unformat($('#total2').val());
+            diskon=unformat($('#diskon').val());
+            total=unformat($('#total').val());
+            pajak=unformat($('#pajak').val());          
 
 
             total=diskonmethod(total2,diskon,total,pajak);
             
-            $('#total').val(total).trigger('mask.maskMoney');
-            $('#sisa').val(total).trigger('mask.maskMoney');      
+            $('#total').val(total.format(2, 3, '.', ','));
+            $('#sisa').val(total.format(2, 3, '.', ','));      
             $('#metodelunas').iCheck('uncheck');
             $('#metodedp').iCheck('uncheck');
         });
+
         $('#diskon').focus(function(){
-            totalbeforediskon=$('#total').maskMoney('unmasked')[0];
+            totalbeforediskon=$('#total').val();
         });
 
         $('#pajak').blur(function(){
-            total2=$('#total2').maskMoney('unmasked')[0];
-            diskon=$('#diskon').maskMoney('unmasked')[0];
-            pajak=$('#pajak').maskMoney('unmasked')[0];
-            total=$('#total').maskMoney('unmasked')[0];
+            total2=unformat($('#total2').val());
+            diskon=unformat($('#diskon').val());
+            pajak=unformat($('#pajak').val());
+            total=unformat($('#total').val());
 
-            var sisasisa=$('#sisa').maskMoney('unmasked')[0];
-            var total4=$('#total').maskMoney('unmasked')[0];
+            var sisasisa=unformat($('#sisa').val());
+            var total4=unformat($('#total').val());
 
             // if (total2==0)
             // {
@@ -1043,29 +1009,31 @@
             total=pajakmethod(total2,diskon,total,pajak); 
             console.log(total);
             total4=total-total4;
-            $('#total').val(total).trigger('mask.maskMoney');    
+            $('#total').val(total.format(2, 3, '.', ','));    
             // sisasisa=sisasisa+total4;
 
             $('#metodelunas').iCheck('uncheck');
             $('#metodedp').iCheck('uncheck');
-            $('#sisa').val(total).trigger('mask.maskMoney');      
+            $('#sisa').val(total.format(2, 3, '.', ','));      
             
         });
+
         $('#pajak').focus(function(){
-            totalbeforepajak=$('#total').maskMoney('unmasked')[0];
+            totalbeforepajak=$('#total').val();
         });
 
         $('#bayardp').keyup(function(){
             bayardpmethod(bayardp,total,total2,bayardp);
         });
+
         $('#bayardp').focus(function(){
-            totalbeforedp=$('#total').maskMoney('unmasked')[0];
+            totalbeforedp=$('#total').val();
         });
         
         $('#submitpelanggan').click(function(){
             var namapelanggan=$('#namapelanggan').val();
             var nomorhandphone=$('#nomorhandphone').val();
-            // console.log(namapelanggan);
+            console.log(namapelanggan);
             if ((namapelanggan=="") || (nomorhandphone=="")){
                 swal("Gagal", "Data Pelanggan Tidak Valid", "error");
             }
@@ -1140,6 +1108,17 @@
 
                                     });
                         }
+                        else
+                        {
+                            $('#namapelanggan').attr('disabled',true);
+                            $('#nomorhandphone').attr('disabled',true);
+                            $('#pelanggan').attr('disabled',true);            
+                            $('#handphonelabel').text('  '+$('#nomorhandphone').val());
+                            $('#kepadalabel').text('  '+$('#namapelanggan').val());
+
+                            $('#buttonmodal_add').removeAttr('disabled');
+                            $('#submitpelanggan').attr('disabled',true);
+                        }
 
                     }).
                     fail(function(){
@@ -1148,6 +1127,7 @@
                 }
                 else
                 {
+                    // console.log('a');
                     $('#namapelanggan').attr('disabled',true);
                     $('#nomorhandphone').attr('disabled',true);
                     $('#pelanggan').attr('disabled',true);            
@@ -1178,13 +1158,13 @@
             var inputnamapelanggan=$('#namapelanggan').val();
             var inputnomorpelanggan=$('#nomorhandphone').val();
             var inputpelanggan=$('#pelanggan').val();            
-            var inputdiskon=$('#diskon').maskMoney('unmasked')[0];
-            var inputtotal=$('#total').maskMoney('unmasked')[0];
-            var inputbayardp=$('#bayardp').maskMoney('unmasked')[0];
+            var inputdiskon=$('#diskon').val();
+            var inputtotal=$('#total').val();
+            var inputbayardp=$('#bayardp').val();
             var inputpembayaran=$('#pembayaran').val();
-            var inputpajak=$('#pajak').maskMoney('unmasked')[0];
+            var inputpajak=$('#pajak').val();
             var inputtanggal=$('#tanggal').val();
-            var inputsisa=$('#sisa').maskMoney('unmasked')[0];
+            var inputsisa=$('#sisa').val();
             var jsonprodukid=[];
             $('input[name^="produkid[]"]').each(function() {
                 item = {}
@@ -1310,12 +1290,12 @@
                                         var url = window.location.pathname + '/report/' + response.id;
                                         window.open(url, '_blank');
                                         $('tbody').empty();
-                                        $('#diskon').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
-                                        $('#bayardp').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
+                                        $('#diskon').val('0').removeAttr('disabled');
+                                        $('#bayardp').val('0').removeAttr('disabled');
                                         $('#pembayaran').removeAttr('disabled');
-                                        $('#pajak').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
-                                        $('#sisa').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
-                                        $('#total').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
+                                        $('#pajak').val('0').removeAttr('disabled');
+                                        $('#sisa').val('0');
+                                        $('#total').val('0');
                                         $('#metode').iCheck('enable');
                                         $('#metode').iCheck('uncheck');
                                         $('#namapelanggan').val("").removeAttr('disabled');
@@ -1326,12 +1306,12 @@
                                         $('#handphonelabel').text('');                                                                                
                                     } else {
                                         $('tbody').empty();
-                                        $('#diskon').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
-                                        $('#bayardp').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
+                                        $('#diskon').val('0').removeAttr('disabled');
+                                        $('#bayardp').val('0').removeAttr('disabled');
                                         $('#pembayaran').removeAttr('disabled');
-                                        $('#pajak').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
-                                        $('#sisa').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
-                                        $('#total').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
+                                        $('#pajak').val('0').removeAttr('disabled');
+                                        $('#sisa').val('0');
+                                        $('#total').val('0');
                                         $('#metode').iCheck('enable');
                                         $('#metode').iCheck('uncheck');
                                         $('#namapelanggan').val("").removeAttr('disabled');
@@ -1339,7 +1319,7 @@
                                         $('#pelanggan').val('').trigger('change');
                                         $('#submitpelanggan').removeAttr('disabled');
                                         $('#kepadalabel').text('');
-                                        $('#handphonelabel').text('');           
+                                        $('#handphonelabel').text('');               
                                     }
                                     });
                         }
@@ -1398,7 +1378,7 @@
                             $('#add_lebar').attr('disabled',true);
                         }
                         
-                        $('#add_harga').val(response.harga_jual).trigger('mask.maskMoney');  
+                        $('#add_harga').val(response.harga_jual.format(2, 3, '.', ','));  
                     },
                 });
             }
@@ -1436,7 +1416,7 @@
                             $('#add_lebar').attr('disabled',true);
                         }
                         
-                        $('#add_harga').val(response.harga_khusus).trigger('mask.maskMoney');  
+                        $('#add_harga').val(response.harga_khusus.format(2, 3, '.', ','));  
                     },
                 });
             }
@@ -1461,13 +1441,12 @@
             $('#add_panjang').removeAttr('disabled');
             $('#add_lebar').removeAttr('disabled');
             $('#add_produk').val('').trigger('change');            
-            $('#add_harga').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
-            $('#add_diskon').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
-            $('#add_subtotal').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
-            $('#add_kuantitas').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
-            $('#add_panjang').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
-            $('#add_lebar').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
-            $('#add_subtotal').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
+            $('#add_harga').val('0'); 
+            $('#add_diskon').val('0'); 
+            $('#add_subtotal').val('0');
+            $('#add_kuantitas').val('0');
+            $('#add_panjang').val('0');
+            $('#add_lebar').val('0');
         });
         
 
@@ -1476,14 +1455,14 @@
             var produk=$('#add_produk').val();
 
             var produkid=$('#add_produkid').val();
-            var harga=$('#add_harga').maskMoney('unmasked')[0];
-            var panjang=$('#add_panjang').maskMoney('unmasked')[0];
-            var lebar=$('#add_lebar').maskMoney('unmasked')[0];
-            var kuantitas=$('#add_kuantitas').maskMoney('unmasked')[0];
+            var harga=unformat($('#add_harga').val());
+            var panjang=unformat($('#add_panjang').val());
+            var lebar=unformat($('#add_lebar').val());
+            var kuantitas=$('#add_kuantitas').val();
             var finishing=$('#add_finishing').val();
             var keterangan=$('#add_keterangan').val();
-            var subtotal=$('#add_subtotal').maskMoney('unmasked')[0];
-            var diskonnow=$('#add_diskon').maskMoney('unmasked')[0];
+            var subtotal=unformat($('#add_subtotal').val());
+            var diskonnow=unformat($('#add_diskon').val());
 
             $('input[type=radio][name=r2]').on('ifChecked',function () {
                 // alert("asd");
@@ -1496,14 +1475,14 @@
             });    
 
 
-            total=$('#total').maskMoney('unmasked')[0];
+            total=unformat($('#total').val());
             total=(subtotal)+total;
             console.log(satuan);
-            $('#total2').val(total).trigger('mask.maskMoney');
+            $('#total2').val(total.format(2, 3, '.', ','));
             
-            $('#total').val(total).trigger('mask.maskMoney');
+            $('#total').val(total.format(2, 3, '.', ','));
             tdid=tdid+1;
-            $('#sisa').val(total).trigger('mask.maskMoney');
+            $('#sisa').val(total.format(2, 3, '.', ','));
             $("tbody").append(
             '<tr id="'+tdid+'"><td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+produk+'" name="produk[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+finishing+'<input type="hidden" readonly disable id="finishing[]" value="'+finishing+'" name="finishing[]"></td><td style="width: 170px;word-break: break-all;">'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+diskonnow.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="diskonnow[]" value="'+diskonnow+'" name="diskonnow[]"></td><td>'+subtotal.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-diskon="'+diskonnow+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-namaproduk="'+namaproduk+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdid+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td></tr>'
             );
@@ -1514,11 +1493,11 @@
 
         $('#add_kuantitas').keyup(function(){
             // alert(satuan);
-            var harga=$('#add_harga').maskMoney('unmasked')[0];
-            var panjang=$('#add_panjang').maskMoney('unmasked')[0];
-            var lebar=$('#add_lebar').maskMoney('unmasked')[0];
-            var kuantitas=$('#add_kuantitas').maskMoney('unmasked')[0];
-            var diskon=$('#add_diskon').maskMoney('unmasked')[0];
+            var harga=unformat($('#add_harga').val());
+            var panjang=unformat($('#add_panjang').val());
+            var lebar=unformat($('#add_lebar').val());
+            var kuantitas=unformat($('#add_kuantitas').val());
+            var diskon=unformat($('#add_diskon').val());
 
             if (hitung_luas==1){
                 if (satuan =="cm") {
@@ -1535,7 +1514,7 @@
                         subtotal = subtotal - diskonsubtotal;
                     }
                     
-                    $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                    $('#add_subtotal').val(subtotal.format(2, 3, '.', ','));
                 }
                 else if (satuan =="m")
                 {
@@ -1545,7 +1524,7 @@
 
                         subtotal = subtotal - diskonsubtotal;
                     }
-                    $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                    $('#add_subtotal').val(subtotal.format(2, 3, '.', ','));
                 }
                 else
                 {
@@ -1556,7 +1535,7 @@
                         subtotal = subtotal - diskonsubtotal;
                     }
                     
-                    $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                    $('#add_subtotal').val(subtotal.format(2, 3, '.', ','));
                 }
             }
             else
@@ -1568,24 +1547,24 @@
 
                         subtotal = subtotal - diskonsubtotal;
                     }
-                    $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                    $('#add_subtotal').val(subtotal.format(2, 3, '.', ','));
             }
-            $('#add_harga').trigger('mask.maskMoney');
-            $('#add_panjang').trigger('mask.maskMoney');
-            $('#add_lebar').trigger('mask.maskMoney');
-            $('#add_kuantitas').trigger('mask.maskMoney');
-            $('#add_diskon').trigger('mask.maskMoney');
+            // $('#add_harga').trigger('mask.maskMoney');
+            // $('#add_panjang').trigger('mask.maskMoney');
+            // $('#add_lebar').trigger('mask.maskMoney');
+            // $('#add_kuantitas').trigger('mask.maskMoney');
+            // $('#add_diskon').trigger('mask.maskMoney');
 
 
         });
 
         $('#add_diskon').blur(function(){
             // alert(satuan);
-            var harga=$('#add_harga').maskMoney('unmasked')[0];
-            var panjang=$('#add_panjang').maskMoney('unmasked')[0];
-            var lebar=$('#add_lebar').maskMoney('unmasked')[0];
-            var kuantitas=$('#add_kuantitas').maskMoney('unmasked')[0];
-            var diskon=$('#add_diskon').maskMoney('unmasked')[0];
+            var harga=$('#add_harga').val();
+            var panjang=$('#add_panjang').val();
+            var lebar=$('#add_lebar').val();
+            var kuantitas=$('#add_kuantitas').val();
+            var diskon=$('#add_diskon').val();
 
 
             if (hitung_luas==1){
@@ -1599,7 +1578,7 @@
                     subtotal = subtotal - diskonsubtotal;
                     // console.log(subtotal);
                     
-                    $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                    $('#add_subtotal').val(subtotal);
                 }
                 else
                 {
@@ -1612,7 +1591,7 @@
                     subtotal = subtotal - diskonsubtotal;
                     // console.log(subtotal);
                     
-                    $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                    $('#add_subtotal').val(subtotal.format(2, 3, '.', ','));
                 }
             }
             else
@@ -1624,7 +1603,7 @@
                     var subtotal = (harga) * kuantitas;
                     var diskonsubtotal = (subtotal * diskon) / 100;
                     subtotal = subtotal - diskonsubtotal;
-                    $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
+                    $('#add_subtotal').val(subtotal.format(2, 3, '.', ','));
             }
                 
         });
@@ -1794,7 +1773,7 @@
             var harga=$('#edit_harga').maskMoney('unmasked')[0];
             var panjang=$('#edit_panjang').maskMoney('unmasked')[0];
             var lebar=$('#edit_lebar').maskMoney('unmasked')[0];
-            var kuantitas=$('#edit_kuantitas').maskMoney('unmasked')[0];
+            var kuantitas=$('#edit_kuantitas').val();
             var finishing=$('#edit_finishing').val();
             var keterangan=$('#edit_keterangan').val();
             var subtotal=$('#edit_subtotal').maskMoney('unmasked')[0];

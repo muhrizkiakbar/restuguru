@@ -38,12 +38,14 @@ class SpecialpricegroupController extends Controller
     public function loaddatatable(){
         $tables=CSpesialpricesgroup:: leftJoin('Produks','Spesialpricesgroups.produk_id','=','Produks.id')
                                     ->leftJoin('Jenispelanggans','Spesialpricesgroups.jenispelanggan_id','=','Jenispelanggans.id')
+                                    ->leftJoin('Users','Spesialpricesgroups.user_id','=','Users.id')
                                     ->select('Spesialpricesgroups.id',
                                              'Spesialpricesgroups.jenispelanggan_id',
                                              'Spesialpricesgroups.produk_id',
                                              'Spesialpricesgroups.harga_khusus', 
                                              'Spesialpricesgroups.updated_at',
                                              'Produks.nama_produk',
+                                             'Users.username',
                                              'Jenispelanggans.jenis_pelanggan')
                                     ->get();
         return Datatables::of($tables)
@@ -118,6 +120,7 @@ class SpecialpricegroupController extends Controller
             $table->jenispelanggan_id = decrypt($request->tambah_jenispelanggan);
             $table->produk_id = $request->tambah_produk;
             $table->harga_khusus = $request->tambah_harga_khusus;
+            $table->user_id = Auth::user()->id;
 
             if ($table->save()){
                 return response()->json("Success");

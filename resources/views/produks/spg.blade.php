@@ -226,7 +226,7 @@
                     { data: 'nama_produk', name: 'nama_produk'},
                     { data: 'harga_khusus', name: 'harga_khusus'},
                     { data: 'updated_at', name: 'updated_at'},
-                    { data: 'user', name: 'user'},
+                    { data: 'username', name: 'username'},
                     { data: 'action'}
                 ]
             });

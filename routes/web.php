@@ -21,6 +21,8 @@ Route::get('/', function () {
 });
 
 
+Route::get('/timeline','ActivityLogController@index')->name('timeline');
+
 
 Route::post('/','LoginController@postLogin');
 Route::post('/login','LoginController@postLogin');
@@ -192,7 +194,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/pelanggan/deletepelanggan',['middleware' => ['permission:delete-pelanggan'], 'uses' => 'PelangganController@destroy'])->name('deletepelanggan');
 
         // Special Price Route
-        Route::get('/specialprice',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@index'])->name('specialpriceindex');
+        Route::get('/specialprice',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@index'])->name('managespecialprice');
         Route::get('/specialprice/loadspecialprice',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@loadspecialprice'])->name('loadspecialprice');
         Route::post('/specialprice/postspecialprice',['middleware' => ['permission:add-specialprice'], 'uses' => 'SpecialPriceController@store'])->name('storespecialprice');
         Route::post('/specialprice/updatespecialprice',['middleware' => ['permission:edit-specialprice'], 'uses' => 'SpecialPriceController@update'])->name('updatespecialprice');
@@ -200,7 +202,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 
         //SpecialPriceGroup
-        Route::get('/specialpricegroup',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@index'])->name('specialpricegroupindex');
+        Route::get('/specialpricegroup',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@index'])->name('managespecialpricegroup');
         Route::post('/specialpricegroup/postspg',['middleware' => ['permission:add-specialpricegroup'], 'uses' => 'SpecialpricegroupController@store'])->name('storespg');
         Route::get('/specialpricegroup/loaddata',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@loaddatatable'])->name('loaddata');
         Route::post('/specialpricegroup/updatespg',['middleware' => ['permission:edit-specialpricegroup'], 'uses' => 'SpecialpricegroupController@update'])->name('updatespg');
@@ -251,7 +253,7 @@ Route::group(['middleware' => 'auth'], function() {
             return redirect('/login')->with('error', 'Logout Berhasil');
         });
 
-        Route::get('/timeline',['middleware' => ['permission:index-timeline'], 'uses' => 'ActivityLogController@index'])->name('timeline');
+        // Route::get('/timeline',['middleware' => ['permission:index-timeline'], 'uses' => 'ActivityLogController@index'])->name('timeline');
 
         Route::get('/transaksi/bahan',['middleware' => ['permission:manage-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@index'])->name('indextransaksibahanbaku');
         Route::post('/transaksi/bahan',['middleware' => ['permission:manage-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@index'])->name('indextransaksibahanbakupost');

@@ -701,7 +701,9 @@ class AngsuranPenjualanController extends Controller
                             'Users.nama','Jenispelanggans.jenis_pelanggan','roles.display_name')
                     ->withTrashed()
                     ->where('Transaksi_Penjualans.id','=',$data->transaksipenjualan_id)->first();
-        $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')->where('penjualan_id','=',$data->transaksipenjualan_id)->get();
+        $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
+                        ->select('Sub_Tpenjualans.*','Produks.nama_produk')
+                        ->where('penjualan_id','=',$data->transaksipenjualan_id)->get();
         // dd($transaksi);
         $jumlahangsuran=Angsuran::where('transaksipenjualan_id','=',$data->transaksipenjualan_id)
                                     ->select(DB::raw('sum(Angsurans.nominal_angsuran) as totalangsuran'))
