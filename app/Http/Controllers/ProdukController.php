@@ -69,8 +69,8 @@ class ProdukController extends Controller
                         <small class="label '.$warna.'">'.$tables->hitung_luas.'</small>
                         </span>';
                 })
-            -> editColumn ('harga_beli', 'Rp {{number_format($harga_beli,2,",",".")}}')
-            -> editColumn ('harga_jual', 'Rp {{number_format($harga_jual,2,",",".")}}')
+            -> editColumn ('harga_beli', 'Rp {{number_format($harga_beli,0,",",".")}}')
+            -> editColumn ('harga_jual', 'Rp {{number_format($harga_jual,0,",",".")}}')
             ->rawColumns(['action','produks.hitung_luas'])
             ->make(true);
     }

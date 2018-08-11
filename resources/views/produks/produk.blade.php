@@ -103,7 +103,7 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input id="tambah_harga_beli" name="tambah_harga_beli" class="form-control" type="text" value="0">
+                                                    <input id="tambah_harga_beli" name="tambah_harga_beli" class="form-control mata-uang" type="text" value="0">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -112,7 +112,7 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input id="tambah_harga_jual" name="tambah_harga_jual" class="form-control" type="text" value="0">
+                                                    <input id="tambah_harga_jual" name="tambah_harga_jual" class="form-control mata-uang" type="text" value="0">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -186,7 +186,7 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input id="edit_harga_beli" name="edit_harga_beli" class="form-control" type="text" value="0">
+                                                    <input id="edit_harga_beli" name="edit_harga_beli" class="form-control mata-uang" type="text" value="0">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -195,7 +195,7 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input id="edit_harga_jual" name="edit_harga_jual" class="form-control" type="text" value="0">
+                                                    <input id="edit_harga_jual" name="edit_harga_jual" class="form-control mata-uang" type="text" value="0">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -273,7 +273,8 @@
     <!-- Select2 -->
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- Mask Money -->
-    <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
+    {{-- <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> --}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <!-- DataTables -->
     <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -287,10 +288,31 @@
 
     {{-- Init JS --}}
     <script type="text/javascript">
+        numeral.register('locale', 'idr', {
+            delimiters: {
+                thousands: '.',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'ribu',
+                million: 'juta',
+                billion: 'ratus juta',
+                trillion: 'milyar'
+            },
+            currency: {
+                symbol: 'Rp'
+            }
+        });
+        numeral.locale('idr')
         $('#tambah_kategori, #edit_kategori').select2({
             placeholder: "Pilih Kategori."
         });
-        $('#tambah_harga_beli, #tambah_harga_jual, #edit_harga_beli, #edit_harga_jual').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
+        $(function(){
+            $("input.mata-uang").keyup(function(){
+                $(this).val(numeral($(this).val()).format('0,0'));
+            });
+        });
+        // $('#tambah_harga_beli, #tambah_harga_jual, #edit_harga_beli, #edit_harga_jual').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
     </script>
 
     {{-- javascript Tabel --}}
@@ -321,9 +343,9 @@
             $('#tambah_kategori').val(0).trigger('change');
             $('#tambah_nama_produk').val("");
             $('#tambah_satuan').val("");
-            $('#tambah_harga_beli, #tambah_harga_jual').maskMoney({ allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
-            $('#tambah_harga_beli').val(0).maskMoney('mask');
-            $('#tambah_harga_jual').val(0).maskMoney('mask');
+            // $('#tambah_harga_beli, #tambah_harga_jual').maskMoney({ allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
+            $('#tambah_harga_beli').val(0);
+            $('#tambah_harga_jual').val(0);
             $('#tambah_hitung_luas').val(0);
             $('#tambah_keterangan').val("");
         });
@@ -335,9 +357,9 @@
             $('#edit_kategori').val($(this).data('kategori_id')).trigger('change');
             $('#edit_nama_produk').val($(this).data('nama_produk'));
             $('#edit_satuan').val($(this).data('satuan'));
-            $('#edit_harga_beli, #edit_harga_jual').maskMoney({ allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
-            $('#edit_harga_beli').val($(this).data('harga_beli')).maskMoney('mask');
-            $('#edit_harga_jual').val($(this).data('harga_jual')).maskMoney('mask');
+            // $('#edit_harga_beli, #edit_harga_jual').maskMoney({ allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
+            $('#edit_harga_beli').val(numeral($(this).data('harga_beli')).format('0,0'));
+            $('#edit_harga_jual').val(numeral($(this).data('harga_jual')).format('0,0'));
             $hitung_luas = $(this).data('hitung_luas');
             if ($hitung_luas) {
                 $('#edit_hitung_luas_y').prop('checked',true);
@@ -360,6 +382,9 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
+            
+            $("#tambah_harga_jual").val(numeral($("#tambah_harga_jual").val()).value());
+            $("#tambah_harga_beli").val(numeral($("#tambah_harga_beli").val()).value());
             $.ajax({
                 type:'post',
                 url:'{{route('storeproduk')}}',
@@ -409,6 +434,8 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
+            $("#edit_harga_jual").val(numeral($("#edit_harga_jual").val()).value());
+            $("#edit_harga_beli").val(numeral($("#edit_harga_beli").val()).value());
             $.ajax({
                 type:'post',
                 url:'{{route('updateproduk')}}',
