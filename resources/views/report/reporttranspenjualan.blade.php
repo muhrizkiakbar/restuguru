@@ -135,13 +135,13 @@
                         @foreach ($subtransaksis as $subtransaksi)
                         <tr>
                             <td style="word-break: break-all;">{{$subtransaksi->nama_produk}}</td>
-                            <td style="word-wrap: break-word;">Rp. {{number_format(floatval($subtransaksi->harga_satuan),2,',','.')}}</td>
-                            <td style="word-wrap: break-word;">{{number_format(floatval($subtransaksi->panjang),2,',','.')}}</td>
-                            <td style="word-wrap: break-word;">{{number_format(floatval($subtransaksi->lebar),2,',','.')}}</td>
-                            <td style="word-wrap: break-word;">{{number_format(floatval($subtransaksi->banyak),2,',','.')}}</td>
+                            <td style="word-wrap: break-word;">Rp. {{number_format(floatval($subtransaksi->harga_satuan),0,',','.')}}</td>
+                            <td style="word-wrap: break-word;">@if ($subtransaksi->panjang==0) - @else {{number_format(floatval($subtransaksi->panjang),2,',','.').' '.$subtransaksi->satuan}} @endif</td>
+                            <td style="word-wrap: break-word;">@if ($subtransaksi->lebar==0) - @else {{number_format(floatval($subtransaksi->lebar),2,',','.').' '.$subtransaksi->satuan}} @endif</td>
+                            <td style="word-wrap: break-word;">{{number_format(floatval($subtransaksi->banyak),0,',','.')}}</td>
                             <td style="word-wrap: break-word;">{{$subtransaksi->finishing}}</td>
                             <td style="width: 20%;word-break: break-all;">{{$subtransaksi->keterangan}}</td>
-                            <td style="word-wrap: break-word;">Rp. {{number_format(floatval($subtransaksi->subtotal),2,',','.')}}</td>
+                            <td style="word-wrap: break-word;">Rp. {{number_format(floatval($subtransaksi->subtotal),0,',','.')}}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -198,15 +198,15 @@
                         <table class="table">
                             <tr>
                                 <th style="width:50%">Total :</th>
-                                <td>Rp. {{number_format(floatval($transaksi->total_harga),2,',','.')}}</td>
+                                <td>Rp. {{number_format(floatval($transaksi->total_harga),0,',','.')}}</td>
                             </tr>
                             <tr>
                                 <th>DP:</th>
-                                <td>Rp. {{number_format(floatval($transaksi->jumlah_pembayaran),2,',','.')}}</td>
+                                <td>Rp. {{number_format(floatval($transaksi->jumlah_pembayaran),0,',','.')}}</td>
                             </tr>
                             <tr>
                                 <th>Sisa:</th>
-                                <td>Rp. {{number_format(floatval($transaksi->sisa_tagihan),2,',','.')}}</td>
+                                <td>Rp. {{number_format(floatval($transaksi->sisa_tagihan),0,',','.')}}</td>
                             </tr>
                             <tr>
                                 <th>Pembayaran :</th>
