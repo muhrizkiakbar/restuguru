@@ -1406,7 +1406,14 @@
                     processData: false,
                     contentType: false,
                     success:function(response){
+                        console.log(response.harga_jual);
                         hitung_luas=response.hitung_luas;
+                        $('#add_harga').val('0'); 
+                        $('#add_diskon').val('0'); 
+                        $('#add_subtotal').val('0');
+                        $('#add_kuantitas').val('0');
+                        $('#add_panjang').val('0');
+                        $('#add_lebar').val('0');
                         if (hitung_luas==1)
                         {
                             $('#r2m').iCheck('uncheck');
@@ -1415,6 +1422,7 @@
                             $('#r2cm').iCheck('enable');
                             $('#add_panjang').removeAttr('disabled');
                             $('#add_lebar').removeAttr('disabled');
+                            satuandasar = response.satuan.toUpperCase();
                         }
                         else
                         {
@@ -1426,7 +1434,7 @@
                             $('#add_lebar').attr('disabled',true);
                         }
                         
-                        $('#add_harga').val(response.harga_khusus.format(2, 3, '.', ','));  
+                        $('#add_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
                     },
                 });
             }
