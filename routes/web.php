@@ -20,6 +20,11 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::get('/stokbahanbaku','StokBahanbakuController@index');
+Route::post('/stokbahanbaku','StokBahanbakuController@index')->name('stokbahanbaku');
+Route::get('/bahanbaku/harga', 'BahanBakuController@bahanbakuharga')->name('bahanbakuharga');
+
+
 
 Route::get('/timeline','ActivityLogController@index')->name('timeline');
 

@@ -320,22 +320,22 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Harga</label>
-                                          <input id="add_harga" name="add_harga" class="form-control" type="text">
+                                          <input id="add_harga" name="add_harga" class="form-control mata-uang" type="text">
                                           {{csrf_field()}}
                                       </div>
                                       <div class="form-group">
                                           <label>P</label>
-                                          <input id="add_panjang" name="add_panjang" class="form-control pull-right" type="text">
+                                          <input id="add_panjang" name="add_panjang" class="form-control pull-right addbesaran" type="text">
                                       </div>
                                       <div class="form-group">
                                           <label>L</label>
-                                          <input id="add_lebar" name="add_lebar" class="form-control pull-right" type="text">
+                                          <input id="add_lebar" name="add_lebar" class="form-control pull-right addbesaran" type="text">
                                       </div>
                                       <div class="form-group">
                                           <label>Satuan  :</label>
-                                            <input type="radio" id="r2cm" name="r2" class="minimal-red" value="cm">
+                                            <input type="radio" id="r2cm" name="r2" class="minimal-red" value="CENTIMETER">
                                             Centimeter
-                                            <input type="radio" id="r2m" name="r2" class="minimal-red" value="m">
+                                            <input type="radio" id="r2m" name="r2" class="minimal-red" value="METER">
                                             Meter
                                       </div>
                                       <div class="form-group">
@@ -348,7 +348,7 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Subtotal</label>
-                                          <input id="add_subtotal" name="add_subtotal" class="form-control pull-right" type="text">
+                                          <input id="add_subtotal" name="add_subtotal" class="form-control pull-right mata-uang" type="text">
                                       </div>
                                       <!-- /.form-group -->
                                   </div>
@@ -384,22 +384,22 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Harga</label>
-                                          <input id="edit_harga" name="edit_harga" class="form-control" type="text">
+                                          <input id="edit_harga" name="edit_harga" class="form-control mata-uang" type="text">
                                           {{csrf_field()}}
                                       </div>
                                       <div class="form-group">
                                           <label>P</label>
-                                          <input id="edit_panjang" name="edit_panjang" class="form-control pull-right" type="text">
+                                          <input id="edit_panjang" name="edit_panjang" class="form-control pull-right editbesaran" type="text">
                                       </div>
                                       <div class="form-group">
                                           <label>L</label>
-                                          <input id="edit_lebar" name="edit_lebar" class="form-control pull-right" type="text">
+                                          <input id="edit_lebar" name="edit_lebar" class="form-control pull-right editbesaran" type="text">
                                       </div>
                                       <div class="form-group">
                                           <label>Satuan  :</label>
-                                            <input type="radio" id="r2editcm" name="r2edit" class="minimal-red" value="cm">
+                                            <input type="radio" id="r2editcm" name="r2edit" class="minimal-red" value="CENTIMETER">
                                             Centimeter
-                                            <input type="radio" id="r2editm" name="r2edit" class="minimal-red" value="m">
+                                            <input type="radio" id="r2editm" name="r2edit" class="minimal-red" value="METER">
                                             Meter
                                       </div>
                                       <div class="form-group">
@@ -412,7 +412,7 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Subtotal</label>
-                                          <input id="edit_subtotal" name="edit_subtotal" class="form-control pull-right" type="text">
+                                          <input id="edit_subtotal" name="edit_subtotal" class="form-control pull-right mata-uang" type="text">
                                       </div>
                                       <!-- /.form-group -->
                                   </div>
@@ -502,400 +502,119 @@
     <!-- AdminLTE for demo purposes -->
     <script>
 
-      var jenismodal="";
-    
-      var total3=0;
-      var total2=0;
-      var total=0;
-      var diskon=0;
-      var namaproduk="";
-      var totalbeforediskon=0;
-      var totalbeforepajak=0;
-      var totalbeforedp=0;
-      var nominaldiskon=0;
-      var pajak=0;
-      var nominalpajak=0;
-      var sisa=0;
-      var bayardp=0;
-      var satuan="";
-      var hitung_luas=1;
-      var tdid=0;
-      var subtotalawal=0;
-      var tdidnow=0;
-      var subtotaldelete=0;
-
+//custom format
+    //numeral
+        numeral.register('locale', 'idr', {
+            delimiters: {
+                thousands: '.',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'ribu',
+                million: 'juta',
+                billion: 'ratus juta',
+                trillion: 'milyar'
+            },
+            currency: {
+                symbol: 'Rp'
+            }
+        });
+    //
+    //number format
         Number.prototype.format = function(n, x, s, c) {
             var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
                 num = this.toFixed(Math.max(0, ~~n));
             
             return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
         };
-
-
-      $(function(){
-
+    //
+//
+//def variable     
+        var jenismodal="";
         
+        var total3=0;
+        var total2=0;
+        var total=0;
+        var diskon=0;
+        var namaproduk="";
+        var totalbeforediskon=0;
+        var totalbeforepajak=0;
+        var totalbeforedp=0;
+        var nominaldiskon=0;
+        var pajak=0;
+        var nominalpajak=0;
+        var sisa=0;
+        var bayardp=0;
+        var satuan="";
+        var hitung_luas=1;
+        var tdid=0;
+        var subtotalawal=0;
+        var tdidnow=0;
+        var subtotaldelete=0;
+        var satuandasar="";
+        var luas=1;
+        var hargasatuan=0;
+        var kuantitas=0;
 
-        $('input[name="tanggal"]').datepicker({
-            format: "yyyy-mm-dd",
-        });
-        
 
-        $("#add_harga").keydown(function (e) {
-          // Allow: backspace, delete, tab, escape, enter and .
-          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-              // Allow: Ctrl+A, Command+A
-              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
-              // Allow: home, end, left, right, down, up
-              (e.keyCode >= 35 && e.keyCode <= 40)) {
-                  // let it happen, don't do anything
-                  return;
-          }
-          // Ensure that it is a number and stop the keypress
-          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            //   console.log(e.preventDefault())
-            
-            e.preventDefault();
-          }
-        //   console.log(e.target.value)
-        //   console.log($('#add_harga').val());
-            if ($('#add_harga').val()=="0")
-            {
-                $('#add_harga').val("");
-            }   
-
-        });
-
-        $('#add_harga').keyup(function (e) {
-            if (($('#add_harga').val()).length > 3)
-            {
-                $('#add_harga').val(numeral($('#add_harga').val()).format('0,0'));
-            }
-
-            if ($('#add_harga').val()=="")
-            {
-                $('#add_harga').val("0");
-            }   
-        });
-
-        $("#add_panjang").keydown(function (e) {
-          // Allow: backspace, delete, tab, escape, enter and .
-          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-              // Allow: Ctrl+A, Command+A
-              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
-              // Allow: home, end, left, right, down, up
-              (e.keyCode >= 35 && e.keyCode <= 40)) {
-                  // let it happen, don't do anything
-                  return;
-          }
-          // Ensure that it is a number and stop the keypress
-          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-              e.preventDefault();
-          }
-        });
-
-        $("#add_lebar").keydown(function (e) {
-          // Allow: backspace, delete, tab, escape, enter and .
-          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-              // Allow: Ctrl+A, Command+A
-              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
-              // Allow: home, end, left, right, down, up
-              (e.keyCode >= 35 && e.keyCode <= 40)) {
-                  // let it happen, don't do anything
-                  return;
-          }
-          // Ensure that it is a number and stop the keypress
-          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-              e.preventDefault();
-          }
-        });
-
-        $("#add_kuantitas").keydown(function (e) {
-          // Allow: backspace, delete, tab, escape, enter and .
-          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-              // Allow: Ctrl+A, Command+A
-              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
-              // Allow: home, end, left, right, down, up
-              (e.keyCode >= 35 && e.keyCode <= 40)) {
-                  // let it happen, don't do anything
-                  return;
-          }
-          // Ensure that it is a number and stop the keypress
-          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-              e.preventDefault();
-          }
-        });
-
-        $('input[type=radio][name=metode]').on('ifClicked',function () {
-            // alert("asd");
-            if (this.value == 'lunas') {
-                sisa=0;
-                $('#bayardp').val(numeral(total).format('0.0'));
-                $('#sisa').val(numeral(sisa).format('0.0'));
-            }
-            else if (this.value == 'dp') {
-                bayardp=total / 2;
-                sisa=total-bayardp;
-                $('#bayardp').val(numeral(bayardp).format('0.0'));
-                $('#sisa').val(numeral(sisa).format('0.0'));
-            }
-        });
-
-        $('input[type=radio][name=r2]').on('ifClicked',function () {
-            // alert("asd");
-            var harga=numeral($('#add_harga').val()).value();
-            var panjang=numeral($('#add_panjang').val()).value();
-            var lebar=numeral($('#add_lebar').val()).value();
-            var kuantitas=numeral($('#add_kuantitas').val()).value();
-            
-            if (this.value == 'cm') {
-                
-                
-                // subtotal################
-                
-                // var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
-                // $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
-                satuan=this.value;
-            }
-            else if (this.value == 'm') {
-                
-              
-                
-                // var subtotal = ((panjang * lebar) * harga / 1000) * kuantitas;
-                // $('#add_subtotal').val(subtotal).trigger('mask.maskMoney');
-                satuan=this.value;
-                
-            }
-            else
-            {
-                satuan="pcs";
-            }
-        });
-
-        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-          checkboxClass: 'icheckbox_minimal-red',
-          radioClass   : 'iradio_minimal-red'
-        });
-    
-        
-
-        $("#edit_harga").keydown(function (e) {
-          // Allow: backspace, delete, tab, escape, enter and .
-          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-              // Allow: Ctrl+A, Command+A
-              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
-              // Allow: home, end, left, right, down, up
-              (e.keyCode >= 35 && e.keyCode <= 40)) {
-                  // let it happen, don't do anything
-                  return;
-          }
-          // Ensure that it is a number and stop the keypress
-          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-              e.preventDefault();
-          }
-        });
-
-        $("#edit_kuantitas").keydown(function (e) {
-          // Allow: backspace, delete, tab, escape, enter and .
-          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-              // Allow: Ctrl+A, Command+A
-              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
-              // Allow: home, end, left, right, down, up
-              (e.keyCode >= 35 && e.keyCode <= 40)) {
-                  // let it happen, don't do anything
-                  return;
-          }
-          // Ensure that it is a number and stop the keypress
-          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-              e.preventDefault();
-          }
-        });
-
-        $("#edit_panjang").keydown(function (e) {
-          // Allow: backspace, delete, tab, escape, enter and .
-          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-              // Allow: Ctrl+A, Command+A
-              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
-              // Allow: home, end, left, right, down, up
-              (e.keyCode >= 35 && e.keyCode <= 40)) {
-                  // let it happen, don't do anything
-                  return;
-          }
-          // Ensure that it is a number and stop the keypress
-          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-              e.preventDefault();
-          }
-        });
-
-        $("#edit_lebar").keydown(function (e) {
-          // Allow: backspace, delete, tab, escape, enter and .
-          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-              // Allow: Ctrl+A, Command+A
-              (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
-              // Allow: home, end, left, right, down, up
-              (e.keyCode >= 35 && e.keyCode <= 40)) {
-                  // let it happen, don't do anything
-                  return;
-          }
-          // Ensure that it is a number and stop the keypress
-          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-              e.preventDefault();
-          }
-        });
-
-        $('input[type=radio][name=r2edit]').on('ifClicked',function () {
-            // alert("asd");
-            var harga=numeral($('#edit_harga').val()).value();
-            var panjang=numeral($('#edit_panjang').val()).value();
-            var lebar=numeral($('#edit_lebar').val()).value();
-            var kuantitas=numeral($('#edit_kuantitas').val()).value();
-            
-            if (this.value == 'cm') {
-                
-                
-                // subtotal################
-                
-                // var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
-                // $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
-                satuan=this.value;
-            }
-            else if (this.value == 'm') {
-                
-               
-                
-                // var subtotal = ((panjang * lebar) * harga / 1000) * kuantitas;
-                // $('#edit_subtotal').val(subtotal).trigger('mask.maskMoney');
-                satuan=this.value;
-                
-            }
-            else{
-                satuan="pcs";
-            }
-        });
-
-        $('#add_produk').select2({
-            tags: true,
-            placeholder: "Pilih Bahan Baku.",
-            minimumInputLength: 1,
-            ajax: {
-                url: '{{route('bahanbakucari')}}',
-                dataType: 'json',
-                data: function (params) 
-                {
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) 
-                {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
-            }
-        });
-
-        $('#edit_produk').select2({
-            tags: true,
-            placeholder: "Pilih Bahan Baku.",
-            minimumInputLength: 1,
-            ajax: {
-                url: '{{route('bahanbakucari')}}',
-                dataType: 'json',
-                data: function (params) 
-                {
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) 
-                {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
-            }
-        });
-        
-        $('#jenispengeluaran').select2();
-        
-        $('#pembayaran').select2();
-
-        $('#pelanggan').select2({
-            placeholder: "Pilih Karyawan.",
-            minimumInputLength: 1,
-            ajax: {
-                url: '{{route('searchusers')}}',
-                dataType: 'json',
-                data: function (params) 
-                {
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) 
-                {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
-            }
-        });
-        
-        $('#supplier').select2({
-            placeholder: "Pilih Supplier.",
-            minimumInputLength: 1,
-            ajax: {
-                url: '{{route('suppliersearch')}}',
-                dataType: 'json',
-                data: function (params) 
-                {
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) 
-                {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
-            }
-        });
-
-        $('#bayardp').val(numeral($('#bayardp').val()).format('0.0'));
-        $('#total').val(numeral($('#total').val()).format('0.0')); 
-        $('#total2').val(numeral($('#total2').val()).format('0.0')); 
-        $('#sisa').val(numeral($('#sisa').val()).format('0.0')); 
-
-      });
-      
-        function diskonmethod(total2,diskon,total,pajak){
-            if ($('#diskon').val(numeral($('#diskon').val()).value())=="0"){
-            nominaldiskon=0;
-            total=total2 + nominaldiskon + nominalpajak;
-            // $('#bayardp').val('0').trigger('mask.maskMoney');
-            // $('#sisa').val('0').trigger('mask.maskMoney');
-            return total;
-            
-            }
-            else
-            {
-            nominaldiskon=(total2 * (diskon)) /100;
-            total=total2 - nominaldiskon + nominalpajak;
-            // $('#bayardp').val('0').trigger('mask.maskMoney');
-            // $('#sisa').val('0').trigger('mask.maskMoney');
-            return total;
-                
+//
+//function
+    //hitung luas
+        function hitungluas(panjang, lebar, dasar, perubahan){
+            if ( dasar==perubahan ){
+                return (panjang * lebar);
+            }else if ( (dasar=='CENTIMETER') && (perubahan=='METER') ){
+                return (panjang * 100) * (lebar * 100);
+            }else if ( (dasar=='METER') && (perubahan=='CENTIMETER') ){
+                return (panjang / 100) * (lebar / 100);
             }
         }
-
+    //
+    //hitung subtotal
+        function hitungsubtotal(harga, luas, kuantitas){
+            return (harga * luas) * kuantitas;
+        }
+    //
+    //hitung diskonitem
+        function diskonitem(subtotal, besardiskon){
+            return subtotal - (subtotal * besardiskon);
+        }
+    //
+    //function tampilan panjang lebar di tabel
+        function tampilanpl(nilai){
+            if (nilai == 0){
+                return '-';
+            }else{
+                return numeral(nilai).format('0[.]00');
+            } 
+        }
+    //
+    //function diskon akhir
+        function hitungdiskonpajak(total, pajak, diskon){
+            var hitungdiskon = total * (diskon/100);
+            var totalpotongdiskon = total - hitungdiskon;
+            var hitungpajak = totalpotongdiskon * (pajak/100);
+            return totalpotongdiskon + hitungpajak;
+        }
+    //
+    //function hitung sisa
+        function hitungsisa (total, bayardp, metodebayar){
+            return total - bayardp;
+        }
+    //
+    //function metode
+        function metodepembayaran(metodepembayaran){
+            total=numeral($('#total').val()).value();
+            if (metodepembayaran == "lunas"){
+                return total;
+            }else if (metodepembayaran == "dp"){
+                return total/2;
+            }else{
+                return numeral($('#bayardp').val()).value();
+            }
+        };
         function pajakmethod(total2,diskon,total,pajak){
-            if ($('#pajak').val(numeral($('#pajak').val()).value())=="0")
+            if ($('#pajak').val()=="0")
             {
                 nominalpajak=0;
                 total=total2 + nominalpajak - nominaldiskon;
@@ -914,23 +633,279 @@
             }
         }
 
+        function unformat(value)
+        {
+            value=value.replace('.','');
+
+            value=value.replace(',','.');
+
+            return value;
+        }
+
         function bayardpmethod(bayardp,total,total2,bayardp){
             if (bayardp > total){
             bayardp=0;
             sisa=0;
-            $('#bayardp').val(numeral(bayardp).format('0.0'));
-            $('#sisa').val(numeral(sisa).format('0.0'));
+            $('#bayardp').val(bayardp.format(2, 3, '.', ','));
+            $('#sisa').val(sisa.format(2, 3, '.', ','));
             }
             else
             {
-                bayardp=numeral($('#bayardp').val()).value();
-                sisa=total-(bayardp);
-                $('#bayardp').val(numeral(bayardp).format('0.0'));
-                $('#sisa').val(numeral(sisa).format('0.0'));
+                bayardp=$('#bayardp').val();
+                sisa=total-bayardp;
+                $('#bayardp').val(bayardp.format(2, 3, '.', ','));
+                $('#sisa').val(sisa.format(2, 3, '.', ','));
             }
         }
+//
+//on load
+        $(function(){
+            numeral.locale('idr');
 
-    //   bagian form
+            $("input.mata-uang").keyup(function(){
+                $(this).val(numeral($(this).val()).format('$ 0,0'));
+            });
+
+            $("input.addbesaran").focus(function(){
+                $(this).val(0);
+            });
+
+            $("input.addbesaran").blur(function(){
+                $(this).val(numeral($(this).val()).format('0[.]00'));
+                var panjang=numeral($('#add_panjang').val()).value();
+                var lebar=numeral($('#add_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,$('input[name=r2]:checked').val());
+                hargasatuan=numeral($('#add_harga').val()).value();
+                kuantitas=numeral($('#add_kuantitas').val()).value();
+                // var besardiskon=numeral($('#add_diskon').val()).value();
+                $('#add_subtotal').val(
+                    numeral(hitungsubtotal(hargasatuan, luas, kuantitas)).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas);
+                
+            });
+
+            $("input.editbesaran").focus(function(){
+                $(this).val(0);
+            });
+
+            $("input.editbesaran").blur(function(){
+                $(this).val(numeral($(this).val()).format('0[.]00'));
+                var panjang=numeral($('#edit_panjang').val()).value();
+                var lebar=numeral($('#edit_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,$('input[name=r2edit]:checked').val());
+                hargasatuan=numeral($('#edit_harga').val()).value();
+                kuantitas=numeral($('#edit_kuantitas').val()).value();
+                // var besardiskon=numeral($('#edit_diskon').val()).value();
+                $('#edit_subtotal').val(
+                    numeral((hitungsubtotal(hargasatuan, luas, kuantitas))).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas);
+                
+            });
+
+            $('input[name="tanggal"]').datepicker({
+                format: "yyyy-mm-dd",
+            });
+            
+            $('input[type=radio][name=r2]').on('ifClicked',function () {
+                // alert("asd");
+                var panjang=numeral($('#add_panjang').val()).value();
+                var lebar=numeral($('#add_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,this.value);
+                hargasatuan=numeral($('#add_harga').val()).value();
+                kuantitas=numeral($('#add_kuantitas').val()).value();
+                // var besardiskon=numeral($('#add_diskon').val()).value();
+                // console.log(panjang*lebar);
+                console.log(panjang,lebar,satuandasar,this.value);
+
+                $('#add_subtotal').val(
+                    numeral((hitungsubtotal(hargasatuan, luas, kuantitas))).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas);
+            });
+
+            $("#add_kuantitas").keyup(function(){
+                $(this).val(numeral($(this).val()).format('0'));
+                hargasatuan=numeral($('#add_harga').val()).value();
+                kuantitas=numeral($('#add_kuantitas').val()).value();
+                // var besardiskon=numeral($('#add_diskon').val()).value();
+                $('#add_subtotal').val(
+                    numeral((hitungsubtotal(hargasatuan, luas, kuantitas))).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas);
+            });
+
+            
+
+            $("#add_harga").keydown(function (e) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                    // Allow: Ctrl+A, Command+A
+                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+                    // Allow: home, end, left, right, down, up
+                    (e.keyCode >= 35 && e.keyCode <= 40)) {
+                        // let it happen, don't do anything
+                        return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+
+            $("#add_kuantitas").keydown(function (e) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                    // Allow: Ctrl+A, Command+A
+                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+                    // Allow: home, end, left, right, down, up
+                    (e.keyCode >= 35 && e.keyCode <= 40)) {
+                        // let it happen, don't do anything
+                        return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+
+            $('input[type=radio][name=metode]').on('ifClicked',function () {
+                total=numeral($('#total').val()).value();
+                if ($(this).val() == "lunas"){
+                    $('#bayardp').val(numeral(total).format('$ 0,0'));
+                }else if ($(this).val() == "dp"){
+                    $('#bayardp').val(numeral(total/2).format('$ 0,0'));
+                }
+                bayardp=numeral($('#bayardp').val()).value();
+                $('#sisa').val(numeral(hitungsisa(total, bayardp, $(this).val())).format('$ 0,0'));
+            });
+
+            $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+            checkboxClass: 'icheckbox_minimal-red',
+            radioClass   : 'iradio_minimal-red'
+            });
+        
+            $('#add_produk').select2({
+                tags: true,
+                placeholder: "Pilih Bahan Baku.",
+                minimumInputLength: 2,
+                ajax: {
+                    url: '{{route('bahanbakucari')}}',
+                    dataType: 'json',
+                    data: function (params) 
+                    {
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function (data) 
+                    {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+                
+            });
+
+            $('#edit_produk').select2();
+
+            $("#edit_harga").keydown(function (e) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                    // Allow: Ctrl+A, Command+A
+                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+                    // Allow: home, end, left, right, down, up
+                    (e.keyCode >= 35 && e.keyCode <= 40)) {
+                        // let it happen, don't do anything
+                        return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+
+            $('input[type=radio][name=r2edit]').on('ifClicked',function () {
+                var panjang=numeral($('#edit_panjang').val()).value();
+                var lebar=numeral($('#edit_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,this.value);
+                hargasatuan=numeral($('#edit_harga').val()).value();
+                kuantitas=numeral($('#edit_kuantitas').val()).value();
+                // var besardiskon=numeral($('#edit_diskon').val()).value();
+                $('#edit_subtotal').val(
+                    numeral((hitungsubtotal(hargasatuan, luas, kuantitas))).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas);
+            });
+
+            $("#edit_kuantitas").keyup(function(){
+                $(this).val(numeral($(this).val()).format('0'));
+                hargasatuan=numeral($('#edit_harga').val()).value();
+                kuantitas=numeral($('#edit_kuantitas').val()).value();
+                // var besardiskon=numeral($('#edit_diskon').val()).value();
+                $('#edit_subtotal').val(
+                    numeral((hitungsubtotal(hargasatuan, luas, kuantitas))).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas);
+            });
+
+         
+
+            $('#supplier').select2({
+                placeholder: "Pilih Supplier.",
+                minimumInputLength: 1,
+                ajax: {
+                    url: '{{route('suppliersearch')}}',
+                    dataType: 'json',
+                    data: function (params) 
+                    {
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function (data) 
+                    {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            // console.log(hitungsisa(100000,20000,0)[1]);
+            
+            $('#pelanggan').select2({
+                placeholder: "Pilih Karyawan.",
+                minimumInputLength: 1,
+                ajax: {
+                    url: '{{route('searchusers')}}',
+                    dataType: 'json',
+                    data: function (params) 
+                    {
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function (data) 
+                    {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            $('#jenispengeluaran').select2();
+
+        });
+//
+//bagian form
+    //pencarian pelanggan
         $('#pelanggan').on('select2:select', function (e) {      
             var id=e.params.data.id;
             $.ajax({
@@ -949,95 +924,8 @@
                 },
             });
         });
-
-        $('#supplier').on('select2:select', function (e) {
-            var id=e.params.data.id;
-            $.ajax({
-                async: true, 
-                type:'get',
-                url:'{{route('suppliersearchdetail')}}',
-                data: 'id='+id,
-                dataType:'json',
-                async:false,
-                processData: false,
-                contentType: false,
-                success:function(response){
-                    $('#pelanggan').val('').trigger('change');            
-                    $('#namapelanggan').val(response.nama_supplier);
-                    $('#nomorhandphone').val(response.telpon_supplier);
-                },
-            });
-        });
-
-
-        $('#jenispengeluaran').on('select2:select',function (e){
-            var id=e.params.data.id;
-            $.ajax({
-                async: true, 
-                type:'get',
-                url:'{{route('jenispengeluaransearch')}}',
-                data: 'id='+id,
-                dataType:'json',
-                async:false,
-                processData: false,
-                contentType: false,
-                success:function(response){
-                     console.log(response);
-                },
-            });
-        });
-
-        $('#transaksibaru').click(function(){
-            $('tbody').empty();
-            $('#bayardp').val('0').removeAttr('disabled');
-            $('#pembayaran').removeAttr('disabled');
-            $('#sisa').val('0');
-            $('#total').val('0');
-            $('#metode').iCheck('enable');
-            $('#metode').iCheck('uncheck');
-            $('#namapelanggan').val("").removeAttr('disabled');
-            $('#nomorhandphone').val("").removeAttr('disabled');
-            $('#pelanggan').val('').trigger('change');
-            $('#supplier').val('').trigger('change');
-            $('#submitpelanggan').removeAttr('disabled');
-            $('#pelanggan').removeAttr('disabled');
-            $('#supplier').removeAttr('disabled');
-            $('#jenispengeluaran').removeAttr('disabled');            
-            $('#jenispengeluaran').select2('val',null);                        
-            $('#buttonmodal_add').attr('disabled',true);
-            $('#kepadalabel').text('');
-            $('#handphonelabel').text('');    
-
-             jenismodal="";
-    
-             total3=0;
-             total2=0;
-             total=0;
-             diskon=0;
-             namaproduk="";
-             totalbeforediskon=0;
-             totalbeforepajak=0;
-             totalbeforedp=0;
-             nominaldiskon=0;
-             pajak=0;
-             nominalpajak=0;
-             sisa=0;
-             bayardp=0;
-             satuan="";
-             hitung_luas=1;
-             tdid=0;
-             subtotalawal=0;
-             tdidnow=0;
-             subtotaldelete=0;       
-        });
-
-        $('#bayardp').keyup(function(){
-            bayardpmethod(bayardp,total,total2,bayardp);
-        });
-        $('#bayardp').focus(function(){
-            totalbeforedp=numeral($('#total').val()).value();
-        });
-        
+    //
+    //submit pelanggan
         $(document).on('click','#submitpelanggan',function (){
             var namapelanggan=$('#namapelanggan').val();
             var nomorhandphone=$('#nomorhandphone').val();
@@ -1081,6 +969,102 @@
 
             
         });
+    //
+    //tombol transaksi baru
+        $('#transaksibaru').click(function(){
+            $('tbody').empty();
+            $('#bayardp').val('0').removeAttr('disabled');
+            $('#pembayaran').removeAttr('disabled');
+            $('#pajak').val('0').removeAttr('disabled');
+            $('#sisa').val('0');
+            $('#total').val('0');
+            $('#metode').iCheck('enable');
+            $('#metode').iCheck('uncheck');
+            $('#namapelanggan').val("").removeAttr('disabled');
+            $('#nomorhandphone').val("").removeAttr('disabled');
+            $('#pelanggan').val('').trigger('change');
+            $('#submitpelanggan').removeAttr('disabled');
+            $('#kepadalabel').text('');
+            $('#handphonelabel').text('');  
+                total3=0;
+                total2=0;
+                total=0;
+                namaproduk="";
+                totalbeforediskon=0;
+                totalbeforepajak=0;
+                totalbeforedp=0;
+                nominaldiskon=0;
+                pajak=0;
+                nominalpajak=0;
+                sisa=0;
+                bayardp=0;
+                satuan="";
+                hitung_luas=1;
+                tdid=0;
+                subtotalawal=0;
+                tdidnow=0;
+                subtotaldelete=0;
+                satuandasar="";
+                luas=1;
+                hargasatuan=0;
+                kuantitas=0;           
+        });
+    //
+
+
+        $('#supplier').on('select2:select', function (e) {
+            var id=e.params.data.id;
+            $.ajax({
+                async: true, 
+                type:'get',
+                url:'{{route('suppliersearchdetail')}}',
+                data: 'id='+id,
+                dataType:'json',
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    $('#pelanggan').val('').trigger('change');            
+                    $('#namapelanggan').val(response.nama_supplier);
+                    $('#nomorhandphone').val(response.telpon_supplier);
+                },
+            });
+        });
+
+        $('#jenispengeluaran').on('select2:select',function (e){
+            var id=e.params.data.id;
+            $.ajax({
+                async: true, 
+                type:'get',
+                url:'{{route('jenispengeluaransearch')}}',
+                data: 'id='+id,
+                dataType:'json',
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                     console.log(response);
+                },
+            });
+        });
+
+
+        $('#bayardp').keyup(function(){
+            $(this).val(numeral($(this).val()).format('$ 0,0'));
+            total2=numeral($('#total2').val()).value();
+            // diskon=numeral($('#diskon').val()).value();
+            pajak=numeral($('#pajak').val()).value();
+            $('#total').val(numeral((total2)).format('$ 0,0'));
+            total=numeral($('#total').val()).value();
+            bayardp=numeral($('#bayardp').val()).value();
+            $('#sisa').val(numeral(hitungsisa(total, bayardp)).format('$ 0,0'));
+        });
+
+        $('#bayardp').focus(function(){
+            $('#metodelunas').iCheck('uncheck');
+            $('#metodedp').iCheck('uncheck');
+            $(this).val(0);
+        });
 
         $('#submittransaksi').click(function(){
             // $('input[name^="produk[]"]').each(function() {
@@ -1098,7 +1082,7 @@
             var inputnomorpelanggan=$('#nomorhandphone').val();
             var inputpelanggan=$('#pelanggan').val();            
             var inputsupplier=$('#supplier').val();            
-            var inputdiskon=numeral($('#diskon').val()).value();
+            // var inputdiskon=numeral($('#diskon').val()).value();
             var inputtotal=numeral($('#total').val()).value();
             var inputbayardp=numeral($('#bayardp').val()).value();
             var inputpembayaran=$('#pembayaran').val();
@@ -1109,6 +1093,7 @@
             $('input[name^="produkid[]"]').each(function() {
                 item = {}
                 item ["value"] = $(this).val();
+                // console.log($(this).val())
                 jsonprodukid.push(item);
             });
             var jsonproduk=[];
@@ -1188,6 +1173,7 @@
                         jsonpanjang: jsonpanjang,
                         jsonlebar: jsonlebar,
                         jsonproduk: jsonproduk,
+                        jsonprodukid: jsonprodukid,
                         jsonsatuan: jsonsatuan,
                         jsonkuantitas: jsonkuantitas,
                         jsonketerangan: jsonketerangan,
@@ -1268,527 +1254,384 @@
     // bagian form
 
 
-        //bagian modal add
-
+//bagian modal add
+    //pencarian produk
         $('#add_produk').on('select2:select', function (e) {
             // alert($('add_produk').select2('val'));
-            
+            // console.log(e.params.data.id);
+            // var id=e.params.data.id;
             var id=e.params.data.id;
-            
             $('#add_produkid').val(id);
-            var pelanggan=$('#pelanggan').val();
-            console.log(id);
-            namaproduk=e.params.data.text;
-            // if (pelanggan==null)
-            // {
-            //     namaproduk=e.params.data.text;
-            //     $.ajax({
-            //         async: true, 
-            //         type:'get',
-            //         url:'{{route('produkharga')}}',
-            //         data: 'id='+id,
-            //         dataType:'json',
-            //         async:false,
-            //         processData: false,
-            //         contentType: false,
-            //         success:function(response){
-            //             hitung_luas=response.hitung_luas;
-            //             if (hitung_luas==1)
-            //             {
-            //                 $('#r2m').iCheck('uncheck');
-            //                 $('#r2cm').iCheck('uncheck');
-            //                 $('#r2m').iCheck('enable');
-            //                 $('#r2cm').iCheck('enable');
-            //                 $('#add_panjang').removeAttr('disabled');
-            //                 $('#add_lebar').removeAttr('disabled');
-            //             }
-            //             else
-            //             {
-            //                 $('#r2m').iCheck('uncheck');
-            //                 $('#r2cm').iCheck('uncheck');
-            //                 $('#r2m').iCheck('disable');
-            //                 $('#r2cm').iCheck('disable');
-            //                 $('#add_panjang').attr('disabled',true);
-            //                 $('#add_lebar').attr('disabled',true);
-            //             }
-                        
-            //             $('#add_harga').val(response.harga_jual).trigger('mask.maskMoney');  
-            //         },
-            //     });
-            // }
-            // else
-            // {
-            //     // yang spesial price
-            //     namaproduk=e.params.data.text;
-            //     $.ajax({
-            //         async: true, 
-            //         type:'get',
-            //         url:'{{route('priceprodukkhusus')}}',
-            //         data: 'produkid='+id+'&pelanggan='+pelanggan,
-            //         dataType:'json',
-            //         async:false,
-            //         processData: false,
-            //         contentType: false,
-            //         success:function(response){
-            //             hitung_luas=response.hitung_luas;
-            //             if (hitung_luas==1)
-            //             {
-            //                 $('#r2m').iCheck('uncheck');
-            //                 $('#r2cm').iCheck('uncheck');
-            //                 $('#r2m').iCheck('enable');
-            //                 $('#r2cm').iCheck('enable');
-            //                 $('#add_panjang').removeAttr('disabled');
-            //                 $('#add_lebar').removeAttr('disabled');
-            //             }
-            //             else
-            //             {
-            //                 $('#r2m').iCheck('uncheck');
-            //                 $('#r2cm').iCheck('uncheck');
-            //                 $('#r2m').iCheck('disable');
-            //                 $('#r2cm').iCheck('disable');
-            //                 $('#add_panjang').attr('disabled',true);
-            //                 $('#add_lebar').attr('disabled',true);
-            //             }
-                        
-            //             $('#add_harga').val(response.harga_khusus).trigger('mask.maskMoney');  
-            //         },
-            //     });
-            // }
-        });
+            // var pelanggan=$('#pelanggan').val();
 
+            namaproduk=e.params.data.text;
+            console.log(namaproduk);
+            console.log(id);
+
+            $.ajax({
+
+                type:'get',
+                url:'{{route('bahanbakuharga')}}',
+                data: 'id='+id,
+                dataType:'json',
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    
+                    hitung_luas=response.hitung_luas;
+                    $('#add_harga').val('0'); 
+                    // $('#add_diskon').val('0'); 
+                    $('#add_subtotal').val('0');
+                    $('#add_kuantitas').val('0');
+                    $('#add_panjang').val('0');
+                    $('#add_lebar').val('0');
+                    // console.log(response.satuan)
+                    if (hitung_luas==1)
+                    {
+                        $('#r2m').iCheck('uncheck');
+                        $('#r2cm').iCheck('uncheck');
+                        $('#r2m').iCheck('enable');
+                        $('#r2cm').iCheck('enable');
+                        $('#add_panjang').removeAttr('disabled');
+                        $('#add_lebar').removeAttr('disabled');
+                        satuandasar = response.satuan.toUpperCase();
+                    }
+                    else
+                    {
+                        luas = 1;
+                        $('#r2m').iCheck('uncheck');
+                        $('#r2cm').iCheck('uncheck');
+                        $('#r2m').iCheck('disable');
+                        $('#r2cm').iCheck('disable');
+                        $('#add_panjang').attr('disabled',true);
+                        $('#add_lebar').attr('disabled',true);
+                    }
+                    
+                    $('#add_harga').val(numeral(response.harga).format('$ 0,0'));  
+                },
+                error: function(xhr, status, error) {
+                    
+                    hitung_luas=0;
+                    satuandasar="PCS";
+                    luas = 1;
+                    $('#r2m').iCheck('uncheck');
+                    $('#r2cm').iCheck('uncheck');
+                    $('#r2m').iCheck('disable');
+                    $('#r2cm').iCheck('disable');
+                    $('#add_panjang').attr('disabled',true);
+                    $('#add_lebar').attr('disabled',true);
+                    console.log(satuandasar)
+                }
+            });
+        });
+    //
+    //tombol +item
         $('#buttonmodal_add').click(function (){
 
-            
-            if (jenismodal=="mode_luas"){
-                $('#add_panjang').removeAttr('disabled');
-                $('#add_lebar').removeAttr('disabled');
-                $('#r2m').iCheck('uncheck');
-                $('#r2cm').iCheck('uncheck');
-                $('#r2m').iCheck('enable');
-                $('#r2cm').iCheck('enable');
-                $('input[type=radio][name=r2]').on('ifChecked',function () {
-                    // alert("asd");
-                    if (this.value == 'cm') {
-                        satuan=this.value;
-                    }
-                    else if (this.value == 'm') {
-                        satuan=this.value;
-                    }
-                });
-            }
-            else if (jenismodal=="mode_pencairan"){
-                $('#add_panjang').attr('disabled',true);
-                $('#add_lebar').attr('disabled',true);
-                $('#add_kuantitas').attr('disabled',true);               
-                $('#r2m').iCheck('uncheck');
-                $('#r2cm').iCheck('uncheck');
-                $('#r2m').iCheck('disable');
-                $('#r2cm').iCheck('disable');
-            }
-            else if (jenismodal=="mode_satuan"){
-                $('#add_panjang').attr('disabled',true);
-                $('#add_lebar').attr('disabled',true);
-                $('#add_kuantitas').removeAttr('disabled');                
-                $('#r2m').iCheck('uncheck');
-                $('#r2cm').iCheck('uncheck');
-                $('#r2m').iCheck('disable');
-                $('#r2cm').iCheck('disable');
-            }
+            $('#r2m').iCheck('uncheck');
+            $('#r2cm').iCheck('uncheck');
+            $('#r2m').iCheck('enable');
+            $('#r2cm').iCheck('enable');
             
 
-            
-            $('#add_produk').val('').trigger('change');   
-            // $('#add_produk').select2().val('').trigger('change');                     
+            $('#add_panjang').removeAttr('disabled');
+            $('#add_lebar').removeAttr('disabled');
+            $('#add_produk').val('').trigger('change');            
             $('#add_harga').val('0'); 
+            // $('#add_diskon').val('0'); 
             $('#add_subtotal').val('0');
             $('#add_kuantitas').val('0');
             $('#add_panjang').val('0');
             $('#add_lebar').val('0');
-            $('#add_subtotal').val('0');
         });
-        
+    //
+    //button simpan tambah item
+    $('#additem').click(function(){
 
-        $('#additem').click(function(){
+    var produk=namaproduk;
+    var produkid=($('#add_produkid').val());
+    var harga=numeral($('#add_harga').val()).value();
+    var panjang=numeral($('#add_panjang').val()).value();
+    var lebar=numeral($('#add_lebar').val()).value();
+    var kuantitas=$('#add_kuantitas').val();
+    var finishing=$('#add_finishing').val();
+    var keterangan=$('#add_keterangan').val();
+    var subtotal=numeral($('#add_subtotal').val()).value();
 
-            var produk=$('#add_produk').val();
-            var produkid=($('#add_produkid').val());
-            var harga=numeral($('#add_harga').val()).value();
-            var panjang=numeral($('#add_panjang').val()).value();
-            var lebar=numeral($('#add_lebar').val()).value();
-            var kuantitas=$('#add_kuantitas').val();
-            var finishing=$('#add_finishing').val();
-            var keterangan=$('#add_keterangan').val();
-            var subtotal=numeral($('#add_subtotal').val()).value();
-            
-            if (isNaN(produkid)){
-                console.log("id nya string");
-                $('#add_produkid').val('');
-                produkid=$('#add_produkid').val('');
-            }   
+    if (isNaN(produkid)){
+        console.log("id nya string");
+        $('#add_produkid').val('');
+        produkid=$('#add_produkid').val('');
+    }   
 
-            $('input[type=radio][name=r2]').on('ifChecked',function () {
-                // alert("asd");
-                if (this.value == 'cm') {
-                    satuan=this.value;
-                }
-                else if (this.value == 'm') {
-                    satuan=this.value;
-                }
-            });    
+    $('input[type=radio][name=r2]').on('ifChecked',function () {
+        // alert("asd");
+        if (this.value == 'cm') {
+            satuan=this.value;
+        }
+        else if (this.value == 'm') {
+            satuan=this.value;
+        }
+    });    
 
 
-            total=numeral($('#total').val()).value();
-            total=(subtotal)+total;
-            
-            $('#total2').val(numeral(total).format('0.0'));
-            
-            $('#total').val(numeral(total).format('0.0'));
-            tdid=tdid+1;
-            console.log(namaproduk);
-            $('#sisa').val(numeral(total).format('0.0'));
-            $("tbody").append(
-            '<tr id="'+tdid+'"><td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+namaproduk+'" name="produk[]"><input type="hidden" readonly disabled id="namaproduk[]" value="'+namaproduk+'" name="namaproduk[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td style="width: 170px;word-break: break-all;">'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+subtotal.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-namaproduk="'+namaproduk+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdid+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td></tr>'
-            );
-            $('#submittransaksi').removeAttr('disabled');
-            $('#modal_add').modal('hide');
+    total=numeral($('#total').val()).value();
+    total=(subtotal)+total;
 
-        });
+    $('#total2').val(numeral(total).format('0,0'));
 
-        $('#add_kuantitas').keyup(function(){
-            // alert(satuan);
-            var harga=numeral($('#add_harga').val()).value();
-            var panjang=numeral($('#add_panjang').val()).value();
-            var lebar=numeral($('#add_lebar').val()).value();
-            var kuantitas=numeral($('#add_kuantitas').val()).value();
-            
-            if (hitung_luas==1){
-                if (satuan =="cm") {
-                    
+    $('#total').val(numeral(total).format('0,0'));
+    tdid=tdid+1;
+    console.log(namaproduk);
+    $('#sisa').val(numeral(total).format('0,0'));
+    $("tbody").append(
+    '<tr id="'+tdid+'">'+
+    '<td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+namaproduk+'" name="produk[]"><input type="hidden" readonly disabled id="namaproduk[]" value="'+namaproduk+'" name="namaproduk[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td>'+
+    '<td>'+numeral(harga).format('$ 0,0')+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td>'+
+    '<td>'+tampilanpl(panjang)+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td>'+
+    '<td>'+tampilanpl(lebar)+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td>'+
+    '<td>'+numeral(kuantitas).format('0')+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td>'+
+    '<td style="width: 170px;word-break: break-all;">'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td>'+
+    '<td>'+numeral(subtotal).format('$ 0,0')+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td>'+
+    '<td><div class="btn-group">'+
+        '<button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal"' +
+            'data-satuan="'+satuan+'" '+
+            'data-produk="'+produk+'" '+
+            'data-harga="'+harga+'" '+
+            'data-panjang="'+panjang+'" '+
+            'data-lebar="'+lebar+'" '+
+            'data-kuantitas="'+kuantitas+'" '+
+            'data-finishing="'+finishing+'" '+
+            'data-keterangan="'+keterangan+'" '+
+            'data-namaproduk="'+namaproduk+'" '+
+            'data-subtotal="'+subtotal+'" '+
+            'data-tdid="'+tdid+'" '+
+            'data-hitungluas="'+hitung_luas+'" '+
+            'data-target="#modal_edit"><i class="fa fa-edit"></i></button>'+
+        '<button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" '+
+            'data-namaproduk="'+namaproduk+'" '+
+            'data-produk="'+produk+'" '+
+            'data-harga="'+harga+'" '+
+            'data-panjang="'+panjang+'" '+
+            'data-lebar="'+lebar+'" '+
+            'data-tdid="'+tdid+'" '+
+            'data-kuantitas="'+kuantitas+'" '+
+            'data-finishing="'+finishing+'" '+
+            'data-keterangan="'+keterangan+'" '+
+            'data-subtotal="'+subtotal+'" '+
+            'data-tdid="'+tdid+'" '+
+            'data-hitungluas="'+hitung_luas+'" '+
+            'data-target="#modal_delete"><i class="fa fa-trash"></i>'+
+        '</button>'+
+        '</div></td></tr>'
+    );
+    $('#submittransaksi').removeAttr('disabled');
+    $('#modal_add').modal('hide');
 
-                    // subtotal################
-                    
-                    var subtotal = harga * kuantitas;
-                    
-                    
-                    $('#add_subtotal').val(numeral(subtotal).format('0.0'));
-                }
-                else
-                {
-                    
+    });
+    //
+//
 
-                    // subtotal################
-                    
-                    var subtotal = harga * kuantitas;
-                    $('#add_subtotal').val(numeral(subtotal).format('0.0'));
-                }
-            }
-            else
-            {
-
-                    var subtotal = (harga) * kuantitas;
-                    $('#add_subtotal').val(numeral(subtotal).format('0.0'));
-            }
-                
-        });
-
-        $('#add_harga').keyup(function(){
-            // alert(satuan);
-            var harga=numeral($('#add_harga').val()).value();
-            var panjang=numeral($('#add_panjang').val()).value();
-            var lebar=numeral($('#add_lebar').val()).value();
-            var kuantitas=numeral($('#add_kuantitas').val()).value();
-            
-            if (hitung_luas==1){
-                if (satuan =="cm") {
-                    
-
-                    // subtotal################
-                    
-                    var subtotal = harga * kuantitas;
-                    
-                    
-                    $('#add_subtotal').val(numeral(subtotal).format('0.0'));
-                }
-                else
-                {
-                    
-                    
-                    var subtotal = harga * kuantitas;
-                    $('#add_subtotal').val(numeral(subtotal).format('0.0'));
-                }
-            }
-            else
-            {
-
-                    var subtotal = (harga) * kuantitas;
-                    $('#add_subtotal').val(numeral(subtotal).format('0.0'));
-            }
-                
-        });
-    
-      //bagianmodal add
-      
-      //bagian modal edit
-        
+//bagian modal edit
+    //tombol edit
         $(document).on('click','.modal_edit',function () {
-
-            if (jenismodal=="mode_luas"){
-                $('#edit_panjang').removeAttr('disabled');
-                $('edit_lebar').removeAttr('disabled');
-                $('#r2editm').iCheck('uncheck');
-                $('#r2editcm').iCheck('uncheck');
-                $('#r2editm').iCheck('enable');
-                $('#r2editcm').iCheck('enable');
-                
-                if ($(this).data('satuan')=="cm"){
-                    $('#r2editcm').iCheck('check');
-                    satuan="cm";
-                }
-                else if ($(this).data('satuan')=="m")
-                {
-                    $('#r2editm').iCheck('check');
-                    satuan="m";
-                }
-                else
-                {
-                    satuan="";
-                }
-            }
-            else if (jenismodal=="mode_pencairan"){
-                $('#edit_panjang').attr('disabled',true);
-                $('#edit_lebar').attr('disabled',true);
-                $('#edit_kuantitas').attr('disabled',true);               
-                $('#r2editm').iCheck('uncheck');
-                $('#r2editcm').iCheck('uncheck');
-                $('#r2editm').iCheck('disable');
-                $('#r2editcm').iCheck('disable');
-            }
-            else if (jenismodal=="mode_satuan"){
-                $('#edit_panjang').attr('disabled',true);
-                $('#edit_lebar').attr('disabled',true);
-                $('#edit_kuantitas').removeAttr('disabled');                
-                $('#r2editm').iCheck('uncheck');
-                $('#r2editcm').iCheck('uncheck');
-                $('#r2editm').iCheck('disable');
-                $('#r2editcm').iCheck('disable');
-            }
-
             var data = {
                 id: $(this).data('produk'),
                 text: $(this).data('namaproduk')
             };
-            
             subtotalawal=$(this).data('subtotal');
-
-            var newOption = new Option(data.text, data.id, false, false);
-            $('#edit_produk').append(newOption).trigger('change');
-            
-
-            // var $search = $('#edit_produk').data('select2').dropdown.$search || $('#edit_produk').data('select2').selection.$search;
-            // $('#edit_produk').on("select2:selecting", function(e) {
-            //     $search.val(e.params.args.data.text);
-            // });
-
-            console.log(data);
+            var $search = $('#edit_produk').data('select2').dropdown.$search || $('#edit_produk').data('select2').selection.$search;
+            $('#edit_produk').on("select2:selecting", function(e) {
+                $search.val(e.params.args.data.text);
+            });
             tdidnow=$(this).data('tdid');     
             hitung_luas=$(this).data('hitungluas');
             // console.log($(this).data('hitungluas'));
-            // if ($(this).data('hitungluas')==1){
-            //     $('#r2editm').iCheck('uncheck');
-            //     $('#r2editcm').iCheck('uncheck');
-            //     $('#r2editm').iCheck('enabled');
-            //     $('#r2editcm').iCheck('enabled');
-            //     $('#edit_panjang').removeAttr('disabled');
-            //     $('#edit_lebar').removeAttr('disabled');
-            // }
-            // else
-            // {
-            //     $('#r2editm').iCheck('uncheck');
-            //     $('#r2editcm').iCheck('uncheck');
-            //     $('#r2editm').iCheck('disable');
-            //     $('#r2editcm').iCheck('disable');
-            //     $('#edit_panjang').attr('disabled',true);
-            //     $('#edit_lebar').attr('disabled',true);
-            // }
+            if ($(this).data('hitungluas')==1){
 
-            $('#edit_harga').val(numeral($(this).data('harga')).value()); 
-            $('#edit_subtotal').val(numeral($(this).data('subtotal')).value());
-            $('#edit_kuantitas').val(numeral($(this).data('kuantitas')).value());
-            $('#edit_panjang').val(numeral($(this).data('panjang')).value());
-            $('#edit_keterangan').val(numeral($(this).data('keterangan')).value());
-            $('#edit_lebar').val(numeral($(this).data('lebar')).value());
-            $('#edit_subtotal').val(numeral($(this).data('subtotal')).value());
+                $('#r2editm').iCheck('uncheck');
+                $('#r2editcm').iCheck('uncheck');
+                if ($(this).data('satuan')=="CENTIMETER"){
+                console.log($(this).data('satuan'));
 
-        });
-
-        $('#edit_produk').on('select2:select', function (e) {
-            var id=e.params.data.id;
-            $('#edit_produkid').val(id);
-            namaproduk=e.params.data.text;            
-            var pelanggan=$('#pelanggan').val();
-            // if (pelanggan=="")
-            // {
-            //     $.ajax({
-            //         async: true, 
-            //         type:'get',
-            //         url:'{{route('produkharga')}}',
-            //         data: 'id='+id,
-            //         dataType:'json',
-            //         async:false,
-            //         processData: false,
-            //         contentType: false,
-            //         success:function(response){
-            //             hitung_luas=response.hitung_luas;
-            //             if (hitung_luas==1)
-            //             {
-            //                 $('#r2editm').iCheck('uncheck');
-            //                 $('#r2editcm').iCheck('uncheck');
-            //                 $('#r2editm').iCheck('enabled');
-            //                 $('#r2editcm').iCheck('enabled');
-            //                 $('#edit_panjang').removeAttr('disabled');
-            //                 $('#edit_lebar').removeAttr('disabled');
-            //             }
-            //             else
-            //             {
-            //                 $('#r2editm').iCheck('uncheck');
-            //                 $('#r2editcm').iCheck('uncheck');
-            //                 $('#r2editm').iCheck('disable');
-            //                 $('#r2editcm').iCheck('disable');
-            //                 $('#edit_panjang').attr('disabled',true);
-            //                 $('#edit_lebar').attr('disabled',true);
-            //             }
-            //             $('#edit_harga').val(response.harga_jual).trigger('mask.maskMoney');  
-            //         },
-            //     });
-            // }
-            // else
-            // {
-            //     $.ajax({
-            //         async: true, 
-            //         type:'get',
-            //         url:'{{route('priceprodukkhusus')}}',
-            //         data: 'produkid='+id+'&pelanggan='+pelanggan,
-            //         dataType:'json',
-            //         async:false,
-            //         processData: false,
-            //         contentType: false,
-            //         success:function(response){
-            //             hitung_luas=response.hitung_luas;
-            //             if (hitung_luas==1)
-            //             {
-            //                 $('#r2editm').iCheck('uncheck');
-            //                 $('#r2editcm').iCheck('uncheck');
-            //                 $('#r2editm').iCheck('enable');
-            //                 $('#r2editcm').iCheck('enable');
-            //                 $('#edit_panjang').removeAttr('disabled');
-            //                 $('#edit_lebar').removeAttr('disabled');
-            //             }
-            //             else
-            //             {
-            //                 $('#r2editm').iCheck('uncheck');
-            //                 $('#r2editcm').iCheck('uncheck');
-            //                 $('#r2editm').iCheck('disable');
-            //                 $('#r2editcm').iCheck('disable');
-            //                 $('#edit_panjang').attr('disabled',true);
-            //                 $('#edit_lebar').attr('disabled',true);
-            //             }
-                        
-            //             $('#edit_harga').val(response.harga_khusus).trigger('mask.maskMoney');  
-            //         },
-            //     });
-            // }
-
-        });
-
-        $('#edititem').click(function(){
-
-            var produk=$('#edit_produk').val();
-
-            var produkid=$('#edit_produkid').val();
-            var harga=numeral($('#edit_harga').val()).value();
-            var panjang=numeral($('#edit_panjang').val()).value();
-            var lebar=numeral($('#edit_lebar').val()).value();
-            var kuantitas=numeral($('#edit_kuantitas').val()).value();
-            var finishing=$('#edit_finishing').val();
-            var keterangan=$('#edit_keterangan').val();
-            var subtotal=numeral($('#edit_subtotal').val()).value();
-            
-
-            $('input[type=radio][name=r2edit]').on('ifChecked',function () {
-                // alert("asd");
-                if (this.value == 'cm') {
-                    satuan=this.value;
+                $('#r2editm').iCheck('uncheck');
+                $('#r2editcm').iCheck('check');
+                // $('#r2editcm').prop('checked',true).iCheck('update');
+                satuan="CENTIMETER";
                 }
-                else if (this.value == 'm') {
-                    satuan=this.value;
-                }
-            });    
+                else if ($(this).data('satuan')=="METER")
+                {
+                    console.log($(this).data('satuan'));
 
-
-
-            total=numeral($('#total').val()).value();
-            total=(subtotal)+(total-subtotalawal);
-            
-            $('#total2').val(numeral(total).format('0.0').value());
-            
-            $('#total').val(numeral(total).format('0.0').value());
-            $('#sisa').val(numeral(total).format('0.0').value());
-            
-            var isi='<td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+namaproduk+'" name="produk[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td><td>'+harga.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td><td>'+panjang.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td><td>'+lebar.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td><td>'+kuantitas.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td><td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td><td>'+subtotal.format(2, 3, '.', ',')+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td><td><div class="btn-group"><button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-satuan="'+satuan+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-namaproduk="'+namaproduk+'" data-subtotal="'+subtotal+'" data-tdid="'+tdidnow+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdidnow+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td>';
-            $('#'+tdidnow+'').html(isi);
-            $('#modal_edit').modal('hide');
-        });
-
-        $('#edit_kuantitas').keyup(function(){
-            // alert(satuan);
-
-            var harga=numeral($('#edit_harga').val()).value();
-            var panjang=numeral($('#edit_panjang').val()).value();
-            var lebar=numeral($('#edit_lebar').val()).value();
-            var kuantitas=numeral($('#edit_kuantitas').val()).value();
-
-            if (hitung_luas==1){
-                if (satuan =="cm") {
-                    
-
-                    var subtotal = ((panjang * lebar) * harga / 10000) * kuantitas;
-                    if (diskon!=0){
-                        var diskonsubtotal = (subtotal * diskon) / 100;
-
-                        subtotal = subtotal - diskonsubtotal;
-                    }
-                    $('#edit_subtotal').val(numeral(subtotal).format('0.0').value());
+                    $('#r2editcm').iCheck('uncheck');
+                    $('#r2editm').iCheck('check');
+                    // $('#r2editm').prop('checked',true).iCheck('update');
+                    satuan="METER";
                 }
                 else
                 {
-                    // var subtotal=0;
+                    console.log($(this).data('satuan'));
 
-                    // subtotal################
-                    
-                    var subtotal = (harga ) * kuantitas;
-                    
-                    $('#edit_subtotal').val(numeral(subtotal).format('0.0').value());
+                    satuan="PCS";
                 }
+                $('#r2editm').iCheck('enabled');
+                $('#r2editcm').iCheck('enabled');
+                $('#edit_panjang').removeAttr('disabled');
+                $('#edit_lebar').removeAttr('disabled');
             }
             else
             {
-               
-                // subtotal################
                 
-                var subtotal = (harga) * kuantitas;
-                $('#edit_subtotal').val(numeral(subtotal).format('0.0').value());
+                $('#r2editm').iCheck('uncheck');
+                $('#r2editcm').iCheck('uncheck');
+                $('#r2editm').iCheck('disable');
+                $('#r2editcm').iCheck('disable');
+                $('#edit_panjang').attr('disabled',true);
+                $('#edit_lebar').attr('disabled',true);
             }
-            
+            $('#edit_harga').val(numeral($(this).data('harga')).format('$ 0,0')); 
+            $('#edit_subtotal').val(numeral($(this).data('subtotal')).format('$ 0,0'));
+            $('#edit_kuantitas').val(numeral($(this).data('kuantitas')).format('0'));
+            $('#edit_diskon').val(numeral($(this).data('diskon')).format('0.00%'));
+            $('#edit_panjang').val(numeral($(this).data('panjang')).format('0[.]00'));
+            $('#edit_lebar').val(numeral($(this).data('lebar')).format('0[.]00'));
+            $('#edit_keterangan').val($(this).data('keterangan'));
+
         });
+    //
+    //pencarian edit produk
+        $('#edit_produk').on('select2:select', function (e) {
+            var id=e.params.data.id;
+            $('#edit_produkid').val(id);
+            var pelanggan=$('#pelanggan').val();
+            $.ajax({
+                async: true, 
+                type:'get',
+                url:'{{route('produkharga')}}',
+                data: 'id='+id,
+                dataType:'json',
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    hitung_luas=response.hitung_luas;
+                    $('#edit_harga').val('0'); 
+                    $('#edit_diskon').val('0'); 
+                    $('#edit_subtotal').val('0');
+                    $('#edit_kuantitas').val('0');
+                    $('#edit_panjang').val('0');
+                    $('#edit_lebar').val('0');
+                    if (hitung_luas==1)
+                    {
+                        $('#r2editm').iCheck('uncheck');
+                        $('#r2editcm').iCheck('uncheck');
+                        $('#r2editm').iCheck('enabled');
+                        $('#r2editcm').iCheck('enabled');
+                        $('#edit_panjang').removeAttr('disabled');
+                        $('#edit_lebar').removeAttr('disabled');
+                        satuandasar = response.satuan.toUpperCase();
+                    }
+                    else
+                    {
+                        $('#r2editm').iCheck('uncheck');
+                        $('#r2editcm').iCheck('uncheck');
+                        $('#r2editm').iCheck('disable');
+                        $('#r2editcm').iCheck('disable');
+                        $('#edit_panjang').attr('disabled',true);
+                        $('#edit_lebar').attr('disabled',true);
+                    }
+                    $('#edit_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
+                },
+            });
+        });
+    //
+    //tombol simpan edit
+    $('#edititem').click(function(){
+
+        var produk=$('#edit_produk').val();
+
+        var produkid=$('#edit_produkid').val();
+        var harga=numeral($('#edit_harga').val()).value();
+        var panjang=numeral($('#edit_panjang').val()).value();
+        var lebar=numeral($('#edit_lebar').val()).value();
+        var kuantitas=numeral($('#edit_kuantitas').val()).value();
+        var finishing=$('#edit_finishing').val();
+        var keterangan=$('#edit_keterangan').val();
+        var subtotal=numeral($('#edit_subtotal').val()).value();
 
 
-      //bagian model edit
+        $('input[type=radio][name=r2edit]').on('ifChecked',function () {
+        // alert("asd");
+        if (this.value == 'cm') {
+            satuan=this.value;
+        }
+        else if (this.value == 'm') {
+            satuan=this.value;
+        }
+        });    
+
+
+
+        total=numeral($('#total').val()).value();
+        total=(subtotal)+(total-subtotalawal);
+
+        $('#total2').val(numeral(total).format('0,0'));
+
+        $('#total').val(numeral(total).format('0,0'));
+        $('#sisa').val(numeral(total).format('0,0'));
+
+        var isi=
+        '<td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+namaproduk+'" name="produk[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td>'+
+        '<td>'+numeral(harga).format('$ 0,0')+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td>'+
+        '<td>'+tampilanpl(panjang)+'<input type="hidden" readonly disable id="panjang[]" value="'+panjang+'" name="panjang[]"></td>'+
+        '<td>'+tampilanpl(lebar)+'<input type="hidden" readonly disable id="lebar[]" value="'+lebar+'" name="lebar[]"></td>'+
+        '<td>'+numeral(kuantitas).format('0')+'<input type="hidden" readonly disable id="kuantitas[]" value="'+kuantitas+'" name="kuantitas[]"></td>'+
+        '<td>'+keterangan+'<input type="hidden" readonly disable id="keterangan[]" value="'+keterangan+'" name="keterangan[]"></td>'+
+        '<td>'+numeral(subtotal).format('$ 0,0')+'<input type="hidden" readonly disable id="subtotal[]" value="'+subtotal+'" name="subtotal[]"></td>'+
+        '<td><div class="btn-group">'+
+            '<button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" '+
+                'data-satuan="'+satuan+'" '+
+                'data-produk="'+produk+'" '+
+                'data-harga="'+harga+'" '+
+                'data-panjang="'+panjang+'" '+
+                'data-lebar="'+lebar+'" '+
+                'data-kuantitas="'+kuantitas+'" '+
+                'data-finishing="'+finishing+'" '+
+                'data-keterangan="'+keterangan+'" '+
+                'data-namaproduk="'+namaproduk+'" '+
+                'data-subtotal="'+subtotal+'" '+
+                'data-tdid="'+tdidnow+'" '+
+                'data-hitungluas="'+hitung_luas+'" '+
+                'data-target="#modal_edit">'+
+                '<i class="fa fa-edit"></i>'+
+            '</button>'+
+            '<button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" '+
+                'data-produk="'+produk+'" '+
+                'data-harga="'+harga+'" '+
+                'data-panjang="'+panjang+'"'+ 
+                'data-lebar="'+lebar+'" '+
+                'data-tdid="'+tdidnow+'" '+
+                'data-kuantitas="'+kuantitas+'" '+
+                'data-finishing="'+finishing+'" '+
+                'data-keterangan="'+keterangan+'" '+
+                'data-subtotal="'+subtotal+'" '+
+                'data-hitungluas="'+hitung_luas+'" '+ 
+                'data-target="#modal_delete">'+
+                '<i class="fa fa-trash"></i>'+
+            '</button>'+
+        '</div></td>';
+        $('#'+tdidnow+'').html(isi);
+        $('#modal_edit').modal('hide');
+    });
+    //
+//
 
       //bagian modal delete
 
         $(document).on('click','.modal_delete',function () {
 
-            subtotaldelete=($(this).data('subtotal'));  
+            subtotaldelete=parseFloat($(this).data('subtotal'));  
             tdidnow=$(this).data('tdid');            
             // alert($(this).data('namaproduk'));
             $('.labelitem').text($(this).data('namaproduk'));
@@ -1802,17 +1645,17 @@
             if (total==0){
                 $('#submittransaksi').attr('disabled',true);
             }
-            sisa=numeral($('#sisa').val()).val();
+            sisa=numeral($('#sisa').val()).value();
             sisa=(sisa-subtotaldelete);
-            $('#total2').val(numeral(total).format('0.0').value());
-            $('#sisa').val(numeral(sisa).format('0.0').value());
-            $('#total').val(numeral(total).format('0.0').value());
+            $('#total2').val(numeral(total).format('$ 0,0'));
+            $('#sisa').val(numeral(total).format('$ 0,0'));
+            $('#total').val(numeral(total).format('$ 0,0'));
 
             $('#modal_delete').modal('hide');
         });
 
-      // bagian modal delete
-      
+
+
     </script>
     
 

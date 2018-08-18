@@ -39,6 +39,19 @@ class BahanBakuController extends Controller
         return response()->json($formatted_tags);
     }
 
+    public function bahanbakuharga(Request $request){
+
+        $table=CBahanBakus::where('id','=',$request->id)
+                ->first();
+
+        // if ($table==null)
+        // {
+        //     $table['hitung_luas']="1";
+        //     $table['satuan']="CENTIMETER";
+        // }        
+        return $table;
+    }
+
     public function loadbahanbaku(){
         $tables=CBahanBakus::leftJoin('Kategories','Bahanbakus.kategori_id','=','Kategories.id')
                ->select('Bahanbakus.*','Kategories.Nama_Kategori')

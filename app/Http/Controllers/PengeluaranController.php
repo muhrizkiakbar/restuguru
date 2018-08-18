@@ -136,83 +136,104 @@ class PengeluaranController extends Controller
         $transaksi->sisa_pengeluaran=$sisa;
         $transaksi->supplier_id=$request->json('inputsupplier');        
         $transaksi->clientuser_id=$request->json('inputpelanggan');        
-        $transaksi->user_id=1;
-        $transaksi->cabang_id=1;
+        $transaksi->user_id=Auth::user()->id;
+        $transaksi->cabang_id=Auth::user()->cabangs->id;
         $transaksi->save();
 
         $isi=Auth::user()->username." telah menambahakan transaksi pengeluaran dengan Nota ".$transaksi->id." di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
         $save=$this->createlog($isi,"add");
-            
+        
+        if ($transaksi->save())
+        {
 
-        $detailitem=[];
-        foreach ($request->json('jsonproduk') as $keyproduk=> $dataprodukid){
-            $subdetail=[];
-            $subdetail['produk']=$dataprodukid['value'];
-            foreach ($request->json('jsonharga') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['harga']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonpanjang') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['panjang']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonlebar') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['lebar']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonkuantitas') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['kuantitas']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonketerangan') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['keterangan']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonsubtotal') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['subtotal']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonsatuan') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['satuan']=$data['value'];
-                }
-            }
-            array_push($detailitem,$subdetail);
-        }
+            $detailitem=[];
+            foreach ($request->json('jsonproduk') as $keyproduk=> $dataprodukid){
+                $subdetail=[];
+                $subdetail['produk']=$dataprodukid['value'];
 
-        foreach ($detailitem as $key=>$value){
-            
-            $subtransaksi=new Sub_Tpengeluaran;
-            $subtransaksi->transaksipengeluaran_id=$transaksi->id;
-            $subtransaksi->nama_bahanbaku=$value['produk'];
-            $subtransaksi->harga_satuan=$value['harga'];
-            $subtransaksi->panjang=$value['panjang'];
-            $subtransaksi->lebar=$value['lebar'];
-            $subtransaksi->kuantitas=$value['kuantitas'];
-            $subtransaksi->keterangan=$value['keterangan'];
-            $subtransaksi->user_id=1;
-            $subtransaksi->cabang_id=1;
-            $subtransaksi->sub_totalpengeluaran=$value['subtotal'];
-            $subtransaksi->satuan=$value['satuan'];
-            
-            if ($subtransaksi->save()){
-                $status="Success";
-            }else
-            {
-                $status="Failed";                
+                foreach ($request->json('jsonprodukid') as $key=>$data){
+                    if ($key==$keyproduk){
+                        $subdetail['produkid']=$data['value'];
+                    }
+                }
+
+                foreach ($request->json('jsonharga') as $key=>$data){
+                    if ($key==$keyproduk){
+                        $subdetail['harga']=$data['value'];
+                    }
+                }
+                foreach ($request->json('jsonpanjang') as $key=>$data){
+                    if ($key==$keyproduk){
+                        $subdetail['panjang']=$data['value'];
+                    }
+                }
+                foreach ($request->json('jsonlebar') as $key=>$data){
+                    if ($key==$keyproduk){
+                        $subdetail['lebar']=$data['value'];
+                    }
+                }
+                foreach ($request->json('jsonkuantitas') as $key=>$data){
+                    if ($key==$keyproduk){
+                        $subdetail['kuantitas']=$data['value'];
+                    }
+                }
+                foreach ($request->json('jsonketerangan') as $key=>$data){
+                    if ($key==$keyproduk){
+                        $subdetail['keterangan']=$data['value'];
+                    }
+                }
+                foreach ($request->json('jsonsubtotal') as $key=>$data){
+                    if ($key==$keyproduk){
+                        $subdetail['subtotal']=$data['value'];
+                    }
+                }
+                foreach ($request->json('jsonsatuan') as $key=>$data){
+                    if ($key==$keyproduk){
+                        $subdetail['satuan']=$data['value'];
+                    }
+                }
+                array_push($detailitem,$subdetail);
             }
-            
+
+            foreach ($detailitem as $key=>$value){
+                
+                $subtransaksi=new Sub_Tpengeluaran;
+                $subtransaksi->transaksipengeluaran_id=$transaksi->id;
+                $subtransaksi->nama_bahanbaku=$value['produk'];
+                $subtransaksi->harga_satuan=$value['harga'];
+                $subtransaksi->panjang=$value['panjang'];
+                $subtransaksi->lebar=$value['lebar'];
+                $subtransaksi->kuantitas=$value['kuantitas'];
+                $subtransaksi->keterangan=$value['keterangan'];
+                $subtransaksi->user_id=Auth::user()->id;
+                $subtransaksi->cabang_id=Auth::user()->cabangs->id;
+                $subtransaksi->sub_totalpengeluaran=$value['subtotal'];
+                $subtransaksi->satuan=$value['satuan'];
+                if ($value['produkid']!="")
+                {
+                    $subtransaksi->bahanbaku_id=$value['produkid'];
+                }
+
+                if ($subtransaksi->save()){
+                    $status="Success";
+                }else
+                {
+                    $status="Failed";                
+                }
+                
+            }
+            $datareturn=[];
+            $datareturn['status']=$status;
+            $datareturn['id']=encrypt($transaksi->id);
+            return $datareturn;
+
         }
-        $datareturn=[];
-        $datareturn['status']=$status;
-        $datareturn['id']=encrypt($transaksi->id);
-        return $datareturn;
+        else
+        {
+            $datareturn=[];
+            $datareturn['status']="Failed";
+            return $datareturn;
+        }
     }
 
     /**
