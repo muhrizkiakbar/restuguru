@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 use App\Jenis_Pengeluaran;
 use App\User;
+use App\CBahanBakus;
 use App\Transaksi_Pengeluaran;
 use App\Sub_Tpengeluaran;
 use App\CSuppliers;
+use App\stokbahanbaku;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -30,7 +32,8 @@ class PengeluaranController extends Controller
         $date=date("Y-m-d");
         $jenispengeluaran=Jenis_Pengeluaran::all();
         // dd($jenispengeluaran);
-        return view('transaksis.pengeluaran.transaksi',['date'=>$date,'jenispengeluarans'=>$jenispengeluaran]);
+        $bahanbaku=CBahanBakus::all();
+        return view('transaksis.pengeluaran.transaksi',['date'=>$date,'jenispengeluarans'=>$jenispengeluaran,'bahanbakus'=>$bahanbaku]);
     }
 
     /**
@@ -195,6 +198,7 @@ class PengeluaranController extends Controller
                 array_push($detailitem,$subdetail);
             }
 
+            // dd($detailitem);
             foreach ($detailitem as $key=>$value){
                 
                 $subtransaksi=new Sub_Tpengeluaran;
@@ -209,9 +213,65 @@ class PengeluaranController extends Controller
                 $subtransaksi->cabang_id=Auth::user()->cabangs->id;
                 $subtransaksi->sub_totalpengeluaran=$value['subtotal'];
                 $subtransaksi->satuan=$value['satuan'];
-                if ($value['produkid']!="")
+                // dd(is_numeric($value['produkid']));
+                if (is_numeric($value['produkid']))
                 {
                     $subtransaksi->bahanbaku_id=$value['produkid'];
+
+                    $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$value['produkid'])
+                                                    ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                    ->count();
+
+                    if ($stokbahanbaku==0)
+                    {
+                        
+                        $addbahanbaku=new stokbahanbaku;
+                        $addbahanbaku->bahanbaku_id=$value['produkid'];
+                        $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
+                        $addbahanbaku->satuan=$value['satuan'];
+
+                        $bahanbakugethitungluas=CBahanBakus::find($value['produkid']);
+
+                        $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
+
+                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="CENTIMETER"))
+                        {
+                            $luas=$value['panjang']*$value['lebar']*$value['kuantitas'];
+                            $addbahanbaku->banyakstok=$luas;
+                        }
+                        else
+                        {
+                            $addbahanbaku->banyakstok=$value['satuan'];
+                        }
+
+                        $addbahanbaku->save();
+
+                    }
+                    else
+                    {  
+                        $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$value['produkid'])
+                                                    ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                    ->first();
+
+                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="CENTIMETER"))
+                        {
+                            $luas=$value['panjang']*$value['lebar']*$value['kuantitas'];
+                            $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$luas;
+                        }
+                        else
+                        {
+                            $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$value['satuan'];
+                        }
+
+                        $stokbahanbaku->save();
+
+                    }
+
+
+                }
+                else
+                {
+                    $subtransaksi->bahanbaku_id=null;
                 }
 
                 if ($subtransaksi->save()){
@@ -585,8 +645,8 @@ class PengeluaranController extends Controller
         $transaksi->sisa_pengeluaran=$sisa;
         $transaksi->supplier_id=$request->json('inputsupplier');        
         $transaksi->clientuser_id=$request->json('inputpelanggan');        
-        $transaksi->user_id=1;
-        $transaksi->cabang_id=1;
+        $transaksi->user_id=Auth::user()->id;
+        $transaksi->cabang_id=Auth::user()->cabangs->id;
         $transaksi->save();
             
         // dd($request->json('jsonsubtotal'));
@@ -647,8 +707,8 @@ class PengeluaranController extends Controller
             $subtransaksi->lebar=$value['lebar'];
             $subtransaksi->kuantitas=$value['kuantitas'];
             $subtransaksi->keterangan=$value['keterangan'];
-            $subtransaksi->user_id=1;
-            $subtransaksi->cabang_id=1;
+            $subtransaksi->user_id=Auth::user()->id;
+            $subtransaksi->cabang_id=Auth::user()->cabangs->id;
             $subtransaksi->sub_totalpengeluaran=$value['subtotal'];
             $subtransaksi->satuan=$value['satuan'];
             

@@ -314,7 +314,11 @@
                                   <div class="col-md-12">
                                       <div class="form-group ui-widget">
                                           <label>Pengeluaran</label>
-                                          <select id="add_produk" name="add_produk" class="form-control select2" style="width:100%;" type="text"></select>
+                                          <select id="add_produk" name="add_produk" class="form-control select2" style="width:100%;" type="text">
+                                                @foreach ($bahanbakus as $bahanbaku)
+                                                <option value="{{$bahanbaku->id}}">{{$bahanbaku->nama_bahan}}</option>
+                                                @endforeach
+                                          </select>
                                           <input id="add_produkid" name="add_produkid" class="form-control" type="hidden">
 
                                       </div>
@@ -378,7 +382,11 @@
                                   <div class="col-md-12">
                                       <div class="form-group ui-widget">
                                           <label>Pengeluaram</label>
-                                          <select id="edit_produk" name="edit_produk"  class="form-control select2" style="width:100%;" type="text"></select>
+                                          <select id="edit_produk" name="edit_produk" class="form-control select2" style="width:100%;" type="text">
+                                                @foreach ($bahanbakus as $bahanbaku)
+                                                <option value="{{$bahanbaku->id}}">{{$bahanbaku->nama_bahan}}</option>
+                                                @endforeach
+                                          </select>
                                           <input id="edit_produkid" name="edit_produkid" readonly class="form-control" type="hidden">
                                           <input id="edit_subtotalawal" name="edit_subtotalawal" readonly class="form-control" type="hidden">
                                       </div>
@@ -420,7 +428,7 @@
                       </div>
                       <div class="modal-footer">
                           
-                          <button type="button" class="btn btn-default pull-left" id="closeitem" data-dismiss="modal">Keluar</button>
+                          <button type="button" class="btn btn-default pull-left" id="closeedititem" data-dismiss="modal">Keluar</button>
                           <button type="button" id="edititem" class="btn btn-success">Simpan</button>
                       </div>
                   </div>
@@ -555,7 +563,8 @@
         var luas=1;
         var hargasatuan=0;
         var kuantitas=0;
-
+        
+        var produkideditproduk="";
 
 //
 //function
@@ -722,6 +731,15 @@
                 $('#add_subtotal').val(
                     numeral((hitungsubtotal(hargasatuan, luas, kuantitas))).format('$ 0,0')
                 );
+                if (this.value == 'CENTIMETER') 
+                {
+                    satuan="CENTIMETER";
+                }
+                else if (this.value == 'METER') 
+                {
+                    satuan="METER";
+                }
+                
                 console.log(luas, hargasatuan, kuantitas);
             });
 
@@ -786,31 +804,33 @@
             radioClass   : 'iradio_minimal-red'
             });
         
-            $('#add_produk').select2({
-                tags: true,
-                placeholder: "Pilih Bahan Baku.",
-                minimumInputLength: 2,
-                ajax: {
-                    url: '{{route('bahanbakucari')}}',
-                    dataType: 'json',
-                    data: function (params) 
-                    {
-                        return {
-                            q: $.trim(params.term)
-                        };
-                    },
-                    processResults: function (data) 
-                    {
-                        return {
-                            results: data
-                        };
-                    },
-                    cache: true
-                }
-                
-            });
+            $('#add_produk').select2({tags: true});
 
-            $('#edit_produk').select2();
+            // $('#add_produk').select2({
+            //     tags: true,
+            //     placeholder: "Pilih Bahan Baku.",
+            //     minimumInputLength: 2,
+            //     ajax: {
+            //         url: '{{route('bahanbakucari')}}',
+            //         dataType: 'json',
+            //         data: function (params) 
+            //         {
+            //             return {
+            //                 q: $.trim(params.term)
+            //             };
+            //         },
+            //         processResults: function (data) 
+            //         {
+            //             return {
+            //                 results: data
+            //             };
+            //         },
+            //         cache: true
+            //     }
+                
+            // });
+
+            $('#edit_produk').select2({tags: true});
 
             $("#edit_harga").keydown(function (e) {
                 // Allow: backspace, delete, tab, escape, enter and .
@@ -838,6 +858,16 @@
                 $('#edit_subtotal').val(
                     numeral((hitungsubtotal(hargasatuan, luas, kuantitas))).format('$ 0,0')
                 );
+                
+                if (this.value == 'CENTIMETER') 
+                {
+                    satuan="CENTIMETER";
+                }
+                else if (this.value == 'METER') 
+                {
+                    satuan="METER";
+                }
+
                 console.log(luas, hargasatuan, kuantitas);
             });
 
@@ -1314,6 +1344,7 @@
                     
                     hitung_luas=0;
                     satuandasar="PCS";
+                    satuan="PCS";
                     luas = 1;
                     $('#r2m').iCheck('uncheck');
                     $('#r2cm').iCheck('uncheck');
@@ -1329,17 +1360,62 @@
     //tombol +item
         $('#buttonmodal_add').click(function (){
 
-            $('#r2m').iCheck('uncheck');
-            $('#r2cm').iCheck('uncheck');
-            $('#r2m').iCheck('enable');
-            $('#r2cm').iCheck('enable');
+            // $('#r2m').iCheck('uncheck');
+            // $('#r2cm').iCheck('uncheck');
+            // $('#r2m').iCheck('enable');
+            // $('#r2cm').iCheck('enable');
+
+            if (jenismodal=="mode_luas"){
+                $('#add_panjang').removeAttr('disabled');
+                $('#add_lebar').removeAttr('disabled');
+                $('#r2m').iCheck('uncheck');
+                $('#r2cm').iCheck('uncheck');
+                $('#r2m').iCheck('enable');
+                $('#r2cm').iCheck('enable');
+                $('input[type=radio][name=r2]').on('ifChecked',function () {
+                    // alert("asd");
+                    if (this.value == 'cm') {
+                        satuan=this.value;
+                    }
+                    else if (this.value == 'm') {
+                        satuan=this.value;
+                    }
+                });
+            }
+            else if (jenismodal=="mode_pencairan"){
+                $('#add_panjang').attr('disabled',true);
+                $('#add_lebar').attr('disabled',true);
+                $('#add_kuantitas').attr('disabled',true);               
+                $('#r2m').iCheck('uncheck');
+                $('#r2cm').iCheck('uncheck');
+                $('#r2m').iCheck('disable');
+                $('#r2cm').iCheck('disable');
+            }
+            else if (jenismodal=="mode_satuan"){
+                $('#add_panjang').attr('disabled',true);
+                $('#add_lebar').attr('disabled',true);
+                $('#add_kuantitas').removeAttr('disabled');                
+                $('#r2m').iCheck('uncheck');
+                $('#r2cm').iCheck('uncheck');
+                $('#r2m').iCheck('disable');
+                $('#r2cm').iCheck('disable');
+            }
+            
+            
+            $('#add_produk').val('').trigger('change');   
+            // $('#add_produk').select2().val('').trigger('change');                     
+            $('#add_harga').val('0'); 
+            $('#add_subtotal').val('0');
+            $('#add_kuantitas').val('0');
+            $('#add_panjang').val('0');
+            $('#add_lebar').val('0');
+            $('#add_subtotal').val('0');
             
 
-            $('#add_panjang').removeAttr('disabled');
-            $('#add_lebar').removeAttr('disabled');
-            $('#add_produk').val('').trigger('change');            
+            // $('#add_produk').val('').trigger('change');            
             $('#add_harga').val('0'); 
             // $('#add_diskon').val('0'); 
+            $("#add_produk").val(null).trigger('change')
             $('#add_subtotal').val('0');
             $('#add_kuantitas').val('0');
             $('#add_panjang').val('0');
@@ -1361,29 +1437,50 @@
 
     if (isNaN(produkid)){
         console.log("id nya string");
-        $('#add_produkid').val('');
-        produkid=$('#add_produkid').val('');
+        $("#add_produk").val(null).trigger('change')        
+        produkid=$('#add_produkid').val();
     }   
 
-    $('input[type=radio][name=r2]').on('ifChecked',function () {
-        // alert("asd");
-        if (this.value == 'cm') {
-            satuan=this.value;
-        }
-        else if (this.value == 'm') {
-            satuan=this.value;
-        }
-    });    
+    // $('input[type=radio][name=r2]').on('ifChecked',function () {
+    //     // alert("asd");
+    //     if (this.value == "CENTIMETER") {
+    //         satuan=this.value;
+    //     }
+    //     else if (this.value == "METER") {
+    //         satuan=this.value;
+    //     }
+    //     else
+    //     {
+    //         satuan="PCS";
+    //     }
+    // });
+
+    // if (satuan == "CENTIMETER") {
+    //     satuan="CENTIMETER";
+    // }
+    // else if (satuan == "METER") {
+    //     satuan="METER";
+    // }
+    // else
+    // {
+    //     satuan="PCS";
+    // }
+    
+    $('input[type=radio][name=r2]').on('ifUnchecked',function () {
+        satuan="PCS";
+    });
 
 
     total=numeral($('#total').val()).value();
     total=(subtotal)+total;
 
+    console.log(satuan);
+
     $('#total2').val(numeral(total).format('0,0'));
 
     $('#total').val(numeral(total).format('0,0'));
     tdid=tdid+1;
-    console.log(namaproduk);
+    console.log(satuan);
     $('#sisa').val(numeral(total).format('0,0'));
     $("tbody").append(
     '<tr id="'+tdid+'">'+
@@ -1398,6 +1495,7 @@
         '<button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal"' +
             'data-satuan="'+satuan+'" '+
             'data-produk="'+produk+'" '+
+            'data-produkid="'+produkid+'" '+
             'data-harga="'+harga+'" '+
             'data-panjang="'+panjang+'" '+
             'data-lebar="'+lebar+'" '+
@@ -1412,6 +1510,7 @@
         '<button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" '+
             'data-namaproduk="'+namaproduk+'" '+
             'data-produk="'+produk+'" '+
+            'data-produkid="'+produkid+'" '+
             'data-harga="'+harga+'" '+
             'data-panjang="'+panjang+'" '+
             'data-lebar="'+lebar+'" '+
@@ -1437,14 +1536,23 @@
     //tombol edit
         $(document).on('click','.modal_edit',function () {
             var data = {
-                id: $(this).data('produk'),
+                id: $(this).data('produkid'),
                 text: $(this).data('namaproduk')
             };
             subtotalawal=$(this).data('subtotal');
-            var $search = $('#edit_produk').data('select2').dropdown.$search || $('#edit_produk').data('select2').selection.$search;
-            $('#edit_produk').on("select2:selecting", function(e) {
-                $search.val(e.params.args.data.text);
-            });
+
+            produkideditproduk=$(this).data('produkid');
+
+            var newOption = new Option(data.text, data.id, false, false);
+            $('#edit_produk').append(newOption).trigger('change');
+
+            // var $search = $('#edit_produk').data('select2').dropdown.$search || $('#edit_produk').data('select2').selection.$search;
+            // $('#edit_produk').on("select2:selecting", function(e) {
+            //     $search.val(e.params.args.data.text);
+            // });
+
+            $("#edit_produk").val($(this).data('produkid')).trigger('change')
+            $("#edit_produkid").val($(this).data('produkid'))
             tdidnow=$(this).data('tdid');     
             hitung_luas=$(this).data('hitungluas');
             // console.log($(this).data('hitungluas'));
@@ -1493,7 +1601,6 @@
             $('#edit_harga').val(numeral($(this).data('harga')).format('$ 0,0')); 
             $('#edit_subtotal').val(numeral($(this).data('subtotal')).format('$ 0,0'));
             $('#edit_kuantitas').val(numeral($(this).data('kuantitas')).format('0'));
-            $('#edit_diskon').val(numeral($(this).data('diskon')).format('0.00%'));
             $('#edit_panjang').val(numeral($(this).data('panjang')).format('0[.]00'));
             $('#edit_lebar').val(numeral($(this).data('lebar')).format('0[.]00'));
             $('#edit_keterangan').val($(this).data('keterangan'));
@@ -1505,10 +1612,12 @@
             var id=e.params.data.id;
             $('#edit_produkid').val(id);
             var pelanggan=$('#pelanggan').val();
+            namaproduk=e.params.data.text;
+
             $.ajax({
                 async: true, 
                 type:'get',
-                url:'{{route('produkharga')}}',
+                url:'{{route('bahanbakuharga')}}',
                 data: 'id='+id,
                 dataType:'json',
                 async:false,
@@ -1517,7 +1626,6 @@
                 success:function(response){
                     hitung_luas=response.hitung_luas;
                     $('#edit_harga').val('0'); 
-                    $('#edit_diskon').val('0'); 
                     $('#edit_subtotal').val('0');
                     $('#edit_kuantitas').val('0');
                     $('#edit_panjang').val('0');
@@ -1543,6 +1651,20 @@
                     }
                     $('#edit_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
                 },
+                error: function(xhr, status, error) {
+                    
+                    hitung_luas=0;
+                    satuandasar="PCS";
+                    satuan="PCS";
+                    luas = 1;
+                    $('#r2editm').iCheck('uncheck');
+                    $('#r2editcm').iCheck('uncheck');
+                    $('#r2editm').iCheck('disable');
+                    $('#r2editcm').iCheck('disable');
+                    $('#edit_panjang').attr('disabled',true);
+                    $('#edit_lebar').attr('disabled',true);
+                    console.log(satuandasar)
+                }
             });
         });
     //
@@ -1563,15 +1685,23 @@
 
         $('input[type=radio][name=r2edit]').on('ifChecked',function () {
         // alert("asd");
-        if (this.value == 'cm') {
+        if (this.value == 'CENTIMETER') {
             satuan=this.value;
         }
-        else if (this.value == 'm') {
+        else if (this.value == 'METER') {
             satuan=this.value;
         }
         });    
 
+        if (isNaN(produkid)){
+            console.log("id nya string");
+            $("#edit_produk").val(null).trigger('change')        
+            produkid=$('#edit_produkid').val();
+        }   
 
+        $('#edit_produk option[value='+produkideditproduk+']').remove();
+
+        produkideditproduk="";
 
         total=numeral($('#total').val()).value();
         total=(subtotal)+(total-subtotalawal);
@@ -1628,6 +1758,12 @@
 //
 
       //bagian modal delete
+
+        $('#closeedititem').click(function(){
+            $('#edit_produk option[value='+produkideditproduk+']').remove();
+
+            produkideditproduk="";
+        });
 
         $(document).on('click','.modal_delete',function () {
 
