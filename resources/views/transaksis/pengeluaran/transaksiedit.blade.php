@@ -1203,7 +1203,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type:'POST',
-                    url:'{{route('storetransaksipengeluaran')}}',
+                    url:'{{route('updatetransaksipengeluaran')}}',
                     data: JSON.stringify({
                         inputnamapelanggan: inputnamapelanggan,
                         inputnomorpelanggan: inputnomorpelanggan,
