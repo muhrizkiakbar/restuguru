@@ -222,26 +222,40 @@ class PengeluaranController extends Controller
                                                     ->where('cabang_id','=',Auth::user()->cabangs->id)
                                                     ->count();
 
+                    $bahanbakugethitungluas=CBahanBakus::find($value['produkid']);
+                    // dd($stokbahanbaku);
                     if ($stokbahanbaku==0)
                     {
-                        
+
                         $addbahanbaku=new stokbahanbaku;
                         $addbahanbaku->bahanbaku_id=$value['produkid'];
                         $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
                         $addbahanbaku->satuan=$value['satuan'];
 
-                        $bahanbakugethitungluas=CBahanBakus::find($value['produkid']);
 
                         $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
 
-                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="CENTIMETER"))
+                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="METER"))
                         {
-                            $luas=$value['panjang']*$value['lebar']*$value['kuantitas'];
+
+                            if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
+                            {
+                                $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
+                            {
+                                $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
+                            {
+                                $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                            }
+
                             $addbahanbaku->banyakstok=$luas;
                         }
                         else
                         {
-                            $addbahanbaku->banyakstok=$value['satuan'];
+                            $addbahanbaku->banyakstok=$value['kuantitas'];
                         }
 
                         $addbahanbaku->save();
@@ -253,14 +267,28 @@ class PengeluaranController extends Controller
                                                     ->where('cabang_id','=',Auth::user()->cabangs->id)
                                                     ->first();
 
-                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="CENTIMETER"))
+                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="METER"))
                         {
-                            $luas=$value['panjang']*$value['lebar']*$value['kuantitas'];
+
+                            if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
+                            {
+                                $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
+                            {
+                                $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
+                            {
+                                // dd("sd");
+                                $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                            }
+
                             $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$luas;
                         }
                         else
                         {
-                            $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$value['satuan'];
+                            $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$value['kuantitas'];
                         }
 
                         $stokbahanbaku->save();
@@ -590,16 +618,20 @@ class PengeluaranController extends Controller
 
 
         $showsubtransaksi=Sub_Tpengeluaran::where('transaksipengeluaran_id','=',$id)
-                                ->select('Sub_Tpengeluarans.*')
+                                ->leftJoin('Bahanbakus','Sub_Tpengeluarans.bahanbaku_id','=','Bahanbakus.id')
+                                ->select('Sub_Tpengeluarans.*','Bahanbakus.hitung_luas')
                                 ->get();
 
         $counttransaksi=Sub_Tpengeluaran::where('transaksipengeluaran_id','=',$id)
         ->select('Sub_Tpengeluarans.*')
         ->count();
+
+        $bahanbaku=CBahanBakus::all();
+
         $jenispengeluaran2=Jenis_Pengeluaran::where('id','=',$showtransaksi->jenispengeluaran_id)->first();
         // dd($jenispengeluaran2->form_mode);
         $jenispengeluaran=Jenis_Pengeluaran::all();
-        return view('transaksis.pengeluaran.transaksiedit',['datas'=>$showsubtransaksi,'jenispengeluarans'=>$jenispengeluaran,'jenismodal'=>$jenispengeluaran2->form_mode,'count'=>$counttransaksi,'transaksi'=>$showtransaksi,'date'=>$date]);
+        return view('transaksis.pengeluaran.transaksiedit',['datas'=>$showsubtransaksi,'jenispengeluarans'=>$jenispengeluaran,'jenismodal'=>$jenispengeluaran2->form_mode,'count'=>$counttransaksi,'transaksi'=>$showtransaksi,'bahanbakus'=>$bahanbaku,'date'=>$date]);
     }
     /**
      * Show the form for editing the specified resource.
@@ -654,6 +686,7 @@ class PengeluaranController extends Controller
         $save=$this->createlog($isi,"edit");
 
         $detailitem=[];
+        dd($request->json('jsonsubtransid'));
         foreach ($request->json('jsonproduk') as $keyproduk=> $dataprodukid){
             $subdetail=[];
             $subdetail['produk']=$dataprodukid['value'];

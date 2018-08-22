@@ -1374,10 +1374,10 @@
                 $('#r2cm').iCheck('enable');
                 $('input[type=radio][name=r2]').on('ifChecked',function () {
                     // alert("asd");
-                    if (this.value == 'cm') {
+                    if (this.value == 'CENTIMETER') {
                         satuan=this.value;
                     }
-                    else if (this.value == 'm') {
+                    else if (this.value == 'METER') {
                         satuan=this.value;
                     }
                 });
@@ -1551,7 +1551,7 @@
             //     $search.val(e.params.args.data.text);
             // });
 
-            $("#edit_produk").val($(this).data('produkid')).trigger('change')
+            // $("#edit_produk").val($(this).data('produkid')).trigger('change')
             $("#edit_produkid").val($(this).data('produkid'))
             tdidnow=$(this).data('tdid');     
             hitung_luas=$(this).data('hitungluas');

@@ -41,6 +41,11 @@ class BahanBakuController extends Controller
 
     public function bahanbakuharga(Request $request){
 
+        if (strlen($request->id)>10)
+        {
+            $request->id=decrypt($request->id);
+        }
+
         $table=CBahanBakus::where('id','=',$request->id)
                 ->first();
 

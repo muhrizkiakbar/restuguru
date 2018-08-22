@@ -25,6 +25,18 @@ Route::post('/stokbahanbaku','StokBahanbakuController@index')->name('stokbahanba
 Route::get('/bahanbaku/harga', 'BahanBakuController@bahanbakuharga')->name('bahanbakuharga');
 
 
+        Route::get('/transaksi/bahan','TransaksiBahanBakuController@index')->name('indextransaksibahanbaku');
+        Route::post('/transaksi/bahan','TransaksiBahanBakuController@index')->name('indextransaksibahanbakupost');
+        Route::get('/transaksi/bahan/add','TransaksiBahanBakuController@create')->name('createtransaksibahanbaku');
+        Route::post('/transaksi/bahan/add','TransaksiBahanBakuController@store')->name('storetransaksibahanbaku');
+        Route::get('/transaksi/bahan/edit/{id}','TransaksiBahanBakuController@show');
+        Route::put('/transaksi/bahan/edit/{id}','TransaksiBahanBakuController@update');
+        Route::get('/transaksi/bahan/delete/{id}','TransaksiBahanBakuController@destroy');
+        Route::get('/transaksi/bahan/deleted','TransaksiBahanBakuController@indexdeleted')->name('indexdeletedtransaksibahanbaku');
+        Route::post('/transaksi/bahan/deleted','TransaksiBahanBakuController@indexdeleted')->name('indexdeletedtransaksibahanbakupost');
+
+
+
 
 Route::get('/timeline','ActivityLogController@index')->name('timeline');
 
@@ -260,15 +272,15 @@ Route::group(['middleware' => 'auth'], function() {
 
         // Route::get('/timeline',['middleware' => ['permission:index-timeline'], 'uses' => 'ActivityLogController@index'])->name('timeline');
 
-        Route::get('/transaksi/bahan',['middleware' => ['permission:manage-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@index'])->name('indextransaksibahanbaku');
-        Route::post('/transaksi/bahan',['middleware' => ['permission:manage-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@index'])->name('indextransaksibahanbakupost');
-        Route::get('/transaksi/bahan/add',['middleware' => ['permission:add-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@create'])->name('createtransaksibahanbaku');
-        Route::post('/transaksi/bahan/add',['middleware' => ['permission:add-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@store'])->name('storetransaksibahanbaku');
-        Route::get('/transaksi/bahan/edit/{id}',['middleware' => ['permission:edit-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@show']);
-        Route::put('/transaksi/bahan/edit/{id}',['middleware' => ['permission:edit-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@update']);
-        Route::get('/transaksi/bahan/delete/{id}',['middleware' => ['permission:delete-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@destroy']);
-        Route::get('/transaksi/bahan/deleted',['middleware' => ['permission:index-transaksibahanbakudeleted'], 'uses' => 'TransaksiBahanBakuController@indexdeleted'])->name('indexdeletedtransaksibahanbaku');
-        Route::post('/transaksi/bahan/deleted',['middleware' => ['permission:index-transaksibahanbakudeleted'], 'uses' => 'TransaksiBahanBakuController@indexdeleted'])->name('indexdeletedtransaksibahanbakupost');
+        // Route::get('/transaksi/bahan',['middleware' => ['permission:manage-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@index'])->name('indextransaksibahanbaku');
+        // Route::post('/transaksi/bahan',['middleware' => ['permission:manage-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@index'])->name('indextransaksibahanbakupost');
+        // Route::get('/transaksi/bahan/add',['middleware' => ['permission:add-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@create'])->name('createtransaksibahanbaku');
+        // Route::post('/transaksi/bahan/add',['middleware' => ['permission:add-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@store'])->name('storetransaksibahanbaku');
+        // Route::get('/transaksi/bahan/edit/{id}',['middleware' => ['permission:edit-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@show']);
+        // Route::put('/transaksi/bahan/edit/{id}',['middleware' => ['permission:edit-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@update']);
+        // Route::get('/transaksi/bahan/delete/{id}',['middleware' => ['permission:delete-transaksibahanbaku'], 'uses' => 'TransaksiBahanBakuController@destroy']);
+        // Route::get('/transaksi/bahan/deleted',['middleware' => ['permission:index-transaksibahanbakudeleted'], 'uses' => 'TransaksiBahanBakuController@indexdeleted'])->name('indexdeletedtransaksibahanbaku');
+        // Route::post('/transaksi/bahan/deleted',['middleware' => ['permission:index-transaksibahanbakudeleted'], 'uses' => 'TransaksiBahanBakuController@indexdeleted'])->name('indexdeletedtransaksibahanbakupost');
 
 
 });

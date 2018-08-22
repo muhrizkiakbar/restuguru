@@ -156,25 +156,7 @@ option{
                       
                       <div class="form-group">
                         <label for="displayrole">Satuan</label>
-                        <select class="form-control select2" id="satuan_transaksibahanbaku" name="satuan_transaksibahanbaku">
-                            @if ($data->satuan=="pcs")
-                              <option value="pcs" selected>pcs</option>
-                            @else
-                              <option value="pcs">pcs</option>
-                            @endif
-
-                            @if ($data->satuan=="meter")
-                              <option value="meter" selected>Meter</option>
-                            @else
-                              <option value="meter">Meter</option>
-                            @endif
-
-                            @if ($data->satuan=="cm")
-                              <option value="cm" selected>Cm</option>
-                            @else
-                              <option value="cm">Cm</option>
-                            @endif
-                        </select>
+                        <input type="text" class="form-control" id="satuan_transaksibahanbaku" name="satuan_transaksibahanbaku" value="{{$data->satuan}}" disabled placeholder="Satuan">
                       </div>
 
                       <div class="form-group">

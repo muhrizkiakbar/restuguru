@@ -23,20 +23,36 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
                 <span class="label label-warning">
-                    {{$jatuhtempopelanggan}}
+                    {{$jatuhtempopelanggan+$sisastokattention+$sisastoknull}}
                 </span>
                 </a>
                 <ul class="dropdown-menu">
                 <li>
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
-                     
-                    <li>
-                        <a href="/jatuhtempo">
-                        <i class="fa fa-exclamation-circle text-red"></i>{{$jatuhtempopelanggan}} Pelanggan masuk jatuh tempo.
-                        </a>
-                    </li>
-                   
+                     @if ($jatuhtempopelanggan>0)
+                        <li>
+                            <a href="/jatuhtempo">
+                            <i class="fa fa-exclamation-circle text-red"></i>{{$jatuhtempopelanggan}} Pelanggan masuk jatuh tempo.
+                            </a>
+                        </li>
+                    @endif
+
+                    @if ($sisastokattention>0)
+                        <li>
+                            <a href="/stokbahanbaku">
+                            <i class="fa fa-exclamation-circle text-yellow"></i>{{$sisastokattention}} jenis bahan baku akan habis.
+                            </a>
+                        </li>
+                    @endif
+
+                    @if ($sisastoknull>0)
+                        <li>
+                            <a href="/stokbahanbaku">
+                            <i class="fa fa-exclamation-circle text-red"></i>{{$sisastoknull}} jenis bahan baku habis.
+                            </a>
+                        </li>
+                    @endif
                     
                     </ul>
                 </li>

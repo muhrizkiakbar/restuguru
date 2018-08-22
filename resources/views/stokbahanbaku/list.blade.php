@@ -103,7 +103,7 @@
         <div class="row">
           <!-- left column -->
           <form id="formtrans">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Cari Transaksi</h3>
@@ -127,11 +127,16 @@
                                 @endif
 
                                 @foreach ($bahanbakus as $bahanbaku)
-                                    @if (decrypt($bahanbaku_id)==$bahanbaku->id)
-                                    <option value="{{decrypt($bahanbaku->id)}}" selected>{{$bahanbaku->nama_bahan}}</option>
+                                    @if (strlen($bahanbaku_id)>0)
+                                        @if (($bahanbaku_id)==$bahanbaku->id)
+                                        <option value="{{encrypt($bahanbaku->id)}}" selected>{{$bahanbaku->nama_bahan}}</option>
+                                        @else
+                                        <option value="{{encrypt($bahanbaku->id)}}">{{$bahanbaku->nama_bahan}}</option>
+                                        @endif
                                     @else
-                                    <option value="{{$bahanbaku->id}}">{{$bahanbaku->nama_bahan}}</option>
+                                        <option value="{{encrypt($bahanbaku->id)}}">{{$bahanbaku->nama_bahan}}</option>
                                     @endif
+
                                 @endforeach
 
                             </select>
@@ -147,10 +152,14 @@
                                     @endif
 
                                     @foreach ($cabangs as $cabang)
-                                        @if (decrypt($cabang_id) == $cabang->id)
-                                        <option value="{{decrypt($cabang->id)}}" selected>{{$cabang->Nama_Cabang}}</option>
+                                        @if (strlen($cabang_id)>0)
+                                            @if (decrypt($cabang_id) == $cabang->id)
+                                            <option value="{{encrypt($cabang->id)}}" selected>{{$cabang->Nama_Cabang}}</option>
+                                            @else
+                                            <option value="{{encrypt($cabang->id)}}">{{$cabang->Nama_Cabang}}</option>
+                                            @endif
                                         @else
-                                        <option value="{{decrypt($cabang->id)}}">{{$cabang->Nama_Cabang}}</option>
+                                            <option value="{{encrypt($cabang->id)}}">{{$cabang->Nama_Cabang}}</option>
                                         @endif
                                     @endforeach
                                     
@@ -173,7 +182,7 @@
           </div>
           </form>
 
-          <div class="col-md-10">
+          <div class="col-md-9">
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Stok Bahan Baku</h3>
@@ -194,9 +203,22 @@
                             @foreach ($datas as $key=>$data)
                             <tr>
                                 <td>{{$data->nama_bahan}}</td>
-                                <td>{{$data->banyakstok}}</td>
+                                @if ($data->banyakstok<=$data->batas_stok)
+
+                                    <td>
+                                        <span class="label label-danger">
+                                            {{$data->banyakstok}}
+                                        </span>
+                                    </td>
+                                @else
+                                    <td>{{$data->banyakstok}}</td>
+                                @endif
                                 <td>{{$data->satuan}}</td>
-                                <td>{{$data->stokhitungluas}}</td>
+                                @if ($data->stokhitungluas=="1")
+                                    <td>Ya</td>
+                                @else
+                                    <td>Tidak</td>
+                                @endif
                                 <td>{{$data->Nama_Cabang}}</td>                                                               
                             </tr>
                             @endforeach

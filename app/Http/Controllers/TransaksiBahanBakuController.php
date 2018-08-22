@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\CBahanBakus;
 use App\transaksibahanbaku;
 use App\CCabangs;
+use App\stokbahanbaku;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,13 +87,50 @@ class TransaksiBahanBakuController extends Controller
             'banyak_transaksibahanbaku'=>'required | numeric',
         ]);
 
+        // dd($request);
+
         $table= new transaksibahanbaku;
         $table->bahanbaku_id=decrypt($request->bahanbaku_transaksibahanbaku);
+
+            $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',decrypt($request->bahanbaku_transaksibahanbaku))
+                                            ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                            ->count();
+            $bahanbakugethitungluas=CBahanBakus::find(decrypt($request->bahanbaku_transaksibahanbaku));
+
+            if ($stokbahanbaku==0)
+            {
+                
+                $addbahanbaku=new stokbahanbaku;
+                $addbahanbaku->bahanbaku_id=decrypt($request->bahanbaku_transaksibahanbaku);
+                $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
+                $addbahanbaku->satuan=$bahanbakugethitungluas->satuan;
+
+                
+
+                $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
+
+                $addbahanbaku->banyakstok=0-($request->banyak_transaksibahanbaku);
+
+                $addbahanbaku->save();
+
+            }
+            else
+            {  
+                $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',decrypt($request->bahanbaku_transaksibahanbaku))
+                                            ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                            ->first();
+
+                $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-$request->banyak_transaksibahanbaku;
+
+                $stokbahanbaku->save();
+
+            }
+
         $table->cabangdari_id=Auth::user()->cabangs->id;
         $table->cabangtujuan_id=decrypt($request->cabangtujuan_transaksibahanbaku);
         $table->banyak=$request->banyak_transaksibahanbaku;
         $table->tanggal=date('Y-m-d');
-        $table->satuan=$request->satuan_transaksibahanbaku;
+        $table->satuan=$bahanbakugethitungluas->satuan;
         $table->keterangan=$request->keterangan_transaksibahanbaku;
         $table->user_id=Auth::user()->id;
         // dd($request->permissionrole)
@@ -137,9 +175,44 @@ class TransaksiBahanBakuController extends Controller
 
         $table=transaksibahanbaku::where('id','=',decrypt($id))->first();
         $table->bahanbaku_id=decrypt($request->bahanbaku_transaksibahanbaku);
+        
+            $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',decrypt($request->bahanbaku_transaksibahanbaku))
+                                            ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                            ->count();
+            $bahanbakugethitungluas=CBahanBakus::find(decrypt($request->bahanbaku_transaksibahanbaku));
+
+            if ($stokbahanbaku==0)
+            {
+                
+                $addbahanbaku=new stokbahanbaku;
+                $addbahanbaku->bahanbaku_id=decrypt($request->bahanbaku_transaksibahanbaku);
+                $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
+                $addbahanbaku->satuan=$bahanbakugethitungluas->satuan;
+
+                
+
+                $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
+
+                $addbahanbaku->banyakstok=0-($request->banyak_transaksibahanbaku);
+
+                $addbahanbaku->save();
+
+            }
+            else
+            {  
+                $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',decrypt($request->bahanbaku_transaksibahanbaku))
+                                            ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                            ->first();
+
+                $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$table->banyak-$request->banyak_transaksibahanbaku;
+
+                $stokbahanbaku->save();
+
+            }
+
         $table->cabangtujuan_id=decrypt($request->cabangtujuan_transaksibahanbaku);
         $table->banyak=$request->banyak_transaksibahanbaku;
-        $table->satuan=$request->satuan_transaksibahanbaku;
+        $table->satuan=$bahanbakugethitungluas->satuan;
         $table->keterangan=$request->keterangan_transaksibahanbaku;
         $table->user_id=Auth::user()->id;
         // dd($request->permissionrole)
@@ -157,7 +230,44 @@ class TransaksiBahanBakuController extends Controller
     public function destroy($id)
     {
         $table=transaksibahanbaku::where('id','=',decrypt($id))->first();
+
+        $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$table->bahanbaku_id)
+                ->where('cabang_id','=',Auth::user()->cabangs->id)
+                ->count();
+        $bahanbakugethitungluas=CBahanBakus::find($table->bahanbaku_id);
+        // dd($stokbahanbaku);
+        if ($stokbahanbaku==0)
+        {
+
+        $addbahanbaku=new stokbahanbaku;
+        $addbahanbaku->bahanbaku_id=$table->bahanbaku_id;
+        $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
+        $addbahanbaku->satuan=$bahanbakugethitungluas->satuan;
+
+
+
+        $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
+
+        $addbahanbaku->banyakstok=0-($request->banyak_transaksibahanbaku);
+
+        $addbahanbaku->save();
+
+        }
+        else
+        {  
+        $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$table->bahanbaku_id)
+                ->where('cabang_id','=',Auth::user()->cabangs->id)
+                ->first();
+
+        $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$table->banyak;
+
+        $stokbahanbaku->save();
+
+        }
         if ($table->delete()){
+
+            
+
             $isi=Auth::user()->username." telah menghapus transaksi bahan baku dengan No. ".decrypt($id)." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
             $save=$this->createlog($isi,"delete");
             return redirect('/transaksi/bahan')->with('success','Berhasil menghapus transaki bahan baku.');

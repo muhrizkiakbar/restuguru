@@ -68,7 +68,7 @@ option{
                         <label for="displayrole">Bahan Baku</label>
                         <select class="form-control select2" id="bahanbaku_transaksibahanbaku" name="bahanbaku_transaksibahanbaku">
                             @foreach ($bahanbakus as $bahanbaku)
-                              <option value="{{encrypt($bahanbaku->id)}}">{{$bahanbaku->nama_bahan}}</option>
+                              <option value="{{encrypt($bahanbaku->id)}}" data-id="{{$bahanbaku->id}}">{{$bahanbaku->nama_bahan}}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{$errors->first('bahanbaku_transaksibahanbaku')}}</span>
@@ -77,6 +77,8 @@ option{
                       <div class="form-group">
                         <label for="displayrole">Bahan Baku</label>
                         <select class="form-control select2" id="bahanbaku_transaksibahanbaku" name="bahanbaku_transaksibahanbaku">
+                              <option value="" selected>Pilih Bahan Baku</option>
+
                             @foreach ($bahanbakus as $bahanbaku)
                               <option value="{{encrypt($bahanbaku->id)}}">{{$bahanbaku->nama_bahan}}</option>
                             @endforeach
@@ -120,11 +122,7 @@ option{
                       
                       <div class="form-group">
                         <label for="displayrole">Satuan</label>
-                        <select class="form-control select2" id="satuan_transaksibahanbaku" name="satuan_transaksibahanbaku">
-                            <option value="pcs">pcs</option>
-                            <option value="meter">M</option>
-                            <option value="cm">Cm</option>
-                        </select>
+                        <input type="text" class="form-control" id="satuan_transaksibahanbaku" name="satuan_transaksibahanbaku" disabled placeholder="Satuan">
                       </div>
 
                       <div class="form-group">
@@ -203,6 +201,29 @@ option{
         })
 
         $('.select2').select2()
+
+        $('#bahanbaku_transaksibahanbaku').on('select2:select', function (e) {
+          console.log(e.params.data)
+          var id=e.params.data.id;
+
+          $.ajax({
+
+            type:'get',
+            url:'{{route('bahanbakuharga')}}',
+            data: 'id='+id,
+            dataType:'json',
+            async:false,
+            processData: false,
+            contentType: false,
+            success:function(response){
+                
+                $('#satuan_transaksibahanbaku').val((response.satuan));  
+            },
+            error: function(xhr, status, error) {
+              console.log('s')
+            }
+          });
+        });
       });
 
     </script>

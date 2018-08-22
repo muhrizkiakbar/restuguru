@@ -9,6 +9,8 @@ use App\Role;
 use App\Permission;
 use App\kategorimenu;
 use App\kategori_permission;
+use App\stokbahanbaku;
+use App\CBahanBakus;
 use App\CTransaksi_Penjualans;
 
 class NotificationComposer {
@@ -39,6 +41,20 @@ class NotificationComposer {
              //(count($pelanggans));
              
             $view->with('jatuhtempopelanggan',count($pelanggans));
+
+            $sisastokattentions=stokbahanbaku::leftJoin('Bahanbakus','stokbahanbakus.bahanbaku_id','=','Bahanbakus.id')
+                                ->where('stokbahanbakus.cabang_id','=',Auth::user()->cabangs->id)
+                                ->where('stokbahanbakus.banyakstok','!=','0')
+                                ->havingRaw('banyakstok < batas_stok')
+                                ->get();
+
+            $view->with('sisastokattention',count($sisastokattentions));
+
+            $sisastoknull=stokbahanbaku::leftJoin('Bahanbakus','stokbahanbakus.bahanbaku_id','=','Bahanbakus.id')
+                            ->where('stokbahanbakus.cabang_id','=',Auth::user()->cabangs->id)
+                            ->where('stokbahanbakus.banyakstok','=','0')
+                            ->get();
+            $view->with('sisastoknull',count($sisastoknull));
         }
     }
  
