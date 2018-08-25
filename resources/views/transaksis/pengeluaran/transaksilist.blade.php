@@ -240,7 +240,7 @@
                                     <div class="btn-group">
                                         <button type="button" class="modal_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_pengeluaran),2,',','.')}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
                                         <button type="button" class="modal_showangsuran btn btn-warning btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_pengeluaran}}" data-target="#modal_showangsuran"><i class="fa fa-money"></i></button>
-                                        <button type="button" class="modal_edit btn btn-success btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-edit"></i></button>
+                                        <!-- <button type="button" class="modal_edit btn btn-success btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-edit"></i></button> -->
                                         <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
                                         <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
                                     </div>

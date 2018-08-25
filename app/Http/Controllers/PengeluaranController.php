@@ -324,12 +324,7 @@ class PengeluaranController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function reporttranspengeluaran($id)
     {
         //
@@ -401,7 +396,8 @@ class PengeluaranController extends Controller
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                                         ->paginate(50);
         }
-        elseif ($request->periode=="bulan"){
+        elseif ($request->periode=="bulan")
+        {
             $tanggal=explode("-",$request->tanggal);
             $bulan=$tanggal[1];
             $tahun=$tanggal[2];
@@ -654,7 +650,8 @@ class PengeluaranController extends Controller
     public function update(Request $request)
     {
         //
-        $id=decrypt($request->json('inputtransaksiid'));
+        // dd($request->json('transaksiid'));
+        $id=decrypt($request->json('transaksiid'));
         $transaksi=Transaksi_Pengeluaran::where('id','=',$id)->first();
 
         $jenispeng=Jenis_Pengeluaran::where('id','=',$transaksi->jenispengeluaran_id)
@@ -686,10 +683,19 @@ class PengeluaranController extends Controller
         $save=$this->createlog($isi,"edit");
 
         $detailitem=[];
-        dd($request->json('jsonsubtransid'));
+        // dd($request->json('jsonsubtransid'));
+        $subtransidarray=[];
         foreach ($request->json('jsonproduk') as $keyproduk=> $dataprodukid){
             $subdetail=[];
             $subdetail['produk']=$dataprodukid['value'];
+
+            foreach ($request->json('jsonsubtransid') as $key=>$data){
+                if ($key==$keyproduk){
+                    $subdetail['subtransid']=decrypt($data['value']);
+                    array_push($subtransidarray,decrypt($data['value']));
+                }
+            }
+
             foreach ($request->json('jsonharga') as $key=>$data){
                 if ($key==$keyproduk){
                     $subdetail['harga']=$data['value'];
@@ -727,29 +733,281 @@ class PengeluaranController extends Controller
             }
             array_push($detailitem,$subdetail);
         }
+
+        // dd($subtransidarray);
             
-        $subtransaksi=Sub_Tpengeluaran::where('transaksipengeluaran_id','=',$id)->forceDelete();
+        $subtransaksideletes=Sub_Tpengeluaran::whereNotIn('id',$subtransidarray)
+                        ->where('transaksipengeluaran_id','=',$id)->get();
+
+        foreach ($subtransaksideletes as $subtransaksidelete)
+        {
+            $deletedata=Sub_Tpengeluaran::where('id','=',$subtransaksidelete->id)->first();
+
+            if ($deletedata->bahanbaku_id!=null)
+            {
+
+                $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$deletedata->bahanbaku_id)
+                                                    ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                    ->first();
+
+                if (($deletedata->bahanbaku_id=="CENTIMETER") || ($deletedata->bahanbaku_id=="METER"))
+                {
+
+                    if (($deletedata->satuan=="CENTIMETER") && ($stokbahanbaku->satuan=="METER"))
+                    {
+                        $luas=($deletedata->panjang*100)*($deletedata->lebar*100)*$stokbahanbaku->satuan;
+                    }
+                    elseif (($deletedata->satuan==$stokbahanbaku->satuan))
+                    {
+                        $luas=($deletedata->panjang)*($deletedata->lebar)*$value['kuantitas'];
+                    }
+                    elseif (($deletedata->satuan=="METER") && ($stokbahanbaku->satuan=="CENTIMETER"))
+                    {
+                        // dd("sd");
+                        $luas=($deletedata->panjang/100)*($deletedata->lebar/100)*$deletedata->kuantitas;
+                    }
+
+                    $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$luas;
+                }
+                else
+                {
+                    $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$deletedata->kuantitas;
+                }
+
+                
+                if ($stokbahanbaku->save())
+                {
+                    $deletedata->delete();
+                }
+            }
+            else
+            {
+                $deletedata->delete();
+            }
+        }
         
         foreach ($detailitem as $key=>$value){
             
-            $subtransaksi=new Sub_Tpengeluaran;
-            $subtransaksi->transaksipengeluaran_id=$id;
-            $subtransaksi->nama_bahanbaku=$value['produk'];
-            $subtransaksi->harga_satuan=$value['harga'];
-            $subtransaksi->panjang=$value['panjang'];
-            $subtransaksi->lebar=$value['lebar'];
-            $subtransaksi->kuantitas=$value['kuantitas'];
-            $subtransaksi->keterangan=$value['keterangan'];
-            $subtransaksi->user_id=Auth::user()->id;
-            $subtransaksi->cabang_id=Auth::user()->cabangs->id;
-            $subtransaksi->sub_totalpengeluaran=$value['subtotal'];
-            $subtransaksi->satuan=$value['satuan'];
-            
-            if ($subtransaksi->save()){
-                $status="Success";
-            }else
+            $cekdata=Sub_Tpengeluaran::where('id','=',$value['subtransid'])
+                                        ->count();
+
+            if ($cekdata>0)
             {
-                $status="Failed";                
+                $subtransaksi=Sub_Tpengeluaran::where('id','=',$value['subtransid'])->first();
+                $subtransaksi->transaksipengeluaran_id=$id;
+                $subtransaksi->nama_bahanbaku=$value['produk'];
+                $subtransaksi->harga_satuan=$value['harga'];
+                $subtransaksi->panjang=$value['panjang'];
+                $subtransaksi->lebar=$value['lebar'];
+                $subtransaksi->kuantitas=$value['kuantitas'];
+                $subtransaksi->keterangan=$value['keterangan'];
+                $subtransaksi->user_id=Auth::user()->id;
+                $subtransaksi->cabang_id=Auth::user()->cabangs->id;
+                $subtransaksi->sub_totalpengeluaran=$value['subtotal'];
+                $subtransaksi->satuan=$value['satuan'];
+                
+                if (is_numeric($value['produkid']))
+                {
+                    $subtransaksi->bahanbaku_id=$value['produkid'];
+
+                    $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$value['produkid'])
+                                                    ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                    ->count();
+
+                    $bahanbakugethitungluas=CBahanBakus::find($value['produkid']);
+
+                    if ($stokbahanbaku==0)
+                    {
+
+                        $addbahanbaku=new stokbahanbaku;
+                        $addbahanbaku->bahanbaku_id=$value['produkid'];
+                        $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
+                        $addbahanbaku->satuan=$value['satuan'];
+
+
+                        $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
+
+                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="METER"))
+                        {
+
+                            if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
+                            {
+                                $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
+                            {
+                                $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
+                            {
+                                $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                            }
+
+                            $addbahanbaku->banyakstok=$luas;
+                        }
+                        else
+                        {
+                            $addbahanbaku->banyakstok=$value['kuantitas'];
+                        }
+
+                        $addbahanbaku->save();
+
+                    }
+                    else
+                    {  
+                        $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$value['produkid'])
+                                                    ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                    ->first();
+
+                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="METER"))
+                        {
+
+                            if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
+                            {
+                                $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
+                            {
+                                $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
+                            {
+                                // dd("sd");
+                                $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                            }
+
+                            $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-$luas;
+                        }
+                        else
+                        {
+                            $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-$value['kuantitas'];
+                        }
+
+                        $stokbahanbaku->save();
+
+                    }
+
+                }
+                else
+                {
+                    $subtransaksi->bahanbaku_id=null;
+                }
+
+                if ($subtransaksi->save()){
+                    $status="Success";
+                }else
+                {
+                    $status="Failed";                
+                }
+            }
+            else
+            {
+                $subtransaksi=new Sub_Tpengeluaran;
+                $subtransaksi->transaksipengeluaran_id=$id;
+                $subtransaksi->nama_bahanbaku=$value['produk'];
+                $subtransaksi->harga_satuan=$value['harga'];
+                $subtransaksi->panjang=$value['panjang'];
+                $subtransaksi->lebar=$value['lebar'];
+                $subtransaksi->kuantitas=$value['kuantitas'];
+                $subtransaksi->keterangan=$value['keterangan'];
+                $subtransaksi->user_id=Auth::user()->id;
+                $subtransaksi->cabang_id=Auth::user()->cabangs->id;
+                $subtransaksi->sub_totalpengeluaran=$value['subtotal'];
+                $subtransaksi->satuan=$value['satuan'];
+                
+                if (is_numeric($value['produkid']))
+                {
+                    $subtransaksi->bahanbaku_id=$value['produkid'];
+
+                    $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$value['produkid'])
+                                                    ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                    ->count();
+
+                    $bahanbakugethitungluas=CBahanBakus::find($value['produkid']);
+
+                    if ($stokbahanbaku==0)
+                    {
+
+                        $addbahanbaku=new stokbahanbaku;
+                        $addbahanbaku->bahanbaku_id=$value['produkid'];
+                        $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
+                        $addbahanbaku->satuan=$value['satuan'];
+
+
+                        $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
+
+                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="METER"))
+                        {
+
+                            if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
+                            {
+                                $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
+                            {
+                                $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
+                            {
+                                $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                            }
+
+                            $addbahanbaku->banyakstok=$luas;
+                        }
+                        else
+                        {
+                            $addbahanbaku->banyakstok=$value['kuantitas'];
+                        }
+
+                        $addbahanbaku->save();
+
+                    }
+                    else
+                    {  
+                        $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$value['produkid'])
+                                                    ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                    ->first();
+
+                        if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="METER"))
+                        {
+
+                            if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
+                            {
+                                $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
+                            {
+                                $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                            }
+                            elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
+                            {
+                                // dd("sd");
+                                $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                            }
+
+                            $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$luas;
+                        }
+                        else
+                        {
+                            $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$value['kuantitas'];
+                        }
+
+                        $stokbahanbaku->save();
+
+                    }
+
+                }
+                else
+                {
+                    $subtransaksi->bahanbaku_id=null;
+                }
+
+                if ($subtransaksi->save()){
+                    $status="Success";
+                }else
+                {
+                    $status="Failed";                
+                }
             }
             
         }
@@ -791,8 +1049,59 @@ class PengeluaranController extends Controller
         $table=Transaksi_Pengeluaran::where('id','=',$id)
                     ->first();
 
+        $substransksis=Sub_Tpengeluaran::where('transaksipengeluaran_id','=',$id)
+                        ->get();
+        foreach ($substransksis as $substransaksi)
+        {
+
+            if ($substransaksi->bahanbaku_id!=null)
+            {
+                // $subtransaksi->bahanbaku_id=$value['produkid'];
+
+                $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$substransaksi->bahanbaku_id)
+                                                ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                ->count();
+
+                $bahanbakugethitungluas=CBahanBakus::find($substransaksi->bahanbaku_id);
+                // dd($stokbahanbaku);
+               
+                    $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$value['produkid'])
+                                                ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                ->first();
+
+                    if (($substransaksi->satuan=="CENTIMETER") || ($substransaksi->satuan=="METER"))
+                    {
+
+                        if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($substransaksi->satuan=="METER"))
+                        {
+                            $luas=($substransaksi->panjang*100)*($substransaksi->lebar*100)*$substransaksi->kuantitas;
+                        }
+                        elseif (($bahanbakugethitungluas->satuan==$substransaksi->satuan))
+                        {
+                            $luas=($substransaksi->panjang)*($substransaksi->lebar)*$substransaksi->kuantitas;
+                        }
+                        elseif (($bahanbakugethitungluas->satuan=="METER") && ($substransaksi->satuan=="CENTIMETER"))
+                        {
+                            $luas=($substransaksi->panjang/100)*($substransaksi->lebar/100)*$substransaksi->kuantitas;
+                        }
+
+                        $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-$luas;
+                    }
+                    else
+                    {
+                        $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-$substransaksi->kuantitas;
+                    }
+
+                    $stokbahanbaku->save();
+
+
+            }
+        }
+
         if ($table->delete()){
             
+
+
             $tableangsuran=Angsuran_Pengeluarans::where('transaksipengeluaran_id','=',$id)
                         ->delete();
 
