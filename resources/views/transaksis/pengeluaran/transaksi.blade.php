@@ -1338,6 +1338,8 @@
                         $('#r2cm').iCheck('disable');
                         $('#add_panjang').attr('disabled',true);
                         $('#add_lebar').attr('disabled',true);
+                        satuandasar = response.satuan.toUpperCase();
+                        satuan=response.satuan.toUpperCase();
                     }
                     
                     $('#add_harga').val(numeral(response.harga).format('$ 0,0'));  
@@ -1345,8 +1347,8 @@
                 error: function(xhr, status, error) {
                     
                     hitung_luas=0;
-                    satuandasar="PCS";
-                    satuan="PCS";
+                    // satuandasar="PCS";
+                    // satuan="PCS";
                     luas = 1;
                     $('#r2m').iCheck('uncheck');
                     $('#r2cm').iCheck('uncheck');
@@ -1441,6 +1443,7 @@
             console.log("id nya string");
             $("#add_produk").val(null).trigger('change')        
             produkid=$('#add_produkid').val();
+            // satuandasar = "PCS";
         }   
 
         // $('input[type=radio][name=r2]').on('ifChecked',function () {
@@ -1468,9 +1471,9 @@
             singkatansatuan="";
         }
         
-        $('input[type=radio][name=r2]').on('ifUnchecked',function () {
-            satuan="PCS";
-        });
+        // $('input[type=radio][name=r2]').on('ifUnchecked',function () {
+        //     satuan="PCS";
+        // });
 
 
         total=numeral($('#total').val()).value();
@@ -1565,12 +1568,12 @@
                 $('#r2editm').iCheck('uncheck');
                 $('#r2editcm').iCheck('uncheck');
                 if ($(this).data('satuan')=="CENTIMETER"){
-                console.log($(this).data('satuan'));
+                    console.log($(this).data('satuan'));
 
-                $('#r2editm').iCheck('uncheck');
-                $('#r2editcm').iCheck('check');
-                // $('#r2editcm').prop('checked',true).iCheck('update');
-                satuan="CENTIMETER";
+                    $('#r2editm').iCheck('uncheck');
+                    $('#r2editcm').iCheck('check');
+                    // $('#r2editcm').prop('checked',true).iCheck('update');
+                    satuan="CENTIMETER";
                 }
                 else if ($(this).data('satuan')=="METER")
                 {
@@ -1585,7 +1588,7 @@
                 {
                     console.log($(this).data('satuan'));
 
-                    satuan="PCS";
+                    // satuan="PCS";
                 }
                 $('#r2editm').iCheck('enabled');
                 $('#r2editcm').iCheck('enabled');
@@ -1660,8 +1663,8 @@
                 error: function(xhr, status, error) {
                     
                     hitung_luas=0;
-                    satuandasar="PCS";
-                    satuan="PCS";
+                    // satuandasar="PCS";
+                    // satuan="PCS";
                     luas = 1;
                     $('#r2editm').iCheck('uncheck');
                     $('#r2editcm').iCheck('uncheck');

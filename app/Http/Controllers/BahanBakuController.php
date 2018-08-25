@@ -175,7 +175,7 @@ class BahanBakuController extends Controller
             $table= new CBahanBakus;
             $table->kategori_id = decrypt($request->tambah_kategori_bb);
             $table->nama_bahan = $request->tambah_nama_bahan;
-            $table->satuan = $request->tambah_satuan;
+            $table->satuan = strtoupper($request->tambah_satuan);
             $table->harga = $request->tambah_harga;
             $table->batas_stok = $request->tambah_batas_stok;
             $table->hitung_luas = $request->tambah_hitung_luas;
