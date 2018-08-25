@@ -35,11 +35,14 @@ class UserController extends Controller
                 ->select('Users.*','Cabangs.Nama_Cabang')
                 ->get();
         return Datatables::of($tables)
+        ->editColumn('gaji', function($tables) {
+                return 'Rp ' . number_format($tables->gaji,2,",",".");
+            })
         ->addColumn('action', function ($tables) {
             return '
             <div class="btn-group">
-            <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal"  data-id="'.encrypt($tables->id).'" data-username="'.$tables->username.'" data-nama="'.$tables->nama.'" data-telepon="'.$tables->Telepon.'" data-gaji="'.$tables->gaji.'" data-alamat="'.$tables->Alamat.'" data-cabang="'.($tables->cabang_id).'"  data-target="#modal_delete"><i class="fa fa-trash"></i></button>
             <button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-id="'.encrypt($tables->id).'" data-username="'.$tables->username.'" data-nama="'.$tables->nama.'" data-telepon="'.$tables->Telepon.'" data-gaji="'.$tables->gaji.'" data-alamat="'.$tables->Alamat.'" data-cabang="'.($tables->cabang_id).'" data-target="#modal_edit"><i class="fa fa-edit"></i></button>
+            <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal"  data-id="'.encrypt($tables->id).'" data-username="'.$tables->username.'" data-nama="'.$tables->nama.'" data-telepon="'.$tables->Telepon.'" data-gaji="'.$tables->gaji.'" data-alamat="'.$tables->Alamat.'" data-cabang="'.($tables->cabang_id).'"  data-target="#modal_delete"><i class="fa fa-trash"></i></button>
             </div>';
             })
             ->rawColumns(['action'])

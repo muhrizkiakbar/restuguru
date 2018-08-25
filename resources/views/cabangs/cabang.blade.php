@@ -89,7 +89,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Kode Cabang</label>
-                                                <input id="tambah_kode_cabang" name="tambah_kode_cabang" class="form-control pull-right" type="text">
+                                                <input id="tambah_kode_cabang" name="tambah_kode_cabang" class="form-control pull-right" type="text" maxlength="12">
                                                 {{csrf_field()}}
                                             </div>
                                             <div class="form-group">
@@ -98,7 +98,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Nomor Telepon</label>
-                                                <input id="tambah_telepon_cabang" name="tambah_telepon_cabang" class="form-control pull-right" type="text">
+                                                <input id="tambah_telepon_cabang" name="tambah_telepon_cabang" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -145,7 +145,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Kode Cabang</label>
-                                                <input id="edit_kode_cabang" name="edit_kode_cabang" class="form-control pull-right" type="text">
+                                                <input id="edit_kode_cabang" name="edit_kode_cabang" class="form-control pull-right" type="text" maxlength="12">
                                                 <input class="form-control" id="cabang_id" name="cabang_id" type="hidden">
                                                 {{csrf_field()}}
                                             </div>
@@ -155,7 +155,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Nomor Telepon</label>
-                                                <input id="edit_telepon_cabang" name="edit_telepon_cabang" class="form-control pull-right" type="text">
+                                                <input id="edit_telepon_cabang" name="edit_telepon_cabang" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -250,6 +250,10 @@
                     {data:'action'}
                 ]
             });
+            $('#tambah_telepon_cabang,#edit_telepon_cabang').bind('keypress', function(e){
+                var keyCode = (e.which)?e.which:event.keyCode
+                return !(keyCode>31 && (keyCode<48 || keyCode>57));
+            });
         });
     </script>
 
@@ -304,24 +308,19 @@
                         if ((response.errors.tambah_jenis_cabang)){
                             swal("Jenis Cabang", ""+response.errors.tambah_jenis_cabang+"", "error");
                         }
-
-                        if ((response.errors.tambah_kode_cabang)){
+                        else if ((response.errors.tambah_kode_cabang)){
                             swal("Kode Cabang", ""+response.errors.tambah_kode_cabang+"", "error");
                         }
-                        
-                        if ((response.errors.tambah_nama_cabang)){
+                        else if ((response.errors.tambah_nama_cabang)){
                             swal("Nama Cabang", ""+response.errors.tambah_nama_cabang+"", "error");
                         }
-
-                        if ((response.errors.tambah_telepon_cabang)){
+                        else if ((response.errors.tambah_telepon_cabang)){
                             swal("Telepon", ""+response.errors.tambah_telepon_cabang+"", "error");
                         }
-
-                        if ((response.errors.tambah_email_cabang)){
+                        else if ((response.errors.tambah_email_cabang)){
                             swal("Email", ""+response.errors.tambah_email_cabang+"", "error");
                         }
-
-                        if ((response.errors.tambah_alamat_cabang)){
+                        else if ((response.errors.tambah_alamat_cabang)){
                             swal("Alamat", ""+response.errors.tambah_alamat_cabang+"", "error");
                         }
                         // $('#modal_tambah').modal('hide');
@@ -362,27 +361,22 @@
                         if ((response.errors.edit_jenis_cabang)){
                             swal("Jenis Cabang", ""+response.errors.edit_jenis_cabang+"", "error");
                         }
-
-                        if ((response.errors.edit_kode_cabang)){
+                        else if ((response.errors.edit_kode_cabang)){
                             swal("Kode Cabang", ""+response.errors.edit_kode_cabang+"", "error");
                         }
-                        
-                        if ((response.errors.edit_nama_cabang)){
+                        else if ((response.errors.edit_nama_cabang)){
                             swal("Nama Cabang", ""+response.errors.edit_nama_cabang+"", "error");
                         }
-
-                        if ((response.errors.edit_telepon_cabang)){
+                        else if ((response.errors.edit_telepon_cabang)){
                             swal("Telepon", ""+response.errors.edit_telepon_cabang+"", "error");
                         }
-
-                        if ((response.errors.edit_email_cabang)){
+                        else if ((response.errors.edit_email_cabang)){
                             swal("Email", ""+response.errors.edit_email_cabang+"", "error");
                         }
-
-                        if ((response.errors.edit_alamat_cabang)){
+                        else if ((response.errors.edit_alamat_cabang)){
                             swal("Alamat", ""+response.errors.edit_alamat_cabang+"", "error");
                         }
-                        $('#modal_edit').modal('hide');
+                        // $('#modal_edit').modal('hide');
                     }
                     else
                     {   if (response=="Success"){
@@ -392,13 +386,13 @@
                         }
                         else{
                             wal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_edit').modal('hide');
+                            // $('#modal_edit').modal('hide');
                         }
                     }
                 },
                 error:function(){
                             swal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_edit').modal('hide');
+                            // $('#modal_edit').modal('hide');
                 }
             });
         });

@@ -97,6 +97,19 @@
                         <input type="text" class="form-control" id="descriptionrole" name="descriptionrole"  value="{{$roles->description}}" placeholder="Description">
                       </div>
                       @endif
+
+                      @if ($errors->has('permissionrole'))
+                      <div class="form-group has-error">
+                        <label for="displayrole">Permission</label>
+                        <select class="form-control select2" id="permissionrole[]" name="permissionrole[]" multiple="multiple" data-placeholder="Pilih Permission"
+                        style="width: 100%;">
+                          @foreach ($permissions as $permission)
+                            <option value="{{$permission->id}}">{{$permission->name}}</option>
+                          @endforeach
+                        </select>
+                        <span class="help-block">{{$errors->first('permissionrole')}}</span>
+                      </div>
+                      @else
                       <div class="form-group ">
                         <label for="displayrole">Permission</label>
                         <select class="form-control select2" id="permissionrole[]" name="permissionrole[]" multiple="multiple" data-placeholder="Pilih Permission"
@@ -106,6 +119,8 @@
                           @endforeach
                         </select>
                       </div>
+                      @endif
+                      
                     </div>
                   </div>
                 </div>

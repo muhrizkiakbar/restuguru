@@ -46,7 +46,6 @@
                                     <table id="tabel_pelanggan" class="table">
                                         <thead>
                                         <tr>
-                                            <th>Action</th>
                                             <th>Status</th>
                                             <th>Jenis Pelanggan</th>
                                             <th>Nama Pemilik</th>
@@ -60,6 +59,7 @@
                                             <th>Rekening</th>
                                             <th>KTP</th>
                                             <th>Keterangan</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -88,7 +88,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <select class="form-control" placeholder="Jenis Pelanggan" name="tambah_jenis_pelanggan" id="tambah_jenis_pelanggan" style="width: 100%;">
-                                                        <option value="null" disabled selected>Jenis Pelanggan</option>
+                                                    <option disabled selected>Jenis Pelanggan</option>
                                                     @foreach ($jenispelanggans as $jenispelanggan)
                                                         <option value="{{encrypt($jenispelanggan->id)}}">{{$jenispelanggan->jenis_pelanggan}}</option>
                                                     @endforeach
@@ -105,7 +105,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Handphone</label>
-                                                <input id="tambah_hppelanggan" name="tambah_hppelanggan" class="form-control pull-right" type="text">
+                                                <input id="tambah_hppelanggan" name="tambah_hppelanggan" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
                                                 <label>Perusahaan</label>
@@ -113,7 +113,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Telepon Kantor</label>
-                                                <input id="tambah_teleponpelanggan" name="tambah_teleponpelanggan" class="form-control pull-right" type="text">
+                                                <input id="tambah_teleponpelanggan" name="tambah_teleponpelanggan" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -133,7 +133,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>No Rekening</label>
-                                                <input id="tambah_rekpelanggan" name="tambah_rekpelanggan" class="form-control pull-right" type="text">
+                                                <input id="tambah_rekpelanggan" name="tambah_rekpelanggan" class="form-control pull-right" type="text" maxlength="50">
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
@@ -177,9 +177,9 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <select class="form-control" placeholder="Jenis Pelanggan" name="edit_jenis_pelanggan" id="edit_jenis_pelanggan" style="width: 100%;">
-                                                        <option disabled selected>Jenis Pelanggan</option>
+                                                    <option disabled selected>Jenis Pelanggan</option>
                                                     @foreach ($jenispelanggans as $jenispelanggan)
-                                                        <option value="{{encrypt($jenispelanggan->id)}}">{{$jenispelanggan->jenis_pelanggan}}</option>
+                                                        <option value="{{$jenispelanggan->id}}">{{$jenispelanggan->jenis_pelanggan}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -194,7 +194,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Handphone</label>
-                                                <input id="edit_hppelanggan" name="edit_hppelanggan" class="form-control pull-right" type="text">
+                                                <input id="edit_hppelanggan" name="edit_hppelanggan" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
                                                 <label>Perusahaan</label>
@@ -202,7 +202,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Telepon Kantor</label>
-                                                <input id="edit_teleponpelanggan" name="edit_teleponpelanggan" class="form-control pull-right" type="text">
+                                                <input id="edit_teleponpelanggan" name="edit_teleponpelanggan" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -222,7 +222,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>No Rekening</label>
-                                                <input id="edit_rekpelanggan" name="edit_rekpelanggan" class="form-control pull-right" type="text">
+                                                <input id="edit_rekpelanggan" name="edit_rekpelanggan" class="form-control pull-right" type="text" maxlength="50">
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
@@ -313,7 +313,6 @@
                 serverSide: true,
                 ajax: '{{route('loaddatapelanggan')}}',
                 columns: [
-                    { data: 'action'},
                     { data: 'Pelanggans.status_pelanggan', name: 'status_pelanggan' },
                     { data: 'jenis_pelanggan', name: 'jenis_pelanggan' },
                     { data: 'nama_pemilik', name: 'nama_pemilik' },
@@ -326,17 +325,25 @@
                     { data: 'limit_pelanggan', name: 'limit_pelanggan' },
                     { data: 'norek_pelanggan', name: 'norek_pelanggan' },
                     { data: 'ktp', name: 'ktp' },
-                    { data: 'keterangan_pelanggan', name: 'keterangan_pelanggan' }
+                    { data: 'keterangan_pelanggan', name: 'keterangan_pelanggan' },
+                    { data: 'action'}
                     
                 ]
             });
+        });
+        $('#tambah_jenis_pelanggan, #edit_jenis_pelanggan').select2({
+            placeholder: "Pilih Jenis Pelanggan."
+        });
+        $('#tambah_ktppelanggan,#edit_ktppelanggan,#tambah_hppelanggan,#edit_hppelanggan,#tambah_teleponpelanggan,#edit_teleponpelanggan,#tambah_tempotagihan,#edit_tempotagihan,#tambah_limittagihan,#edit_limittagihan,#tambah_rekpelanggan,#edit_rekpelanggan').bind('keypress', function(e){
+            var keyCode = (e.which)?e.which:event.keyCode
+            return !(keyCode>31 && (keyCode<48 || keyCode>57));
         });
     </script>
 
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_pelanggan',function () {
-            // $('#tambah_jenis_cabang').val("");
+            $('#tambah_jenis_pelanggan').val(0).trigger('change');
             $('#tambah_namapemilik').val("");
             $('#tambah_ktppelanggan').val("");
             $('#tambah_hppelanggan').val("");
@@ -355,6 +362,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            $('#edit_jenis_pelanggan').val($(this).data('jenispelanggan')).trigger('change');
             $('#edit_namapemilik').val($(this).data('nama_pemilik'));
             $('#edit_ktppelanggan').val($(this).data('ktp'));
             $('#edit_hppelanggan').val($(this).data('hp_pelanggan'));
@@ -392,44 +400,41 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        if ((response.errors.tambah_namapemilik)){
-                            swal("Nama Pemilik", ""+response.errors.tambah_namapemilik+"", "error");
+                        if ((response.errors.tambah_jenis_pelanggan)){
+                            swal("Pelanggan", ""+response.errors.tambah_jenis_pelanggan+"", "error");
                         }
-
-                        if ((response.errors.tambah_ktppelanggan)){
-                            swal("No KTP", ""+response.errors.tambah_ktppelanggan+"", "error");
+                        else if ((response.errors.tambah_namapemilik)){
+                            swal("Pelanggan", ""+response.errors.tambah_namapemilik+"", "error");
                         }
-                        
-                        if ((response.errors.tambah_hppelanggan)){
-                            swal("Handphone", ""+response.errors.tambah_hppelanggan+"", "error");
+                        else if ((response.errors.tambah_ktppelanggan)){
+                            swal("Pelanggan", ""+response.errors.tambah_ktppelanggan+"", "error");
                         }
-
-                        if ((response.errors.tambah_namaperusahaan)){
-                            swal("Perusahaan", ""+response.errors.tambah_namaperusahaan+"", "error");
+                        else if ((response.errors.tambah_hppelanggan)){
+                            swal("Pelanggan", ""+response.errors.tambah_hppelanggan+"", "error");
                         }
-
-                        if ((response.errors.tambah_teleponpelanggan)){
-                            swal("Telepon Kantor", ""+response.errors.tambah_teleponpelanggan+"", "error");
+                        else if ((response.errors.tambah_namaperusahaan)){
+                            swal("Pelanggan", ""+response.errors.tambah_namaperusahaan+"", "error");
                         }
-
-                        if ((response.errors.tambah_emailpelanggan)){
-                            swal("Email", ""+response.errors.tambah_emailpelanggan+"", "error");
+                        else if ((response.errors.tambah_teleponpelanggan)){
+                            swal("Pelanggan", ""+response.errors.tambah_teleponpelanggan+"", "error");
                         }
-
-                        if ((response.errors.tambah_alamatpelanggan)){
-                            swal("Alamat", ""+response.errors.tambah_alamatpelanggan+"", "error");
+                        else if ((response.errors.tambah_emailpelanggan)){
+                            swal("Pelanggan", ""+response.errors.tambah_emailpelanggan+"", "error");
                         }
-
-                        if ((response.errors.tambah_tempotagihan)){
-                            swal("Tempo Tagihan", ""+response.errors.tambah_tempotagihan+"", "error");
+                        else if ((response.errors.tambah_alamatpelanggan)){
+                            swal("Pelanggan", ""+response.errors.tambah_alamatpelanggan+"", "error");
                         }
-                        
-                        if ((response.errors.tambah_limittagihan)){
-                            swal("Limit Tagihan", ""+response.errors.tambah_limittagihan+"", "error");
+                        else if ((response.errors.tambah_tempotagihan)){
+                            swal("Pelanggan", ""+response.errors.tambah_tempotagihan+"", "error");
                         }
-
-                        if ((response.errors.tambah_rekpelanggan)){
-                            swal("No Rekening", ""+response.errors.tambah_rekpelanggan+"", "error");
+                        else if ((response.errors.tambah_limittagihan)){
+                            swal("Pelanggan", ""+response.errors.tambah_limittagihan+"", "error");
+                        }
+                        else if ((response.errors.tambah_rekpelanggan)){
+                            swal("Pelanggan", ""+response.errors.tambah_rekpelanggan+"", "error");
+                        }
+                        else if ((response.errors.tambah_keterangan)){
+                            swal("Pelanggan", ""+response.errors.tambah_keterangan+"", "error");
                         }
 
                         // $('#modal_tambah').modal('hide');
@@ -442,13 +447,13 @@
                         }
                         else{
                             wal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_tambah').modal('hide');
+                            // $('#modal_tambah').modal('hide');
                         }
                     }
                 },
                 error:function(){
                             swal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_tambah').modal('hide');
+                            // $('#modal_tambah').modal('hide');
                 }
             });
         });
@@ -469,47 +474,40 @@
                     if((response.errors)){
                         
                         if ((response.errors.edit_jenis_pelanggan)){
-                            swal("Jenis Pelanggan", ""+response.errors.edit_jenis_pelanggan+"", "error");
+                            swal("Pelanggan", ""+response.errors.edit_jenis_pelanggan+"", "error");
                         }
-
-                        if ((response.errors.edit_namapemilik)){
-                            swal("Nama Pemilik", ""+response.errors.edit_namapemilik+"", "error");
+                        else if ((response.errors.edit_namapemilik)){
+                            swal("Pelanggan", ""+response.errors.edit_namapemilik+"", "error");
                         }
-
-                        if ((response.errors.edit_ktppelanggan)){
-                            swal("No KTP", ""+response.errors.edit_ktppelanggan+"", "error");
+                        else if ((response.errors.edit_ktppelanggan)){
+                            swal("Pelanggan", ""+response.errors.edit_ktppelanggan+"", "error");
                         }
-                        
-                        if ((response.errors.edit_hppelanggan)){
-                            swal("Handphone", ""+response.errors.edit_hppelanggan+"", "error");
+                        else if ((response.errors.edit_hppelanggan)){
+                            swal("Pelanggan", ""+response.errors.edit_hppelanggan+"", "error");
                         }
-
-                        if ((response.errors.edit_namaperusahaan)){
-                            swal("Perusahaan", ""+response.errors.edit_namaperusahaan+"", "error");
+                        else if ((response.errors.edit_namaperusahaan)){
+                            swal("Pelanggan", ""+response.errors.edit_namaperusahaan+"", "error");
                         }
-
-                        if ((response.errors.edit_teleponpelanggan)){
-                            swal("Telepon Kantor", ""+response.errors.edit_teleponpelanggan+"", "error");
+                        else if ((response.errors.edit_teleponpelanggan)){
+                            swal("Pelanggan", ""+response.errors.edit_teleponpelanggan+"", "error");
                         }
-
-                        if ((response.errors.edit_emailpelanggan)){
-                            swal("Email", ""+response.errors.edit_emailpelanggan+"", "error");
+                        else if ((response.errors.edit_emailpelanggan)){
+                            swal("Pelanggan", ""+response.errors.edit_emailpelanggan+"", "error");
                         }
-
-                        if ((response.errors.edit_alamatpelanggan)){
-                            swal("Alamat", ""+response.errors.edit_alamatpelanggan+"", "error");
+                        else if ((response.errors.edit_alamatpelanggan)){
+                            swal("Pelanggan", ""+response.errors.edit_alamatpelanggan+"", "error");
                         }
-
-                        if ((response.errors.edit_tempotagihan)){
-                            swal("Tempo Tagihan", ""+response.errors.edit_tempotagihan+"", "error");
+                        else if ((response.errors.edit_tempotagihan)){
+                            swal("Pelanggan", ""+response.errors.edit_tempotagihan+"", "error");
                         }
-                        
-                        if ((response.errors.edit_limittagihan)){
-                            swal("Limit Tagihan", ""+response.errors.edit_limittagihan+"", "error");
+                        else if ((response.errors.edit_limittagihan)){
+                            swal("Pelanggan", ""+response.errors.edit_limittagihan+"", "error");
                         }
-
-                        if ((response.errors.edit_rekpelanggan)){
-                            swal("No Rekening", ""+response.errors.edit_rekpelanggan+"", "error");
+                        else if ((response.errors.edit_rekpelanggan)){
+                            swal("Pelanggan", ""+response.errors.edit_rekpelanggan+"", "error");
+                        }
+                        else if ((response.errors.edit_keterangan)){
+                            swal("Pelanggan", ""+response.errors.edit_keterangan+"", "error");
                         }
                         // $('#modal_edit').modal('hide');
                     }
@@ -521,13 +519,13 @@
                         }
                         else{
                             wal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_edit').modal('hide');
+                            // $('#modal_edit').modal('hide');
                         }
                     }
                 },
                 error:function(){
                             swal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_edit').modal('hide');
+                            // $('#modal_edit').modal('hide');
                 }
             });
         });

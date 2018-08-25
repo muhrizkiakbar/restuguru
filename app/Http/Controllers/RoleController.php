@@ -78,7 +78,7 @@ class RoleController extends Controller
         }
         else
         {
-            return redirect()->back()->with('error','Gagal menyimpan role.');
+            return redirect()->back()->withInput($request->input())->with('error','Gagal menyimpan role.');
         }
         
     }
