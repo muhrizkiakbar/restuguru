@@ -6,6 +6,7 @@ use App\User;
 use App\CBahanBakus;
 use App\Transaksi_Pengeluaran;
 use App\Sub_Tpengeluaran;
+use App\Angsuran_Pengeluarans;
 use App\CSuppliers;
 use App\stokbahanbaku;
 use Illuminate\Http\Request;
@@ -1065,7 +1066,7 @@ class PengeluaranController extends Controller
                 $bahanbakugethitungluas=CBahanBakus::find($substransaksi->bahanbaku_id);
                 // dd($stokbahanbaku);
                
-                    $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$value['produkid'])
+                    $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$substransaksi->bahanbaku_id)
                                                 ->where('cabang_id','=',Auth::user()->cabangs->id)
                                                 ->first();
 
@@ -1074,24 +1075,25 @@ class PengeluaranController extends Controller
 
                         if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($substransaksi->satuan=="METER"))
                         {
-                            $luas=($substransaksi->panjang*100)*($substransaksi->lebar*100)*$substransaksi->kuantitas;
+                            // dd("(".$substransaksi->panjang." * 100) * (".$substransaksi->lebar." * 100 )) * ".$substransaksi->kuantitas);
+                            $luas=(($substransaksi->panjang*100)*($substransaksi->lebar*100))*$substransaksi->kuantitas;
                         }
                         elseif (($bahanbakugethitungluas->satuan==$substransaksi->satuan))
                         {
-                            $luas=($substransaksi->panjang)*($substransaksi->lebar)*$substransaksi->kuantitas;
+                            $luas=(($substransaksi->panjang)*($substransaksi->lebar))*$substransaksi->kuantitas;
                         }
                         elseif (($bahanbakugethitungluas->satuan=="METER") && ($substransaksi->satuan=="CENTIMETER"))
                         {
-                            $luas=($substransaksi->panjang/100)*($substransaksi->lebar/100)*$substransaksi->kuantitas;
+                            $luas=(($substransaksi->panjang/100)*($substransaksi->lebar/100))*$substransaksi->kuantitas;
                         }
-
+                        dd($stokbahanbaku->banyakstok." - ".$luas);
                         $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-$luas;
                     }
                     else
                     {
                         $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-$substransaksi->kuantitas;
                     }
-
+                    // dd($stokbahanbaku->banyakstok);
                     $stokbahanbaku->save();
 
 

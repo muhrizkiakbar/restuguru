@@ -15,7 +15,7 @@ class CreateStokbahanbakusTable extends Migration
     {
         Schema::create('stokbahanbakus', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('banyakstok');
+            $table->double('banyakstok');
             $table->string('satuan');
             $table->boolean('stokhitungluas');
             $table->integer('bahanbaku_id')->unsigned();
