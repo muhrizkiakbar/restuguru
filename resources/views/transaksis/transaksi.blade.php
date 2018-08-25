@@ -759,6 +759,20 @@
                 console.log(luas, hargasatuan, kuantitas, besardiskon);
             });
 
+            $('input[type=radio][name=r2]').on('ifChecked',function () {
+                // alert("asd");
+                var panjang=numeral($('#add_panjang').val()).value();
+                var lebar=numeral($('#add_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,this.value);
+                hargasatuan=numeral($('#add_harga').val()).value();
+                kuantitas=numeral($('#add_kuantitas').val()).value();
+                var besardiskon=numeral($('#add_diskon').val()).value();
+                $('#add_subtotal').val(
+                    numeral(diskonitem(hitungsubtotal(hargasatuan, luas, kuantitas), besardiskon)).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas, besardiskon);
+            });
+
             $("#add_kuantitas").keyup(function(){
                 $(this).val(numeral($(this).val()).format('0'));
                 hargasatuan=numeral($('#add_harga').val()).value();
@@ -828,6 +842,17 @@
                 $('#sisa').val(numeral(hitungsisa(total, bayardp, $(this).val())).format('$ 0,0'));
             });
 
+            $('input[type=radio][name=metode]').on('ifChecked',function () {
+                total=numeral($('#total').val()).value();
+                if ($(this).val() == "lunas"){
+                    $('#bayardp').val(numeral(total).format('$ 0,0'));
+                }else if ($(this).val() == "dp"){
+                    $('#bayardp').val(numeral(total/2).format('$ 0,0'));
+                }
+                bayardp=numeral($('#bayardp').val()).value();
+                $('#sisa').val(numeral(hitungsisa(total, bayardp, $(this).val())).format('$ 0,0'));
+            });
+
             $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
             checkboxClass: 'icheckbox_minimal-red',
             radioClass   : 'iradio_minimal-red'
@@ -854,6 +879,19 @@
             });
 
             $('input[type=radio][name=r2edit]').on('ifClicked',function () {
+                var panjang=numeral($('#edit_panjang').val()).value();
+                var lebar=numeral($('#edit_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,this.value);
+                hargasatuan=numeral($('#edit_harga').val()).value();
+                kuantitas=numeral($('#edit_kuantitas').val()).value();
+                var besardiskon=numeral($('#edit_diskon').val()).value();
+                $('#edit_subtotal').val(
+                    numeral(diskonitem(hitungsubtotal(hargasatuan, luas, kuantitas), besardiskon)).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas, besardiskon);
+            });
+
+            $('input[type=radio][name=r2edit]').on('ifChecked',function () {
                 var panjang=numeral($('#edit_panjang').val()).value();
                 var lebar=numeral($('#edit_lebar').val()).value();
                 luas=hitungluas(panjang,lebar,satuandasar,this.value);
