@@ -262,8 +262,8 @@ class PermissionTableSeeder extends Seeder
         		'name' => 'manage-cabang',
         		'display_name' => 'Manajemen Cabang',
         		'description' => 'Manajemen Cabang',
-				'index'=>'1',
-				'urlindex'=>'managecabangindex'
+						'index'=>'1',
+						'urlindex'=>'managecabangindex'
             ],
             [
         		'name' => 'add-cabang',
@@ -509,46 +509,14 @@ class PermissionTableSeeder extends Seeder
 					'description' => 'Hapus Aturan Bahan Baku',
 					'index'=>'0'
 				],
-				[
-					'name' => 'manage-transaksibahanbaku',
-					'display_name' => 'Manajemen Transaksi Bahan Baku',
-					'description' => 'Manajemen Transaksi Bahan Baku',
-					'index'=>'1',
-					'urlindex'=> 'indextransaksibahanbaku'
-				],
-				[
-					'name' => 'add-transaksibahanbaku',
-					'display_name' => 'Tambah Transaksi Bahan Baku',
-					'description' => 'Tambah Transaksi Bahan Baku',
-					'index'=>'0'
-				],
-				[
-					'name' => 'edit-transaksibahanbaku',
-					'display_name' => 'Edit Transaksi Bahan Baku',
-					'description' => 'Edit Transaksi Bahan Baku',
-					'index'=>'0'
-				],
-				[
-					'name' => 'delete-transaksibahanbaku',
-					'display_name' => 'Hapus Transaksi Bahan Baku',
-					'description' => 'Hapus Transaksi Bahan Baku',
-					'index'=>'0'
-				],
-				[
-					'name' => 'index-transaksibahanbakudeleted',
-					'display_name' => 'Transaksi Bahan Baku Terhapus',
-					'description' => 'Transaksi Bahan Baku Terhapus',
-					'index'=>'1',
-					'urlindex'=> 'indexdeletedtransaksibahanbaku'
-				],
 
-                [
-                    'name' => 'manage-menuname',
-                    'display_name' => 'Manajemen Nama Menu',
-                    'description' => 'Manajemen Nama Menu',
-                    'index'=>'1',
-                    'urlindex'=>'menuindex'
-                ],
+				[
+						'name' => 'manage-menuname',
+						'display_name' => 'Manajemen Nama Menu',
+						'description' => 'Manajemen Nama Menu',
+						'index'=>'1',
+						'urlindex'=>'menuindex'
+				],
 				[
 					'name' => 'edit-menuname',
 					'display_name' => 'Edit Nama Menu',
@@ -568,7 +536,47 @@ class PermissionTableSeeder extends Seeder
 					'description' => 'Aktifitas Pengguna',
 					'index'=>'1',
 					'urlindex'=>'timeline'
-				]
+				],
+				[
+					'name' => 'list-stokbahanbaku',
+					'display_name' => 'Daftar Bahan Baku',
+					'description' => 'Daftar Bahan Baku',
+					'index'=>'1',
+					'urlindex'=>'indexstokbahanbaku'
+				],
+				[
+					'name' => 'manage-transaksistokbahanbaku',
+					'display_name' => 'Manajemen Transaksi Bahan Baku',
+					'description' => 'Manajemen Transaksi Bahan Baku',
+					'index'=>'1',
+					'urlindex'=>'indextransaksibahanbaku'
+				],
+				[
+					'name' => 'add-transaksistokbahanbaku',
+					'display_name' => 'Tambah Transaksi Bahan Baku',
+					'description' => 'Tambah Transaksi Bahan Baku',
+					'index'=>'0',
+				],
+				[
+					'name' => 'edit-transaksistokbahanbaku',
+					'display_name' => 'Ubah Transaksi Bahan Baku',
+					'description' => 'Ubah Transaksi Bahan Baku',
+					'index'=>'0',
+				],
+				[
+					'name' => 'delete-transaksistokbahanbaku',
+					'display_name' => 'Hapus Transaksi Bahan Baku',
+					'description' => 'Hapus Transaksi Bahan Baku',
+					'index'=>'0',
+				],
+				[
+					'name' => 'deleted-transaksistokbahanbaku',
+					'display_name' => 'Transaksi Bahan Baku Terhapus',
+					'description' => 'Transaksi Bahan Baku Terhapus',
+					'index'=>'1',
+					'urlindex'=>'indexdeletedtransaksibahanbaku'
+				],
+
         ];
 
 

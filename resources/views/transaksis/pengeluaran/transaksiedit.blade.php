@@ -1117,6 +1117,7 @@
             $('#submittransaksi').attr('disabled',true);
             $('#buttonmodal_add').attr('disabled',true);
             var inputnamapelanggan=$('#namapelanggan').val();
+            var transaksiid=$('#transaksiid').val();
             var inputjenispengeluaran=$('#jenispengeluaran').val();
             var inputnomorpelanggan=$('#nomorhandphone').val();
             var inputpelanggan=$('#pelanggan').val();            
@@ -1222,6 +1223,8 @@
                         jsonprodukid: jsonprodukid,
                         jsonsatuan: jsonsatuan,
                         jsonkuantitas: jsonkuantitas,
+                        transaksiid:transaksiid,
+                        jsonsubtransid:jsonsubtransid,
                         jsonketerangan: jsonketerangan,
                         jsonsubtotal: jsonsubtotal,
                         _token : $('meta[name="csrf-token"]').attr('content')

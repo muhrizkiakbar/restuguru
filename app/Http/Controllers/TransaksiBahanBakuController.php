@@ -239,31 +239,32 @@ class TransaksiBahanBakuController extends Controller
         if ($stokbahanbaku==0)
         {
 
-        $addbahanbaku=new stokbahanbaku;
-        $addbahanbaku->bahanbaku_id=$table->bahanbaku_id;
-        $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
-        $addbahanbaku->satuan=$bahanbakugethitungluas->satuan;
+            $addbahanbaku=new stokbahanbaku;
+            $addbahanbaku->bahanbaku_id=$table->bahanbaku_id;
+            $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
+            $addbahanbaku->satuan=$bahanbakugethitungluas->satuan;
 
 
 
-        $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
+            $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
 
-        $addbahanbaku->banyakstok=0-($request->banyak_transaksibahanbaku);
+            $addbahanbaku->banyakstok=0-($request->banyak_transaksibahanbaku);
 
-        $addbahanbaku->save();
+            $addbahanbaku->save();
 
         }
         else
         {  
-        $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$table->bahanbaku_id)
-                ->where('cabang_id','=',Auth::user()->cabangs->id)
-                ->first();
+            $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$table->bahanbaku_id)
+                    ->where('cabang_id','=',Auth::user()->cabangs->id)
+                    ->first();
 
-        $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$table->banyak;
+            $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$table->banyak;
 
-        $stokbahanbaku->save();
+            $stokbahanbaku->save();
 
         }
+        
         if ($table->delete()){
 
             
