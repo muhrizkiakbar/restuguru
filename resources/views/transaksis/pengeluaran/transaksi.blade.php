@@ -352,7 +352,7 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Subtotal</label>
-                                          <input id="add_subtotal" name="add_subtotal" class="form-control pull-right mata-uang" type="text">
+                                          <input id="add_subtotal" name="add_subtotal" readonly class="form-control pull-right mata-uang" type="text">
                                       </div>
                                       <!-- /.form-group -->
                                   </div>
@@ -420,7 +420,7 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Subtotal</label>
-                                          <input id="edit_subtotal" name="edit_subtotal" class="form-control pull-right mata-uang" type="text">
+                                          <input id="edit_subtotal" name="edit_subtotal" readonly class="form-control pull-right mata-uang" type="text">
                                       </div>
                                       <!-- /.form-group -->
                                   </div>
