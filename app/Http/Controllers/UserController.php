@@ -32,6 +32,7 @@ class UserController extends Controller
 
     public function dataalluser(){
         $tables=User::leftJoin('Cabangs','Users.cabang_id','=','Cabangs.id')
+                ->where('Users.id','!=',Auth::user()->id)
                 ->select('Users.*','Cabangs.Nama_Cabang')
                 ->get();
         return Datatables::of($tables)
