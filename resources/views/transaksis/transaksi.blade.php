@@ -1214,7 +1214,13 @@
             var jsonsatuan=[];
             $('input[name^="satuan[]"]').each(function() {
                 item = {}
-                item ["value"] = $(this).val();
+                if ($(this).val() == 'cm'){
+                    item ["value"] = 'CENTIMETER';
+                }else if ($(this).val() == 'm'){
+                    item ["value"] = 'METER';
+                }else{
+                    item ["value"] = $(this).val();
+                }
                 jsonsatuan.push(item);
             });
             var jsonketerangan=[];
@@ -1425,6 +1431,7 @@
                             $('#r2cm').iCheck('disable');
                             $('#add_panjang').attr('disabled',true);
                             $('#add_lebar').attr('disabled',true);
+                            satuan = response.satuan.toUpperCase();
                         }
                         
                         $('#add_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
@@ -1473,6 +1480,7 @@
                             $('#r2cm').iCheck('disable');
                             $('#add_panjang').attr('disabled',true);
                             $('#add_lebar').attr('disabled',true);
+                            satuan = response.satuan.toUpperCase();
                         }
                         
                         $('#add_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
@@ -1685,6 +1693,7 @@
                             $('#r2editcm').iCheck('disable');
                             $('#edit_panjang').attr('disabled',true);
                             $('#edit_lebar').attr('disabled',true);
+                            satuan = response.satuan.toUpperCase();
                         }
                         $('#edit_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
                     },
@@ -1730,6 +1739,7 @@
                             $('#r2editcm').iCheck('disable');
                             $('#edit_panjang').attr('disabled',true);
                             $('#edit_lebar').attr('disabled',true);
+                            satuan = response.satuan.toUpperCase();
                         }
                         
                         $('#edit_harga').val(numeral(response.harga_jual).format('$ 0,0'));  

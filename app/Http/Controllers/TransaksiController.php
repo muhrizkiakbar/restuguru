@@ -10,6 +10,9 @@ use App\CPelanggans;
 use App\CSub_Tpenjualans;
 use App\CTransaksi_Penjualans;
 use App\Angsuran;
+use App\CRelasiBahanBakus;
+use App\stokbahanbaku;
+use App\CBahanBakus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -291,6 +294,93 @@ class TransaksiController extends Controller
             $subtransaksi->finishing=$value['finishing'];
             $subtransaksi->satuan=$value['satuan'];
             $subtransaksi->diskon=$value['diskonnow'];
+    
+            $relasibahanbakus=CRelasiBahanBakus::where('produk_id','=',$value['id'])
+                                                 ->get();
+
+            foreach( $relasibahanbakus as $key=>$relasibahanbaku ){
+                $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
+                                            ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                            ->count();
+
+                $bahanbakugethitungluas=CBahanBakus::find($relasibahanbaku->bahanbaku_id);
+                // dd($stokbahanbaku);
+                if ($stokbahanbaku==0)
+                {
+
+                    $addbahanbaku=new stokbahanbaku;
+                    $addbahanbaku->bahanbaku_id=$relasibahanbaku->bahanbaku_id;
+                    $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
+                    $addbahanbaku->satuan=$bahanbakugethitungluas->satuan;
+
+
+                    $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
+
+                    if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="METER"))
+                    {
+                        // dd('jancokkk');
+                        if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
+                        {
+                            $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                        }
+                        elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
+                        {
+                            $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                        }
+                        elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
+                        {
+                            $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                        }
+
+                        $addbahanbaku->banyakstok=$luas;
+                    }
+                    else
+                    {
+                        $addbahanbaku->banyakstok=$value['kuantitas'];
+                    }
+
+                    $addbahanbaku->save();
+
+                }
+                else
+                {  
+                    $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
+                                                ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                ->first();
+
+                    if (($value['satuan']=="CENTIMETER") || ($value['satuan']=="METER"))
+                    {
+                        // dd('jancok');
+                        if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
+                        {
+                            $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                        }
+                        elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
+                        {
+                            $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                        }
+                        elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
+                        {
+                            // dd("sd");
+                            $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                        }
+                        // dd($stokbahanbaku->banyakstok);
+
+                        $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-( $luas * $relasibahanbaku->qtypertrx );
+                        // dd($relasibahanbaku->qtypertrx);
+                    }
+                    else
+                    {
+                        $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-( $value['kuantitas'] * $relasibahanbaku->qtypertrx );
+                    }
+
+                    $stokbahanbaku->save();
+                  
+
+                }
+
+            }
+
             
             if ($subtransaksi->save()){
 
@@ -433,18 +523,75 @@ class TransaksiController extends Controller
         $table=CTransaksi_Penjualans::where('id','=',$id)
                     ->first();
 
-        if ($table->delete()){
-            $tableangsuran=Angsuran::where('transaksipenjualan_id','=',$id)
-                        ->delete();
+        $subtransaksis=CSub_Tpenjualans::where('penjualan_id','=',$id)->get();
 
-            $isi=Auth::user()->username." telah menghapus transaksi penjualan dengan No. ".$id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi,"delete");
-            return "{\"msg\":\"success\"}";
+        foreach($subtransaksis as $subtransaksi){
+            $relasibahanbakus=CRelasiBahanBakus::where('produk_id','=',$subtransaksi->produk_id)
+                                                 ->get();
+
+            foreach( $relasibahanbakus as $key=>$relasibahanbaku ){
+                $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
+                                            ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                            ->count();
+
+                $bahanbakugethitungluas=CBahanBakus::find($relasibahanbaku->bahanbaku_id);
+                // dd($stokbahanbaku);
+                $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
+                                            ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                            ->first();
+
+                if (($subtransaksi->satuan=="CENTIMETER") || ($subtransaksi->satuan=="METER"))
+                {
+                    // dd('jancok');
+                    if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($subtransaksi->satuan=="METER"))
+                    {
+                        $luas=($subtransaksi->panjang*100)*($subtransaksi->lebar*100)*$subtransaksi->banyak;
+                    }
+                    elseif (($bahanbakugethitungluas->satuan==$subtransaksi->satuan))
+                    {
+                        $luas=($subtransaksi->panjang)*($subtransaksi->lebar)*$subtransaksi->banyak;
+                    }
+                    elseif (($bahanbakugethitungluas->satuan=="METER") && ($subtransaksi->satuan=="CENTIMETER"))
+                    {
+                        $luas=($subtransaksi->panjang/100)*($subtransaksi->lebar/100)*$subtransaksi->banyak;
+                    }
+
+                    $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $luas * $relasibahanbaku->qtypertrx );
+                }
+                else
+                {
+                    $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $subtransaksi->banyak * $relasibahanbaku->qtypertrx );
+                }
+                // dd($stokbahanbaku->banyakstok);
+
+                if ($stokbahanbaku->save())
+                {
+                    $stokbahanbakustatus = true;
+                }else{
+                    $stokbahanbakustatus = false;
+                }
+
+
+            }
         }
-        else
-        {
+
+        if ($stokbahanbakustatus){
+            if ($table->delete()){
+                $tableangsuran=Angsuran::where('transaksipenjualan_id','=',$id)
+                            ->delete();
+    
+                $isi=Auth::user()->username." telah menghapus transaksi penjualan dengan No. ".$id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"delete");
+                return "{\"msg\":\"success\"}";
+            }
+            else
+            {
+                return "{\"msg\":\"failed\"}";
+            }
+        }else{
             return "{\"msg\":\"failed\"}";
         }
+        
 
     }
 

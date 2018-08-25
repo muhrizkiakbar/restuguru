@@ -35,9 +35,9 @@ class RelasiBahanBakuController extends Controller
     }
 
     public function loadrelasibahanbaku(){
-        $tables=CRelasiBahanBakus::leftJoin('bahanbakus','produkbahanbakus.bahanbaku_id','=','bahanbakus.id')
-        ->leftJoin('Produks','produkbahanbakus.produk_id','=','Produks.id')
-        ->select('produkbahanbakus.*','Produks.nama_produk','bahanbakus.nama_bahan')
+        $tables=CRelasiBahanBakus::leftJoin('Bahanbakus','Produkbahanbakus.bahanbaku_id','=','Bahanbakus.id')
+        ->leftJoin('Produks','Produkbahanbakus.produk_id','=','Produks.id')
+        ->select('Produkbahanbakus.*','Produks.nama_produk','Bahanbakus.nama_bahan')
         ->get();
         return Datatables::of($tables)
         -> addColumn ('action', function ($tables) {
