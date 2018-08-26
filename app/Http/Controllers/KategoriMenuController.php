@@ -128,10 +128,13 @@ class KategoriMenuController extends Controller
             array_push($data,$kategoripermission->id);
         }
 
-        $tanpapage=kategori_permission::pluck('permission_id')->where('kategori_id','=',$id);
+        $tanpapage=kategori_permission::pluck('permission_id');
+        $denganpage=kategori_permission::where('kategori_id','=',$id)->pluck('permission_id');
+        // dd($denganpage);
         // dd($tanpapage);
         $permissions=Permission::where('index','=','1')
-                    // ->whereNotIn('id',$tanpapage)
+                    ->whereNotIn('id',$tanpapage)
+                    ->orWhereIn('id',$denganpage)
                     ->get();
         $id=encrypt($id);
         return view('kategorimenu.editmenu',compact('id','kategorimenu','permissions'),['data'=>$data]);        
