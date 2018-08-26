@@ -94,8 +94,13 @@
                                                 <input id="tambah_nama_bahan" name="tambah_nama_bahan" class="form-control" type="text">
                                             </div>
                                             <div class="form-group">
-                                                <label>Satuan</label>
-                                                <input id="tambah_satuan" name="tambah_satuan" class="form-control" type="text">
+                                                <select class="form-control select2" placeholder="Satuan" name="tambah_satuan" id="tambah_satuan" style="width: 100%;">
+                                                        <option disabled selected>Satuan Produk</option>
+                                                        <option value="CM">Centimeter</option>
+                                                        <option value="M">Meter</option>
+                                                        <option value="PCS">Pcs</option>
+                                                        <option value="PAKET">Paket</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga</label>
@@ -103,27 +108,12 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input id="tambah_harga" name="tambah_harga" class="form-control" type="text" value="0">
+                                                    <input id="tambah_harga" name="tambah_harga" class="form-control mata-uang" type="text" value="0">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Batas Stok</label>
-                                                <input id="tambah_batas_stok" name="tambah_batas_stok" class="form-control" type="text" value="0">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Hitung Luas</label>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="tambah_hitung_luas" id="tambah_hitung_luas_t" value="0" checked>
-                                                        Tidak
-                                                    </label>
-                                                </div>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="tambah_hitung_luas" id="tambah_hitung_luas_y" value="1">
-                                                        Ya
-                                                    </label>
-                                                </div>
+                                                <input id="tambah_batas_stok" name="tambah_batas_stok" class="form-control mata-uang" type="text" value="0">
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
@@ -172,8 +162,13 @@
                                                 <input id="edit_nama_bahan" name="edit_nama_bahan" class="form-control" type="text">
                                             </div>
                                             <div class="form-group">
-                                                <label>Satuan</label>
-                                                <input id="edit_satuan" name="edit_satuan" class="form-control" type="text">
+                                                <select class="form-control select2" placeholder="Satuan" name="edit_satuan" id="edit_satuan" style="width: 100%;">
+                                                        <option disabled selected>Satuan Produk</option>
+                                                        <option value="CM">Centimeter</option>
+                                                        <option value="M">Meter</option>
+                                                        <option value="PCS">Pcs</option>
+                                                        <option value="PAKET">Paket</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga</label>
@@ -181,27 +176,12 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input id="edit_harga" name="edit_harga" class="form-control" type="text" value="0">
+                                                    <input id="edit_harga" name="edit_harga" class="form-control mata-uang" type="text" value="0">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Batas Stok</label>
-                                                <input id="edit_batas_stok" name="edit_batas_stok" class="form-control" type="text" value="0">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Hitung Luas</label>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="edit_hitung_luas" id="edit_hitung_luas_t" value="0">
-                                                        Tidak
-                                                    </label>
-                                                </div>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="edit_hitung_luas" id="edit_hitung_luas_y" value="1">
-                                                        Ya
-                                                    </label>
-                                                </div>
+                                                <input id="edit_batas_stok" name="edit_batas_stok" class="form-control mata-uang" type="text" value="0">
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
@@ -263,6 +243,7 @@
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- Mask Money -->
     <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <!-- DataTables -->
     <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -276,10 +257,34 @@
 
     {{-- Init JS --}}
     <script type="text/javascript">
-        $('#tambah_kategori_bb, #edit_kategori_bb').select2({
-            placeholder: "Pilih Kategori."
+    numeral.register('locale', 'idr', {
+      delimiters: {
+        thousands: '.',
+        decimal: ','
+      },
+      abbreviations: {
+        thousand: 'ribu',
+        million: 'juta',
+        billion: 'ratus juta',
+        trillion: 'milyar'
+      },
+      currency: {
+        symbol: 'Rp'
+      }
+    });
+    numeral.locale('idr');
+    $('#tambah_kategori_bb, #edit_kategori_bb').select2({
+      placeholder: "Pilih Kategori."
+    });
+    $('#tambah_satuan, #edit_satuan').select2({
+      placeholder: "Pilih Satuan."
+    });
+    // $('#tambah_harga, #tambah_batas_stok, #edit_harga, #edit_batas_stok').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
+    $(function(){
+        $("input.mata-uang").keyup(function(){
+            $(this).val(numeral($(this).val()).format('0,0'));
         });
-        $('#tambah_harga, #tambah_batas_stok, #edit_harga, #edit_batas_stok').maskMoney({thousands:'', decimal:'.',allowZero:true,precision:0});
+    });
     </script>
 
     {{-- javascript Tabel --}}
@@ -309,10 +314,9 @@
         $(document).on('click','#modal_tambah_produk',function () {
             $('#tambah_kategori_bb').val(0).trigger('change');
             $('#tambah_nama_bahan').val("");
-            $('#tambah_satuan').val("");
+            $('#tambah_satuan').val(0).trigger('change');
             $('#tambah_harga').val(0);
             $('#tambah_batas_stok').val(0);
-            $('#tambah_hitung_luas').val(0);
             $('#tambah_keterangan').val("");
         });
     </script>
@@ -322,15 +326,9 @@
         $(document).on('click','.modal_edit',function () {
             $('#edit_kategori_bb').val($(this).data('kategori_id')).trigger('change');
             $('#edit_nama_bahan').val($(this).data('nama_bahan'));
-            $('#edit_satuan').val($(this).data('satuan'));
-            $('#edit_harga').val($(this).data('harga'));
-            $('#edit_batas_stok').val($(this).data('batas_stok'));
-            $hitung_luas = $(this).data('hitung_luas');
-            if ($hitung_luas) {
-                $('#edit_hitung_luas_y').prop('checked',true);
-            } else {
-                $('#edit_hitung_luas_t').prop('checked',true);
-            }
+            $('#edit_satuan').val($(this).data('satuan')).trigger('change');
+            $('#edit_harga').val(numeral($(this).data('harga')).format('0,0'));
+            $('#edit_batas_stok').val(numeral($(this).data('batas_stok')).format('0,0'));
             $('#edit_keterangan').val($(this).data('keterangan'));
             $('#produk_id').val($(this).data('id'));
         });
@@ -347,6 +345,8 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
+            $("#tambah_harga").val(numeral($("#tambah_harga").val()).value());
+            $("#tambah_batas_stok").val(numeral($("#tambah_batas_stok").val()).value());
             $.ajax({
                 type:'post',
                 url:'{{route('storebahanbaku')}}',
@@ -367,11 +367,11 @@
                             swal("Bahan Baku", ""+response.errors.tambah_harga+"", "error");
                         }else if ((response.errors.tambah_batas_stok)){
                             swal("Bahan Baku", ""+response.errors.tambah_batas_stok+"", "error");
-                        }else if ((response.errors.tambah_hitung_luas)){
-                            swal("Bahan Baku", ""+response.errors.tambah_hitung_luas+"", "error");
                         }else if ((response.errors.tambah_keterangan)){
                             swal("Bahan Baku", ""+response.errors.tambah_keterangan+"", "error");
                         }
+                        $("#tambah_harga").val(numeral($("#tambah_harga").val()).format('0,0'));
+                        $("#tambah_batas_stok").val(numeral($("#tambah_batas_stok").val()).format('0,0'));
                         // $('#modal_tambah').modal('hide');
                     }else{
                         if (response=="Success"){
@@ -380,6 +380,8 @@
                             oTable.ajax.reload();
                         }else{
                             wal("Error !", "Gagal menyimpan !", "error");
+                            $("#tambah_harga").val(numeral($("#tambah_harga").val()).format('0,0'));
+                            $("#tambah_batas_stok").val(numeral($("#tambah_batas_stok").val()).format('0,0'));
                             // $('#modal_tambah').modal('hide');
                         }
                     }
@@ -387,6 +389,8 @@
                 error:function(response){
                     console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
+                    $("#tambah_harga").val(numeral($("#tambah_harga").val()).format('0,0'));
+                    $("#tambah_batas_stok").val(numeral($("#tambah_batas_stok").val()).format('0,0'));
                     // $('#modal_tambah').modal('hide');
                 }
             });
@@ -396,6 +400,8 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
+            $("#edit_harga").val(numeral($("#edit_harga").val()).value());
+            $("#edit_batas_stok").val(numeral($("#edit_batas_stok").val()).value());
             $.ajax({
                 type:'post',
                 url:'{{route('updatebahanbaku')}}',
@@ -416,11 +422,11 @@
                             swal("Bahan Baku", ""+response.errors.edit_harga+"", "error");
                         }else if ((response.errors.edit_batas_stok)){
                             swal("Bahan Baku", ""+response.errors.edit_batas_stok+"", "error");
-                        }else if ((response.errors.edit_hitung_luas)){
-                            swal("Bahan Baku", ""+response.errors.edit_hitung_luas+"", "error");
                         }else if ((response.errors.edit_keterangan)){
                             swal("Bahan Baku", ""+response.errors.edit_keterangan+"", "error");
                         }
+                        $("#edit_harga").val(numeral($("#edit_harga").val()).format('0,0'));
+                        $("#edit_batas_stok").val(numeral($("#edit_batas_stok").val()).format('0,0'));
                         // $('#modal_edit').modal('hide');
                     }else{
                         if (response=="Success"){
@@ -430,6 +436,8 @@
                         }else{
                             console.log('atas');
                             wal("Error !", "Gagal menyimpan !", "error");
+                            $("#edit_harga").val(numeral($("#edit_harga").val()).format('0,0'));
+                            $("#edit_batas_stok").val(numeral($("#edit_batas_stok").val()).format('0,0'));
                             // $('#modal_edit').modal('hide');
                         }
                     }
@@ -437,6 +445,8 @@
                 error:function(response){
                     console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
+                    $("#edit_harga").val(numeral($("#edit_harga").val()).format('0,0'));
+                    $("#edit_batas_stok").val(numeral($("#edit_batas_stok").val()).format('0,0'));
                     // $('#modal_edit').modal('hide');
                 }
             });

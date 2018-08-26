@@ -53,7 +53,7 @@ class BahanBakuController extends Controller
         // {
         //     $table['hitung_luas']="1";
         //     $table['satuan']="CENTIMETER";
-        // }        
+        // }
         return $table;
     }
 
@@ -95,6 +95,8 @@ class BahanBakuController extends Controller
                         <small class="label '.$warna.'">'.$tables->hitung_luas.'</small>
                         </span>';
                 })
+            ->editColumn('harga', '{{number_format($harga,0,",",".")}}')
+            ->editColumn('batas_stok', '{{number_format($batas_stok,0,",",".")}}')
             ->rawColumns(['action','hitung_luas'])
             ->make(true);
     }
@@ -164,7 +166,6 @@ class BahanBakuController extends Controller
             'tambah_satuan' => 'required',
             'tambah_harga' => 'required|numeric',
             'tambah_batas_stok' => 'required|numeric',
-            'tambah_hitung_luas' => 'required|numeric',
             'tambah_keterangan' => 'required'
         );
 
@@ -178,7 +179,14 @@ class BahanBakuController extends Controller
             $table->satuan = strtoupper($request->tambah_satuan);
             $table->harga = $request->tambah_harga;
             $table->batas_stok = $request->tambah_batas_stok;
-            $table->hitung_luas = $request->tambah_hitung_luas;
+            if (
+              ($request->tambah_satuan=='CM') ||
+              ($request->tambah_satuan=='M')
+            ) {
+              $table->hitung_luas = 1;
+            } else {
+              $table->hitung_luas = 0;
+            }
             $table->keterangan = $request->tambah_keterangan;
 
             if ($table->save()){
@@ -227,7 +235,6 @@ class BahanBakuController extends Controller
             'edit_satuan' => 'required',
             'edit_harga' => 'required|numeric',
             'edit_batas_stok' => 'required|numeric',
-            'edit_hitung_luas' => 'required|numeric',
             'edit_keterangan' => 'required'
         );
 
@@ -242,7 +249,14 @@ class BahanBakuController extends Controller
             $table->satuan = $request->edit_satuan;
             $table->harga = $request->edit_harga;
             $table->batas_stok = $request->edit_batas_stok;
-            $table->hitung_luas = $request->edit_hitung_luas;
+            if (
+              ($request->edit_satuan=='CM') ||
+              ($request->edit_satuan=='M')
+            ) {
+              $table->hitung_luas = 1;
+            } else {
+              $table->hitung_luas = 0;
+            }
             $table->keterangan = $request->edit_keterangan;
 
             if ($table->save()){
