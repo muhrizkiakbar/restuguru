@@ -58,13 +58,13 @@
                       @if ($errors->has('namerole'))
                       <div class="form-group has-error">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="namerole" name="namerole" placeholder="Name">
+                        <input type="text" class="form-control" id="namerole" name="namerole" placeholder="Name" value="{{ old('namerole') }}">
                         <span class="help-block">{{$errors->first('namerole')}}</span>
                       </div>
                       @else
                       <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="namerole" name="namerole" placeholder="Name">
+                        <input type="text" class="form-control" id="namerole" name="namerole" placeholder="Name" value="{{ old('namerole') }}">
                       </div>
                       @endif
 
@@ -72,28 +72,41 @@
                       @if ($errors->has('displayrole'))
                       <div class="form-group has-error">
                         <label for="displayrole">Display Role</label>
-                        <input type="text" class="form-control" id="displayrole" name="displayrole" placeholder="Display Role">
+                        <input type="text" class="form-control" id="displayrole" name="displayrole" placeholder="Display Role" value="{{ old('displayrole') }}">
                         <span class="help-block">{{$errors->first('displayrole')}}</span>
                       </div>
                       @else
                       <div class="form-group">
                         <label for="displayrole">Display Role</label>
-                        <input type="text" class="form-control" id="displayrole" name="displayrole" placeholder="Display Role">
+                        <input type="text" class="form-control" id="displayrole" name="displayrole" placeholder="Display Role" value="{{ old('displayrole') }}">
                       </div>
                       @endif
 
                       @if ($errors->has('descriptionrole'))
                       <div class="form-group has-error">
                         <label for="displayrole">Description Role</label>
-                        <input type="text" class="form-control" id="descriptionrole" name="descriptionrole" placeholder="Description">
+                        <input type="text" class="form-control" id="descriptionrole" name="descriptionrole" placeholder="Description" value="{{ old('descriptionrole') }}">
                         <span class="help-block">{{$errors->first('descriptionrole')}}</span>
                       </div>
                       @else
                       <div class="form-group ">
-                        <label for="displayrole">Description Role</label>
-                        <input type="text" class="form-control" id="descriptionrole" name="descriptionrole" placeholder="Description">
+                        <label for="descriptionrole">Description Role</label>
+                        <input type="text" class="form-control" id="descriptionrole" name="descriptionrole" placeholder="Description" value="{{ old('descriptionrole') }}">
                       </div>
                       @endif
+
+                      @if ($errors->has('permissionrole'))
+                      <div class="form-group has-error">
+                        <label for="displayrole">Permission</label>
+                        <select class="form-control select2" id="permissionrole[]" name="permissionrole[]" multiple="multiple" data-placeholder="Pilih Permission"
+                        style="width: 100%;">
+                          @foreach ($permissions as $permission)
+                            <option value="{{$permission->id}}" {{ (collect(old('permissionrole'))->contains($permission->id)) ? 'selected':'' }}>{{$permission->name}}</option>
+                          @endforeach
+                        </select>
+                        <span class="help-block">{{$errors->first('permissionrole')}}</span>
+                      </div>
+                      @else
                       <div class="form-group ">
                         <label for="displayrole">Permission</label>
                         <select class="form-control select2" id="permissionrole[]" name="permissionrole[]" multiple="multiple" data-placeholder="Pilih Permission"
@@ -103,6 +116,9 @@
                           @endforeach
                         </select>
                       </div>
+                      @endif
+
+                      
                     </div>
                   </div>
                 </div>

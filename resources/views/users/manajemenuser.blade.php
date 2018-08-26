@@ -83,7 +83,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input id="username" name="username" class="form-control pull-right" type="text">
+                                                <input id="username" name="username" class="form-control pull-right" maxlength="20" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Nama</label>
@@ -96,11 +96,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Telepon</label>
-                                                <input id="Telepon" name="Telepon" class="form-control pull-right" type="text">
+                                                <input id="Telepon" name="Telepon" class="form-control pull-right" maxlength="13" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Gaji</label>
-                                                <input id="gaji" name="gaji" class="form-control pull-right" type="text">
+                                                <input id="gaji" name="gaji" class="form-control pull-right" type="text" maxlength="20" value="0">
                                             </div>
                                             <div class="form-group">
                                                 <label>Alamat</label>
@@ -154,7 +154,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input id="username2" name="username2" class="form-control pull-right" disabled type="text">
+                                                <input id="username2" name="username2" class="form-control pull-right" maxlength="20" disabled type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Nama</label>
@@ -168,7 +168,7 @@
                                             <input type="hidden" id="iduser2" name="iduser2">
                                             <div class="form-group">
                                                 <label>Telepon</label>
-                                                <input id="Telepon2" name="Telepon2" class="form-control pull-right" type="text">
+                                                <input id="Telepon2" name="Telepon2" class="form-control pull-right" maxlength="13" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Gaji</label>
@@ -251,6 +251,7 @@
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <!-- FastClick -->
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <!-- sweet alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -260,10 +261,47 @@
     <!-- AdminLTE for demo purposes -->
     <!-- Page script -->
     <script>
+        numeral.register('locale', 'idr', {
+            delimiters: {
+                thousands: '.',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'ribu',
+                million: 'juta',
+                billion: 'ratus juta',
+                trillion: 'milyar'
+            },
+            currency: {
+                symbol: 'Rp'
+            }
+        });
         $(function () {
+            numeral.locale('idr');
             //Initialize Select2 Elements
             $('.select2').select2()
+            $('#Telepon,#Telepon2').bind('keypress', function(e){
+                var keyCode = (e.which)?e.which:event.keyCode
+                return !(keyCode>31 && (keyCode<48 || keyCode>57));
+            });
+            $('#gaji,#gaji2').bind('keypress', function(e){
+                gaji = numeral($(this).val()).value();
+                if(String(gaji).length==13){
+                    return false;
+                }
+                var keyCode = (e.which)?e.which:event.keyCode
+                return !(keyCode>31 && (keyCode<48 || keyCode>57));
+            });
+            $('#username,#username2').bind('keypress', function(e){
+                var keyCode = (e.which)?e.which:event.keyCode
+                return !(keyCode==32);
+            });
 
+            $("#gaji,#gaji2").keyup(function (e) {
+                // console.log(numeral($("#gaji").val()).format('$ 0,0'));
+                gaji = numeral($(this).val()).format('$ 0,0');
+                $(this).val(gaji);
+            });
         })
     </script>
     <script type="text/javascript">
@@ -291,7 +329,7 @@
             $('#username').val("");
             $('#password').val("");
             $('#nama').val("");
-            $('#gaji').val("");
+            $('#gaji').val("0");
             $('#Telepon').val("");
             $('#alamat').val("");
             $('#modal_add').modal("show");
@@ -304,7 +342,8 @@
             $('#username2').val($(this).data('username'));
             $('#password2').val("");
             $('#nama2').val($(this).data('nama'));
-            $('#gaji2').val($(this).data('gaji'));
+            gaji = numeral($(this).data('gaji')).format('$ 0,0');
+            $('#gaji2').val(gaji);
             $('#Telepon2').val($(this).data('telepon'));
             $('#alamat2').val($(this).data('alamat'));
             // $('#cabang_id2').val($(this).data('cabang')).change();
@@ -322,7 +361,10 @@
     </script>
 
     <script type="text/javascript">
+
         $(document).on('click','#simpanadduser',function (){
+            gaji = numeral($("#gaji").val()).value();
+            $("#gaji").val(gaji);
             $.ajax({
                 type:'post',
                 url:'{{route('storeuser')}}',
@@ -357,6 +399,8 @@
                             swal("Alamat", ""+response.errors.alamat+"", "error");
                         }
                         // $('#modal_add').modal('hide');
+                        gaji = numeral(gaji).format('$ 0,0');
+                        $("#gaji").val(gaji);
                     }
                     else
                     {
@@ -367,14 +411,18 @@
                         }
                         else{
                             wal("Eror !", "Gagal menyimpan !", "error");
-                            $('#modal_add').modal('hide');
+                            gaji = numeral(gaji).format('$ 0,0');
+                            $("#gaji").val(gaji);
+                            // $('#modal_add').modal('hide');
                         }
                         
                     }
                 },
                 error:function(){
-                            swal("Eror !", "Gagal menyimpan !", "error");
-                            $('#modal_add').modal('hide');
+                    swal("Eror !", "Gagal menyimpan !", "error");
+                    gaji = numeral(gaji).format('$ 0,0');
+                    $("#gaji").val(gaji);
+                    // $('#modal_add').modal('hide');
                 }
             });
         });
@@ -382,6 +430,8 @@
     
     <script type="text/javascript">
         $(document).on('click','#simpanedituser',function (){
+            gaji = numeral($("#gaji2").val()).value();
+            $("#gaji2").val(gaji);
             $.ajax({
                 type:'post',
                 url:'{{route('updateuser')}}',
@@ -412,6 +462,8 @@
                             swal("Alamat", ""+response.errors.alamat2+"", "error");
                         }
                         // $('#modal_add').modal('hide');
+                        gaji = numeral(gaji).format('$ 0,0');
+                        $("#gaji2").val(gaji);
                     }
                     else
                     {
@@ -422,14 +474,18 @@
                         }
                         else{
                             wal("Eror !", "Gagal menyimpan !", "error");
-                            $('#modal_edit').modal('hide');
+                            gaji = numeral(gaji).format('$ 0,0');
+                            $("#gaji2").val(gaji);
+                            // $('#modal_edit').modal('hide');
                         }
                         
                     }
                 },
                 error:function(){
-                            swal("Eror !", "Gagal menyimpan !", "error");
-                            $('#modal_edit').modal('hide');
+                    swal("Eror !", "Gagal menyimpan !", "error");
+                    gaji = numeral(gaji).format('$ 0,0');
+                    $("#gaji2").val(gaji);
+                    // $('#modal_edit').modal('hide');
                 }
             });
         });
@@ -447,12 +503,12 @@
                 success:function(response){
                         if (response=="Success"){
                             swal("Success !", "Berhasil menghapus !", "success");
-                            $('#modal_edit').modal('hide');
+                            $('#modal_delete').modal('hide');
                             oTable.ajax.reload();
                         }
                         else{
                             wal("Eror !", "Gagal menghapus !", "error");
-                            $('#modal_edit').modal('hide');
+                            $('#modal_delete').modal('hide');
                         }
                 },
             });

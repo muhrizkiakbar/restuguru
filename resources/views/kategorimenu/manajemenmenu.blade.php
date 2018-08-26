@@ -51,7 +51,7 @@
                                             <th>Name Menu</th>
                                             <th>Icon</th>
                                             <th>Page</th>
-                                            <th width="50px">Edit</th>
+                                            <th width="50px">Aksi</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -154,7 +154,7 @@
                     { data: 'namakategorimenu', name: 'namakategorimenu' },
                     { data: 'icon', name: 'icon' },
                     { data: 'pages', name: 'pages' },
-                    {data:'edit'}
+                    { data: 'aksi' }
                 ]
             });
         });

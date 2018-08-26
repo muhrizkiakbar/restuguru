@@ -49,14 +49,14 @@ class KategoriMenuController extends Controller
             ->editColumn('icon',function ($tables){
                 return '<i class="fa '.$tables->icon.'"></i>';
             })
-            ->addColumn('edit', function ($tables) {
+            ->addColumn('aksi', function ($tables) {
             return '
             <div class="btn-group">
             <a class="btn btn-success btn-sm" href="/menu/edit/'.encrypt($tables->id).'"><i class="fa fa-edit"></i></a>
             <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal"  data-id="'.encrypt($tables->id).'" data-name="'.$tables->namakategorimenu.'" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
             </div>';
             })
-            ->rawColumns(['edit','pages','icon'])
+            ->rawColumns(['aksi','pages','icon'])
             ->make(true);
     }
 
@@ -101,7 +101,7 @@ class KategoriMenuController extends Controller
         }
         else
         {
-            return redirect()->back()->with('error','Gagal menyimpan submenu.');
+            return redirect()->back()->withInput($request->input())->with('error','Gagal menyimpan submenu.');
         }
         
     }
@@ -183,7 +183,7 @@ class KategoriMenuController extends Controller
         }
         else
         {
-            return redirect('/menu')->with('error','Gagal menyimpan submenu.');
+            return redirect('/menu')->withInput($request->input())->with('error','Gagal menyimpan submenu.');
         }
     }
 
