@@ -91,7 +91,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Telepon</label>
-                                                <input id="tambah_telpon_supplier" name="tambah_telpon_supplier" class="form-control" type="text" maxlength="15">
+                                                <input id="tambah_telpon_supplier" name="tambah_telpon_supplier" class="form-control" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -103,7 +103,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Rekening</label>
-                                                <input id="tambah_rekening_suppliers" name="tambah_rekening_suppliers" class="form-control" type="text" maxlength="15">
+                                                <input id="tambah_rekening_suppliers" name="tambah_rekening_suppliers" class="form-control" type="text" maxlength="30">
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>
@@ -150,7 +150,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Telepon</label>
-                                                <input id="edit_telpon_supplier" name="edit_telpon_supplier" class="form-control" type="text" maxlength="15">
+                                                <input id="edit_telpon_supplier" name="edit_telpon_supplier" class="form-control" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -162,7 +162,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Rekening</label>
-                                                <input id="edit_rekening_suppliers" name="edit_rekening_suppliers" class="form-control" type="text" maxlength="15">
+                                                <input id="edit_rekening_suppliers" name="edit_rekening_suppliers" class="form-control" type="text" maxlength="30">
                                             </div>
                                             <div class="form-group">
                                                 <label>Keterangan</label>

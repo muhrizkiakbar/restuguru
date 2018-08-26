@@ -213,6 +213,12 @@ class PengeluaranController extends Controller
                 $subtransaksi->user_id=Auth::user()->id;
                 $subtransaksi->cabang_id=Auth::user()->cabangs->id;
                 $subtransaksi->sub_totalpengeluaran=$value['subtotal'];
+                
+                // if ($value['satuan']==null)
+                // {
+                //     $value['satuan']=
+                // }
+
                 $subtransaksi->satuan=$value['satuan'];
                 // dd(is_numeric($value['produkid']));
                 if (is_numeric($value['produkid']))
@@ -231,7 +237,7 @@ class PengeluaranController extends Controller
                         $addbahanbaku=new stokbahanbaku;
                         $addbahanbaku->bahanbaku_id=$value['produkid'];
                         $addbahanbaku->cabang_id=Auth::user()->cabangs->id;
-                        $addbahanbaku->satuan=$value['satuan'];
+                        $addbahanbaku->satuan=$bahanbakugethitungluas->satuan;
 
 
                         $addbahanbaku->stokhitungluas=$bahanbakugethitungluas->hitung_luas;
@@ -241,15 +247,15 @@ class PengeluaranController extends Controller
 
                             if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
                             {
-                                $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                                $luas=(($value['panjang']*100)*($value['lebar']*100))*$value['kuantitas'];
                             }
                             elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
                             {
-                                $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                                $luas=(($value['panjang'])*($value['lebar']))*$value['kuantitas'];
                             }
                             elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
                             {
-                                $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                                $luas=(($value['panjang']/100)*($value['lebar']/100))*$value['kuantitas'];
                             }
 
                             $addbahanbaku->banyakstok=$luas;
@@ -273,16 +279,16 @@ class PengeluaranController extends Controller
 
                             if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($value['satuan']=="METER"))
                             {
-                                $luas=($value['panjang']*100)*($value['lebar']*100)*$value['kuantitas'];
+                                $luas=(($value['panjang']*100)*($value['lebar']*100))*$value['kuantitas'];
                             }
                             elseif (($bahanbakugethitungluas->satuan==$value['satuan']))
                             {
-                                $luas=($value['panjang'])*($value['lebar'])*$value['kuantitas'];
+                                $luas=(($value['panjang'])*($value['lebar']))*$value['kuantitas'];
                             }
                             elseif (($bahanbakugethitungluas->satuan=="METER") && ($value['satuan']=="CENTIMETER"))
                             {
                                 // dd("sd");
-                                $luas=($value['panjang']/100)*($value['lebar']/100)*$value['kuantitas'];
+                                $luas=(($value['panjang']/100)*($value['lebar']/100))*$value['kuantitas'];
                             }
 
                             $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+$luas;

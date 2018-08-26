@@ -96,6 +96,7 @@ class PelangganController extends Controller
     {
         //
         $rules=array(
+            'tambah_jenis_pelanggan'=>'required',
             'tambah_namapemilik'=>'required',
             'tambah_ktppelanggan'=>'required | numeric',
             'tambah_hppelanggan'=>'required | numeric',
@@ -179,6 +180,7 @@ class PelangganController extends Controller
             'edit_alamatpelanggan'=>'required',
             'edit_limittagihan'=>'required | numeric',
             'edit_rekpelanggan'=>'required | numeric',
+            'edit_keterangan'=>'required',
         );
 
         $validator=Validator::make(Input::all(),$rules);
@@ -188,7 +190,7 @@ class PelangganController extends Controller
         else {
             $table= CPelanggans::where('id','=',decrypt($request->pelanggan_id))
                     ->first();
-            $table->jenispelanggan_id   =decrypt($request->edit_jenis_pelanggan);
+            $table->jenispelanggan_id   =$request->edit_jenis_pelanggan;
             $table->nama_pemilik        =$request->edit_namapemilik;
             $table->ktp                 =$request->edit_ktppelanggan;
             $table->hp_pelanggan        =$request->edit_hppelanggan;

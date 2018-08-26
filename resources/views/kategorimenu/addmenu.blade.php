@@ -108,7 +108,7 @@ code{
                       @else
                       <div class="form-group">
                         <label for="name">Name Menu</label>
-                        <input type="text" class="form-control" id="namemenu" name="namemenu" placeholder="Name Submenu">
+                        <input type="text" class="form-control" id="namemenu" name="namemenu" placeholder="Name Submenu" value="{{ old('namemenu') }}">
                       </div>
                       @endif
 
@@ -122,7 +122,7 @@ code{
                       @else
                       <div class="form-group">
                         <label for="displayrole">Icon</label>
-                        <input type="text" id="icon" name="icon" class="input input1 form-control">
+                        <input type="text" id="icon" name="icon" class="input input1 form-control" value="{{ old('icon') }}">
                         <!-- <select class="input" id="icon" name="icon">
                             <option value="fa-align-left">&#xf036; fa-align-left</option>
                             <option value="fa-align-right">&#xf038; fa-align-right</option>
@@ -562,7 +562,9 @@ code{
                         </select> -->
                       </div>
                       @endif
-                      <div class="form-group ">
+
+                      @if ($errors->has('page'))
+                      <div class="form-group has-error">
                         <label for="displayrole">Page</label>
                         <select class="form-control select2" id="page[]" name="page[]" multiple="multiple" data-placeholder="Pilih Page"
                         style="width: 100%;">
@@ -570,7 +572,19 @@ code{
                             <option value="{{$permission->id}}">{{$permission->display_name}}</option>
                           @endforeach
                         </select>
+                        <span class="help-block">{{$errors->first('page')}}</span>
                       </div>
+                      @else
+                      <div class="form-group ">
+                        <label for="displayrole">Page</label>
+                        <select class="form-control select2" id="page[]" name="page[]" multiple="multiple" data-placeholder="Pilih Page"
+                        style="width: 100%;">
+                          @foreach ($permissions as $permission)
+                            <option value="{{$permission->id}}" {{ (collect(old('page'))->contains($permission->id)) ? 'selected':'' }}>{{$permission->display_name}}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      @endif
                     </div>
                   </div>
                 </div>
