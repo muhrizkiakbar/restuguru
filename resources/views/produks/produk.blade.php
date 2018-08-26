@@ -94,8 +94,13 @@
                                                 <input id="tambah_nama_produk" name="tambah_nama_produk" class="form-control" type="text">
                                             </div>
                                             <div class="form-group">
-                                                <label>Satuan</label>
-                                                <input id="tambah_satuan" name="tambah_satuan" class="form-control" type="text">
+                                                <select class="form-control select2" placeholder="Satuan" name="tambah_satuan" id="tambah_satuan" style="width: 100%;">
+                                                        <option disabled selected>Satuan Produk</option>
+                                                        <option value="CM">Centimeter</option>
+                                                        <option value="M">Meter</option>
+                                                        <option value="PCS">Pcs</option>
+                                                        <option value="PAKET">Paket</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Beli</label>
@@ -113,21 +118,6 @@
                                                         Rp
                                                     </div>
                                                     <input id="tambah_harga_jual" name="tambah_harga_jual" class="form-control mata-uang" type="text" value="0">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Hitung Luas</label>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="tambah_hitung_luas" id="tambah_hitung_luas_t" value="0" checked>
-                                                        Tidak
-                                                    </label>
-                                                </div>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="tambah_hitung_luas" id="tambah_hitung_luas_y" value="1">
-                                                        Ya
-                                                    </label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -177,8 +167,13 @@
                                                 <input id="edit_nama_produk" name="edit_nama_produk" class="form-control" type="text">
                                             </div>
                                             <div class="form-group">
-                                                <label>Satuan</label>
-                                                <input id="edit_satuan" name="edit_satuan" class="form-control" type="text">
+                                                <select class="form-control select2" placeholder="Satuan" name="edit_satuan" id="edit_satuan" style="width: 100%;">
+                                                        <option disabled selected>Satuan Produk</option>
+                                                        <option value="CM">Centimeter</option>
+                                                        <option value="M">Meter</option>
+                                                        <option value="PCS">Pcs</option>
+                                                        <option value="PAKET">Paket</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga Beli</label>
@@ -196,21 +191,6 @@
                                                         Rp
                                                     </div>
                                                     <input id="edit_harga_jual" name="edit_harga_jual" class="form-control mata-uang" type="text" value="0">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Hitung Luas</label>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="edit_hitung_luas" id="edit_hitung_luas_t" value="0">
-                                                        Tidak
-                                                    </label>
-                                                </div>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="edit_hitung_luas" id="edit_hitung_luas_y" value="1">
-                                                        Ya
-                                                    </label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -303,9 +283,12 @@
                 symbol: 'Rp'
             }
         });
-        numeral.locale('idr')
+        numeral.locale('idr');
         $('#tambah_kategori, #edit_kategori').select2({
             placeholder: "Pilih Kategori."
+        });
+        $('#tambah_satuan, #edit_satuan').select2({
+            placeholder: "Pilih Satuan."
         });
         $(function(){
             $("input.mata-uang").keyup(function(){
@@ -342,11 +325,10 @@
         $(document).on('click','#modal_tambah_produk',function () {
             $('#tambah_kategori').val(0).trigger('change');
             $('#tambah_nama_produk').val("");
-            $('#tambah_satuan').val("");
+            $('#tambah_satuan').val(0).trigger('change');
             // $('#tambah_harga_beli, #tambah_harga_jual').maskMoney({ allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
             $('#tambah_harga_beli').val(0);
             $('#tambah_harga_jual').val(0);
-            $('#tambah_hitung_luas').val(0);
             $('#tambah_keterangan').val("");
         });
     </script>
@@ -356,16 +338,10 @@
         $(document).on('click','.modal_edit',function () {
             $('#edit_kategori').val($(this).data('kategori_id')).trigger('change');
             $('#edit_nama_produk').val($(this).data('nama_produk'));
-            $('#edit_satuan').val($(this).data('satuan'));
+            $('#edit_satuan').val($(this).data('satuan')).trigger('change');
             // $('#edit_harga_beli, #edit_harga_jual').maskMoney({ allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
             $('#edit_harga_beli').val(numeral($(this).data('harga_beli')).format('0,0'));
             $('#edit_harga_jual').val(numeral($(this).data('harga_jual')).format('0,0'));
-            $hitung_luas = $(this).data('hitung_luas');
-            if ($hitung_luas) {
-                $('#edit_hitung_luas_y').prop('checked',true);
-            } else {
-                $('#edit_hitung_luas_t').prop('checked',true);
-            }
             $('#edit_keterangan').val($(this).data('keterangan'));
             $('#produk_id').val($(this).data('id'));
         });
@@ -382,7 +358,6 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
-            
             $("#tambah_harga_jual").val(numeral($("#tambah_harga_jual").val()).value());
             $("#tambah_harga_beli").val(numeral($("#tambah_harga_beli").val()).value());
             $.ajax({
@@ -405,8 +380,6 @@
                             swal("Produk", ""+response.errors.tambah_harga_beli+"", "error");
                         }else if ((response.errors.tambah_harga_jual)){
                             swal("Produk", ""+response.errors.tambah_harga_jual+"", "error");
-                        }else if ((response.errors.tambah_hitung_luas)){
-                            swal("Produk", ""+response.errors.tambah_hitung_luas+"", "error");
                         }else if ((response.errors.tambah_keterangan)){
                             swal("Produk", ""+response.errors.tambah_keterangan+"", "error");
                         }
@@ -456,8 +429,6 @@
                             swal("Produk", ""+response.errors.edit_harga_beli+"", "error");
                         }else if ((response.errors.edit_harga_jual)){
                             swal("Produk", ""+response.errors.edit_harga_jual+"", "error");
-                        }else if ((response.errors.edit_hitung_luas)){
-                            swal("Produk", ""+response.errors.edit_hitung_luas+"", "error");
                         }else if ((response.errors.edit_keterangan)){
                             swal("Produk", ""+response.errors.edit_keterangan+"", "error");
                         }
