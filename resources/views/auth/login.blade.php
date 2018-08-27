@@ -9,8 +9,8 @@
             <div class="login-logo">
                 <img src="/dist/img/logo.png" alt="">
             </div>
-            <div style="font-size: 35px;text-align: center;max-width: 100%;">
-            <strong>RESTU GURU</strong><br>
+            <div style="font-size: 25px;text-align: center;max-width: 100%;">
+                <strong>RESTU GURU</strong><br>
                 <strong>PROMOSINDO</strong>
             </div>
             <form action="/" method="post">
