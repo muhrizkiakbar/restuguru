@@ -41,6 +41,7 @@ class RoleTableSeeder extends Seeder
                     'Telepon' => '0811513055',
                     'gaji' => '50000',
                     'Alamat' => 'Jl. Gt. Paikat, Komplek. Buana Permai No. Blok B',
+                    'cabang_id'=> '1'
                 ],
             ];
             foreach ($users as $key => $value) {
