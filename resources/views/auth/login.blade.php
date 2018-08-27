@@ -45,7 +45,8 @@
                             </div>
                         @endif
                     @endif
-                        <p><small>Dikembangkan oleh <a href="diskominfo.kalselprov.go.id">Diskominfo Prov. Kalsel</a> &copy; 2017</small></p>
+                    <p><small>Dikembangkan oleh <a href="https://www.instagram.com/bilalteknologi/">Bilal Teknologi</a> &copy; 2018</small></p>
+
                     </div>
                     <!-- /.col -->
                 </div>
