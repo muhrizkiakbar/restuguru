@@ -101,7 +101,7 @@
                         <select class="form-control select2" id="permissionrole[]" name="permissionrole[]" multiple="multiple" data-placeholder="Pilih Permission"
                         style="width: 100%;">
                           @foreach ($permissions as $permission)
-                            <option value="{{$permission->id}}" {{ (collect(old('permissionrole'))->contains($permission->id)) ? 'selected':'' }}>{{$permission->name}}</option>
+                            <option value="{{$permission->id}}" {{ (collect(old('permissionrole'))->contains($permission->id)) ? 'selected':'' }}>{{$permission->display_name}}</option>
                           @endforeach
                         </select>
                         <span class="help-block">{{$errors->first('permissionrole')}}</span>
@@ -112,7 +112,7 @@
                         <select class="form-control select2" id="permissionrole[]" name="permissionrole[]" multiple="multiple" data-placeholder="Pilih Permission"
                         style="width: 100%;">
                           @foreach ($permissions as $permission)
-                            <option value="{{$permission->id}}">{{$permission->name}}</option>
+                            <option value="{{$permission->id}}">{{$permission->display_name}}</option>
                           @endforeach
                         </select>
                       </div>
