@@ -27,7 +27,7 @@ class UserController extends Controller
         //
         $cabangs=CCabangs::all();
         $role=Role::all();
-        return view('Users.manajemenuser',['cabangs'=>$cabangs,'roles'=>$role]);
+        return view('users.manajemenuser',['cabangs'=>$cabangs,'roles'=>$role]);
     }
 
     public function dataalluser(){
