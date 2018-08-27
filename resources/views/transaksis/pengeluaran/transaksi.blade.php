@@ -185,7 +185,7 @@
 
                 <div class="row">
                   <div class="col-md-12">
-                      <div class="box-body no-padding">
+                      <div class="box-body no-padding table-responsive">
                         <table class="table table-striped table-bordered">
                           <thead>
                             <th>Pengeluaran</th>
