@@ -16,7 +16,7 @@
             <br>
             <form action="/" method="post">
                 <div class="form-group has-feedback">
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Email/Username/NIP">
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 {{csrf_field()}}
