@@ -140,7 +140,6 @@ class ProdukController extends Controller
             'tambah_satuan' => 'required',
             'tambah_harga_beli' => 'required|numeric',
             'tambah_harga_jual' => 'required|numeric',
-            'tambah_hitung_luas' => 'required|numeric',
             'tambah_keterangan' => 'required'
         );
 
@@ -154,7 +153,14 @@ class ProdukController extends Controller
             $table->satuan = $request->tambah_satuan;
             $table->harga_beli = $request->tambah_harga_beli;
             $table->harga_jual = $request->tambah_harga_jual;
-            $table->hitung_luas = $request->tambah_hitung_luas;
+            if (
+              ($request->tambah_satuan=='CM') ||
+              ($request->tambah_satuan=='M')
+            ) {
+              $table->hitung_luas = 1;
+            } else {
+              $table->hitung_luas = 0;
+            }
             $table->keterangan = $request->tambah_keterangan;
 
             if ($table->save()){
@@ -203,7 +209,6 @@ class ProdukController extends Controller
             'edit_satuan' => 'required',
             'edit_harga_beli' => 'required|numeric',
             'edit_harga_jual' => 'required|numeric',
-            'edit_hitung_luas' => 'required|numeric',
             'edit_keterangan' => 'required'
         );
 
@@ -218,7 +223,14 @@ class ProdukController extends Controller
             $table->satuan = $request->edit_satuan;
             $table->harga_beli = $request->edit_harga_beli;
             $table->harga_jual = $request->edit_harga_jual;
-            $table->hitung_luas = $request->edit_hitung_luas;
+            if (
+              ($request->edit_satuan=='CM') ||
+              ($request->edit_satuan=='M')
+            ) {
+              $table->hitung_luas = 1;
+            } else {
+              $table->hitung_luas = 0;
+            }
             $table->keterangan = $request->edit_keterangan;
 
             if ($table->save()){

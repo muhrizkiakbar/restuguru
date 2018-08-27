@@ -477,18 +477,40 @@
 
                 var Total_c_Pengeluaran = 0;
                 var Total_t_Pengeluaran = 0;
-
+                // console.log(persentaseHutang_Pengeluaran, persentasePembayaran_Pengeluaran, persentasePembayaran_Penjualan, persentasePiutang_Penjualan);
                 $('#Pembayaran_Penjualan').text('Rp. '+Pembayaran_Penjualan.format(2, 3, '.', ','));
                 $('#Piutang_Penjualan').text('Rp. '+Piutang_Penjualan.format(2, 3, '.', ','));
                 $('#Total_Penjualan').text('Rp. '+ (Pembayaran_Penjualan+Piutang_Penjualan).format(2, 3, '.', ','));
-                document.getElementById('Progress_Pembayaran_Penjualan').style.width= persentasePembayaran_Penjualan+'%';
-                document.getElementById('Progress_Piutang_Penjualan').style.width=persentasePiutang_Penjualan+'%';
+                if (isNaN(persentasePembayaran_Penjualan)){ 
+                    document.getElementById('Progress_Pembayaran_Penjualan').style.width= 0 +'%';
+                } else {
+                    document.getElementById('Progress_Pembayaran_Penjualan').style.width= persentasePembayaran_Penjualan+'%';
+                };
+
+                if (isNaN(persentasePiutang_Penjualan)){ 
+                    document.getElementById('Progress_Piutang_Penjualan').style.width= 0 +'%';
+                } else {
+                    document.getElementById('Progress_Piutang_Penjualan').style.width= persentasePiutang_Penjualan+'%';
+                };
+                // document.getElementById('Progress_Pembayaran_Penjualan').style.width= if ( isNaN(persentasePembayaran_Penjualan) ){ 0 }else{persentasePembayaran_Penjualan}+'%';
+                // document.getElementById('Progress_Piutang_Penjualan').style.width=persentasePiutang_Penjualan+'%';
 
                 $('#Pembayaran_Pengeluaran').text('Rp. '+Pembayaran_Pengeluaran.format(2, 3, '.', ','));
                 $('#Hutang_Pengeluaran').text('Rp. '+Hutang_Pengeluaran.format(2, 3, '.', ','));
                 $('#Total_Pengeluaran').text('Rp. '+ (Pembayaran_Pengeluaran + Hutang_Pengeluaran).format(2, 3, '.', ','));
-                document.getElementById('Progress_Pembayaran_Pengeluaran').style.width= persentasePembayaran_Pengeluaran+'%';
-                document.getElementById('Progress_Hutang_Pengeluaran').style.width=persentaseHutang_Pengeluaran+'%';
+                if (isNaN(persentasePiutang_Penjualan)){ 
+                    document.getElementById('Progress_Pembayaran_Pengeluaran').style.width= 0 +'%';
+                } else {
+                    document.getElementById('Progress_Pembayaran_Pengeluaran').style.width= persentasePembayaran_Pengeluaran+'%';
+                };
+
+                if (isNaN(persentasePiutang_Penjualan)){ 
+                    document.getElementById('Progress_Hutang_Pengeluaran').style.width= 0 +'%';
+                } else {
+                    document.getElementById('Progress_Hutang_Pengeluaran').style.width= persentaseHutang_Pengeluaran+'%';
+                };
+                // document.getElementById('Progress_Pembayaran_Pengeluaran').style.width= persentasePembayaran_Pengeluaran+'%';
+                // document.getElementById('Progress_Hutang_Pengeluaran').style.width=persentaseHutang_Pengeluaran+'%';
                 
                 $('#Pencairan_Piutang').text('Rp. '+Pencairan_Piutang.format(2, 3, '.', ','));
                 $('#Pembayaran_Hutang').text('Rp. '+Pembayaran_Hutang.format(2, 3, '.', ','));
