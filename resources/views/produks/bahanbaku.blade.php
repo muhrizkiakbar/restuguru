@@ -17,7 +17,7 @@
 @endpush
 
 @section('body')
-    <body class="hold-transition skin-yellow sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
         @include('layouts.header')
@@ -33,7 +33,7 @@
                 {{-- Tabel Bahan Baku --}}
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="box box-default">
+                        <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Bahan Baku</h3>
                             </div>

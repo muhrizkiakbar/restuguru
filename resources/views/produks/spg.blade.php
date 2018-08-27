@@ -20,7 +20,7 @@
 @endpush
 
 @section('body')
-    <body class="hold-transition skin-yellow sidebar-mini">
+    <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
 
         @include('layouts.header')
@@ -36,7 +36,7 @@
                 {{-- Tabel Harga Khusus Grup --}}
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="box box-default">
+                        <div class="box box-success">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Harga Khusus Jenis Pelanggan</h3>
                             </div>

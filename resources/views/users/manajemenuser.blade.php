@@ -37,7 +37,7 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="box box-default">
+                        <div class="box box-warning">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Manajemen User</h3>
                             </div>

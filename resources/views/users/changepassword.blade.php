@@ -30,7 +30,7 @@
 
 
                 <!-- Atur Jadwal Sebelum Masuk Kerja -->
-                <div class="box box-default">
+                <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Ubah Password</h3>
 

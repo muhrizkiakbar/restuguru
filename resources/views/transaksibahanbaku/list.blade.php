@@ -86,7 +86,7 @@
 @endpush
 
 @section('body')
-    <body class="hold-transition skin-green sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
       @include('layouts.header')
@@ -121,7 +121,7 @@
           <!-- left column -->
           <form id="formtrans">
           <div class="col-md-3">
-            <div class="box box-success">
+            <div class="box box-primary">
               <div class="box-header with-border">
                 <h3 class="box-title">Cari Transaksi</h3>
                 <div class="box-tools pull-right">

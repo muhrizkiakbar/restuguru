@@ -197,7 +197,7 @@
           </form>
 
           <div class="col-md-10">
-            <div class="box box-primary">
+            <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Angsuran Transaksi Penjualan <i class="fa  fa-shopping-cart"></i></h3>
               </div>
