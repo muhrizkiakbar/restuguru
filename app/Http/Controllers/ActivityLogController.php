@@ -12,7 +12,7 @@ class ActivityLogController extends Controller
     public function index(Request $request)
     {
 
-        $datas=CActivityLog::sortBy('created_at','asc')->paginate(50,
+        $datas=CActivityLog::orderBy('id','desc')->paginate(50,
                             array('activity_log.*'));
         // dd(collect($data));
 
