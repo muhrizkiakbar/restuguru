@@ -10,7 +10,7 @@
                 <img src="{{asset('dist/img/rg.png')}}"alt="">
             </div>
             <div style="font-size: 25px;text-align: center;max-width: 100%;" style="padding-top:0px;">
-                <strong>RESTU GURU</strong>
+                <strong>RESTU GURU</strong><br>
                 <strong>PROMOSINDO</strong>
             </div>
             <br>
