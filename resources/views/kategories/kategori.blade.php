@@ -294,7 +294,7 @@
                             $('#modal_edit').modal('hide');
                             oTable.ajax.reload();
                         }else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_edit').modal('hide');
                         }
                     }
@@ -318,9 +318,16 @@
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    $('.error').addClass('hidden');
-                    $('#modal_hapus').modal('hide');
-                    oTable.ajax.reload();
+                    if (response=="Success"){
+                        swal("Success !", "Berhasil menghapus !", "success");
+                        $('.error').addClass('hidden');
+                        $('#modal_hapus').modal('hide');
+                        oTable.ajax.reload();
+                    }else{
+                        swal("Error !", "Gagal menyimpan !", "error");
+                        // $('#modal_edit').modal('hide');
+                    }
+                    
                 },
             });
         });
