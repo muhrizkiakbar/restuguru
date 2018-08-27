@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 
 class LoginController extends Controller
@@ -27,7 +29,46 @@ class LoginController extends Controller
      *
      * @var string
      */
+    public function index()
+    {
+        return view('login');
+    }
+
     protected $redirectTo = '/home';
+
+    public function  postLogin(Request $request){
+        if (Auth::attempt([
+            'username'=>$request->username,
+            'password'=>$request->password
+        ])){
+
+            $isi=Auth::user()->username." telah login di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"login");
+            return redirect('/home');
+          // dd(Auth::user()->role->namaRole="kadis");
+        //   if (Auth::user()->role->namaRole=="kadis"){
+        //     return redirect('/home/pegawai');
+        //   }
+        //   elseif (Auth::user()->role->namaRole=="sekda"){
+        //     return redirect('/dashboard');
+        //   }
+        //   elseif (Auth::user()->role->namaRole=="pegawai"){
+        //     return redirect('/user/pegawai');
+        //   }
+        //   elseif (Auth::user()->role->namaRole=="gubernur"){
+        //     return redirect('/dashboard/gub');
+        //   }
+        //   elseif ((Auth::user()->role->namaRole=="karu")){
+        //     return redirect('/home/ruangan');
+        //   }
+        //   else {
+        //     // dd(Auth::user()->role->namaRole="pegawai");
+        //     return redirect('/home');
+        //   }
+        }else{
+            return redirect()->back()->with('error', 'Login gagal !!');
+        }
+    }
 
     /**
      * Create a new controller instance.

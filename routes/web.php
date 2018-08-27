@@ -12,18 +12,14 @@
 */
 
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/login','Auth\LoginController@index');
 
-Route::get('/', function () {
-    return view('login');
-});
+Route::get('/','Auth\LoginController@index');
 
         
 
-Route::post('/','LoginController@postLogin');
-Route::post('/login','LoginController@postLogin');
+Route::post('/','Auth\LoginController@postLogin');
+Route::post('/login','Auth\LoginController@postLogin');
 
 
 
