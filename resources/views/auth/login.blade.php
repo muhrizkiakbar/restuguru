@@ -13,6 +13,7 @@
                 <strong>RESTU GURU</strong><br>
                 <strong>PROMOSINDO</strong>
             </div>
+            <br>
             <form action="/" method="post">
                 <div class="form-group has-feedback">
                     <input type="text" id="username" name="username" class="form-control" placeholder="Email/Username/NIP">
