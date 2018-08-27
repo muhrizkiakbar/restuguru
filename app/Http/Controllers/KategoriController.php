@@ -81,6 +81,8 @@ class KategoriController extends Controller
             $table->Keterangan = $request->tambah_keterangan;
 
             if ($table->save()){
+                $isi=Auth::user()->username." telah menambah kategori ".$table->Nama_Kategori." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"add");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -136,6 +138,8 @@ class KategoriController extends Controller
             $table->Keterangan = $request->edit_keterangan;
 
             if ($table->save()){
+                $isi=Auth::user()->username." telah mengubah kategori ".$table->Nama_Kategori." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"edit");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -155,6 +159,8 @@ class KategoriController extends Controller
         $table=CKategories::where('id','=',decrypt($request->hapus_kategori_id))
                             ->first();
         if ($table->delete()){
+            $isi=Auth::user()->username." telah menghapus kategori ".$table->Nama_Kategori." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"delete");
             return response()->json("Success");
         }else{
             return response()->json("Failed");

@@ -86,6 +86,8 @@ class JenispelangganController extends Controller
             $table->jenis_pelanggan = $request->tambah_jenispelanggan;
 
             if ($table->save()){
+                $isi=Auth::user()->username." telah menambah jenis pelanggan ".$table->jenis_pelanggan." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"add");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -142,6 +144,8 @@ class JenispelangganController extends Controller
             $table->jenis_pelanggan = $request->edit_jenispelanggan;
             
             if ($table->save()){
+                $isi=Auth::user()->username." telah mengubah jenis pelanggan ".$table->jenis_pelanggan." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"edit");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -161,6 +165,8 @@ class JenispelangganController extends Controller
         $table=CJenispelanggans::where('id','=',decrypt($request->hapus_jenispelanggan_id))
                             ->first();
         if ($table->delete()){
+            $isi=Auth::user()->username." telah menghapus jenis pelanggan ".$table->jenis_pelanggan." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"delete");
             return response()->json("Success");
         }else{
             return response()->json("Failed");

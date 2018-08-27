@@ -190,6 +190,8 @@ class BahanBakuController extends Controller
             $table->keterangan = $request->tambah_keterangan;
 
             if ($table->save()){
+            $isi=Auth::user()->username." telah menambah bahan baku ".$table->nama_bahan." pada id ".$table->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"add");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -260,6 +262,8 @@ class BahanBakuController extends Controller
             $table->keterangan = $request->edit_keterangan;
 
             if ($table->save()){
+            $isi=Auth::user()->username." telah mengubah bahan baku ".$table->nama_bahan." pada id ".$table->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"edit");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -279,6 +283,8 @@ class BahanBakuController extends Controller
         $table=CBahanBakus::where('id','=',decrypt($request->hapus_bahan_baku_id))
                             ->first();
         if ($table->delete()){
+            $isi=Auth::user()->username." telah menghapus bahan baku ".$table->nama_bahan." pada id ".$table->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"delete");
             return response()->json("Success");
         }else{
             return response()->json("Failed");

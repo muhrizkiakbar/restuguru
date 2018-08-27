@@ -30,16 +30,15 @@
             <!-- Main content -->
             <section class="content">
 
-                {{-- Tabel Special Price --}}
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Special Price</h3>
+                                <h3 class="box-title">Harga Khusus Perorangan</h3>
                             </div>
                             <div class="box-body">
                                 <button type="button" id="modal_tambah_spcprice" class="btn btn-primary" data-toggle="modal" data-target="#modal_tambah">
-                                    Tambah Special Price
+                                    Tambah
                                 </button>
                                 <hr>
                                 <div class="table-responsive">

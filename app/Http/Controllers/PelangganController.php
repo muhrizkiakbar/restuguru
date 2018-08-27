@@ -130,6 +130,8 @@ class PelangganController extends Controller
             $table->status_pelanggan    =$request->tambah_statuspelanggan;
 
             if ($table->save()){
+                $isi=Auth::user()->username." telah menambah pelanggan ".$request->tambah_namaperusahaan." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"add");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -190,6 +192,7 @@ class PelangganController extends Controller
         else {
             $table= CPelanggans::where('id','=',decrypt($request->pelanggan_id))
                     ->first();
+            $namaperusahaan = $table->nama_perusahaan;
             $table->jenispelanggan_id   =$request->edit_jenis_pelanggan;
             $table->nama_pemilik        =$request->edit_namapemilik;
             $table->ktp                 =$request->edit_ktppelanggan;
@@ -205,6 +208,8 @@ class PelangganController extends Controller
             $table->status_pelanggan    =$request->edit_statuspelanggan;
 
             if ($table->save()){
+                $isi=Auth::user()->username." telah mengubah pelanggan ".$namaperusahaan." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"edit");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -224,6 +229,8 @@ class PelangganController extends Controller
         $table=CPelanggans::where('id','=',decrypt($request->hapus_pelanggan_id))
                             ->first();
         if ($table->delete()){
+            $isi=Auth::user()->username." telah menghapus pelanggan ".$table->nama_perusahaan." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"delete");
             return response()->json("Success");
         }else{
             return response()->json("Failed");

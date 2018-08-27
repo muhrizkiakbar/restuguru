@@ -96,6 +96,8 @@ class SupplierController extends Controller
             $table->keterangan_suppliers = $request->tambah_keterangan_suppliers;
             $table->user_id=Auth::user()->id;
             if ($table->save()){
+                $isi=Auth::user()->username." telah menambah supplier ".$table->nama_supplier." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"add");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -161,6 +163,8 @@ class SupplierController extends Controller
             $table->keterangan_suppliers = $request->edit_keterangan_suppliers;
 
             if ($table->save()){
+                $isi=Auth::user()->username." telah mengubah supplier ".$table->nama_supplier." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"edit");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -180,6 +184,8 @@ class SupplierController extends Controller
         $table=CSuppliers::where('id','=',decrypt($request->hapus_supplier_id))
                             ->first();
         if ($table->delete()){
+            $isi=Auth::user()->username." telah menghapus supplier ".$table->nama_supplier." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"delete");
             return response()->json("Success");
         }else{
             return response()->json("Failed");

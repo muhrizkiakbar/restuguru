@@ -89,6 +89,8 @@ class CabangController extends Controller
             $table->user_id=Auth::user()->id;
 
             if ($table->save()){
+                $isi=Auth::user()->username." telah menambah cabang ".$table->Nama_Cabang." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"add");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -155,6 +157,8 @@ class CabangController extends Controller
             $table->Jenis_Cabang    = $request->edit_jenis_cabang;
             $table->user_id=Auth::user()->id;
             if ($table->save()){
+                $isi=Auth::user()->username." telah mengubah cabang ".$table->Nama_Cabang." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"edit");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
@@ -174,6 +178,8 @@ class CabangController extends Controller
         $table=CCabangs::where('id','=',decrypt($request->hapus_cabang_id))
                             ->first();
         if ($table->delete()){
+            $isi=Auth::user()->username." telah menghapus cabang ".$table->Nama_Cabang." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"add");
             return response()->json("Success");
         }else{
             return response()->json("Failed");

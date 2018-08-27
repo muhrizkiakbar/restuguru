@@ -97,6 +97,8 @@ class KategoriMenuController extends Controller
                 $kategori_menu->permission_id=$value;
                 $kategori_menu->save();
             }
+            $isi=Auth::user()->username." telah menambah kategori menu ".$table->namakategorimenu." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"add");
             return redirect()->back()->with('success','Berhasil menyimpan submenu.');
         }
         else
@@ -182,6 +184,8 @@ class KategoriMenuController extends Controller
                 $kategori_menu->permission_id=$value;
                 $kategori_menu->save();
             }
+            $isi=Auth::user()->username." telah mengubah kategori menu ".$table->namakategorimenu." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"edit");
             return redirect('/menu')->with('success','Berhasil menyimpan submenu.');
         }
         else
@@ -203,6 +207,8 @@ class KategoriMenuController extends Controller
         $hapuskategoripermission=kategori_permission::where('kategori_id','=',$id)->delete();
         $hapuskategorimenu=kategorimenu::where('id','=',$id)->delete();
         if (($hapuskategorimenu) && ($hapuskategoripermission)){
+            $isi=Auth::user()->username." telah menghapus kategori menu ".$table->namakategorimenu." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+            $save=$this->createlog($isi,"delete");
             return response()->json("Success");
         }else{
             return response()->json("Failed");

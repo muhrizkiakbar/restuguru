@@ -113,10 +113,13 @@ class MenuNameController extends Controller
         } else {
             $table=CPermissions::where('id','=',decrypt($request->menuname_id))
                             ->first();
+            $namaawal = $table->display_name;
             $table->display_name = $request->edit_nama_menu;
             $table->description = $request->edit_deskripsi;
 
             if ($table->save()){
+                $isi=Auth::user()->username." telah mengubah nama menu ".$namaawal." menjadi ".$request->edit_nama_menu." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                $save=$this->createlog($isi,"edit");
                 return response()->json("Success");
             }else{
                 return response()->json("Failed");
