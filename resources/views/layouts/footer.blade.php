@@ -1,6 +1,6 @@
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 0.1 Beta
+        <b>Version</b> 1.0
     </div>
-    <strong>Developped by <a href="http://diskominfo.kalselprov.go.id">Diskominfo Prov. Kalsel</a>.</strong>  &copy; 2017 
+    <strong>Developped by <a href="https://www.instagram.com/bilalteknologi/">Bilal Teknologi</a>.</strong>  &copy; 2018
 </footer>
