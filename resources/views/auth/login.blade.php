@@ -10,8 +10,8 @@
                 <img src="/dist/img/logo.png" alt="">
             </div>
             <div style="font-size: 35px;text-align: center;max-width: 100%;">
-                <strong>RG</strong>
-                <p style="font-size: 15px;text-align: center;max-width: 100%;"><small>Promosindo</small></p>
+            <strong>RESTU GURU</strong><br>
+                <strong>PROMOSINDO</strong>
             </div>
             <form action="/" method="post">
                 <div class="form-group has-feedback">
