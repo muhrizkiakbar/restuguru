@@ -136,8 +136,8 @@
                         <tr>
                             <td style="word-break: break-all;">{{$subtransaksi->nama_produk}}</td>
                             <td style="word-wrap: break-word;">Rp. {{number_format(floatval($subtransaksi->harga_satuan),0,',','.')}}</td>
-                            <td style="word-wrap: break-word;">@if ($subtransaksi->panjang==0) - @else {{number_format(floatval($subtransaksi->panjang),2,',','.').' '.$subtransaksi->satuan}} @endif</td>
-                            <td style="word-wrap: break-word;">@if ($subtransaksi->lebar==0) - @else {{number_format(floatval($subtransaksi->lebar),2,',','.').' '.$subtransaksi->satuan}} @endif</td>
+                            <td style="word-wrap: break-word;">@if ($subtransaksi->panjang==0) - @else {{number_format(floatval($subtransaksi->panjang),2,',','.').' '}} @if ($subtransaksi->satuan=="CENTIMETER") CM  @endif @if ($subtransaksi->satuan=="METER") M @endif  @endif</td>
+                            <td style="word-wrap: break-word;">@if ($subtransaksi->lebar==0) - @else {{number_format(floatval($subtransaksi->lebar),2,',','.').' '}} @if ($subtransaksi->satuan=="CENTIMETER") CM  @endif @if ($subtransaksi->satuan=="METER") M @endif   @endif</td>
                             <td style="word-wrap: break-word;">{{number_format(floatval($subtransaksi->banyak),0,',','.')}}</td>
                             <td style="word-wrap: break-word;">{{$subtransaksi->finishing}}</td>
                             <td style="width: 20%;word-break: break-all;">{{$subtransaksi->keterangan}}</td>

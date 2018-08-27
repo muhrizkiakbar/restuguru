@@ -283,7 +283,7 @@ class PermissionTableSeeder extends Seeder
         		'description' => 'Menghapus Cabang',
 						'index'=>'0'
             ],
-        	[
+        		[	
         		'name' => 'manage-pelanggan',
         		'display_name' => 'Manajemen Pelanggan',
         		'description' => 'Manajemen Pelanggan',
@@ -307,7 +307,32 @@ class PermissionTableSeeder extends Seeder
         		'display_name' => 'Hapus Pelanggan',
         		'description' => 'Menghapus Pelanggan',
 						'index'=>'0'
-            ],
+						],
+						[
+						'name' => 'manage-jenispelanggan',
+						'display_name' => 'Manajemen Jenis Pelanggan',
+						'description' => 'Manajemen Jenis Pelanggan',
+						'index'=>'1',
+						'urlindex'=>'managejenispelangganindex'
+						],
+						[
+						'name' => 'add-jenispelanggan',
+						'display_name' => 'Tambah Jenis Pelanggan',
+						'description' => 'Menambah Jenis Pelanggan',
+						'index'=>'0'
+						],
+						[
+						'name' => 'edit-jenispelanggan',
+						'display_name' => 'Edit Jenis Pelanggan',
+						'description' => 'Mengubah Jenis Pelanggan',
+						'index'=>'0'
+						],
+						[
+							'name' => 'delete-jenispelanggan',
+							'display_name' => 'Hapus Jenis Pelanggan',
+							'description' => 'Menghapus Jenis Pelanggan',
+							'index'=>'0'
+							],
             [
         		'name' => 'manage-supplier',
         		'display_name' => 'Manajemen Supplier',
@@ -515,7 +540,7 @@ class PermissionTableSeeder extends Seeder
 						'display_name' => 'Manajemen Nama Menu',
 						'description' => 'Manajemen Nama Menu',
 						'index'=>'1',
-						'urlindex'=>'menuindex'
+						'urlindex'=>'managemenunameindex'
 				],
 				[
 					'name' => 'edit-menuname',

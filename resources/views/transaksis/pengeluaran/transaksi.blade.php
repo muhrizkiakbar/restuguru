@@ -564,6 +564,8 @@
         var hargasatuan=0;
         var kuantitas=0;
 
+        var sifat_angsuran=0;
+
         var singkatansatuan="";
         
         var produkideditproduk="";
@@ -991,6 +993,7 @@
                         // $('#buttonmodal_add').attr("data-mode",response.form_mode);
                         // $('#buttonmodal_add').data('tes',response.form_mode);
                         jenismodal=response.form_mode;
+                        sifat_angsuran=response.sifat_angsuran;
                         $('#submitpelanggan').attr('disabled',true);
                         $('#jenispengeluaran').attr('disabled',true);
                     },
@@ -1039,7 +1042,10 @@
                 satuandasar="";
                 luas=1;
                 hargasatuan=0;
-                kuantitas=0;           
+                kuantitas=0;       
+
+                sifat_angsuran=0;
+
         });
     //
 
@@ -1273,6 +1279,8 @@
                                         $('#handphonelabel').text('');           
                                     }
                                     });
+                            sifat_angsuran=0;
+                                    
                         }
                         else
                         {
@@ -1481,12 +1489,17 @@
 
         console.log(satuan);
 
-        $('#total2').val(numeral(total).format('0,0'));
+        $('#total2').val(numeral(total).format('$ 0,0'));
 
-        $('#total').val(numeral(total).format('0,0'));
+        $('#total').val(numeral(total).format('$ 0,0'));
         tdid=tdid+1;
         console.log(satuan);
-        $('#sisa').val(numeral(total).format('0,0'));
+        if (sifat_angsuran==0)
+        {
+            $('#bayardp').val(numeral(total).format('$ 0,0'))
+        }
+
+        $('#sisa').val(numeral(total).format('$ 0,0'));
         $("tbody").append(
         '<tr id="'+tdid+'">'+
         '<td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+namaproduk+'" name="produk[]"><input type="hidden" readonly disabled id="namaproduk[]" value="'+namaproduk+'" name="namaproduk[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td>'+
@@ -1532,7 +1545,7 @@
         );
         $('#submittransaksi').removeAttr('disabled');
         $('#modal_add').modal('hide');
-
+        
     });
     //
 //
@@ -1632,6 +1645,7 @@
                 contentType: false,
                 success:function(response){
                     hitung_luas=response.hitung_luas;
+                    console.log(response.harga);
                     $('#edit_harga').val('0'); 
                     $('#edit_subtotal').val('0');
                     $('#edit_kuantitas').val('0');
@@ -1658,7 +1672,7 @@
                         $('#edit_panjang').attr('disabled',true);
                         $('#edit_lebar').attr('disabled',true);
                     }
-                    $('#edit_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
+                    $('#edit_harga').val(numeral(response.harga).format('$ 0,0'));  
                 },
                 error: function(xhr, status, error) {
                     
@@ -1681,7 +1695,7 @@
     $('#edititem').click(function(){
 
         var produk=$('#edit_produk').val();
-
+        console.log(produkid);
         var produkid=$('#edit_produkid').val();
         var harga=numeral($('#edit_harga').val()).value();
         var panjang=numeral($('#edit_panjang').val()).value();
@@ -1723,6 +1737,8 @@
 
         produkideditproduk="";
 
+        
+
         total=numeral($('#total').val()).value();
         total=(subtotal)+(total-subtotalawal);
 
@@ -1730,7 +1746,10 @@
 
         $('#total').val(numeral(total).format('0,0'));
         $('#sisa').val(numeral(total).format('0,0'));
-
+        if (sifat_angsuran==0)
+        {
+            $('#bayardp').val(numeral(total).format('$ 0,0'))
+        }
         var isi=
         '<td>'+namaproduk+'<input type="hidden" readonly disabled id="produk[]" value="'+namaproduk+'" name="produk[]"><input type="hidden" readonly disabled id="satuan[]" value="'+satuan+'" name="satuan[]"><input type="hidden" readonly disabled id="produkid[]" value="'+produkid+'" name="produkid[]"></td>'+
         '<td>'+numeral(harga).format('$ 0,0')+'<input type="hidden" readonly disable id="harga[]" value="'+harga+'" name="harga[]"></td>'+
@@ -1773,6 +1792,9 @@
         '</div></td>';
         $('#'+tdidnow+'').html(isi);
         $('#modal_edit').modal('hide');
+
+        // sifat_angsuran=0;
+
     });
     //
 //
@@ -1806,6 +1828,11 @@
             $('#total2').val(numeral(total).format('$ 0,0'));
             $('#sisa').val(numeral(total).format('$ 0,0'));
             $('#total').val(numeral(total).format('$ 0,0'));
+            
+            if (sifat_angsuran==0)
+            {
+                $('#bayardp').val(numeral(total).format('$ 0,0'))
+            }
 
             $('#modal_delete').modal('hide');
         });

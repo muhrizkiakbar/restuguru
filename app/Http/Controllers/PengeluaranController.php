@@ -44,7 +44,7 @@ class PengeluaranController extends Controller
      */
     public function jenispengeluaransearch(Request $request){
         $table=Jenis_Pengeluaran::where('id','=',decrypt($request->id))
-                ->select('form_mode')
+                ->select('form_mode','sifat_angsuran')
                 ->first();
         return $table;
     }
@@ -1092,7 +1092,7 @@ class PengeluaranController extends Controller
                         {
                             $luas=(($substransaksi->panjang/100)*($substransaksi->lebar/100))*$substransaksi->kuantitas;
                         }
-                        dd($stokbahanbaku->banyakstok." - ".$luas);
+                        // dd($stokbahanbaku->banyakstok." - ".$luas);
                         $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok-$luas;
                     }
                     else

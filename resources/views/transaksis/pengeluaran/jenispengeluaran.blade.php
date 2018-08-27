@@ -323,7 +323,6 @@
                         if ((response.errors.tambah_mode)){
                             swal("Form Mode", ""+response.errors.tambah_mode+"", "error");
                         }
-                        // $('#modal_tambah').modal('hide');
                     }
                     else
                     {   if (response=="Success"){
@@ -338,7 +337,9 @@
                         else if (response=="Failed"){
                             swal("Error !", "Gagal menyimpan !", "error");
                         }
+
                     }
+                    $('#modal_tambah').modal('hide');
                 },
                 error:function(){
                     swal("Error !", "Gagal, menyimpan !", "error");

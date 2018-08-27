@@ -784,7 +784,7 @@
                 console.log(luas, hargasatuan, kuantitas, besardiskon);
             });
 
-            $("#add_diskon").keyup(function(){
+            $("#add_diskon").blur(function(){
                 $(this).val(numeral($(this).val()).format('0[.]00'));
                 hargasatuan=numeral($('#add_harga').val()).value();
                 kuantitas=numeral($('#add_kuantitas').val()).value();
@@ -796,7 +796,7 @@
             });
 
             $("#add_diskon").focus(function(){
-                $(this).val("");
+                $(this).val(0);
             });
 
             $("#add_harga").keydown(function (e) {
@@ -915,7 +915,7 @@
                 console.log(luas, hargasatuan, kuantitas, besardiskon);
             });
 
-            $("#edit_diskon").keyup(function(){
+            $("#edit_diskon").blur(function(){
                 $(this).val(numeral($(this).val()).format('0[.]00'));
                 hargasatuan=numeral($('#edit_harga').val()).value();
                 kuantitas=numeral($('#edit_kuantitas').val()).value();
@@ -1348,6 +1348,7 @@
                                         $('#nomorhandphone').val("").removeAttr('disabled');
                                         $('#pelanggan').val('').trigger('change');
                                         $('#submitpelanggan').removeAttr('disabled');
+                                        $('#pelanggan').removeAttr('disabled');
                                         $('#kepadalabel').text('');
                                         $('#handphonelabel').text('');                                                                                
                                     } else {
@@ -1358,6 +1359,7 @@
                                         $('#pajak').val('0').removeAttr('disabled');
                                         $('#sisa').val('0');
                                         $('#total').val('0');
+                                        $('#pelanggan').removeAttr('disabled');
                                         $('#metode').iCheck('enable');
                                         $('#metode').iCheck('uncheck');
                                         $('#namapelanggan').val("").removeAttr('disabled');
@@ -1593,36 +1595,30 @@
             //     $search.val(e.params.args.data.text);
             // });
             $('#edit_produk').val($(this).data('produk')).trigger('change');
+            $('#edit_produkid').val($(this).data('produk')).trigger('change');
             tdidnow=$(this).data('tdid');     
             hitung_luas=$(this).data('hitungluas');
-            // console.log($(this).data('hitungluas'));
+            console.log($(this).data('satuan'));
             if ($(this).data('hitungluas')==1){
 
                 $('#r2editm').iCheck('uncheck');
                 $('#r2editcm').iCheck('uncheck');
                 if ($(this).data('satuan')=="cm"){
-                    console.log($(this).data('satuan'));
-
                     $('#r2editm').iCheck('uncheck');
-                    $('#r2editcm').iCheck('check');
-                    
+                    $('#r2editcm').iCheck('check');   
                 }
                 else if ($(this).data('satuan')=="m")
                 {
-                    console.log($(this).data('satuan'));
-
                     $('#r2editcm').iCheck('uncheck');
                     $('#r2editm').iCheck('check');
                     // $('#r2editm').prop('checked',true).iCheck('update');
                 }
                 else
                 {
-                    console.log($(this).data('satuan'));
-
                     satuan="";
                 }
-                $('#r2editm').iCheck('enabled');
-                $('#r2editcm').iCheck('enabled');
+                $('#r2editm').iCheck('enable');
+                $('#r2editcm').iCheck('enable');
                 $('#edit_panjang').removeAttr('disabled');
                 $('#edit_lebar').removeAttr('disabled');
             }
@@ -1636,7 +1632,6 @@
                 $('#edit_panjang').attr('disabled',true);
                 $('#edit_lebar').attr('disabled',true);
             }
-            
             
             $('#edit_harga').val(numeral($(this).data('harga')).format('$ 0,0')); 
             $('#edit_subtotal').val(numeral($(this).data('subtotal')).format('$ 0,0'));
@@ -1693,7 +1688,7 @@
                             $('#r2editcm').iCheck('disable');
                             $('#edit_panjang').attr('disabled',true);
                             $('#edit_lebar').attr('disabled',true);
-                            satuan = response.satuan.toUpperCase();
+                            satuandasar = response.satuan.toUpperCase();
                         }
                         $('#edit_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
                     },
@@ -1739,7 +1734,7 @@
                             $('#r2editcm').iCheck('disable');
                             $('#edit_panjang').attr('disabled',true);
                             $('#edit_lebar').attr('disabled',true);
-                            satuan = response.satuan.toUpperCase();
+                            satuandasar = response.satuan.toUpperCase();
                         }
                         
                         $('#edit_harga').val(numeral(response.harga_jual).format('$ 0,0'));  

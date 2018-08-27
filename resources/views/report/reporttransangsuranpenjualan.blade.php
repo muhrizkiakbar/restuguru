@@ -135,8 +135,8 @@
                     <tr>
                         <td>#{{$angsuran->id}}</td>
                         <td>{{date('d-m-Y',strtotime($angsuran->tanggal_angsuran))}}</td>
-                        <td>Rp. {{number_format(floatval($angsuran->nominal_angsuran),2,',','.')}}</td>
-                        <td>Rp. {{number_format(floatval($angsuran->sisa_angsuran),2,',','.')}}</td>
+                        <td>Rp. {{number_format(floatval($angsuran->nominal_angsuran),0,',','.')}}</td>
+                        <td>Rp. {{number_format(floatval($angsuran->sisa_angsuran),0,',','.')}}</td>
                         <td>{{$angsuran->metode_pembayaran}}</td>
                     </tr>
                     @endforeach
@@ -194,15 +194,15 @@
                     <table class="table">
                         <tr>
                             <th style="width:50%">Total :</th>
-                            <td>Rp. {{number_format(floatval($transaksi->total_harga),2,',','.')}}</td>
+                            <td>Rp. {{number_format(floatval($transaksi->total_harga),0,',','.')}}</td>
                         </tr>
                         <tr>
                             <th>DP:</th>
-                            <td>Rp. {{number_format(floatval($transaksi->jumlah_pembayaran),2,',','.')}}</td>
+                            <td>Rp. {{number_format(floatval($transaksi->jumlah_pembayaran),0,',','.')}}</td>
                         </tr>
                         <tr>
                             <th>Sisa:</th>
-                            <td>Rp. {{number_format(floatval($transaksi->sisa_tagihan),2,',','.')}}</td>
+                            <td>Rp. {{number_format(floatval($transaksi->sisa_tagihan),0,',','.')}}</td>
                         </tr>
                         <tr>
                             <th>Pembayaran :</th>
