@@ -576,6 +576,7 @@
         });
 
         $(document).on('click','.modal_delete',function () {
+            $('#deleteitem').removeAttr('disabled');
             idtrans=$(this).data('id');
             $.ajax({
                 async: true, 
@@ -597,6 +598,7 @@
         });
         
         $(document).on('click','#deleteitem',function (){
+            $('#deleteitem').attr('disabled',true);
             var token=$('input[name="_token"]').val();
             $.ajax({
                 headers: {

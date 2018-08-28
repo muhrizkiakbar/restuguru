@@ -326,6 +326,8 @@
 
     <script type="text/javascript">
         $(document).on('click','#modal_add2',function () {
+            $('#simpanadduser').removeAttr('disabled');
+
             $('#username').val("");
             $('#password').val("");
             $('#nama').val("");
@@ -339,6 +341,7 @@
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
             // alert($(this).data('telepon'));
+            $('#simpanedituser').removeAttr('disabled');
             $('#username2').val($(this).data('username'));
             $('#password2').val("");
             $('#nama2').val($(this).data('nama'));
@@ -355,6 +358,7 @@
 
     <script type="text/javascript">
         $(document).on('click','.modal_delete',function () {
+            $('#simpandeluser').removeAttr('disabled');
             $('#deliduser').val($(this).data('id'));
             $('.labelusername').text($(this).data('username'));
         });
@@ -363,6 +367,9 @@
     <script type="text/javascript">
 
         $(document).on('click','#simpanadduser',function (){
+
+            $('#simpanadduser').attr('disabled',true);
+
             gaji = numeral($("#gaji").val()).value();
             $("#gaji").val(gaji);
             $.ajax({
@@ -430,6 +437,8 @@
     
     <script type="text/javascript">
         $(document).on('click','#simpanedituser',function (){
+            $('#simpanedituser').attr('disabled',true);
+
             gaji = numeral($("#gaji2").val()).value();
             $("#gaji2").val(gaji);
             $.ajax({
@@ -492,6 +501,7 @@
     </script>
     <script type="text/javascript">
         $(document).on('click','#simpandeluser',function (){
+            $('#simpandeluser').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('deleteuser')}}',

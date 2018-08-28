@@ -163,6 +163,7 @@
 
     <script type="text/javascript">
         $(document).on('click','.modal_delete',function () {
+            $('#simpandel').removeAttr('disabled');
             $('#delid').val($(this).data('id'));
             $('.label').text($(this).data('name'));
         });
@@ -170,6 +171,8 @@
 
     <script type="text/javascript">
         $(document).on('click','#simpandel',function (){
+            $('#simpandel').attr('disabled',true);
+
             $.ajax({
                 type:'post',
                 url:'{{route('destroyrole')}}',

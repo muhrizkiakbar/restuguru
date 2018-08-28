@@ -569,6 +569,7 @@
         });
 
         $(document).on('click','.modal_add',function () {
+            $('simpanangsuran').removeAttr('disabled');
             $("#nonotapenjualan").text($(this).data('nonota'));
             $("#totaltagihanlabel").text($(this).data('total').format(2, 3, '.', ','));
             $("#sisaangsuranlabel").text($(this).data('sisa').format(2, 3, '.', ','));            
@@ -587,7 +588,7 @@
 
         
         $(document).on('click','#simpanangsuran',function (){
-
+            $('simpanangsuran').attr('disabled',true);
             var token=$('input[name="_token"]').val();
             var nominal=($('#add_nominal').maskMoney('unmasked')[0]);
             var metode=$('#pembayaran').val();
@@ -650,12 +651,14 @@
             
         });
         $(document).on('click','.deletebutton',function () {
+            $('#deleteangsuran').removeAttr('disabled');
             idtrans=$(this).data('id');
             $(".labelnoangsuran").text($(this).data('id'));
             datanominal=$(this).data('nominal');
         });
         
         $(document).on('click','#deleteangsuran',function (){
+            $('#deleteangsuran').attr('disabled',true);
             var token=$('input[name="_token"]').val();
             var sisatagihan=datasisa+datanominal;
             $.ajax({
