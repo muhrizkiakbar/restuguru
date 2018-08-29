@@ -240,10 +240,7 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::get('/ubahpassword','UserController@indexchangepassword');
         Route::post('/ubahpassword','UserController@changepassword');
-        Route::get('/logout',function (){
-            Auth::logout();
-            return redirect('/login')->with('error', 'Logout Berhasil');
-        });
+        Route::get('/logout','Auth\LoginController@logout');
 
         #data stok bahan baku
         Route::get('/stokbahanbaku',['middleware' => ['permission:list-stokbahanbaku'], 'uses' => 'StokBahanbakuController@index'])->name('indexstokbahanbaku');
