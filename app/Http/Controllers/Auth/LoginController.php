@@ -72,9 +72,11 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::logout();
+
         $isi=Auth::user()->username." telah logout di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
         $save=$this->createlog($isi,"logout");
+        
+        Auth::logout();
         return redirect('/login')->with('error', 'Logout Berhasil');
     }
 
