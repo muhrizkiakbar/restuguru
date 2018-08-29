@@ -220,7 +220,7 @@ class UserController extends Controller
 
     public function indexchangepassword(){
         $cabangs=CCabangs::all();
-        return view('Users.changepassword',['cabangs'=>$cabangs]);
+        return view('users.changepassword',['cabangs'=>$cabangs]);
         
       }
   
