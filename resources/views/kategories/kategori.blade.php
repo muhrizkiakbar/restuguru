@@ -209,6 +209,7 @@
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_kategori',function () {
+            $('#bt_simpan_tambah').removeAttr('disabled');
             $('#tambah_nama_kategori').val("");
             $('#tambah_keterangan').val("");
         });
@@ -217,6 +218,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            $('#bt_simpan_edit').removeAttr('disabled');
             $('#edit_nama_kategori').val($(this).data('nama_kategori'));
             $('#edit_keterangan').val($(this).data('keterangan'));
             $('#kategori_id').val($(this).data('id'));
@@ -234,6 +236,7 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
+            $('#bt_simpan_tambah').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('storekategori')}}',
@@ -256,14 +259,15 @@
                             $('#modal_tambah').modal('hide');
                             oTable.ajax.reload();
                         }else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_tambah').modal('hide');
                         }
                     }
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 },
                 error:function(){
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                     swal("Error !", "Gagal menyimpan !", "error");
-                    // $('#modal_tambah').modal('hide');
                 }
             });
         });
@@ -272,6 +276,7 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
+            $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('updatekategori')}}',
@@ -298,9 +303,11 @@
                             // $('#modal_edit').modal('hide');
                         }
                     }
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 },
                 error:function(){
                     swal("Error !", "Gagal menyimpan !", "error");
+                    $('#bt_simpan_edit').removeAttr('disabled');
                     // $('#modal_edit').modal('hide');
                 }
             });
@@ -324,11 +331,14 @@
                         $('#modal_hapus').modal('hide');
                         oTable.ajax.reload();
                     }else{
-                        swal("Error !", "Gagal menyimpan !", "error");
+                        swal("Error !", "Gagal menghapus !", "error");
                         // $('#modal_edit').modal('hide');
                     }
                     
                 },
+                error:function(){
+                    swal("Error !", "Gagal menghapus !", "error");
+                }
             });
         });
     </script>

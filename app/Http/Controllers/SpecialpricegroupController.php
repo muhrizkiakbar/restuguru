@@ -64,13 +64,13 @@ class SpecialpricegroupController extends Controller
                         <button type="button" class="modal_hapus btn btn-danger btn-sm" data-toggle="modal" 
                             data-jenis="'.$tables->jenis_pelanggan.'"
                             data-produk="'.$tables->nama_produk.'"
-                            data-harga="'.number_format($tables->harga_khusus, 2,",",".").'" 
+                            data-harga="'.number_format($tables->harga_khusus, 0,",",".").'" 
                             data-id="'.encrypt($tables->id).'"  
                         data-target="#modal_hapus"><i class="fa fa-fw fa-trash"></i></button>
                 </div>        
                         ';
             })
-            -> editColumn ('harga_khusus', 'Rp {{number_format($harga_khusus,2,",",".")}}')
+            -> editColumn ('harga_khusus', 'Rp {{number_format($harga_khusus,0,",",".")}}')
             -> editColumn ('updated_at', '{{date("d-m-Y", strtotime($updated_at))}}')
             ->rawColumns(['action'])
             ->make(true);

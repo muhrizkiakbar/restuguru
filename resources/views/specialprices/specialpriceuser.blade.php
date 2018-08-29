@@ -200,8 +200,9 @@
     <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <!-- Mask Money -->
-    <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
+    {{-- <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> --}}
     <!-- DataTables -->
     <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -214,6 +215,27 @@
     <!-- Page script -->
 
     {{-- Init JS --}}
+    <script>
+        //numeral
+        numeral.register('locale', 'idr', {
+            delimiters: {
+                thousands: '.',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'ribu',
+                million: 'juta',
+                billion: 'ratus juta',
+                trillion: 'milyar'
+            },
+            currency: {
+                symbol: 'Rp'
+            }
+        });
+
+        numeral.locale('idr');
+        //
+    </script>
     <script type="text/javascript">
         $('#pilih_pelanggan, #pilih_edit_pelanggan').select2({
             placeholder: "Pilih Pelanggan."
@@ -240,26 +262,25 @@
             });
 
             // Mask Money
-            $("#tambah_harga_khusus").maskMoney({prefix:'Rp ', allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
-            $("#tambah_harga_khusus").maskMoney('mask',0)
-            $("#tambah_harga_khusus").on('blur',function(){
-                $("#tambah_harga_khusus").maskMoney('mask')
+            $("#tambah_harga_khusus").keyup(function(){
+                $(this).val(numeral($(this).val()).format('$ 0,0'));
             });
-            $("#edit_harga_khusus").maskMoney({prefix:'Rp ', allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
-            $("#edit_harga_khusus").maskMoney('mask',0)
-            $("#edit_harga_khusus").on('blur',function(){
-                $("#edit_harga_khusus").maskMoney('mask')
+
+            $("#edit_harga_khusus").keyup(function(){
+                $(this).val(numeral($(this).val()).format('$ 0,0'));
             });
+
         });
         function cleanInputModal(){
             $('#pilih_pelanggan, #pilih_edit_pelanggan, #pilih_produk, #pilih_edit_produk').val(0).trigger('change');
-            $("#tambah_harga_khusus, #edit_harga_khusus").val(null).trigger('mask.maskMoney');
+            $("#tambah_harga_khusus, #edit_harga_khusus").val(numeral(0).format('$ 0,0'));
         }
     </script>
 
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_spcprice',function () {
+            $('#bt_simpan_tambah').removeAttr('disabled');
             cleanInputModal()
         });
     </script>
@@ -267,9 +288,10 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            $('#bt_simpan_edit').removeAttr('disabled');
             $('#pilih_edit_pelanggan').val($(this).data('id_pelanggan')).trigger('change');
             $('#pilih_edit_produk').val($(this).data('id_produk')).trigger('change');
-            $('#edit_harga_khusus').val($(this).data('harga_khusus')).trigger('mask.maskMoney');
+            $('#edit_harga_khusus').val(numeral($(this).data('harga_khusus')).format('$ 0,0'));
             $('#spcprice_id').val($(this).data('id'));
         });
     </script>
@@ -287,7 +309,8 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
-            $("#tambah_harga_khusus").val($("#tambah_harga_khusus").maskMoney('unmasked')[0]);
+            $("#tambah_harga_khusus").val(numeral($('#tambah_harga_khusus').val()).value());
+            $('#bt_simpan_tambah').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('storespecialprice')}}',
@@ -298,7 +321,7 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        $("#tambah_harga_khusus").trigger('mask.maskMoney');
+                        $("#tambah_harga_khusus").val(numeral($('#tambah_harga_khusus').val()).format('$ 0,0'));
                         if ((response.errors.pilih_pelanggan)){
                             swal("Special Price", ""+response.errors.pilih_pelanggan+"", "error");
                         }else if ((response.errors.pilih_produk)){
@@ -315,15 +338,16 @@
                         }else if(response=="Duplicated"){
                             swal("Error !", "Data sudah ada !", "error");
                         }else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_tambah').modal('hide');
                         }
                     }
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 },
                 error:function(response){
                     console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
-                    // $('#modal_tambah').modal('hide');
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 }
             });
         });
@@ -332,7 +356,8 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
-            $("#edit_harga_khusus").val($("#edit_harga_khusus").maskMoney('unmasked')[0]);
+            $("#edit_harga_khusus").val(numeral($('#edit_harga_khusus').val()).value());
+            $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('updatespecialprice')}}',
@@ -343,7 +368,7 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        $("#edit_harga_khusus").trigger('mask.maskMoney');
+                        $("#edit_harga_khusus").val(numeral($('#edit_harga_khusus').val()).format('$ 0,0'));
                         if ((response.errors.pilih_edit_pelanggan)){
                             swal("Special Price", ""+response.errors.pilih_edit_pelanggan+"", "error");
                         }else if ((response.errors.pilih_edit_produk)){
@@ -360,14 +385,15 @@
                         }else if(response=="Duplicated"){
                             swal("Error !", "Data sudah ada !", "error");
                         }else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_edit').modal('hide');
                         }
                     }
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 },
                 error:function(){
                     swal("Error !", "Gagal menyimpan !", "error");
-                    // $('#modal_edit').modal('hide');
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 }
             });
         });
@@ -391,10 +417,13 @@
                         $('#modal_hapus').modal('hide');
                         oTable.ajax.reload();
                     }else{
-                        swal("Error !", "Gagal menyimpan !", "error");
+                        swal("Error !", "Gagal menghapus !", "error");
                         // $('#modal_edit').modal('hide');
                     }
                 },
+                error:function(){
+                    swal("Error !", "Gagal menghapus !", "error");
+                }
             });
         });
     </script>

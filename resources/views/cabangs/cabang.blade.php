@@ -261,6 +261,7 @@
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_cabang',function () {
             // $('#tambah_jenis_cabang').val("");
+            $('#bt_simpan_tambah').removeAttr('disabled');
             $('#tambah_kode_cabang').val("");
             $('#tambah_nama_cabang').val("");
             $('#tambah_telepon_cabang').val("");
@@ -273,6 +274,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            $('#bt_simpan_edit').removeAttr('disabled');
             $('#edit_jenis_cabang').val($(this).data('jenis'));
             $('#edit_kode_cabang').val($(this).data('kode'));
             $('#edit_nama_cabang').val($(this).data('nama'));
@@ -295,6 +297,7 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
+            $('#bt_simpan_tambah').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('storecabang')}}',
@@ -332,13 +335,15 @@
                             oTable.ajax.reload();
                         }
                         else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_tambah').modal('hide');
                         }
                     }
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 },
                 error:function(){
                             swal("Error !", "Gagal menyimpan !", "error");
+                            $('#bt_simpan_tambah').removeAttr('disabled');
                             // $('#modal_tambah').modal('hide');
                 }
             });
@@ -348,6 +353,7 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
+            $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('updatecabang')}}',
@@ -385,14 +391,16 @@
                             oTable.ajax.reload();
                         }
                         else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_edit').modal('hide');
                         }
                     }
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 },
                 error:function(){
-                            swal("Error !", "Gagal menyimpan !", "error");
-                            // $('#modal_edit').modal('hide');
+                    swal("Error !", "Gagal menyimpan !", "error");
+                    $('#bt_simpan_edit').removeAttr('disabled');
+                    // $('#modal_edit').modal('hide');
                 }
             });
         });
@@ -416,10 +424,13 @@
                         $('#modal_hapus').modal('hide');
                         oTable.ajax.reload();
                     }else{
-                        swal("Error !", "Gagal menyimpan !", "error");
+                        swal("Error !", "Gagal menghapus !", "error");
                         // $('#modal_edit').modal('hide');
                     }
                 },
+                error:function(){
+                    swal("Error !", "Gagal menghapus !", "error");
+                }
             });
         });
     </script>

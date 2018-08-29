@@ -343,6 +343,7 @@
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_pelanggan',function () {
+            $('#bt_simpan_tambah').removeAttr('disabled');
             $('#tambah_jenis_pelanggan').val(0).trigger('change');
             $('#tambah_namapemilik').val("");
             $('#tambah_ktppelanggan').val("");
@@ -362,6 +363,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            $('#bt_simpan_edit').removeAttr('disabled');
             $('#edit_jenis_pelanggan').val($(this).data('jenispelanggan')).trigger('change');
             $('#edit_namapemilik').val($(this).data('nama_pemilik'));
             $('#edit_ktppelanggan').val($(this).data('ktp'));
@@ -390,6 +392,7 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
+            $('#bt_simpan_tambah').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('storepelanggan')}}',
@@ -446,14 +449,15 @@
                             oTable.ajax.reload();
                         }
                         else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_tambah').modal('hide');
                         }
                     }
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 },
                 error:function(){
-                            swal("Error !", "Gagal menyimpan !", "error");
-                            // $('#modal_tambah').modal('hide');
+                    swal("Error !", "Gagal menyimpan !", "error");
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 }
             });
         });
@@ -462,6 +466,7 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
+            $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('updatepelanggan')}}',
@@ -518,14 +523,15 @@
                             oTable.ajax.reload();
                         }
                         else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_edit').modal('hide');
                         }
                     }
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 },
                 error:function(){
-                            swal("Error !", "Gagal menyimpan !", "error");
-                            // $('#modal_edit').modal('hide');
+                    swal("Error !", "Gagal menyimpan !", "error");
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 }
             });
         });
@@ -543,10 +549,19 @@
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    $('.error').addClass('hidden');
-                    $('#modal_hapus').modal('hide');
-                    oTable.ajax.reload();
+                    if (response=="Success"){
+                        swal("Success !", "Berhasil menghapus !", "success");
+                        $('.error').addClass('hidden');
+                        $('#modal_hapus').modal('hide');
+                        oTable.ajax.reload();
+                    }else{
+                        swal("Error !", "Gagal menghapus !", "error");
+                        // $('#modal_edit').modal('hide');
+                    }
                 },
+                error:function(){
+                    swal("Error !", "Gagal menghapus !", "error");
+                }
             });
         });
     </script>

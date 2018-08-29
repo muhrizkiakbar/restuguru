@@ -206,12 +206,32 @@
     <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
-    <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
-
+    {{-- <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> --}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     {{--<script src="{{asset('dist/js/demo.js')}}"></script>--}}
     <!-- Page script -->
-    
+    <script>
+        //numeral
+        numeral.register('locale', 'idr', {
+            delimiters: {
+                thousands: '.',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'ribu',
+                million: 'juta',
+                billion: 'ratus juta',
+                trillion: 'milyar'
+            },
+            currency: {
+                symbol: 'Rp'
+            }
+        });
+
+        numeral.locale('idr');
+        //
+    </script>
     {{-- javascript Tabel --}}
     <script type="text/javascript">
         var oTable;
@@ -236,9 +256,10 @@
     
     <script type="text/javascript">
         $(document).on('click','#bt_batal_tambah',function () {
+            $('#bt_simpan_tambah').removeAttr('disabled');
             $("#tambah_jenispelanggan").val(null).trigger('change');
             $("#tambah_produk").val(null).trigger('change');
-            $("#tambah_harga_khusus").maskMoney('mask',0);
+            $("#tambah_harga_khusus").val(numeral(0).format('$ 0,0'));
         });
     </script>
 
@@ -272,10 +293,8 @@
                 minimumResultsForSearch: Infinity,
             });
 
-            $("#tambah_harga_khusus").maskMoney({prefix:'Rp ', allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
-            $("#tambah_harga_khusus").maskMoney('mask',0)
-            $("#tambah_harga_khusus").on('blur',function(){
-                $("#tambah_harga_khusus").maskMoney('mask')
+            $("#tambah_harga_khusus").keyup(function(){
+                $(this).val(numeral($(this).val()).format('$ 0,0'));
             });
 
         });
@@ -294,10 +313,8 @@
                 disabled: true,
             });
 
-            $("#edit_harga_khusus").maskMoney({prefix:'Rp ', allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
-            $("#edit_harga_khusus").maskMoney('mask',0)
-            $("#edit_harga_khusus").on('blur',function(){
-                $("#edit_harga_khusus").maskMoney('mask')
+            $("edit_harga_khusus").keyup(function(){
+                $(this).val(numeral($(this).val()).format('$ 0,0'));
             });
 
         });
@@ -320,7 +337,7 @@
             $('#id_edit_produk').val($(this).data('produk_id')); 
             $('#edit_jenispelanggan').append(oJenis).trigger('change');
             $('#edit_produk').append(oProduk).trigger('change');
-            $("#edit_harga_khusus").val($(this).data('harga')).trigger('mask.maskMoney');
+            $("#edit_harga_khusus").val(numeral($(this).data('harga')).format('$ 0,0'));
             $('#id_spg').val($(this).data('id'))
         });
     </script>
@@ -339,7 +356,8 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
-            $("#tambah_harga_khusus").val($("#tambah_harga_khusus").maskMoney('unmasked')[0]);
+            $('#bt_simpan_tambah').attr('disabled',true);
+            $("#tambah_harga_khusus").val(numeral($('#tambah_harga_khusus').val()).value());
             $.ajax({
                 type:'post',
                 url:'{{route('storespg')}}',
@@ -350,7 +368,7 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        $("#tambah_harga_khusus").trigger('mask.maskMoney');
+                        $("#tambah_harga_khusus").val(numeral($('#tambah_harga_khusus').val()).format('$ 0,0'));
                         if ((response.errors.tambah_jenispelanggan)){
                             swal("Jenis Pelanggan", ""+response.errors.tambah_jenispelanggan+"", "error");
                         }
@@ -367,26 +385,28 @@
                             swal("Success !", "Berhasil menyimpan !", "success");
                             $('#tambah_jenispelanggan').val(null).trigger('change');
                             $('#tambah_produk').val(null).trigger('change');
-                            $("#tambah_harga_khusus").val(null).trigger('mask.maskMoney');
+                            $("#tambah_harga_khusus").val(null);
                             $('#modal_tambah').modal('hide');
                             oTable.ajax.reload();
                         }
                         else if (response=="Duplicated"){
-                            $("#tambah_harga_khusus").val(0).trigger('mask.maskMoney');
+                            $("#tambah_harga_khusus").val(numeral(0).format('$ 0,0'));
                             $('#tambah_jenispelanggan').val(null).trigger('change');
                             $('#tambah_produk').val(null).trigger('change');
                             swal("Error !", "Duplikasi Data !", "error");
                             
                         }
                         else if (response=="Failed"){
-                            $("#tambah_harga_khusus").trigger('mask.maskMoney');
+                            $("#tambah_harga_khusus").val(numeral($('#tambah_harga_khusus').val()).format('$ 0,0'));
                             swal("Error !", "Gagal menyimpan !", "error");
                         }
                     }
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 },
                 error:function(){
-                    $("#tambah_harga_khusus").trigger('mask.maskMoney');
+                    $("#tambah_harga_khusus").val(numeral($('#tambah_harga_khusus').val()).format('$ 0,0'));
                     swal("Error !", "Gagal, menyimpan !", "error");
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 }
             });
         });
@@ -395,7 +415,8 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
-            $("#edit_harga_khusus").val($("#edit_harga_khusus").maskMoney('unmasked')[0]);
+            $("#edit_harga_khusus").val(numeral($('#edit_harga_khusus').val()).value());
+            $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('updatespg')}}',
@@ -406,7 +427,7 @@
                 contentType: false,
                 success:function(response){
                     if((response.errors)){
-                        $("#edit_harga_khusus").trigger('mask.maskMoney');
+                        $("#edit_harga_khusus").val(numeral($('#edit_harga_khusus').val()).format('$ 0,0'));
                         if ((response.errors.id_edit_jenispelanggan)){
                             swal("Jenis Pelanggan", ""+response.errors.id_edit_jenispelanggan+"", "error");
                         }
@@ -423,26 +444,29 @@
                             swal("Success !", "Berhasil menyimpan !", "success");
                             $('#edit_jenispelanggan').val(null).trigger('change');
                             $('#edit_produk').val(null).trigger('change');
-                            $("#edit_harga_khusus").val(null).trigger('mask.maskMoney');
+                            $("#edit_harga_khusus").val(null);
                             $('#modal_edit').modal('hide');
                             oTable.ajax.reload();
                         }
                         else if (response=="Duplicated"){
-                            $("#edit_harga_khusus").trigger('mask.maskMoney');
+                            $("#tambah_harga_khusus").val(numeral(0).format('$ 0,0'));
                             swal("Error !", "Duplikasi Data !", "error");
                             
                         }
                         else if (response=="Failed"){
-                            $("#edit_harga_khusus").trigger('mask.maskMoney');
+                            $("#tambah_harga_khusus").val(numeral($('#tambah_harga_khusus').val()).format('$ 0,0'));
                             swal("Error !", "Gagal menyimpan !", "error");
                         }
                     }
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 },
                 error:function(){
-                    $("#edit_harga_khusus").trigger('mask.maskMoney');
+                    $("#tambah_harga_khusus").val(numeral($('#tambah_harga_khusus').val()).format('$ 0,0'));
                     swal("Error !", "Gagal menyimpan !", "error");
-                    $('#modal_edit').modal('hide');
+                    $('#bt_simpan_edit').removeAttr('disabled');
+                    // $('#modal_edit').modal('hide');
                 }
+                
             });
         });
     </script>
@@ -465,10 +489,13 @@
                         $('#modal_hapus').modal('hide');
                         oTable.ajax.reload();
                     }else{
-                        swal("Error !", "Gagal menyimpan !", "error");
+                        swal("Error !", "Gagal menghapus !", "error");
                         // $('#modal_edit').modal('hide');
                     }
                 },
+                error:function(){
+                    swal("Error !", "Gagal menghapus !", "error");
+                }
             });
         });
     </script>

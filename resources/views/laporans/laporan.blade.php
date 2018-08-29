@@ -431,20 +431,20 @@
             if (persentase_perubahan == 0) {
                 document.getElementById(idpersentase).className = "description-percentage text-yellow";
                 document.getElementById(idpersentase).innerHTML = '<i class="fa fa-caret-left"></i> ' + persentase_perubahan.format(2, 0, ',', '') + '%';
-                document.getElementById(idnilai).tinnerHTMLext  = "Rp. " + perubahan.format(2, 3, '.', ',');
+                document.getElementById(idnilai).tinnerHTMLext  = "Rp. " + perubahan.format(0, 3, '.', ',');
             }else if (persentase_perubahan  < 0){
                 persentase_perubahan = persentase_perubahan * -1;
                 perubahan = perubahan * -1;
                 document.getElementById(idpersentase).className = "description-percentage text-red";
                 document.getElementById(idpersentase).innerHTML = '<i class="fa fa-caret-down"></i> ' + persentase_perubahan.format(2, 0, ',', '') + '%';
-                document.getElementById(idnilai).innerHTML      = "Rp. " + perubahan.format(2, 3, '.', ',');
+                document.getElementById(idnilai).innerHTML      = "Rp. " + perubahan.format(0, 3, '.', ',');
             }else if(persentase_perubahan > 0){
                 if (persentase_perubahan == Infinity){
                     persentase_perubahan = 100;
                 }
                 document.getElementById(idpersentase).className = "description-percentage text-green";
                 document.getElementById(idpersentase).innerHTML = '<i class="fa fa-caret-up"></i> ' + persentase_perubahan.format(2, 0, ',', '') + '%';
-                document.getElementById(idnilai).innerHTML      = "Rp. " + perubahan.format(2, 3, '.', ',');
+                document.getElementById(idnilai).innerHTML      = "Rp. " + perubahan.format(0, 3, '.', ',');
             }
         };
 
@@ -478,9 +478,9 @@
                 var Total_c_Pengeluaran = 0;
                 var Total_t_Pengeluaran = 0;
                 // console.log(persentaseHutang_Pengeluaran, persentasePembayaran_Pengeluaran, persentasePembayaran_Penjualan, persentasePiutang_Penjualan);
-                $('#Pembayaran_Penjualan').text('Rp. '+Pembayaran_Penjualan.format(2, 3, '.', ','));
-                $('#Piutang_Penjualan').text('Rp. '+Piutang_Penjualan.format(2, 3, '.', ','));
-                $('#Total_Penjualan').text('Rp. '+ (Pembayaran_Penjualan+Piutang_Penjualan).format(2, 3, '.', ','));
+                $('#Pembayaran_Penjualan').text('Rp. '+Pembayaran_Penjualan.format(0, 3, '.', ','));
+                $('#Piutang_Penjualan').text('Rp. '+Piutang_Penjualan.format(0, 3, '.', ','));
+                $('#Total_Penjualan').text('Rp. '+ (Pembayaran_Penjualan+Piutang_Penjualan).format(0, 3, '.', ','));
                 if (isNaN(persentasePembayaran_Penjualan)){ 
                     document.getElementById('Progress_Pembayaran_Penjualan').style.width= 0 +'%';
                 } else {
@@ -495,9 +495,9 @@
                 // document.getElementById('Progress_Pembayaran_Penjualan').style.width= if ( isNaN(persentasePembayaran_Penjualan) ){ 0 }else{persentasePembayaran_Penjualan}+'%';
                 // document.getElementById('Progress_Piutang_Penjualan').style.width=persentasePiutang_Penjualan+'%';
 
-                $('#Pembayaran_Pengeluaran').text('Rp. '+Pembayaran_Pengeluaran.format(2, 3, '.', ','));
-                $('#Hutang_Pengeluaran').text('Rp. '+Hutang_Pengeluaran.format(2, 3, '.', ','));
-                $('#Total_Pengeluaran').text('Rp. '+ (Pembayaran_Pengeluaran + Hutang_Pengeluaran).format(2, 3, '.', ','));
+                $('#Pembayaran_Pengeluaran').text('Rp. '+Pembayaran_Pengeluaran.format(0, 3, '.', ','));
+                $('#Hutang_Pengeluaran').text('Rp. '+Hutang_Pengeluaran.format(0, 3, '.', ','));
+                $('#Total_Pengeluaran').text('Rp. '+ (Pembayaran_Pengeluaran + Hutang_Pengeluaran).format(0, 3, '.', ','));
                 if (isNaN(persentasePiutang_Penjualan)){ 
                     document.getElementById('Progress_Pembayaran_Pengeluaran').style.width= 0 +'%';
                 } else {
@@ -512,21 +512,21 @@
                 // document.getElementById('Progress_Pembayaran_Pengeluaran').style.width= persentasePembayaran_Pengeluaran+'%';
                 // document.getElementById('Progress_Hutang_Pengeluaran').style.width=persentaseHutang_Pengeluaran+'%';
                 
-                $('#Pencairan_Piutang').text('Rp. '+Pencairan_Piutang.format(2, 3, '.', ','));
-                $('#Pembayaran_Hutang').text('Rp. '+Pembayaran_Hutang.format(2, 3, '.', ','));
+                $('#Pencairan_Piutang').text('Rp. '+Pencairan_Piutang.format(0, 3, '.', ','));
+                $('#Pembayaran_Hutang').text('Rp. '+Pembayaran_Hutang.format(0, 3, '.', ','));
                 
                 //Detail Cash
-                $('#c_Kas_Masuk').text('Rp. '+(c_Pembayaran_Penjualan + c_Pencairan_Piutang).format(2, 3, '.', ','));
-                $('#c_Pembayaran_Penjualan').text('Rp. '+c_Pembayaran_Penjualan.format(2, 3, '.', ','));
-                $('#c_Pencairan_Piutang').text('Rp. '+c_Pencairan_Piutang.format(2, 3, '.', ','));
+                $('#c_Kas_Masuk').text('Rp. '+(c_Pembayaran_Penjualan + c_Pencairan_Piutang).format(0, 3, '.', ','));
+                $('#c_Pembayaran_Penjualan').text('Rp. '+c_Pembayaran_Penjualan.format(0, 3, '.', ','));
+                $('#c_Pencairan_Piutang').text('Rp. '+c_Pencairan_Piutang.format(0, 3, '.', ','));
                 
-                $('#c_Pembayaran_Hutang').text('Rp. '+c_Pembayaran_Hutang.format(2, 3, '.', ','));
+                $('#c_Pembayaran_Hutang').text('Rp. '+c_Pembayaran_Hutang.format(0, 3, '.', ','));
                 for (i = 0; i < label_Jenis_Pengeluaran.length; i++) {
-                    $('#c_'+label_Jenis_Pengeluaran[i].replace(' ','_')).text('Rp. '+c_value_Jenis_Pengeluaran[i].format(2, 3, '.', ','));
+                    $('#c_'+label_Jenis_Pengeluaran[i].replace(' ','_')).text('Rp. '+c_value_Jenis_Pengeluaran[i].format(0, 3, '.', ','));
                     Total_c_Pengeluaran = Total_c_Pengeluaran + c_value_Jenis_Pengeluaran[i];
                 };
-                $('#c_Kas_Keluar').text('Rp. '+(c_Pembayaran_Hutang + Total_c_Pengeluaran).format(2, 3, '.', ','));
-                $('#c_Total').text('Rp. '+(c_Pembayaran_Penjualan + c_Pencairan_Piutang - Total_c_Pengeluaran).format(2, 3, '.', ','))
+                $('#c_Kas_Keluar').text('Rp. '+(c_Pembayaran_Hutang + Total_c_Pengeluaran).format(0, 3, '.', ','));
+                $('#c_Total').text('Rp. '+(c_Pembayaran_Penjualan + c_Pencairan_Piutang - Total_c_Pengeluaran).format(0, 3, '.', ','))
                 if (((c_Pembayaran_Penjualan + c_Pencairan_Piutang) - Total_c_Pengeluaran) < 0){
                     document.getElementById('c_Total').className = "pull-right badge bg-red";
                 }else if (((c_Pembayaran_Penjualan + c_Pencairan_Piutang) - Total_c_Pengeluaran) > 0){
@@ -534,17 +534,17 @@
                 };
 
                 //Detail Transfer
-                $('#t_Kas_Masuk').text('Rp. '+(t_Pembayaran_Penjualan + t_Pencairan_Piutang).format(2, 3, '.', ','));
-                $('#t_Pembayaran_Penjualan').text('Rp. '+t_Pembayaran_Penjualan.format(2, 3, '.', ','));
-                $('#t_Pencairan_Piutang').text('Rp. '+t_Pencairan_Piutang.format(2, 3, '.', ','));
+                $('#t_Kas_Masuk').text('Rp. '+(t_Pembayaran_Penjualan + t_Pencairan_Piutang).format(0, 3, '.', ','));
+                $('#t_Pembayaran_Penjualan').text('Rp. '+t_Pembayaran_Penjualan.format(0, 3, '.', ','));
+                $('#t_Pencairan_Piutang').text('Rp. '+t_Pencairan_Piutang.format(0, 3, '.', ','));
                 
-                $('#t_Pembayaran_Hutang').text('Rp. '+t_Pembayaran_Hutang.format(2, 3, '.', ','));
+                $('#t_Pembayaran_Hutang').text('Rp. '+t_Pembayaran_Hutang.format(0, 3, '.', ','));
                 for (i = 0; i < label_Jenis_Pengeluaran.length; i++) {
-                    $('#t_'+label_Jenis_Pengeluaran[i].replace(' ','_')).text('Rp. '+t_value_Jenis_Pengeluaran[i].format(2, 3, '.', ','));
+                    $('#t_'+label_Jenis_Pengeluaran[i].replace(' ','_')).text('Rp. '+t_value_Jenis_Pengeluaran[i].format(0, 3, '.', ','));
                     Total_t_Pengeluaran = Total_t_Pengeluaran + t_value_Jenis_Pengeluaran[i];
                 };
-                $('#t_Kas_Keluar').text('Rp. '+(t_Pembayaran_Hutang + Total_t_Pengeluaran).format(2, 3, '.', ','));
-                $('#t_Total').text('Rp. '+(t_Pembayaran_Penjualan + t_Pencairan_Piutang - Total_t_Pengeluaran).format(2, 3, '.', ','))
+                $('#t_Kas_Keluar').text('Rp. '+(t_Pembayaran_Hutang + Total_t_Pengeluaran).format(0, 3, '.', ','));
+                $('#t_Total').text('Rp. '+(t_Pembayaran_Penjualan + t_Pencairan_Piutang - Total_t_Pengeluaran).format(0, 3, '.', ','))
                 if (((t_Pembayaran_Penjualan + t_Pencairan_Piutang) - Total_t_Pengeluaran) < 0){
                     document.getElementById('t_Total').className = "pull-right badge bg-red";
                 }else if (((t_Pembayaran_Penjualan + t_Pencairan_Piutang) - Total_t_Pengeluaran) > 0){

@@ -323,6 +323,7 @@
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_produk',function () {
+            $('#bt_simpan_tambah').removeAttr('disabled');
             $('#tambah_kategori').val(0).trigger('change');
             $('#tambah_nama_produk').val("");
             $('#tambah_satuan').val(0).trigger('change');
@@ -336,6 +337,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            $('#bt_simpan_edit').removeAttr('disabled');
             $('#edit_kategori').val($(this).data('kategori_id')).trigger('change');
             $('#edit_nama_produk').val($(this).data('nama_produk'));
             $('#edit_satuan').val($(this).data('satuan')).trigger('change');
@@ -360,6 +362,7 @@
         $(document).on('click','#bt_simpan_tambah',function (){
             $("#tambah_harga_jual").val(numeral($("#tambah_harga_jual").val()).value());
             $("#tambah_harga_beli").val(numeral($("#tambah_harga_beli").val()).value());
+            $('#bt_simpan_tambah').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('storeproduk')}}',
@@ -390,15 +393,16 @@
                             $('#modal_tambah').modal('hide');
                             oTable.ajax.reload();
                         }else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_tambah').modal('hide');
                         }
                     }
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 },
                 error:function(response){
                     console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
-                    // $('#modal_tambah').modal('hide');
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 }
             });
         });
@@ -409,6 +413,7 @@
         $(document).on('click','#bt_simpan_edit',function (){
             $("#edit_harga_jual").val(numeral($("#edit_harga_jual").val()).value());
             $("#edit_harga_beli").val(numeral($("#edit_harga_beli").val()).value());
+            $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('updateproduk')}}',
@@ -440,15 +445,16 @@
                             oTable.ajax.reload();
                         }else{
                             console.log('atas');
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_edit').modal('hide');
                         }
                     }
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 },
                 error:function(response){
                     console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
-                    // $('#modal_edit').modal('hide');
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 }
             });
         });
@@ -472,10 +478,13 @@
                         $('#modal_hapus').modal('hide');
                         oTable.ajax.reload();
                     }else{
-                        swal("Error !", "Gagal menyimpan !", "error");
+                        swal("Error !", "Gagal menghapus !", "error");
                         // $('#modal_edit').modal('hide');
                     }
                 },
+                error:function(){
+                    swal("Error !", "Gagal menghapus !", "error");
+                }
             });
         });
     </script>

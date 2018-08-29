@@ -312,6 +312,7 @@
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_produk',function () {
+            $('#bt_simpan_tambah').removeAttr('disabled');
             $('#tambah_kategori_bb').val(0).trigger('change');
             $('#tambah_nama_bahan').val("");
             $('#tambah_satuan').val(0).trigger('change');
@@ -324,6 +325,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            $('#bt_simpan_edit').removeAttr('disabled');
             $('#edit_kategori_bb').val($(this).data('kategori_id')).trigger('change');
             $('#edit_nama_bahan').val($(this).data('nama_bahan'));
             $('#edit_satuan').val($(this).data('satuan')).trigger('change');
@@ -347,6 +349,7 @@
         $(document).on('click','#bt_simpan_tambah',function (){
             $("#tambah_harga").val(numeral($("#tambah_harga").val()).value());
             $("#tambah_batas_stok").val(numeral($("#tambah_batas_stok").val()).value());
+            $('#bt_simpan_tambah').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('storebahanbaku')}}',
@@ -379,19 +382,20 @@
                             $('#modal_tambah').modal('hide');
                             oTable.ajax.reload();
                         }else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             $("#tambah_harga").val(numeral($("#tambah_harga").val()).format('0,0'));
                             $("#tambah_batas_stok").val(numeral($("#tambah_batas_stok").val()).format('0,0'));
                             // $('#modal_tambah').modal('hide');
                         }
                     }
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 },
                 error:function(response){
                     console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
                     $("#tambah_harga").val(numeral($("#tambah_harga").val()).format('0,0'));
                     $("#tambah_batas_stok").val(numeral($("#tambah_batas_stok").val()).format('0,0'));
-                    // $('#modal_tambah').modal('hide');
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 }
             });
         });
@@ -402,6 +406,7 @@
         $(document).on('click','#bt_simpan_edit',function (){
             $("#edit_harga").val(numeral($("#edit_harga").val()).value());
             $("#edit_batas_stok").val(numeral($("#edit_batas_stok").val()).value());
+            $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('updatebahanbaku')}}',
@@ -435,19 +440,20 @@
                             oTable.ajax.reload();
                         }else{
                             console.log('atas');
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             $("#edit_harga").val(numeral($("#edit_harga").val()).format('0,0'));
                             $("#edit_batas_stok").val(numeral($("#edit_batas_stok").val()).format('0,0'));
                             // $('#modal_edit').modal('hide');
                         }
                     }
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 },
                 error:function(response){
                     console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
                     $("#edit_harga").val(numeral($("#edit_harga").val()).format('0,0'));
                     $("#edit_batas_stok").val(numeral($("#edit_batas_stok").val()).format('0,0'));
-                    // $('#modal_edit').modal('hide');
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 }
             });
         });
@@ -475,6 +481,9 @@
                         // $('#modal_edit').modal('hide');
                     }
                 },
+                error:function(){
+                    swal("Error !", "Gagal menghapus !", "error");
+                }
             });
         });
     </script>

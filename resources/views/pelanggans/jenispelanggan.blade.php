@@ -199,6 +199,7 @@
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_jenispelanggan',function () {
+            $('#bt_simpan_tambah').removeAttr('disabled');
             $('#tambah_jenispelanggan').val("");
         });
     </script>
@@ -206,6 +207,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            $('#bt_simpan_edit').removeAttr('disabled');
             $('#edit_jenispelanggan').val($(this).data('jenis'));
             $('#jenispelanggan_id').val($(this).data('id'));
         });
@@ -223,6 +225,7 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
+            $('#bt_simpan_tambah').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('storejenispelanggan')}}',
@@ -236,7 +239,7 @@
                         if ((response.errors.tambah_jenispelanggan)){
                             swal("Jenis Pelanggan", ""+response.errors.tambah_jenispelanggan+"", "error");
                         }
-                        $('#modal_tambah').modal('hide');
+                        // $('#modal_tambah').modal('hide');
                     }
                     else
                     {   if (response=="Success"){
@@ -245,14 +248,15 @@
                             oTable.ajax.reload();
                         }
                         else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             $('#modal_tambah').modal('hide');
                         }
                     }
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 },
                 error:function(){
-                            swal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_tambah').modal('hide');
+                    swal("Error !", "Gagal menyimpan !", "error");
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 }
             });
         });
@@ -261,6 +265,7 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
+            $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('updatejenispelanggan')}}',
@@ -283,14 +288,16 @@
                             oTable.ajax.reload();
                         }
                         else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             $('#modal_edit').modal('hide');
                         }
                     }
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 },
                 error:function(){
-                            swal("Error !", "Gagal menyimpan !", "error");
-                            $('#modal_edit').modal('hide');
+                    swal("Error !", "Gagal menyimpan !", "error");
+                    $('#bt_simpan_edit').removeAttr('disabled');
+                            // $('#modal_edit').modal('hide');
                 }
             });
         });
@@ -308,10 +315,19 @@
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    $('.error').addClass('hidden');
-                    $('#modal_hapus').modal('hide');
-                    oTable.ajax.reload();
+                    if (response=="Success"){
+                        swal("Success !", "Berhasil menghapus !", "success");
+                        $('.error').addClass('hidden');
+                        $('#modal_hapus').modal('hide');
+                        oTable.ajax.reload();
+                    }else{
+                        swal("Error !", "Gagal menghapus !", "error");
+                        // $('#modal_edit').modal('hide');
+                    }
                 },
+                error:function(){
+                    swal("Error !", "Gagal menghapus !", "error");
+                }
             });
         });
     </script>

@@ -247,6 +247,7 @@
     {{-- javascript modal tambah --}}
     <script type="text/javascript">
         $(document).on('click','#modal_tambah_relasi',function () {
+            $('#bt_simpan_tambah').removeAttr('disabled');
             $('#tambah_r_produk').val(0).trigger('change');
             $('#tambah_r_bahan_baku').val(0).trigger('change');
             $('#tambah_qty_p_trans').val(0);
@@ -256,6 +257,7 @@
     {{-- javascript modal edit --}}
     <script type="text/javascript">
         $(document).on('click','.modal_edit',function () {
+            $('#bt_simpan_edit').removeAttr('disabled');
             $('#edit_r_produk').val($(this).data('produk_id')).trigger('change');
             $('#edit_r_bahan_baku').val($(this).data('bahanbaku_id')).trigger('change');
             $('#edit_qty_p_trans').val($(this).data('qtypertrx'));
@@ -274,6 +276,7 @@
     {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
+            $('#bt_simpan_tambah').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('storerelasibahanbaku')}}',
@@ -298,15 +301,16 @@
                             $('#modal_tambah').modal('hide');
                             oTable.ajax.reload();
                         }else{
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_tambah').modal('hide');
                         }
                     }
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 },
                 error:function(response){
                     console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
-                    // $('#modal_tambah').modal('hide');
+                    $('#bt_simpan_tambah').removeAttr('disabled');
                 }
             });
         });
@@ -315,6 +319,7 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
+            $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',
                 url:'{{route('updaterelasibahanbaku')}}',
@@ -340,15 +345,16 @@
                             oTable.ajax.reload();
                         }else{
                             console.log('atas');
-                            wal("Error !", "Gagal menyimpan !", "error");
+                            swal("Error !", "Gagal menyimpan !", "error");
                             // $('#modal_edit').modal('hide');
                         }
                     }
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 },
                 error:function(response){
                     console.log(response);
                     swal("Error !", "Gagal menyimpan !", "error");
-                    // $('#modal_edit').modal('hide');
+                    $('#bt_simpan_edit').removeAttr('disabled');
                 }
             });
         });
@@ -372,10 +378,13 @@
                         $('#modal_hapus').modal('hide');
                         oTable.ajax.reload();
                     }else{
-                        swal("Error !", "Gagal menyimpan !", "error");
+                        swal("Error !", "Gagal menghapus !", "error");
                         // $('#modal_edit').modal('hide');
                     }
                 },
+                error:function(){
+                    swal("Error !", "Gagal menghapus !", "error");
+                }
             });
         });
     </script>
