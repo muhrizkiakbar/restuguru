@@ -154,8 +154,8 @@ class ProdukController extends Controller
             $table->harga_beli = $request->tambah_harga_beli;
             $table->harga_jual = $request->tambah_harga_jual;
             if (
-              ($request->tambah_satuan=='CM') ||
-              ($request->tambah_satuan=='M')
+              ($request->tambah_satuan=='CENTIMETER') ||
+              ($request->tambah_satuan=='METER')
             ) {
               $table->hitung_luas = 1;
             } else {
@@ -226,8 +226,8 @@ class ProdukController extends Controller
             $table->harga_beli = $request->edit_harga_beli;
             $table->harga_jual = $request->edit_harga_jual;
             if (
-              ($request->edit_satuan=='CM') ||
-              ($request->edit_satuan=='M')
+              ($request->edit_satuan=='CENTIMETER') ||
+              ($request->edit_satuan=='METER')
             ) {
               $table->hitung_luas = 1;
             } else {

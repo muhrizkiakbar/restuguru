@@ -96,8 +96,8 @@
                                             <div class="form-group">
                                                 <select class="form-control select2" placeholder="Satuan" name="tambah_satuan" id="tambah_satuan" style="width: 100%;">
                                                         <option disabled selected>Satuan Produk</option>
-                                                        <option value="CM">Centimeter</option>
-                                                        <option value="M">Meter</option>
+                                                        <option value="CENTIMETER">Centimeter</option>
+                                                        <option value="METER">Meter</option>
                                                         <option value="PCS">Pcs</option>
                                                         <option value="PAKET">Paket</option>
                                                 </select>
@@ -164,8 +164,8 @@
                                             <div class="form-group">
                                                 <select class="form-control select2" placeholder="Satuan" name="edit_satuan" id="edit_satuan" style="width: 100%;">
                                                         <option disabled selected>Satuan Produk</option>
-                                                        <option value="CM">Centimeter</option>
-                                                        <option value="M">Meter</option>
+                                                        <option value="CENTIMETER">Centimeter</option>
+                                                        <option value="METER">Meter</option>
                                                         <option value="PCS">Pcs</option>
                                                         <option value="PAKET">Paket</option>
                                                 </select>

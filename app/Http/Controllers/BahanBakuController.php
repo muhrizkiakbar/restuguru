@@ -180,8 +180,8 @@ class BahanBakuController extends Controller
             $table->harga = $request->tambah_harga;
             $table->batas_stok = $request->tambah_batas_stok;
             if (
-              ($request->tambah_satuan=='CM') ||
-              ($request->tambah_satuan=='M')
+              ($request->tambah_satuan=='CENTIMETER') ||
+              ($request->tambah_satuan=='METER')
             ) {
               $table->hitung_luas = 1;
             } else {
@@ -252,8 +252,8 @@ class BahanBakuController extends Controller
             $table->harga = $request->edit_harga;
             $table->batas_stok = $request->edit_batas_stok;
             if (
-              ($request->edit_satuan=='CM') ||
-              ($request->edit_satuan=='M')
+              ($request->edit_satuan=='CENTIMETER') ||
+              ($request->edit_satuan=='METER')
             ) {
               $table->hitung_luas = 1;
             } else {
