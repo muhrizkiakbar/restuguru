@@ -611,7 +611,7 @@
             // nominalangsuran=$('#nominalangsuran').val();
             arrayidtrans.push(this.value);
             nominalangsuran=nominalangsuran+$(this).data('sisa');
-            $('#nominalangsuran').val(numeral(nominalangsuran).value());
+            $('#nominalangsuran').val(numeral(nominalangsuran).format('$ 0,0'));
         });
 
         $('.checkbox').on('ifUnchecked',function () { 
@@ -621,7 +621,7 @@
             }
             console.log(arrayidtrans);
             nominalangsuran=nominalangsuran-$(this).data('sisa');
-            $('#nominalangsuran').val(numeral(nominalangsuran).value());
+            $('#nominalangsuran').val(numeral(nominalangsuran).format('$ 0,0'));
         });
 
         $("input.mata-uang").keyup(function(){
