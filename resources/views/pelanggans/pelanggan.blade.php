@@ -129,7 +129,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Limit Tagihan</label>
-                                                <input id="tambah_limittagihan" name="tambah_limittagihan" class="form-control pull-right" type="text">
+                                                <input id="tambah_limittagihan" name="tambah_limittagihan" class="form-control pull-right mata-uang" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>No Rekening</label>
@@ -218,7 +218,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Limit Tagihan</label>
-                                                <input id="edit_limittagihan" name="edit_limittagihan" class="form-control pull-right" type="text">
+                                                <input id="edit_limittagihan" name="edit_limittagihan" class="form-control pull-right mata-uang" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>No Rekening</label>
@@ -289,6 +289,10 @@
     <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap 3.3.7 -->
     <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+
     <!-- Select2 -->
     <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
@@ -306,8 +310,27 @@
     
     {{-- javascript Tabel --}}
     <script type="text/javascript">
+        numeral.register('locale', 'idr', {
+            delimiters: {
+                thousands: '.',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'ribu',
+                million: 'juta',
+                billion: 'ratus juta',
+                trillion: 'milyar'
+            },
+            currency: {
+                symbol: 'Rp'
+            }
+        });
+
         var oTable;
         $(function() {
+            numeral.locale('idr');
+            
+        
             oTable = $('#tabel_pelanggan').DataTable({
                 processing: true,
                 serverSide: true,
@@ -331,6 +354,11 @@
                 ]
             });
         });
+
+        $("input.mata-uang").keyup(function(){
+                $(this).val(numeral($(this).val()).format('$ 0,0'));
+        });
+
         $('#tambah_jenis_pelanggan, #edit_jenis_pelanggan').select2({
             placeholder: "Pilih Jenis Pelanggan."
         });
@@ -389,10 +417,10 @@
     </script>
 
 
-    {{-- javascript simpan tambah --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_tambah',function (){
             $('#bt_simpan_tambah').attr('disabled',true);
+            $('#tambah_limittagihan').val(numeral($('#tambah_limittagihan').val()).value());
             $.ajax({
                 type:'post',
                 url:'{{route('storepelanggan')}}',
@@ -466,6 +494,7 @@
     {{-- javascript simpan edit --}}
     <script type="text/javascript">
         $(document).on('click','#bt_simpan_edit',function (){
+            $('#edit_limittagihan').val(numeral($('#edit_limittagihan').val()).value());
             $('#bt_simpan_edit').attr('disabled',true);
             $.ajax({
                 type:'post',

@@ -530,9 +530,6 @@
     <script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
 
-    {{-- <!-- <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> --> --}}
-    <!-- <script src="{{asset('bower_components/jquery-number/jquery.number.js')}}"></script> -->
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
     <!-- sweet alert -->

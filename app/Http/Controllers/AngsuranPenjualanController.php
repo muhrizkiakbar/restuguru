@@ -670,8 +670,10 @@ class AngsuranPenjualanController extends Controller
             ->first();
 
             $sisa=$transaksi->sisa_tagihan + $tableangsuran->nominal_angsuran;
+            $jumlahpembayaran=$transaksi->jumlah_pembayaran - $tableangsuran->nominal_angsuran;
 
             $transaksi->sisa_tagihan=$sisa;
+            $transaksi->jumlah_pembayaran=$jumlahpembayaran;
             $transaksi->save();
 
         if ($tableangsuran->delete())

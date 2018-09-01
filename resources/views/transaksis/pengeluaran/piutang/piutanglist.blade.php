@@ -245,22 +245,22 @@
                                 <td>{{$data->namapenerima}}</td>
                                 <td>{{$data->hppenerima}}</td>
                                 <td>{{$data->tanggal_pengeluaran}}</td>
-                                <td>Rp. {{number_format(floatval($data->pembayaran_pengeluaran),2,',','.')}}</td>
+                                <td id="pembayaran{{$data->id}}">Rp. {{number_format(floatval($data->pembayaran_pengeluaran),0,',','.')}}</td>
                                 <td>{{$data->metode_pembayaran}}</td>
                                 @if ($data->sisa_pengeluaran!=0)
                                     <td id="sisa{{$data->id}}"><span class="badge bg-red">
-                                    Rp. {{number_format(floatval($data->sisa_pengeluaran),2,',','.')}}
+                                    Rp. {{number_format(floatval($data->sisa_pengeluaran),0,',','.')}}
                                     </span></td>
                                 @else
-                                    <td id="sisa{{$data->id}}">Rp. {{number_format(floatval($data->sisa_pengeluaran),2,',','.')}}</td>                 
+                                    <td id="sisa{{$data->id}}">Rp. {{number_format(floatval($data->sisa_pengeluaran),0,',','.')}}</td>                 
                                 @endif
                                 <td>{{$data->jenis_pengeluaran}}</td>                                
-                                <td>Rp. {{number_format(floatval($data->total_pengeluaran),2,',','.')}}</td>
+                                <td>Rp. {{number_format(floatval($data->total_pengeluaran),0,',','.')}}</td>
                                 <td style="width: 150px;min-width:140px;">
                                     <div class="btn-group">
-                                        <button type="button" class="modal_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_pengeluaran}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
+                                        <button type="button" id="showtombol{{$data->id}}" class="modal_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_pengeluaran}}" data-pembayaran="{{$data->pembayaran_pengeluaran}}"  data-target="#modal_show"><i class="fa fa-eye"></i></button>
                                         <button type="button" class="buttonprint btn btn-danger btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>                                        
-                                        <button type="button" id="simpantombol{{$data->id}}" class="modal_add btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-nonota="{{$data->id}}" data-sisa="{{$data->sisa_pengeluaran}}" data-total="{{$data->total_pengeluaran}}" data-target="#modal_add"><i class="fa fa-plus"></i> Angsuran</button>
+                                        <button type="button" id="simpantombol{{$data->id}}" class="modal_add btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-nonota="{{$data->id}}" data-sisa="{{$data->sisa_pengeluaran}}" data-total="{{$data->total_pengeluaran}}" data-pembayaran="{{$data->pembayaran_pengeluaran}}"  data-target="#modal_add"><i class="fa fa-plus"></i> Angsuran</button>
                                     </div>
                                 </td>
                                 <td>{{$data->Nama_Cabang}}</td> 
@@ -342,7 +342,7 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Nominal</label>
-                                          <input id="add_nominal" name="add_nominal" class="form-control" type="text">
+                                          <input id="add_nominal" name="add_nominal" class="form-control mata-uang" type="text">
                                           {{csrf_field()}}
                                       </div>
                                   </div>
@@ -433,8 +433,10 @@
     <!-- bootstrap datepicker -->
     <script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
-    <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
+
+    <!-- <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> -->
     <!-- <script src="{{asset('bower_components/jquery-number/jquery.number.js')}}"></script> -->
 
     <!-- sweet alert -->
@@ -481,39 +483,57 @@
             return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
         };
 
-
-      $(function(){
-
-        $('#add_nominal').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
-
-        $('input[name="tanggal"]').datepicker({
-            format: "dd-mm-yyyy",
-        });
-
-        
-        $('#pelanggan').select2({
-            placeholder: "Pilih Pelanggan.",
-            minimumInputLength: 1,
-            ajax: {
-                url: '{{route('pelanggancari')}}',
-                dataType: 'json',
-                data: function (params) 
-                {
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) 
-                {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
+        numeral.register('locale', 'idr', {
+            delimiters: {
+                thousands: '.',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'ribu',
+                million: 'juta',
+                billion: 'ratus juta',
+                trillion: 'milyar'
+            },
+            currency: {
+                symbol: 'Rp'
             }
         });
-        
-      });
+
+        $(function(){
+
+            // $('#add_nominal').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
+            
+            numeral.locale('idr');
+
+
+            $('input[name="tanggal"]').datepicker({
+                format: "dd-mm-yyyy",
+            });
+
+            
+            $('#pelanggan').select2({
+                placeholder: "Pilih Pelanggan.",
+                minimumInputLength: 1,
+                ajax: {
+                    url: '{{route('pelanggancari')}}',
+                    dataType: 'json',
+                    data: function (params) 
+                    {
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function (data) 
+                    {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+            });
+            
+        });
       
 
     //   bagian form
@@ -536,6 +556,10 @@
                 },
             });
         });
+        
+        $("input.mata-uang").keyup(function(){
+                $(this).val(numeral($(this).val()).format('$ 0,0'));
+        });
 
         $(document).on('click','.modal_show',function () {
             $("#showdata").empty();
@@ -543,6 +567,8 @@
             idbaris=$(this).data('id');
             datanonota=$(this).data('nonota');
             datasisa=$(this).data('sisa');
+            datapembayaran=$(this).data('pembayaran');
+
             $.ajax({
                 async: true, 
                 type:'get',
@@ -557,7 +583,7 @@
                     $.each( response, function( key, value ) {
                         
                         $("#showdata").append(
-                            '<tr id="baris'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idtrans+'" target="_blank">#'+response[key]['transaksipengeluaran_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id2']+'"  data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
+                            '<tr id="show'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idtrans+'" target="_blank">#'+response[key]['transaksipengeluaran_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id2']+'"  data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
                         );
                     });
                     // $('.labelnota').text(response.nonota);
@@ -578,19 +604,21 @@
             datatotal=parseFloat($(this).data('total'));
             datasisa=parseFloat($(this).data('sisa'));
             datanonota=$(this).data('nonota');
-            console.log('idtrans = '+idtrans);
-            console.log('idbaris = '+idbaris);
-            console.log('datatotal = '+datatotal);
-            console.log('datasisa = '+datasisa);
-            console.log('datanonota = '+datanonota);
-            $('#add_nominal').val('0').trigger('mask.maskMoney');;
+            datapembayaran=parseFloat($(this).data('pembayaran'));
+
+            // console.log('idtrans = '+idtrans);
+            // console.log('idbaris = '+idbaris);
+            // console.log('datatotal = '+datatotal);
+            // console.log('datasisa = '+datasisa);
+            // console.log('datanonota = '+datanonota);
+            $('#add_nominal').val('0');
         });
 
         
         $(document).on('click','#simpanangsuran',function (){
             $('simpanangsuran').attr('disabled',true);
             var token=$('input[name="_token"]').val();
-            var nominal=($('#add_nominal').maskMoney('unmasked')[0]);
+            var nominal=(numeral($('#add_nominal').val()).value());
             var metode=$('#pembayaran').val();
             
             if (nominal==0){
@@ -625,16 +653,24 @@
                             if (response['msg']=="success"){
                                 swal("Berhasil !", "Berhasil mennyimpan angsuran !", "success");
                                 datasisa=datasisa-nominal;
+                                datapembayaran=datapembayaran+nominal;
+                                $('#simpantombol'+datanonota).data('pembayaran',datapembayaran);
                                 $('#simpantombol'+datanonota).data('sisa',datasisa);
+                                $('#showtombol'+datanonota).data('sisa',datasisa);
+                                $('#showtombol'+datanonota).data('pembayaran',datapembayaran);
                                 console.log(datasisa);
                                 if (datasisa>0){
+                                    $('#pembayaran'+datanonota).html('Rp. '+datapembayaran.format(0, 3, '.', ','));
                                     $('#sisa'+datanonota).html('<span class="badge bg-red">Rp. '+datasisa.format(2, 3, '.', ',')+'</span>');
                                 }
                                 else
                                 {
                                     $('#sisa'+datanonota).empty();
+                                    $('#'+datanonota).remove();
                                     $('#sisa'+datanonota).text('Rp. '+datasisa.format(2, 3, '.', ','));                                    
                                 }
+                                console.log(datasisa)
+                                // datasisa=0;
                                 $('#modal_add').modal('hide');
                             }
                             else{
@@ -661,6 +697,8 @@
             $('#deleteangsuran').attr('disabled',true);
             var token=$('input[name="_token"]').val();
             var sisatagihan=datasisa+datanominal;
+            datapembayaran=datapembayaran-datanominal;
+            var sisapembayaran=datapembayaran;            
             $.ajax({
                 headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -676,13 +714,19 @@
                         // console.log(response['msg']);
                         if (response['msg']=="success"){
                             swal("Berhasil !", "Berhasil menghapus angsuran !", "success");
-                            $('#baris'+idtrans+'').remove();
+                            $('#show'+idtrans+'').remove();
                             $('#sisatagihanlabel').text(sisatagihan.format(2, 3, '.', ','));
                             datasisa=sisatagihan;
                             $('#sisa'+datanonota).html('<span class="badge bg-red">Rp. '+sisatagihan.format(2, 3, '.', ',')+'</span>');
+                            $('#pembayaran'+datanonota).html('Rp. '+sisapembayaran.format(0, 3, '.', ','));
+                            $('#showtombol'+datanonota).data('sisa',datasisa);
+                            $('#simpantombol'+datanonota).data('sisa',datasisa);
+                            $('#showtombol'+datanonota).data('pembayaran',sisapembayaran);
+                            $('#simpantombol'+datanonota).data('pembayaran',sisapembayaran);
                             $('#modal_delete').modal('hide');
                         }
                         else{
+
                             swal("Error !", "Gagal menghapus angsuran !", "error");
                             $('#modal_delete').modal('hide');
                             

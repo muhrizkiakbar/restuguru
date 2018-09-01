@@ -215,7 +215,7 @@
                                         <div class="box-body">
                                             <form id="formstoreall">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" id="nominalangsuran" name="nominal" placeholder="Nominal Pembayaran">
+                                                    <input type="text" class="form-control mata-uang" id="nominalangsuran" name="nominal" placeholder="Nominal Pembayaran">
                                                 </div>
                                                 <div class="form-group">
                                                     <select class="form-control"  id="pembayaran3" name="pembayaran3" style="width: 100%;">
@@ -276,23 +276,23 @@
                                     <td>{{$data->nama_pelanggan}}</td>
                                     <td>{{$data->hp_pelanggan}}</td>
                                     <td>{{$data->tanggal}}</td>
-                                    <td style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->jumlah_pembayaran),2,',','.')}}</td>
+                                    <td  id="pembayaran{{$data->nomor_nota}}" style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->jumlah_pembayaran),0,',','.')}}</td>
                                     <td>{{$data->metode_pembayaran}}</td>
-                                    <td>{{number_format(floatval($data->diskon),2,',','.')}} %</td>
-                                    <td style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->pajak),2,',','.')}}</td>
+                                    <td>{{number_format(floatval($data->diskon),0,',','.')}} %</td>
+                                    <td style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->pajak),0,',','.')}}</td>
                                     @if ($data->sisa_tagihan!=0)
                                         <td id="sisa{{$data->nomor_nota}}" style="width: 450px;min-width:140px;"><span class="badge bg-red">
-                                        Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}
+                                        Rp. {{number_format(floatval($data->sisa_tagihan),0,',','.')}}
                                         </span></td>
                                     @else
-                                        <td id="sisa{{$data->nomor_nota}}" style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}</td>                 
+                                        <td id="sisa{{$data->nomor_nota}}" style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->sisa_tagihan),0,',','.')}}</td>                 
                                     @endif
-                                    <td style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
+                                    <td style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->total_harga),0,',','.')}}</td>
                                     <td style="width: 150px;min-width:140px;">
                                         <div class="btn-group">
-                                            <button type="button" class="modal_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
+                                            <button type="button" id="showtombol{{$data->nomor_nota}}" class="modal_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}" data-pembayaran="{{$data->jumlah_pembayaran}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
                                             <button type="button" class="buttonprint btn btn-danger btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>                                        
-                                            <button type="button" id="simpantombol{{$data->nomor_nota}}" class="modal_add btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{$data->sisa_tagihan}}" data-total="{{$data->total_harga}}" data-target="#modal_add"><i class="fa fa-plus"></i> Angsuran</button>
+                                            <button type="button" id="simpantombol{{$data->nomor_nota}}" class="modal_add btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{$data->sisa_tagihan}}" data-total="{{$data->total_harga}}" data-pembayaran="{{$data->jumlah_pembayaran}}" data-target="#modal_add"><i class="fa fa-plus"></i> Angsuran</button>
                                         </div>
                                     </td>
                                     <td>{{$data->Nama_Cabang}}</td> 
@@ -374,7 +374,7 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Nominal</label>
-                                          <input id="add_nominal" name="add_nominal" class="form-control" type="text">
+                                          <input id="add_nominal" name="add_nominal" class="form-control mata-uang" type="text">
                                           {{csrf_field()}}
                                       </div>
                                   </div>
@@ -466,8 +466,11 @@
     <script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
 
-    <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
+    <!-- <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> -->
     <!-- <script src="{{asset('bower_components/jquery-number/jquery.number.js')}}"></script> -->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
 
     <!-- sweet alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -490,6 +493,23 @@
         var datanonota=0;
         var datatotal=0;
         var datanominal=0;
+        var datapembayaran=0;
+
+        numeral.register('locale', 'idr', {
+            delimiters: {
+                thousands: '.',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'ribu',
+                million: 'juta',
+                billion: 'ratus juta',
+                trillion: 'milyar'
+            },
+            currency: {
+                symbol: 'Rp'
+            }
+        });
 
         function gotoreport(protocol,url,id){
             var url2 = protocol+'//'+url + '/transaksi/angsuran/report/' + id;
@@ -533,8 +553,10 @@
         })
 
         $(function(){
+            numeral.locale('idr');
+
             
-            $('#nominalangsuran').maskMoney({thousands:'.', decimal:',',allowZero:true});
+            // $('#nominalangsuran').maskMoney({thousands:'.', decimal:',',allowZero:true});
 
             $('#select_all').on('ifChanged', function(event){
                 if(!this.changed) {
@@ -547,7 +569,7 @@
                 $('.checkbox').iCheck('update');
             });
 
-            $('#add_nominal').maskMoney({thousands:'.', decimal:',',allowZero:true}); 
+            // $('#add_nominal').maskMoney({thousands:'.',precision:0, decimal:',',allowZero:true}); 
 
             $('input[name="tanggal"]').datepicker({
                 format: "dd-mm-yyyy",
@@ -589,7 +611,7 @@
             // nominalangsuran=$('#nominalangsuran').val();
             arrayidtrans.push(this.value);
             nominalangsuran=nominalangsuran+$(this).data('sisa');
-            $('#nominalangsuran').val(nominalangsuran).trigger('mask.maskMoney');
+            $('#nominalangsuran').val(numeral(nominalangsuran).value());
         });
 
         $('.checkbox').on('ifUnchecked',function () { 
@@ -599,7 +621,11 @@
             }
             console.log(arrayidtrans);
             nominalangsuran=nominalangsuran-$(this).data('sisa');
-            $('#nominalangsuran').val(nominalangsuran).trigger('mask.maskMoney');
+            $('#nominalangsuran').val(numeral(nominalangsuran).value());
+        });
+
+        $("input.mata-uang").keyup(function(){
+                $(this).val(numeral($(this).val()).format('$ 0,0'));
         });
 
         $(document).on('click','#submitangsuran',function (){
@@ -620,9 +646,9 @@
             }
             else
             {
-                if (($('#nominalangsuran').maskMoney('unmasked')[0] <= nominalangsuran))
+                if ((numeral($('#nominalangsuran').val()).value() <= nominalangsuran))
                 {
-                    var nominaangsurandibayar=$('#nominalangsuran').maskMoney('unmasked')[0];
+                    var nominaangsurandibayar=numeral($('#nominalangsuran').val()).value();
                     var pembayaran3=$('#pembayaran3').val();
 
                     $.ajax({
@@ -704,10 +730,14 @@
 
         $(document).on('click','.modal_show',function () {
             $("#showdata").empty();
-            $("#sisatagihanlabel").text($(this).data('sisa').format(2, 3, '.', ','));
+
+            $("#sisatagihanlabel").text($(this).data('sisa').format(0, 3, '.', ','));
             idbaris=$(this).data('id');
             datanonota=$(this).data('nonota');
             datasisa=$(this).data('sisa');
+            datapembayaran=$(this).data('pembayaran');
+
+            // console.log(datasisa);
             $.ajax({
                 async: true, 
                 type:'get',
@@ -722,7 +752,7 @@
                     $.each( response, function( key, value ) {
                         
                         $("#showdata").append(
-                            '<tr id="'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idbaris+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id2']+'" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
+                            '<tr id="show'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(0, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idbaris+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id2']+'" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
                         );
                     });
                     // $('.labelnota').text(response.nonota);
@@ -735,23 +765,24 @@
 
         $(document).on('click','.modal_add',function () {
             $("#nonotapenjualan").text($(this).data('nonota'));
-            $("#totaltagihanlabel").text($(this).data('total').format(2, 3, '.', ','));
-            $("#sisaangsuranlabel").text($(this).data('sisa').format(2, 3, '.', ','));            
+            $("#totaltagihanlabel").text($(this).data('total').format(0, 3, '.', ','));
+            $("#sisaangsuranlabel").text($(this).data('sisa').format(0, 3, '.', ','));            
             idtrans=$(this).data('id');
             idbaris=$(this).data('nonota');
             datatotal=parseFloat($(this).data('total'));
             datasisa=parseFloat($(this).data('sisa'));
             datanonota=$(this).data('nonota');
-            $('#add_nominal').val('0').trigger('mask.maskMoney');;
+            datapembayaran=parseFloat($(this).data('pembayaran'));
+            $('#add_nominal').val('0');
         });
 
         
         $(document).on('click','#simpanangsuran',function (){
-
+            $('simpanangsuran').attr('disabled',true);
             var token=$('input[name="_token"]').val();
-            var nominal=($('#add_nominal').maskMoney('unmasked')[0]);
+            var nominal=(numeral($('#add_nominal').val()).value());
             var metode=$('#pembayaran').val();
-            
+            console.log(nominal)
             if (nominal==0){
                 swal("Error !", "Nominal tidak boleh kosong !", "error");
             }
@@ -784,21 +815,30 @@
                             if (response['msg']=="success"){
                                 swal("Berhasil !", "Berhasil mennyimpan angsuran !", "success");
                                 datasisa=datasisa-nominal;
+                                datapembayaran=datapembayaran+nominal;
+                                $('#simpantombol'+datanonota).data('pembayaran',datapembayaran);
                                 $('#simpantombol'+datanonota).data('sisa',datasisa);
+                                $('#showtombol'+datanonota).data('sisa',datasisa);
+                                $('#showtombol'+datanonota).data('pembayaran',datapembayaran);
                                 console.log(datasisa>0);
                                 if (datasisa>0){
-                                    $('#sisa'+datanonota).html('<span class="badge bg-red">Rp. '+datasisa.format(2, 3, '.', ',')+'</span>');
+                                    $('#pembayaran'+datanonota).html('Rp. '+datapembayaran.format(0, 3, '.', ','));
+
+                                    $('#sisa'+datanonota).html('<span class="badge bg-red">Rp. '+datasisa.format(0, 3, '.', ',')+'</span>');
                                 }
                                 else
                                 {
                                     $('#sisa'+datanonota).empty();
                                     $('#'+datanonota).remove();
-                                    $('#sisa'+datanonota).text('Rp. '+datasisa.format(2, 3, '.', ','));                                    
+                                    $('#sisa'+datanonota).text('Rp. '+datasisa.format(0, 3, '.', ','));                                    
                                 }
+                                console.log(datasisa);
+                                // datasisa=0;
                                 $('#modal_add').modal('hide');
                             }
                             else{
                                 swal("Error !", "Gagal menyimpan angsuran !", "error");
+                                // datasisa=0;
                                 $('#modal_add').modal('hide');
                             }
                     },
@@ -819,6 +859,10 @@
         $(document).on('click','#deleteangsuran',function (){
             var token=$('input[name="_token"]').val();
             var sisatagihan=datasisa+datanominal;
+            datapembayaran=datapembayaran-datanominal;
+            // console.log(sisapembayaran)
+            // console.log(sisatagihan+'='+datasisa+'+'+datanominal)
+            var sisapembayaran=datapembayaran;  
             $.ajax({
                 headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -834,13 +878,21 @@
                         // console.log(response['msg']);
                         if (response['msg']=="success"){
                             swal("Berhasil !", "Berhasil menghapus angsuran !", "success");
-                            $('#'+idtrans+'').remove();
-                            $('#sisatagihanlabel').text(sisatagihan.format(2, 3, '.', ','));
+                            $('#show'+idtrans+'').remove();
+                            $('#sisatagihanlabel').text(sisatagihan.format(0, 3, '.', ','));
                             datasisa=sisatagihan;
-                            $('#sisa'+datanonota).html('<span class="badge bg-red">Rp. '+sisatagihan.format(2, 3, '.', ',')+'</span>');
+                            // console.log(sisapembayaran)
+                            $('#sisa'+datanonota).html('<span class="badge bg-red">Rp. '+sisatagihan.format(0, 3,'.',',')+'</span>');
+                            $('#pembayaran'+datanonota).html('Rp. '+sisapembayaran.format(0, 3, '.', ','));
+                            $('#showtombol'+datanonota).data('sisa',datasisa);
+                            $('#simpantombol'+datanonota).data('sisa',datasisa);
+                            $('#showtombol'+datanonota).data('pembayaran',sisapembayaran);
+                            $('#simpantombol'+datanonota).data('pembayaran',sisapembayaran);
+                            // datasisa=0;                            
                             $('#modal_delete').modal('hide');
                         }
                         else{
+                            // datasisa=0;
                             swal("Error !", "Gagal menghapus angsuran !", "error");
                             $('#modal_delete').modal('hide');
                             

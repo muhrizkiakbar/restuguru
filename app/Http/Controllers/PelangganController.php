@@ -40,6 +40,7 @@ class PelangganController extends Controller
     }
 
     public function datapelanggan(){
+        // dd("asd");
         $tables=CPelanggans::leftJoin('Jenispelanggans','Pelanggans.jenispelanggan_id','=','Jenispelanggans.id')
                 ->select('Pelanggans.*','Jenispelanggans.jenis_pelanggan')
                 ->get();
@@ -81,9 +82,13 @@ class PelangganController extends Controller
             return '<span class="">
                     <small class="label '.$warna.'">'.$tables->status_pelanggan.'</small>
                     </span>';
-            })
-            ->rawColumns(['action','Pelanggans.status_pelanggan'])
-            ->make(true);
+        })
+        ->editColumn('Pelanggans.limit_pelanggan', function ($tables) {
+            $limit=number_format(floatval($tables->limit_pelanggan),2,',','.');
+            return $limit;
+        })
+        ->rawColumns(['action','Pelanggans.status_pelanggan','Pelanggans.limit_pelanggan'])
+        ->make(true);
     }
 
     /**

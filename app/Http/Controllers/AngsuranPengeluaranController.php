@@ -581,7 +581,9 @@ class AngsuranPengeluaranController extends Controller
             ->first();
             // dd($transaksi);
             $sisa=$transaksi->sisa_pengeluaran + $tableangsuran->nominal_angsuran;
+            $jumlahpembayaran=$transaksi->pembayaran_pengeluaran - $tableangsuran->nominal_angsuran;
 
+            $transaksi->pembayaran_pengeluaran=$jumlahpembayaran;
             $transaksi->sisa_pengeluaran=$sisa;
             $transaksi->save();
 

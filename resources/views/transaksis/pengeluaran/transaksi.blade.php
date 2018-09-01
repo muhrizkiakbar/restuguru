@@ -316,7 +316,7 @@
                                           <label>Pengeluaran</label>
                                           <select id="add_produk" name="add_produk" class="form-control select2" style="width:100%;" type="text">
                                                 @foreach ($bahanbakus as $bahanbaku)
-                                                <option value="{{$bahanbaku->id}}">{{$bahanbaku->nama_bahan}}</option>
+                                                <option value="{{$bahanbaku->id}}" name="hidden">{{$bahanbaku->nama_bahan}}</option>
                                                 @endforeach
                                           </select>
                                           <input id="add_produkid" name="add_produkid" class="form-control" type="hidden">
@@ -384,7 +384,7 @@
                                           <label>Pengeluaram</label>
                                           <select id="edit_produk" name="edit_produk" class="form-control select2" style="width:100%;" type="text">
                                                 @foreach ($bahanbakus as $bahanbaku)
-                                                <option value="{{$bahanbaku->id}}">{{$bahanbaku->nama_bahan}}</option>
+                                                <option value="{{$bahanbaku->id}}" name="hidden">{{$bahanbaku->nama_bahan}}</option>
                                                 @endforeach
                                           </select>
                                           <input id="edit_produkid" name="edit_produkid" readonly class="form-control" type="hidden">
@@ -674,7 +674,9 @@
 //on load
         $(function(){
             numeral.locale('idr');
-
+            $("#add_produk").select2().val(null).trigger('change');
+            $("#edit_produk").select2().val(null).trigger('change');
+            
             $("input.mata-uang").keyup(function(){
                 $(this).val(numeral($(this).val()).format('$ 0,0'));
             });
@@ -1372,6 +1374,18 @@
     //tombol +item
         $('#buttonmodal_add').click(function (){
 
+            if (jenismodal=="mode_pencairan")
+            {
+                // console.log("asd");
+                // $("#add_produk option").hide().select2().trigger('change');
+                $("#add_produk>option[name='hidden']").attr('disabled','disabled');
+                
+            }
+            else
+            {
+                $("#add_produk>option[name='hidden']").removeAttr('disabled');
+            }
+
             // $('#r2m').iCheck('uncheck');
             // $('#r2cm').iCheck('uncheck');
             // $('#r2m').iCheck('enable');
@@ -1482,7 +1496,13 @@
         // $('input[type=radio][name=r2]').on('ifUnchecked',function () {
         //     satuan="PCS";
         // });
-
+        
+        if (jenismodal=="mode_pencairan")
+        {
+            // subtotal=harga;
+            subtotal=harga;
+            console.log(subtotal)
+        }
 
         total=numeral($('#total').val()).value();
         total=(subtotal)+total;
@@ -1498,6 +1518,8 @@
         {
             $('#bayardp').val(numeral(total).format('$ 0,0'))
         }
+        console.log(jenismodal)
+        
 
         $('#sisa').val(numeral(total).format('$ 0,0'));
         $("tbody").append(
@@ -1553,6 +1575,20 @@
 //bagian modal edit
     //tombol edit
         $(document).on('click','.modal_edit',function () {
+            if (jenismodal=="mode_pencairan")
+            {
+                // console.log("asd");
+                // $("#add_produk option").hide().select2().trigger('change');
+                $('#edit_kuantitas').attr('disabled',true);
+                $("#edit_produk>option[name='hidden']").attr('disabled','disabled');
+                
+            }
+            else
+            {
+                $("#edit_produk>option[name='hidden']").removeAttr('disabled');
+                $('#edit_kuantitas').removeAttr('disabled');
+            }
+
             var data = {
                 id: $(this).data('produkid'),
                 text: $(this).data('namaproduk')
@@ -1560,6 +1596,8 @@
             subtotalawal=$(this).data('subtotal');
 
             produkideditproduk=$(this).data('produkid');
+
+            
 
             var newOption = new Option(data.text, data.id, false, false);
             $('#edit_produk').append(newOption).trigger('change');
@@ -1737,8 +1775,13 @@
 
         produkideditproduk="";
 
+        if (jenismodal=="mode_pencairan")
+        {
+            // subtotal=harga;
+            subtotal=harga;
+            console.log(subtotal)
+        }
         
-
         total=numeral($('#total').val()).value();
         total=(subtotal)+(total-subtotalawal);
 
