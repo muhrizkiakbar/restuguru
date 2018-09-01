@@ -56,6 +56,7 @@
                                             <th>Gaji</th>
                                             <th>Alamat</th>
                                             <th>Cabang</th>
+                                            <th>Hak Akses</th>
                                             <th width="50px">Tool</th>
                                         </tr>
                                         </thead>
@@ -183,6 +184,14 @@
                                                 <select class="form-control select2" id="cabang_id2" name="cabang_id2" style="width: 100%;">
                                                     @foreach ($cabangs as $cabang)
                                                         <option value="{{($cabang->id)}}">{{$cabang->Nama_Cabang}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Level</label>
+                                                <select class="form-control select2" id="role2" name="role2" style="width: 100%;">
+                                                    @foreach ($roles as $role)
+                                                        <option value="{{($role->id)}}">{{$role->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -318,6 +327,7 @@
                     { data: 'gaji', name: 'gaji' },
                     { data: 'Alamat', name: 'Alamat' },
                     { data: 'Nama_Cabang', name: 'Nama_Cabang' },
+                    { data: 'name', name: 'name' },
                     {data:'action'}
                 ]
             });
@@ -352,6 +362,7 @@
             // $('#cabang_id2').val($(this).data('cabang')).change();
             // $('#cabang_id2').select2("val",$(this).data('cabang'));
             $('#cabang_id2').select2().val($(this).data('cabang')).trigger('change');
+            $('#role2').select2().val($(this).data('role')).trigger('change');
             $('#iduser2').val($(this).data('id'));
         });
     </script>

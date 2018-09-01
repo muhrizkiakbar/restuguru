@@ -32,8 +32,10 @@ class UserController extends Controller
 
     public function dataalluser(){
         $tables=User::leftJoin('Cabangs','Users.cabang_id','=','Cabangs.id')
+                ->leftJoin('role_user','Users.id','=','role_user.user_id')
+                ->leftJoin('roles','roles.id','=','role_user.role_id')
                 ->where('Users.id','!=',Auth::user()->id)
-                ->select('Users.*','Cabangs.Nama_Cabang')
+                ->select('Users.*','Cabangs.Nama_Cabang','role_user.role_id','roles.name')
                 ->get();
         return Datatables::of($tables)
         ->editColumn('gaji', function($tables) {
@@ -42,8 +44,8 @@ class UserController extends Controller
         ->addColumn('action', function ($tables) {
             return '
             <div class="btn-group">
-            <button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-id="'.encrypt($tables->id).'" data-username="'.$tables->username.'" data-nama="'.$tables->nama.'" data-telepon="'.$tables->Telepon.'" data-gaji="'.$tables->gaji.'" data-alamat="'.$tables->Alamat.'" data-cabang="'.($tables->cabang_id).'" data-target="#modal_edit"><i class="fa fa-edit"></i></button>
-            <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal"  data-id="'.encrypt($tables->id).'" data-username="'.$tables->username.'" data-nama="'.$tables->nama.'" data-telepon="'.$tables->Telepon.'" data-gaji="'.$tables->gaji.'" data-alamat="'.$tables->Alamat.'" data-cabang="'.($tables->cabang_id).'"  data-target="#modal_delete"><i class="fa fa-trash"></i></button>
+            <button type="button" class="modal_edit btn btn-success btn-sm" data-toggle="modal" data-id="'.encrypt($tables->id).'" data-username="'.$tables->username.'" data-nama="'.$tables->nama.'" data-telepon="'.$tables->Telepon.'" data-gaji="'.$tables->gaji.'" data-alamat="'.$tables->Alamat.'" data-cabang="'.($tables->cabang_id).'" data-role="'.($tables->role_id).'" data-target="#modal_edit"><i class="fa fa-edit"></i></button>
+            <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal"  data-id="'.encrypt($tables->id).'" data-username="'.$tables->username.'" data-nama="'.$tables->nama.'" data-telepon="'.$tables->Telepon.'" data-gaji="'.$tables->gaji.'" data-alamat="'.$tables->Alamat.'" data-cabang="'.($tables->cabang_id).'" data-role="'.($tables->role_id).'" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
             </div>';
             })
             ->rawColumns(['action'])
@@ -181,6 +183,7 @@ class UserController extends Controller
             $table->gaji=$request->gaji2;
             $table->Alamat=$request->alamat2;
             $table->cabang_id=($request->cabang_id2);
+            $table->roles()->sync(($request->role2));
 
             if ($table->save()){
 
