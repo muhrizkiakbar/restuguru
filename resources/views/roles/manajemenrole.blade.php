@@ -37,7 +37,7 @@
                     <div class="col-xs-12">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Manajemen Role</h3>
+                                <h3 class="box-title">Manajemen Hak Akses</h3>
                             </div>
                             <div class="box-body">
                                 <a href="{{route('addrole')}}" class="btn btn-primary" >
@@ -84,7 +84,7 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Hapus Role</h4>
+                                <h4 class="modal-title">Hapus Hak Akses</h4>
                             </div>
                             <div class="modal-body">
                                 <form id="formdelete" action="#" method="post" role="form" enctype="multipart/form-data">
@@ -93,7 +93,7 @@
                                         Peringatan
                                     </h4>
                                     {{csrf_field()}}
-                                    Yakin ingin menghapus role <span class="label"></span>?
+                                    Yakin ingin menghapus hak akses <span class="label"></span>?
                                     <input id="delid" name="delid" type="hidden">
                                 </form>
                             </div>

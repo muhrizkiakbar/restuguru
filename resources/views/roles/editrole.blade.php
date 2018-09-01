@@ -47,7 +47,7 @@
             <!-- general form elements -->
             <div class="box box-primary">
               <div class="box-header with-border">
-                <h3 class="box-title">Edit Role</h3>
+                <h3 class="box-title">Ubah Hak Akses</h3>
               </div>
               <!-- /.box-header -->
               <!-- form start -->
