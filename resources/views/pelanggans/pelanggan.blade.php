@@ -401,7 +401,7 @@
             $('#edit_emailpelanggan').val($(this).data('email_pelanggan'));
             $('#edit_alamatpelanggan').val($(this).data('alamat_pelanggan'));
             $('#edit_tempotagihan').val($(this).data('tempo_pelanggan'));
-            $('#edit_limittagihan').val($(this).data('limit_pelanggan'));
+            $('#edit_limittagihan').val(numeral($(this).data('limit_pelanggan')).format('$ 0,0'));
             $('#edit_rekpelanggan').val($(this).data('norek_pelanggan'));
             $('#edit_keterangan').val($(this).data('keterangan_pelanggan'));
             $('#pelanggan_id').val($(this).data('id'));

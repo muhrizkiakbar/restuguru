@@ -83,11 +83,8 @@ class PelangganController extends Controller
                     <small class="label '.$warna.'">'.$tables->status_pelanggan.'</small>
                     </span>';
         })
-        ->editColumn('Pelanggans.limit_pelanggan', function ($tables) {
-            $limit=number_format(floatval($tables->limit_pelanggan),2,',','.');
-            return $limit;
-        })
-        ->rawColumns(['action','Pelanggans.status_pelanggan','Pelanggans.limit_pelanggan'])
+        ->editColumn('limit_pelanggan', 'Rp {{number_format($limit_pelanggan,0,",",".")}}')
+        ->rawColumns(['action','Pelanggans.status_pelanggan'])
         ->make(true);
     }
 
