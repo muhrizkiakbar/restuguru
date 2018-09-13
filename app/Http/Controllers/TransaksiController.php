@@ -563,6 +563,7 @@ class TransaksiController extends Controller
                     $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $subtransaksi->banyak * $relasibahanbaku->qtypertrx );
                 }
                 // dd($stokbahanbaku->banyakstok);
+                dd($stokbahanbaku->banyakstok);
 
                 if ($stokbahanbaku->save())
                 {
