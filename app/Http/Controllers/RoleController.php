@@ -163,7 +163,7 @@ class RoleController extends Controller
 
         if ($table->save()){
             DB::table('permission_role')->where('permission_role.role_id', decrypt($id))
-            ->forceDelete();
+            ->delete();
             
             $role=Role::where('name','=',$request->namerole)->first();
             foreach($request->permissionrole as $key => $value) {
