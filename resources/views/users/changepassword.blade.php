@@ -44,7 +44,7 @@
                         <form action="/ubahpassword" method="post">
                             <div class="row">
                                 <div class="col-md-12">
-                                    @if (Auth::user()->roles->first()->name=="owner")
+                                    @if ((Auth::user()->roles->first()->name=="direktur") || (Auth::user()->roles->first()->name=="manajemen"))
                                     <div class="form-group">
                                         <label>Ubah Cabang</label>
                                         <div class="input-group bootstrap-timepicker timepicker">

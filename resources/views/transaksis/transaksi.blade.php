@@ -349,12 +349,9 @@
                                           <select class="form-control select2" id="add_finishing" name="add_finishing" style="width: 100%;">
                                               <option value="Tanpa Finishing">Tanpa Finishing</option>
                                               <option value="Mata Ayam">Mata Ayam</option>
-                                              <option value="Selongsong Atas Bawah">Selongsong Atas Bawah</option>
-                                              <option value="Selongsong Kanan Kiri">Selongsong Kanan Kiri</option>
-                                              <option value="Potong Pas">Potong Pas</option>
-                                              <option value="Potong Perbagian">Potong Perbagian</option>
                                               <option value="Laminasi Glossy">Laminassy Glossy</option>
-                                              <option value="Laminasi Dop">Laminasi Dop</option>
+                                              <option value="Laminasi Doff">Laminasi Doff</option>
+                                              <option value="Finishing">Finishing</option>
                                               <option value="Lainnya">Lainnya</option>
                                           </select>
                                       </div>
@@ -433,14 +430,11 @@
                                       <div class="form-group">
                                           <label>Finishing</label>
                                           <select class="form-control select2" id="edit_finishing" name="edit_finishing" style="width: 100%;">
-                                              <option value="Tanpa Finishing">Tanpa Finishing</option>
+                                          <option value="Tanpa Finishing">Tanpa Finishing</option>
                                               <option value="Mata Ayam">Mata Ayam</option>
-                                              <option value="Selongsong Atas Bawah">Selongsong Atas Bawah</option>
-                                              <option value="Selongsong Kanan Kiri">Selongsong Kanan Kiri</option>
-                                              <option value="Potong Pas">Potong Pas</option>
-                                              <option value="Potong Perbagian">Potong Perbagian</option>
                                               <option value="Laminasi Glossy">Laminassy Glossy</option>
-                                              <option value="Laminasi Dop">Laminasi Dop</option>
+                                              <option value="Laminasi Doff">Laminasi Doff</option>
+                                              <option value="Finishing">Finishing</option>
                                               <option value="Lainnya">Lainnya</option>
                                           </select>
                                       </div>
