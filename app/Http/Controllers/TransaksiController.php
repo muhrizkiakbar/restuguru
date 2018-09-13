@@ -528,7 +528,7 @@ class TransaksiController extends Controller
         foreach($subtransaksis as $subtransaksi){
             $relasibahanbakus=CRelasiBahanBakus::where('produk_id','=',$subtransaksi->produk_id)
                                                  ->get();
-
+            dd($relasibahanbaku);
             foreach( $relasibahanbakus as $key=>$relasibahanbaku ){
                 $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
                                             ->where('cabang_id','=',Auth::user()->cabangs->id)
@@ -563,7 +563,7 @@ class TransaksiController extends Controller
                     $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $subtransaksi->banyak * $relasibahanbaku->qtypertrx );
                 }
                 // dd($stokbahanbaku->banyakstok);
-                dd($stokbahanbaku->banyakstok);
+                // dd($stokbahanbaku->banyakstok);
 
                 if ($stokbahanbaku->save())
                 {
