@@ -100,6 +100,7 @@
                                                         <option value="METER">Meter</option>
                                                         <option value="PCS">Pcs</option>
                                                         <option value="PAKET">Paket</option>
+                                                        <option value="ITEM">Item</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -173,6 +174,7 @@
                                                         <option value="METER">Meter</option>
                                                         <option value="PCS">Pcs</option>
                                                         <option value="PAKET">Paket</option>
+                                                        <option value="ITEM">Item</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
