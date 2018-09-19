@@ -214,7 +214,7 @@
           </div>
           </form>
 
-          <div class="col-md-19">
+          <div class="col-md-9">
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Angsuran Transaksi Pengeluaran <i class="fa  fa-shopping-cart"></i></h3>
