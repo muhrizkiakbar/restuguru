@@ -118,7 +118,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                 <div class="box-body">
-                                <form action="{{route('angsuranpenjualan')}}" method="post">
+                                <form action="{{route('listangsuranpenjualan')}}" method="post">
                                     <div class="form-group">
                                     <input type="text" class="form-control" id="nonota" name="nonota" value="{{$nonota}}" placeholder="Nomor Nota">
                                     </div>
