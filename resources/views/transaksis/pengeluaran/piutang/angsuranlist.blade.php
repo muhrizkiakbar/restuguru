@@ -103,7 +103,7 @@
         <div class="row">
           <!-- left column -->
           <form id="formtrans">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Cari Transaksi</h3>
@@ -125,7 +125,7 @@
                       <div class="form-group">
                         <input type="text" class="form-control" id="namapelanggan" name="namapelanggan" value="{{$namapelanggan}}" placeholder="Nama Pelanggan">
                       </div>
-                      
+                    @csrf
                       <div class="form-group">
                         <select id="pelanggan" name="pelanggan" class="form-control select2" style="width:100%;" type="text"></select>
                       </div>
@@ -214,7 +214,7 @@
           </div>
           </form>
 
-          <div class="col-md-10">
+          <div class="col-md-19">
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Angsuran Transaksi Pengeluaran <i class="fa  fa-shopping-cart"></i></h3>
