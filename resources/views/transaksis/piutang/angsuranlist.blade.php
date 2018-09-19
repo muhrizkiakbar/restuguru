@@ -103,7 +103,7 @@
         <div class="row">
           <!-- left column -->
           <form id="formtrans">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Cari Transaksi</h3>
@@ -196,7 +196,7 @@
           </div>
           </form>
 
-          <div class="col-md-10">
+          <div class="col-md-9">
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title">Angsuran Transaksi Penjualan <i class="fa  fa-shopping-cart"></i></h3>
