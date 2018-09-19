@@ -118,7 +118,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                 <div class="box-body">
-                                <form action="{{route('listangsuranpenjualan')}}" method="post">
+                                <form action="{{route('angsuranpenjualan')}}" method="post">
                                     <div class="form-group">
                                     <input type="text" class="form-control" id="nonota" name="nonota" value="{{$nonota}}" placeholder="Nomor Nota">
                                     </div>
@@ -182,6 +182,9 @@
                                             @endif
                                         </select>
                                     </div>
+                                    <div class="box-footer">
+                                        <button type="submit" id="submitpelanggan" class="btn btn-success btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
+                                    </div>
                                     </form>  
                                                 
 
@@ -191,9 +194,7 @@
                             </div>
                             
                             <!-- /.box-body -->
-                            <div class="box-footer">
-                                <button type="submit" id="submitpelanggan" class="btn btn-success btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
-                            </div>
+                            
                         </div>
                     </div>    
                 </div>
