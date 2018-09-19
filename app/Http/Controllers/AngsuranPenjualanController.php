@@ -115,7 +115,7 @@ class AngsuranPenjualanController extends Controller
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
-                                        ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')                                           
+                                        // ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')                                           
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                                         
                                         ->orderBy('created_at','desc')
                                         ->paginate(50);
