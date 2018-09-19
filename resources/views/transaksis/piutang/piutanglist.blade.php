@@ -182,11 +182,7 @@
                                             @endif
                                         </select>
                                     </div>
-                                    <div class="box-footer">
-                                        <button type="submit" id="submitpelanggan" class="btn btn-success btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
-                                    </div>
-                                    </form>  
-                                                
+                                    
 
                                     
                                 </div>
@@ -194,7 +190,11 @@
                             </div>
                             
                             <!-- /.box-body -->
-                            
+                            <div class="box-footer">
+                                <button type="submit" id="submitpelanggan" class="btn btn-success btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
+                            </div>
+                            </form>  
+                                                
                         </div>
                     </div>    
                 </div>
