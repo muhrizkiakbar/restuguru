@@ -90,6 +90,7 @@ class StokBahanbakuController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -101,6 +102,11 @@ class StokBahanbakuController extends Controller
     public function edit($id)
     {
         //
+        // dd(encrypt($id));
+        $data = stokbahanbaku::where('id','=',decrypt($id))->first();
+
+        // dd($data);
+        return view('stokbahanbaku.editstokbahanbaku',['data'=>$data,'id'=>$id]);
     }
 
     /**
@@ -113,6 +119,19 @@ class StokBahanbakuController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $data = stokbahanbaku::where('id','=',decrypt($id))->first();
+        $data->banyakstok=$request->banyakstok;
+
+        if ($data->save())
+        {
+            return redirect('/stokbahanbaku')->with('success','Berhasil mengedit banyak stok !');
+
+        }
+        else
+        {
+            return redirect('/stokbahanbaku')->with('error','Berhasil mengedit banyak stok !');
+
+        }
     }
 
     /**
@@ -121,8 +140,17 @@ class StokBahanbakuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        // dd("sd");
+        $role=stokbahanbaku::whereId(decrypt($request->delid))->delete();
+        // dd($table);
+        
+        if ($role){
+            return response()->json("Success");
+        }else{
+            return response()->json("Failed");
+        }
     }
 }

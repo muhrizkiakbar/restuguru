@@ -245,6 +245,9 @@ Route::group(['middleware' => 'auth'], function() {
         #data stok bahan baku
         Route::get('/stokbahanbaku',['middleware' => ['permission:list-stokbahanbaku'], 'uses' => 'StokBahanbakuController@index'])->name('indexstokbahanbaku');
         Route::post('/stokbahanbaku',['middleware' => ['permission:list-stokbahanbaku'], 'uses' => 'StokBahanbakuController@index'])->name('stokbahanbaku');
+        Route::get('/stokbahanbaku/edit/{id}',['middleware' => ['permission:edit-stokbahanbaku'], 'uses' => 'StokBahanbakuController@edit'])->name('editstokbahanbaku');
+        Route::put('/stokbahanbaku/edit/{id}',['middleware' => ['permission:edit-stokbahanbaku'], 'uses' => 'StokBahanbakuController@update'])->name('editstokbahanbaku');
+        Route::post('/stokbahanbaku/delete',['middleware' => ['permission:delete-stokbahanbaku'], 'uses' => 'StokBahanbakuController@destroy'])->name('deletestokbahanbaku');
         Route::get('/bahanbaku/harga',['middleware' => ['permission:list-stokbahanbaku'], 'uses' => 'BahanBakuController@bahanbakuharga'])->name('bahanbakuharga');
 
         #transaksi bahan baku

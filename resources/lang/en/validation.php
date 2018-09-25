@@ -517,10 +517,11 @@ return [
             'required'=> 'Tentukan banyak bahan baku!',
             'numeric'=> 'Harus angka!'
         ],
-        
-
         'edit_nama_menu'=>[
             'required'=> 'Nama Menu harus diisi!',
+        ],
+        'banyakstok'=>[
+            'required'=> 'Harus diisi !',
         ],
     ],
 

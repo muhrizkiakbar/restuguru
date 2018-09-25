@@ -197,6 +197,7 @@
                                 <th>Satuan</th>
                                 <th>Hitung Luas</th>
                                 <th>Cabang</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -219,7 +220,13 @@
                                 @else
                                     <td>Tidak</td>
                                 @endif
-                                <td>{{$data->Nama_Cabang}}</td>                                                               
+                                <td>{{$data->Nama_Cabang}}</td>    
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="btn btn-success btn-sm" href="/stokbahanbaku/edit/{{encrypt($data->id)}}"><i class="fa fa-edit"></i></a>
+                                        <button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-name="{{$data->nama_bahan}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
+                                    </div>
+                                </td>                                                           
                             </tr>
                             @endforeach
                             </tbody>
@@ -237,6 +244,51 @@
             </div>
           </div>
 
+        </div>
+
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Sukses</h4>
+            {{session('success')}}
+        </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Gagal</h4>
+                    {{session('error')}}
+            </div>
+        @endif
+
+        <div class="modal modal-danger fade" id="modal_delete">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Hapus Stok Bahan Baku</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formdelete" action="#" method="post" role="form" enctype="multipart/form-data">
+                            <h4>
+                                <i class="icon fa fa-ban"></i>
+                                Peringatan
+                            </h4>
+                            {{csrf_field()}}
+                            Yakin ingin menghapus stok bahan baku <span class="label"></span>?
+                            <input id="delid" name="delid" type="hidden">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                        <button type="button" id="simpandel" class="btn btn-outline">Save changes</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
         </div>
 
         </section>
@@ -268,6 +320,7 @@
     <script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
 
+
     <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
     <!-- <script src="{{asset('bower_components/jquery-number/jquery.number.js')}}"></script> -->
 
@@ -289,6 +342,7 @@
         
         $('#bahanbaku_id').select2();
         $('#cabang_id').select2();
+
         
       });
       
@@ -296,7 +350,48 @@
       // bagian modal delete
       
     </script>
+
+    <script type="text/javascript">
+        $(document).on('click','.modal_delete',function () {
+            $('#simpandel').removeAttr('disabled');
+            $('#delid').val($(this).data('id'));
+            $('.label').text($(this).data('name'));
+        });
+    </script>
     
+    <script type="text/javascript">
+        $(document).on('click','#simpandel',function (){
+            $('#simpandel').attr('disabled',true);
+
+            $.ajax({
+                type:'post',
+                url:'{{route('deletestokbahanbaku')}}',
+                data: new FormData($('#formdelete')[0]),
+                dataType:'json',
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                        if (response=="Success"){
+                            swal({ 
+                                title: "Success !",
+                                text: "Berhasil menghapus !",
+                                type: "success" 
+                                }).then(
+                                function(){
+                                    location.reload(true);
+                                });
+                            $('#modal_delete').modal('hide');
+                            // oTable.ajax.reload();
+                        }
+                        else{
+                            swal("Eror !", "Gagal menghapus !", "error");
+                            $('#modal_delete').modal('hide');
+                        }
+                },
+            });
+        });
+    </script>
 
     </body>
 @endsection
