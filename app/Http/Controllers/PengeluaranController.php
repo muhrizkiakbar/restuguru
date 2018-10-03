@@ -1070,7 +1070,7 @@ class PengeluaranController extends Controller
                                                 ->count();
 
                 $bahanbakugethitungluas=CBahanBakus::find($substransaksi->bahanbaku_id);
-                // dd($stokbahanbaku);
+                dd($bahanbakugethitungluas);
                
                     $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$substransaksi->bahanbaku_id)
                                                 ->where('cabang_id','=',Auth::user()->cabangs->id)
