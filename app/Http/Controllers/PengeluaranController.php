@@ -1069,9 +1069,15 @@ class PengeluaranController extends Controller
                                                 ->where('cabang_id','=',Auth::user()->cabangs->id)
                                                 ->count();
 
-                $bahanbakugethitungluas=CBahanBakus::find($substransaksi->bahanbaku_id)->withTrashed();
-                dd($bahanbakugethitungluas);
-               
+                $bahanbakugethitungluas=CBahanBakus::find($substransaksi->bahanbaku_id);
+                // dd($bahanbakugethitungluas);
+
+                if ($bahanbakugethitungluas == null)
+                {
+
+                }
+                else
+                {
                     $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$substransaksi->bahanbaku_id)
                                                 ->where('cabang_id','=',Auth::user()->cabangs->id)
                                                 ->first();
@@ -1101,7 +1107,7 @@ class PengeluaranController extends Controller
                     }
                     // dd($stokbahanbaku->banyakstok);
                     $stokbahanbaku->save();
-
+                }
 
             }
         }
