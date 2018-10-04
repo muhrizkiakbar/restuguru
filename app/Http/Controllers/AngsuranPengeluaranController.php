@@ -313,6 +313,7 @@ class AngsuranPengeluaranController extends Controller
                             ->select('Angsuran_Pengeluarans.*','Users.username','Cabangs.Nama_Cabang',
                                     'Transaksi_Pengeluarans.id as idtrans','Transaksi_Pengeluarans.total_pengeluaran'
                                     ,'Transaksi_Pengeluarans.namapenerima','Transaksi_Pengeluarans.hppenerima')
+                            ->where('Angsuran_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id) 
                             ->orderBy('created_at','desc')
                             ->paginate(50);
         }

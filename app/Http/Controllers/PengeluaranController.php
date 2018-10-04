@@ -450,9 +450,8 @@ class PengeluaranController extends Controller
                                         ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username','Suppliers.nama_supplier')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
-                                        ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')                                                    
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
+                                        ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username')                                            
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                                         ->paginate(50);
         }
