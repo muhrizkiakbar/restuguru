@@ -425,6 +425,9 @@ class TransaksiController extends Controller
         // dd($request->periode);
         if ($request->periode=="hari"){
             // dd($request->periode);    
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
@@ -434,6 +437,8 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereDay('Transaksi_Penjualans.tanggal','=',$request->tanggal)
+                                        ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
+                                        ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
                                         ->orderBy('created_at','desc')
                                         ->paginate(50);
         }

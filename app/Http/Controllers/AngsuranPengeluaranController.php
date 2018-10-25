@@ -184,6 +184,9 @@ class AngsuranPengeluaranController extends Controller
         }
 
         if ($request->periode=="hari"){
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
             $datas=Angsuran_Pengeluarans::leftJoin('Transaksi_Pengeluarans','Angsuran_Pengeluarans.transaksipengeluaran_id','=','Transaksi_Pengeluarans.id')
                             ->leftJoin('Users','Angsuran_Pengeluarans.user_id','=','Users.id')
                             ->leftJoin('Cabangs','Angsuran_Pengeluarans.cabang_id','=','Cabangs.id')
@@ -195,6 +198,8 @@ class AngsuranPengeluaranController extends Controller
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->where('Angsuran_Pengeluarans.tanggal_angsuran','=',$request->tanggal)
+                            ->whereMonth('Angsuran_Pengeluarans.tanggal_angsuran','=',$bulan)
+                            ->whereYear('Angsuran_Pengeluarans.tanggal_angsuran','=',$tahun)
                             ->orderBy('created_at','desc')
                             ->paginate(50);
 

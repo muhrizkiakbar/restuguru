@@ -377,6 +377,9 @@ class PengeluaranController extends Controller
         }
 
         if ($request->periode=="hari"){
+            $tanggal=explode("-",$request->tanggal);
+            $bulan=$tanggal[1];
+            $tahun=$tanggal[2];
             $datas=Transaksi_Pengeluaran::leftJoin('Users','Transaksi_Pengeluarans.user_id','=','Users.id')
                                         ->leftJoin('Users as UserClient','Transaksi_Pengeluarans.clientuser_id','=','UserClient.id')                                        
                                         ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
@@ -387,6 +390,8 @@ class PengeluaranController extends Controller
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereDay('Transaksi_Pengeluarans.tanggal_pengeluaran','=',$request->tanggal)
+                                        ->whereMonth('Transaksi_Pengeluarans.tanggal_pengeluaran','=',$bulan)
+                                        ->whereYear('Transaksi_Pengeluarans.tanggal_pengeluaran','=',$tahun)
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                                         ->paginate(50);
         }
