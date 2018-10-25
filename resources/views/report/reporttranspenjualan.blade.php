@@ -201,7 +201,11 @@
                                 <td>Rp. {{number_format(floatval($transaksi->total_harga),0,',','.')}}</td>
                             </tr>
                             <tr>
-                                <th>DP:</th>
+                                @if ($transaksi->jumlah_pembayaran == $transaksi->total_harga)
+                                    <th>Pembayaran:</th>
+                                @else
+                                    <th>DP:</th>
+                                @endif
                                 <td>Rp. {{number_format(floatval($transaksi->jumlah_pembayaran),0,',','.')}}</td>
                             </tr>
                             <tr>
