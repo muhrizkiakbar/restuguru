@@ -391,13 +391,14 @@ class PengeluaranController extends Controller
                                         ->paginate(50);
         }
         elseif ($request->periode=="semua"){
+
             $datas=Transaksi_Pengeluaran::leftJoin('Users','Transaksi_Pengeluarans.user_id','=','Users.id')
                                         ->leftJoin('Users as UserClient','Transaksi_Pengeluarans.clientuser_id','=','UserClient.id')                                        
                                         ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username','Suppliers.nama_supplier')
                                         ->where('Transaksi_Pengeluarans.cabang_id','=','1')
-                                        ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
+                                        // ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
