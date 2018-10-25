@@ -205,7 +205,7 @@
                             <td>Rp. {{number_format(floatval($transaksi->sisa_tagihan),0,',','.')}}</td>
                         </tr>
                         <tr>
-                            <th>Pembayaran :</th>
+                            <th>Metode:</th>
                             <td>{{$transaksi->metode_pembayaran}}</td>
                         </tr>
                     </table>

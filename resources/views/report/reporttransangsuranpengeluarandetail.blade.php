@@ -198,7 +198,7 @@
                             <td>Rp. {{number_format(floatval($angsuran->sisa_angsuran),0,',','.')}}</td>
                         </tr>
                         <tr>
-                            <th>Pembayaran Pelunasan :</th>
+                            <th>Metode:</th>
                             <td>{{$angsuran->metode_pembayaran}}</td>
                         </tr>
                     </table>

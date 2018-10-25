@@ -211,7 +211,7 @@
                             <td>Rp. {{number_format(floatval($transaksi->total_harga - $jumlahangsuran->totalangsuran),0,',','.')}}</td>
                         </tr>
                         <tr>
-                            <th>Pembayaran Pelunasan :</th>
+                            <th>Metode:</th>
                             <td>{{$angsuran->metode_pembayaran}}</td>
                         </tr>
                     </table>
