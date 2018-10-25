@@ -84,8 +84,7 @@
                     <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}
                     <small class="pull-right"> Nota Penjualan</small>
                     <br/>
-                    <small class="tes">Alamat: {{$transaksi->Alamat}} 
-                    No. Telp: {{$transaksi->No_Telepon}}</small>
+                    <small class="tes">Alamat: {{$transaksi->Alamat}}, No. Telp: {{$transaksi->No_Telepon}}</small>
                     </h2>
                     
                 </div>
