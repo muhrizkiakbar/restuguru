@@ -24,7 +24,7 @@
 	.status
 	{
 		position:absolute;
-
+        top: 270px;
 		left: 250px;
         width: 300px;
         height: 70px;
