@@ -447,7 +447,7 @@ class AngsuranPenjualanController extends Controller
         foreach ($showsubtransaksis as $key => $value){
             $sub=[];
             $sub['id']=$value->id;
-            $sub['id2']=encrypt($value->id);
+            $sub['id2']=encrypt($request->id);
             $sub['tanggal_angsuran']=$value->tanggal_angsuran;
             $sub['nominal_angsuran']=$value->nominal_angsuran;
             $sub['metode_pembayaran']=$value->metode_pembayaran;
