@@ -93,7 +93,7 @@
                     <address>
                     <strong>{{$transaksi->nama}}</strong><br>
                     {{$transaksi->display_name}}<br>
-                    Alamat: <br/>{{$transaksi->Alamat}} <br/>
+                    Alamat: <br/>xxxxxxxxxxijwsidjiasdjiasjdiasjdiasdjiasdsadisjadiasjdisadisdjiadsji{{$transaksi->Alamat}} <br/>
                     No. Telp: <br/>{{$transaksi->No_Telepon}}
                     </address>
                 </div>
