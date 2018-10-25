@@ -26,7 +26,7 @@
 		position:absolute;
         /* top: 270px; */
 		left: 250px;
-        bottom: 50px;
+        bottom: 65px;
         width: 300px;
         height: 70px;
 		z-index: 2;
