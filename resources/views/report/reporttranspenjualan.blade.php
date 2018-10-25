@@ -46,8 +46,7 @@
 	}
     .logorgblank
 	{
-
-        width: 45px;
+        width: 10px;
         height: 40px;
 		z-index: 2;
         opacity: 0;
