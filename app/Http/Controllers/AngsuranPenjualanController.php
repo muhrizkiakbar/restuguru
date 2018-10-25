@@ -51,7 +51,7 @@ class AngsuranPenjualanController extends Controller
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                        ->whereDay('Transaksi_Penjualans.tanggal','like','%'.date('d-m-Y',strtotime($request->tanggal)).'%')
+                                        ->whereDate('Transaksi_Penjualans.tanggal','like','%'.date('d-m-Y',strtotime($request->tanggal)).'%')
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>','0')
                                         ->orderBy('created_at','desc')
                                         ->paginate(50);
