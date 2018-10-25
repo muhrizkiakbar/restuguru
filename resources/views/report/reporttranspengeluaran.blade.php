@@ -189,7 +189,11 @@
                             <td>Rp. {{number_format(floatval($transaksi->total_pengeluaran),0,',','.')}}</td>
                         </tr>
                         <tr>
+                            @if ($transaksi->pembayaran_pengeluaran && $transaksi->total_pengeluaran)
+                            <th>Pembayaran:</th>
+                            @else
                             <th>DP:</th>
+                            @endif
                             <td>Rp. {{number_format(floatval($transaksi->pembayaran_pengeluaran),0,',','.')}}</td>
                         </tr>
                         <tr>
@@ -197,7 +201,7 @@
                             <td>Rp. {{number_format(floatval($transaksi->sisa_pengeluaran),0,',','.')}}</td>
                         </tr>
                         <tr>
-                            <th>Pembayaran :</th>
+                            <th>Metode :</th>
                             <td>{{$transaksi->metode_pembayaran}}</td>
                         </tr>
                     </table>
