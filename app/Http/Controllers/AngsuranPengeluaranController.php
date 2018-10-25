@@ -57,7 +57,7 @@ class AngsuranPengeluaranController extends Controller
                                         ->where('Transaksi_Pengeluarans.jenispengeluaran_id','like','%'.$request->jenispengeluaran.'%')                                                                                
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                        ->where('Transaksi_Pengeluarans.tanggal_pengeluaran','like','%'.$request->tanggal.'%')
+                                        ->whereDay('Transaksi_Pengeluarans.tanggal_pengeluaran','like','%'.$request->tanggal.'%')
                                         ->where('Transaksi_Pengeluarans.sisa_pengeluaran','>','0')
                                         ->where('Jenis_Pengeluaran.sifat_angsuran','=','1')
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
