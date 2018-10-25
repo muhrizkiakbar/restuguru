@@ -40,7 +40,7 @@
     .logorg
 	{
 
-        width: 4px;
+        width: 45px;
         height: 40px;
 		z-index: 2;
 	}
