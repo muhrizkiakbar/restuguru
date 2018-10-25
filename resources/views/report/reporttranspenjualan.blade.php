@@ -34,6 +34,7 @@
         transform: rotate(340deg);
 	}
     .subheader{
+        position:absolute;
         left: 50px;
     }
     .logorg
