@@ -386,7 +386,7 @@ class PengeluaranController extends Controller
                                         ->where('Transaksi_Pengeluarans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                        ->where('Transaksi_Pengeluarans.tanggal_pengeluaran','=',$request->tanggal)
+                                        ->whereDay('Transaksi_Pengeluarans.tanggal_pengeluaran','=',$request->tanggal)
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                                         ->paginate(50);
         }
