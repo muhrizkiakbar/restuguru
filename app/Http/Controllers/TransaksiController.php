@@ -432,7 +432,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.nomor_nota','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                        ->whereDate('Transaksi_Penjualans.tanggal','like','%'.$request->tanggal.'%')
+                                        ->whereDay('Transaksi_Penjualans.tanggal','like','%'.$request->tanggal.'%')
                                         ->orderBy('created_at','desc')
                                         ->paginate(50);
         }
