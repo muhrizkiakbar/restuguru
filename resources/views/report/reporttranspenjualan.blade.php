@@ -44,7 +44,7 @@
         height: 40px;
 		z-index: 2;
 	}
-    .logorg2
+    .logorgblank
 	{
 
         width: 45px;
