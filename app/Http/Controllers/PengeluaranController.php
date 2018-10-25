@@ -382,7 +382,7 @@ class PengeluaranController extends Controller
                                         ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username','Suppliers.nama_supplier')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -397,8 +397,8 @@ class PengeluaranController extends Controller
                                         ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username','Suppliers.nama_supplier')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
-                                        // ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
+                                        // ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')i
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
@@ -414,7 +414,7 @@ class PengeluaranController extends Controller
                                         ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username','Suppliers.nama_supplier')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -433,7 +433,7 @@ class PengeluaranController extends Controller
                                         ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
                                         ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
                                         ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username','Suppliers.nama_supplier')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -505,7 +505,7 @@ class PengeluaranController extends Controller
                                         ->select('Transaksi_Pengeluarans.*','Jenis_Pengeluaran.jenis_pengeluaran'
                                         ,'ClientUsers.username','Suppliers.nama_supplier'
                                         ,'Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -524,7 +524,7 @@ class PengeluaranController extends Controller
                                         ->select('Transaksi_Pengeluarans.*','Jenis_Pengeluaran.jenis_pengeluaran'
                                         ,'ClientUsers.username','Suppliers.nama_supplier'
                                         ,'Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -546,7 +546,7 @@ class PengeluaranController extends Controller
                                         ->select('Transaksi_Pengeluarans.*','Jenis_Pengeluaran.jenis_pengeluaran'
                                         ,'ClientUsers.username','Suppliers.nama_supplier'
                                         ,'Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -572,7 +572,7 @@ class PengeluaranController extends Controller
                                         ->select('Transaksi_Pengeluarans.*','Jenis_Pengeluaran.jenis_pengeluaran'
                                         ,'ClientUsers.username','Suppliers.nama_supplier'
                                         ,'Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
@@ -595,7 +595,7 @@ class PengeluaranController extends Controller
                                         ->select('Transaksi_Pengeluarans.*','Jenis_Pengeluaran.jenis_pengeluaran'
                                         ,'ClientUsers.username','Suppliers.nama_supplier'
                                         ,'Cabangs.Nama_Cabang','Users.username')
-                                        ->where('Transaksi_Pengeluarans.cabang_id','=','1')
+                                        ->where('Transaksi_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                                         ->onlyTrashed()                                        
                                         ->paginate(50);
