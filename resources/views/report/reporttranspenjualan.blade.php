@@ -34,13 +34,13 @@
         transform: rotate(340deg);
 	}
     .tes{
-        padding-top:0px;
+        padding-top:-30px;
         padding-left:70px;
     }
     .logorg
 	{
 
-        width: 45px;
+        width: 4px;
         height: 40px;
 		z-index: 2;
 	}
