@@ -36,7 +36,7 @@
     .tes{
         padding-top:0px;
         padding-left:50px;
-        margin-top:-10px;
+        margin-top:-10px !important;
     }
     .logorg
 	{
