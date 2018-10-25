@@ -41,9 +41,9 @@ class AngsuranPenjualanController extends Controller
         {
             $pembayaran=$request->pembayaran;
         }
-        dd($request->periode);
+        // dd($request->periode);
         if ($request->periode=="hari"){
-            dd($request->periode);
+            // dd($request->periode);
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')

@@ -422,7 +422,7 @@ class TransaksiController extends Controller
         {
             $pembayaran=$request->pembayaran;
         }
-
+        dd($request->periode);
         if ($request->periode=="hari"){
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
