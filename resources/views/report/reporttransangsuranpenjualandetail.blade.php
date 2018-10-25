@@ -34,7 +34,11 @@
         transform: rotate(340deg);
 	}
 
-
+    .tes{
+        padding-top:0px;
+        padding-left:50px;
+        margin-top:-10px !important;
+    }
     .garis
     {
         border-collapse: collapse;
@@ -79,7 +83,9 @@
             <div class="col-xs-12">
                 <h2 class="page-header">
                 <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}
-                <small class="pull-right"> Pelunasan Transaksi Det. Penjualan</small>
+                <small class="pull-right" style="margin-top:5px !important;"> Pelunasan Transaksi Det. Penjualan</small>
+                <br/>
+                    <small class="tes">Alamat: {{$transaksi->Alamat}}, No. Telp: {{$transaksi->No_Telepon}}</small>
                 </h2>
             </div>
             <!-- /.col -->
