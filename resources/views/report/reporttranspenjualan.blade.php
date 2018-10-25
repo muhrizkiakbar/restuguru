@@ -33,10 +33,7 @@
         opacity: 0.3;
         transform: rotate(340deg);
 	}
-    .subtitle{
-        position:absolute;
-        padding-left: 50px;
-    }
+    
     .logorg
 	{
 
@@ -83,8 +80,7 @@
                     <h2 class="page-header">
                     <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}
                     <small class="pull-right"> Nota Penjualan</small>
-                    <br>
-                    <small class="subtitle">Alamat: {{$transaksi->Alamat}} ,No. Telp: {{$transaksi->No_Telepon}}</small>
+                    <small>Alamat: {{$transaksi->Alamat}} ,No. Telp: {{$transaksi->No_Telepon}}</small>
                     </h2>
                     
                 </div>
