@@ -115,9 +115,7 @@
 
             <!-- Table row -->
             <div class="row">
-                @if ($transaksi->sisa_tagihan==0)
-                    <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
-                @endif
+                
                 <div class="col-xs-12">
                     <table class="table garis table-bordered table-striped strong" width="100%">
                     <thead>
@@ -220,7 +218,9 @@
                         </table>
                     </div>
                 </div>
-
+                @if ($transaksi->sisa_tagihan==0)
+                    <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
+                @endif
 
             <!-- /.col -->
             </div>
