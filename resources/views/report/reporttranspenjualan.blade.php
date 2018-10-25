@@ -93,7 +93,8 @@
                     <address>
                     <strong>{{$transaksi->nama}}</strong><br>
                     {{$transaksi->display_name}}<br>
-                    {{$transaksi->Alamat}} <br/>{{$transaksi->No_Telepon}}
+                    Alamat: {{$transaksi->Alamat}} <br/>
+                    No. Telp: {{$transaksi->No_Telepon}}
                     </address>
                 </div>
                 <!-- /.col -->
