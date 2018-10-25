@@ -365,7 +365,7 @@ class PengeluaranController extends Controller
         }
         else
         {
-            $request->tanggal=date('Y-m-d',strtotime($request->tanggal));
+            $request->tanggal=date('d-m-Y',strtotime($request->tanggal));
             $date=$request->tanggal;
         }
 
