@@ -151,7 +151,7 @@
                       </div>
 
                       <div class="form-group">
-                        <input type="text" class="form-control" id="tanggal" readonly name="tanggal" value="{{$tanggal}}" placeholder="Tanggal">
+                        <input type="text" class="form-control" id="tanggal" readonly name="tanggal" value="{{$date}}" placeholder="Tanggal">
                       </div>
                       <div class="form-group">
                             <select class="form-control  pull-right" id="periode" name="periode" style="width: 100%;">
