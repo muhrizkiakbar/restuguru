@@ -34,7 +34,6 @@
         transform: rotate(340deg);
 	}
     .tes{
-        margin-top: 0px;
         padding-top:0px;
         padding-left:50px;
     }
@@ -85,7 +84,7 @@
                     <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}
                     <small class="pull-right"> Nota Penjualan</small>
                     <br/>
-                    <small class="tes">Alamat: {{$transaksi->Alamat}}, No. Telp: {{$transaksi->No_Telepon}}</small>
+                    <span class="tes">Alamat: {{$transaksi->Alamat}}, No. Telp: {{$transaksi->No_Telepon}}</span>
                     </h2>
                     
                 </div>
