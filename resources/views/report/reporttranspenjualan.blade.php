@@ -34,6 +34,7 @@
         transform: rotate(340deg);
 	}
     .tes{
+        padding-top:5px;
         padding-left:70px;
     }
     .logorg
