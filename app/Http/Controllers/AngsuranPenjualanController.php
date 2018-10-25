@@ -453,6 +453,7 @@ class AngsuranPenjualanController extends Controller
         foreach ($showsubtransaksis as $key => $value){
             $sub=[];
             $sub['id']=$value->id;
+            $sub['id3']=encrypt($value->id);
             $sub['id2']=encrypt($request->id);
             $sub['tanggal_angsuran']=$value->tanggal_angsuran;
             $sub['nominal_angsuran']=$value->nominal_angsuran;
@@ -697,10 +698,10 @@ class AngsuranPenjualanController extends Controller
     
     public function reportdetail($id)
     {
-        $id=($id);
+        $id=decrypt($id);
 
         $data=Angsuran::where('id','=',$id)->first();
-        dd($id);
+        // dd($id);
         $transaksi=CTransaksi_Penjualans::leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                     ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                     ->leftJoin('role_user','role_user.user_id','=','Users.id')
