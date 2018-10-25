@@ -30,7 +30,7 @@
         width: 300px;
         height: 70px;
 		z-index: 2;
-        opacity: 0.5;
+        opacity: 0.3;
         transform: rotate(340deg);
 	}
     .logorg
