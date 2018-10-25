@@ -106,7 +106,7 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <b>No. #{{$transaksi->id}}</b><br>
-                    <b>Tanggal :</b> {{date("d-m-Y",strtotime($transaksi->tanggal))}}
+                    <b>Tanggal :</b> {{date("d-m-Y",strtotime($transaksi->tanggal))}}<br/>
                     <b>Jam :</b> {{date("H:i:s",strtotime($transaksi->created_at))}}
                 </div>
                 <!-- /.col -->
