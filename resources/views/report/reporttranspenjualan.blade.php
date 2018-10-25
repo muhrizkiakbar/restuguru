@@ -107,6 +107,7 @@
                 <div class="col-sm-4 invoice-col">
                     <b>No. #{{$transaksi->id}}</b><br>
                     <b>Tanggal :</b> {{date("d-m-Y",strtotime($transaksi->tanggal))}}
+                    <b>Jam :</b> {{date("H:i:s",strtotime($transaksi->created_at))}}
                 </div>
                 <!-- /.col -->
             </div>
@@ -213,7 +214,7 @@
                                 <td>Rp. {{number_format(floatval($transaksi->sisa_tagihan),0,',','.')}}</td>
                             </tr>
                             <tr>
-                                <th>Pembayaran :</th>
+                                <th>Metode :</th>
                                 <td>{{$transaksi->metode_pembayaran}}</td>
                             </tr>
                         </table>
