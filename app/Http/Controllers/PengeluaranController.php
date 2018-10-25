@@ -366,6 +366,7 @@ class PengeluaranController extends Controller
         else
         {
             $request->tanggal=date('Y-m-d',strtotime($request->tanggal));
+            $date=$request->tanggal;
         }
 
         if (($request->pembayaran=="semua") || ($request->pembayaran=="")){

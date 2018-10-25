@@ -412,7 +412,9 @@ class TransaksiController extends Controller
         }
         else
         {
+            
             $request->tanggal=date('d-m-Y',strtotime($request->tanggal));
+            $date=$request->tanggal;
         }
 
         if ($request->pembayaran=="semua"){
