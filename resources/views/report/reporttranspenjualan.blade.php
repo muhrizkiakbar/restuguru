@@ -36,6 +36,7 @@
     .tes{
         padding-top:0px;
         padding-left:50px;
+        margin-top:-10px;
     }
     .logorg
 	{
@@ -82,7 +83,7 @@
                 <div class="col-xs-12">
                     <h2 class="page-header">
                     <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}
-                    <small class="pull-right"> Nota Penjualan</small>
+                    <small class="pull-right" style="margin-top:5px !important;"> Nota Penjualan</small>
                     <br/>
                     <small class="tes">Alamat: {{$transaksi->Alamat}}, No. Telp: {{$transaksi->No_Telepon}}</small>
                     </h2>
