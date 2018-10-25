@@ -697,7 +697,7 @@ class AngsuranPenjualanController extends Controller
     
     public function reportdetail($id)
     {
-        $id=decrypt($id);
+        $id=($id);
 
         $data=Angsuran::where('id','=',$id)->first();
         dd($id);
