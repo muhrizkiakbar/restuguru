@@ -242,11 +242,11 @@
                                 <td>Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
                                 <td style="width: 150px;min-width:140px;">
                                     <div class="btn-group">
-                                        <button type="button" class="modal_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
-                                        <button type="button" class="modal_showangsuran btn btn-warning btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}" data-target="#modal_showangsuran"><i class="fa fa-money"></i></button>                                        
+                                        <button type="button" class="modal_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->nomor_nota)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
+                                        <button type="button" class="modal_showangsuran btn btn-warning btn-xs" data-toggle="modal" data-id="{{encrypt($data->nomor_nota)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}" data-target="#modal_showangsuran"><i class="fa fa-money"></i></button>                                        
                                         <!-- <button type="button" class="modal_edit btn btn-success btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-edit"></i></button> -->
-                                        <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
-                                        <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
+                                        <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->nomor_nota)}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->nomor_nota)}}"><i class="fa fa-print"></i></button>
                                     </div>
                                 </td>
                                 <td>{{$data->Nama_Cabang}}</td> 
