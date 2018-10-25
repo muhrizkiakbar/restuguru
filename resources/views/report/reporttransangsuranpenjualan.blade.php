@@ -24,12 +24,13 @@
 	.status
 	{
 		position:absolute;
-		top: 270px;
+        /* top: 270px; */
 		left: 250px;
+        bottom: 65px;
         width: 300px;
         height: 70px;
 		z-index: 2;
-        opacity: 0.5;
+        opacity: 0.3;
         transform: rotate(340deg);
 	}
     .logorg
@@ -116,9 +117,7 @@
 
             <!-- Table row -->
             <div class="row">
-            @if ($transaksi->sisa_tagihan==0)
-                <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
-            @endif
+            
             <div class="col-xs-12 table-responsive">
                 <table class="table garis table-bordered table-striped strong" width="100%">
                 <thead>
@@ -211,7 +210,9 @@
                     </table>
                 </div>
             </div>
-
+            @if ($transaksi->sisa_tagihan==0)
+                <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
+            @endif
 
             <!-- /.col -->
             </div>

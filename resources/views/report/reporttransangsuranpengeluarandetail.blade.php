@@ -24,12 +24,13 @@
 	.status
 	{
 		position:absolute;
-		top: 270px;
+        /* top: 270px; */
 		left: 250px;
+        bottom: 65px;
         width: 300px;
         height: 70px;
 		z-index: 2;
-        opacity: 0.5;
+        opacity: 0.3;
         transform: rotate(340deg);
 	}
     .logorg
@@ -204,7 +205,9 @@
                     </table>
                 </div>
             </div>
-
+            @if ($transaksi->sisa_pengeluaran==0)
+                <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
+            @endif
 
             <!-- /.col -->
             </div>
