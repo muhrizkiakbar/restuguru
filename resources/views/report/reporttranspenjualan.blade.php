@@ -34,6 +34,7 @@
         transform: rotate(340deg);
 	}
     .tes{
+        margin-top: 0px;
         padding-top:0px;
         padding-left:50px;
     }
