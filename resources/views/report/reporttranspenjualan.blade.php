@@ -78,7 +78,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                    <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}
+                    <img src="{{asset('dist/img/rg.png')}}" class="logorg"> <strong>RESTU GURU PROMOSINDO</strong> Cab. {{$transaksi->Nama_Cabang}}xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     <small class="pull-right"> Nota Penjualan</small>
                     <br/>
                     </h2>
