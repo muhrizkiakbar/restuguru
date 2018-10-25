@@ -380,7 +380,7 @@ class PengeluaranController extends Controller
             $tanggal=explode("-",$request->tanggal);
             $bulan=$tanggal[1];
             $tahun=$tanggal[2];
-            dd($request->periode);
+            // dd($request->periode);
             $datas=Transaksi_Pengeluaran::leftJoin('Users','Transaksi_Pengeluarans.user_id','=','Users.id')
                                         ->leftJoin('Users as UserClient','Transaksi_Pengeluarans.clientuser_id','=','UserClient.id')                                        
                                         ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
