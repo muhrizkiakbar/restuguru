@@ -328,7 +328,7 @@ class AngsuranPenjualanController extends Controller
                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                             ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
-                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan',
                             'Cabangs.Nama_Cabang','Users.username')
                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsurans.id','like','%'.$request->nonota.'%')
@@ -346,7 +346,7 @@ class AngsuranPenjualanController extends Controller
                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                             ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
-                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan',
                             'Cabangs.Nama_Cabang','Users.username')
                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsurans.id','like','%'.$request->nonota.'%')
@@ -366,7 +366,7 @@ class AngsuranPenjualanController extends Controller
                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                             ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
-                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan',
                             'Cabangs.Nama_Cabang','Users.username')
                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsurans.id','like','%'.$request->nonota.'%')
@@ -390,7 +390,7 @@ class AngsuranPenjualanController extends Controller
                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                             ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
-                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan',
                             'Cabangs.Nama_Cabang','Users.username')
                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                             ->where('Angsurans.id','like','%'.$request->nonota.'%')
@@ -414,7 +414,7 @@ class AngsuranPenjualanController extends Controller
                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                             ->select('Angsurans.*','Transaksi_Penjualans.id as idtrans','Transaksi_Penjualans.total_harga',
-                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Pengeluarans.hp_pelanggan',
+                            'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan',
                             'Cabangs.Nama_Cabang','Users.username')
                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                             // ->where('Transaksi_Penjualans.sisa_tagihan','>','0')

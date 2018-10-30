@@ -97,9 +97,7 @@
                     Dari
                     <address>
                     <strong>{{$transaksi->nama}}</strong><br>
-                    {{$transaksi->display_name}}<br>
-                    Alamat: <br/>xxxxxxxxxxijwsidjiasdjiasjdiasjdiasdjiasdsadisjadiasjdisadisdjiadsji{{$transaksi->Alamat}} <br/>
-                    No. Telp: <br/>{{$transaksi->No_Telepon}}
+                    {{$transaksi->display_name}}<br/>
                     </address>
                 </div>
                 <!-- /.col -->
