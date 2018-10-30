@@ -271,7 +271,7 @@
                                     <td><a href="/transaksi/report/{{encrypt($data->id)}}" target="_blank">#{{$data->nomor_nota}}</a></td>
                                     <td>{{$data->nama_pelanggan}}</td>
                                     <td>{{$data->hp_pelanggan}}</td>
-                                    <td>{{$data->tanggal}} {{date("H:i:s",strtotime($data->created_at))}}</td>
+                                    <td>{{date("d-m-Y",strtotime($data->tanggal))}} {{date("H:i:s",strtotime($data->created_at))}}</td>
                                     <td style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->jumlah_pembayaran),2,',','.')}}</td>
                                     <td>{{$data->metode_pembayaran}}</td>
                                     <td>{{number_format(floatval($data->diskon),2,',','.')}} %</td>

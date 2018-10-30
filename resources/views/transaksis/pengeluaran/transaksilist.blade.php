@@ -225,7 +225,7 @@
                                 <td>#{{$data->id}}</td>
                                 <td>{{$data->namapenerima}}</td>
                                 <td>{{$data->hppenerima}}</td>
-                                <td>{{$data->tanggal_pengeluaran}} {{date("H:i:s",strtotime($data->created_at))}}</td>
+                                <td>{{date("d-m-Y",strtotime($data->tanggal_pengeluaran))}} {{date("H:i:s",strtotime($data->created_at))}}</td>
                                 <td>Rp. {{number_format(floatval($data->pembayaran_pengeluaran),2,',','.')}}</td>
                                 <td>{{$data->metode_pembayaran}}</td>
                                 @if ($data->sisa_pengeluaran!=0)
