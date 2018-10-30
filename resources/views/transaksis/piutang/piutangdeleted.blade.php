@@ -192,7 +192,7 @@
                             <tbody>
                             @foreach ($datas as $key=>$data)
                                 <tr id="{{$data->id}}">
-                                    <td><a href="/transaksi/pengeluaran/angsuran/report/{{encrypt($data->id)}}" target="_blank">#{{$data->id}}</a></td>
+                                    <td><a href="/transaksi/penjualan/angsuran/report/{{encrypt($data->id)}}" target="_blank">#{{$data->id}}</a></td>
                                     <td>{{date("d-m-Y",strtotime($data->tanggal_angsuran))}}} {{date("H:i:s",strtotime($data->created_at))}}</td>
                                     <td>Rp. {{number_format(floatval($data->nominal_angsuran),2,',','.')}}</td>
                                     <td>{{$data->metode_pembayaran}}</td>
