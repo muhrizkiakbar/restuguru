@@ -218,8 +218,8 @@
                 </div>
                 <b>Riwayat Pelunasan : </b><br>
                 @foreach ($angsurans as $pelunasan)
-                                #{{ $pelunasan->id }}, Tgl {{ $pelunasan->created_at }} : {{ $pelunasan->nominal_angsuran }}
-                            @endforeach
+                    #{{ $pelunasan->id }}, Tgl {{ $pelunasan->created_at }} : {{ $pelunasan->nominal_angsuran }}
+                @endforeach
             </div>
             @if ($transaksi->sisa_tagihan==0)
                 <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
