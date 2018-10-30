@@ -227,7 +227,7 @@
                                 <td>#{{$data->nomor_nota}}</td>
                                 <td>{{$data->nama_pelanggan}}</td>
                                 <td>{{$data->hp_pelanggan}}</td>
-                                <td>{{$data->tanggal}}</td>
+                                <td>{{$data->tanggal}} {{date("H:i:s",strtotime($data->created_at))}}</td>
                                 <td>Rp. {{number_format(floatval($data->jumlah_pembayaran),2,',','.')}}</td>
                                 <td>{{$data->metode_pembayaran}}</td>
                                 <td>{{number_format(floatval($data->diskon),2,',','.')}} %</td>

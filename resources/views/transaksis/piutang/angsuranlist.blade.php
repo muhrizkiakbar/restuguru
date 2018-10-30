@@ -226,7 +226,7 @@
                                 <td><a href="/transaksi/angsuran/report/detail/{{encrypt($data->id)}}" target="_blank">#{{$data->id}}</a></td>
                                 <td>{{$data->nama_pelanggan}}</td>
                                 <td>{{$data->hp_pelanggan}}</td>
-                                <td style="width: 150px;min-width:90px;" >{{date('d-m-Y',strtotime($data->tanggal_angsuran))}}</td>
+                                <td style="width: 150px;min-width:90px;" >{{date('d-m-Y',strtotime($data->tanggal_angsuran))}} {{date("H:i:s",strtotime($transaksi->created_at))}}</td>
                                 <td style="width: 150px;min-width:140px;">Rp. {{number_format(floatval($data->nominal_angsuran),2,',','.')}}</td>
                                 @if ($data->sisa_angsuran!=0)
                                     <td id="sisa{{$data->id}}" style="width: 150px;min-width:140px;"><span class="badge bg-red">
