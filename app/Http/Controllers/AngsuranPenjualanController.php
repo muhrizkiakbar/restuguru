@@ -700,7 +700,7 @@ class AngsuranPenjualanController extends Controller
     {
         $id=decrypt($id);
 
-        $data=Angsuran::where('id','=',$id)->first();
+        $data=Angsuran::where('id','=',$id)->withTrashed()->first();
         // dd($id);
         $transaksi=CTransaksi_Penjualans::leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                     ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
