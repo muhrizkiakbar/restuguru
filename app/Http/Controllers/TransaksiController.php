@@ -158,7 +158,9 @@ class TransaksiController extends Controller
         $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
                         ->select('Sub_Tpenjualans.*','Produks.nama_produk')
                         ->where('penjualan_id','=',$id)->get();
-        return view('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
+
+        $data=Angsuran::where('transaksipenjualan_id','=',$transaksi->id)->get();
+        return view('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis, 'angsurans'=>$data]);
         // $pdf=PDF::loadView('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
         // // return $pdf->setPaper('F4', 'landscape')->download('laporanharian.pdf');
         // return $pdf->setPaper('a4', 'landscape')->stream('filename.pdf',array('Attachment'=>1));
