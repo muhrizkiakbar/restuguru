@@ -455,7 +455,7 @@ class AngsuranPenjualanController extends Controller
             $sub['id']=$value->id;
             $sub['id3']=encrypt($value->id);
             $sub['id2']=encrypt($request->id);
-            $sub['tanggal_angsuran']=$value->tanggal_angsuran;
+            $sub['tanggal_angsuran']=$value->tanggal_angsuran.' '.date("H:i:s",strtotime($value->created_at));
             $sub['nominal_angsuran']=$value->nominal_angsuran;
             $sub['metode_pembayaran']=$value->metode_pembayaran;
             $sub['transaksipenjualan_id']=$value->transaksipenjualan_id;
