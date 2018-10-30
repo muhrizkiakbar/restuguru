@@ -350,8 +350,9 @@ class PengeluaranController extends Controller
                     ->withTrashed()
                     ->where('Transaksi_Pengeluarans.id','=',$id)->first();
         // dd($transaksi);
+        $data=Angsuran_Pengeluarans::where('transaksipengeluaran_id','=',$transaksi->id)->get();
         $subtransaksis=Sub_Tpengeluaran::where('transaksipengeluaran_id','=',$id)->get();
-        return view('report.reporttranspengeluaran',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
+        return view('report.reporttranspengeluaran',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis, 'angsurans'=>$data]);
 
         // $pdf=PDF::loadView('report.reporttranspengeluaran',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
         // // return $pdf->setPaper('F4', 'landscape')->download('laporanharian.pdf');

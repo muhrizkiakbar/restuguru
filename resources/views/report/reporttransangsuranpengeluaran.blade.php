@@ -191,6 +191,10 @@
                         </tr>
                     </table>
                 </div>
+                <b>Riwayat Pelunasan : </b><br>
+                @foreach ($angsurans as $pelunasan)
+                    #{{ $pelunasan->id }} Tgl {{ date("d-m-Y",strtotime($pelunasan->tanggal_angsuran)) }} : Rp. {{ number_format(floatval($pelunasan->nominal_angsuran),0,',','.') }}<br>
+                @endforeach
             </div>
             @if ($transaksi->sisa_pengeluaran==0)
                 <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
