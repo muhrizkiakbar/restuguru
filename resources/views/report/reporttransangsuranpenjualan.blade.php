@@ -203,7 +203,7 @@
                             <td>Rp. {{number_format(floatval($transaksi->total_harga),0,',','.')}}</td>
                         </tr>
                         <tr>
-                            <th>DP:</th>
+                            <th>Pelunasan:</th>
                             <td>Rp. {{number_format(floatval($transaksi->jumlah_pembayaran),0,',','.')}}</td>
                         </tr>
                         <tr>
