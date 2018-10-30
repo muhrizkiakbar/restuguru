@@ -244,7 +244,7 @@
                                 <td><a href="/transaksi/pengeluaran/report/{{encrypt($data->id)}}" target="_blank">#{{$data->id}}</a></td>
                                 <td>{{$data->namapenerima}}</td>
                                 <td>{{$data->hppenerima}}</td>
-                                <td>{{$data->tanggal_pengeluaran}}</td>
+                                <td>{{$data->tanggal_pengeluaran}} {{date("H:i:s",strtotime($data->created_at))}}</td>
                                 <td id="pembayaran{{$data->id}}">Rp. {{number_format(floatval($data->pembayaran_pengeluaran),0,',','.')}}</td>
                                 <td>{{$data->metode_pembayaran}}</td>
                                 @if ($data->sisa_pengeluaran!=0)
