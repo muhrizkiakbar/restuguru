@@ -191,7 +191,7 @@
                 </div>
 
                 <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                "Apabila pesanan tidak di cetak maka belum di order"
+                "Harap cek kembali orderan anda."
                 </p>
             </div>
             <!-- /.col -->
