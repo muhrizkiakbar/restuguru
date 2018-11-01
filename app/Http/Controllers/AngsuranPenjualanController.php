@@ -728,7 +728,7 @@ class AngsuranPenjualanController extends Controller
     public function reportangsuran($id)
     {
         $id=decrypt($id);
-        $data=Angsuran::where('id','=',$id)->withTrashed()->get();
+        $data=Angsuran::where('id','=',$id)->withTrashed()->first();
         // dd('sdsd');
         dd($data);
         $transaksi=CTransaksi_Penjualans::leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
