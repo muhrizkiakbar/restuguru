@@ -730,7 +730,7 @@ class AngsuranPenjualanController extends Controller
         $id=decrypt($id);
         $data=Angsuran::where('id','=',$id)->withTrashed()->get();
         // dd('sdsd');
-        dd($data);
+        // dd($data);
         $transaksi=CTransaksi_Penjualans::leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                     ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                     ->leftJoin('role_user','role_user.user_id','=','Users.id')
@@ -744,7 +744,7 @@ class AngsuranPenjualanController extends Controller
                     ->where('Transaksi_Penjualans.id','=',$data->transaksipenjualan_id)->first();
                     
         
-        
+        dd($transaksi);
 
         return view('report.reporttransangsuranpenjualan',['transaksi'=>$transaksi,'angsurans'=>$data]);                        
 
