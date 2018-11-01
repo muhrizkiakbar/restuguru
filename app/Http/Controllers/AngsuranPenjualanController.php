@@ -743,6 +743,7 @@ class AngsuranPenjualanController extends Controller
                     ->withTrashed()
                     ->where('Transaksi_Penjualans.id','=',$data->transaksipenjualan_id)->first();
                     
+                    
         
         dd($transaksi);
 
