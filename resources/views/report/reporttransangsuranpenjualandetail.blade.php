@@ -115,7 +115,8 @@
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
                 <b>No. #{{$transaksi->id}}</b><br>
-                <b>Tanggal :</b> {{date("d-m-Y",strtotime($transaksi->tanggal))}}
+                <b>Tanggal :</b> {{date("d-m-Y",strtotime($transaksi->created_at))}}<br>
+                <b>Jam :</b> {{date("H:i:s",strtotime($transaksi->created_at))}}
             </div>
             <!-- /.col -->
             </div>
@@ -190,7 +191,11 @@
                         </tr>
                         <tr>
                             <th>Tanggal Pelunasan</th></th>
-                            <td>{{date("d-m-Y",strtotime($angsuran->tanggal_angsuran))}}</td>
+                            <td>{{date("d-m-Y",strtotime($angsuran->created_at))}}</td>
+                        </tr>
+                        <tr>
+                            <th>Jam Pelunasan</th></th>
+                            <td>{{date("H:i:s",strtotime($angsuran->created_at))}}</td>
                         </tr>
                     </table>
                 </div>

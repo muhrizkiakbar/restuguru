@@ -116,7 +116,7 @@
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
                 <b>No. #{{$transaksi->id}}</b><br>
-                <b>Tanggal :</b> {{date("d-m-Y",strtotime($transaksi->tanggal))}}
+                <b>Tanggal :</b> {{ date("d-m-Y",strtotime($transaksi->tanggal)) }}
             </div>
             <!-- /.col -->
             </div>
@@ -218,8 +218,8 @@
                 </div>
                 <b>Riwayat Pelunasan : </b><br>
                 @foreach ($angsurans as $pelunasan)
-                                #{{ $pelunasan->id }}, Tgl {{ $pelunasan->created_at }} : {{ $pelunasan->nominal_angsuran }}
-                            @endforeach
+                    #{{ $pelunasan->id }} Tgl {{ date("d-m-Y",strtotime($pelunasan->created_at)) }} {{ date("H:i:s",strtotime($pelunasan->created_at)) }} : Rp. {{ number_format(floatval($pelunasan->nominal_angsuran),0,',','.') }}<br>
+                @endforeach
             </div>
             @if ($transaksi->sisa_tagihan==0)
                 <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
