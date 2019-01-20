@@ -155,6 +155,7 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         App\Providers\DropboxFilesystemServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -216,6 +217,7 @@ return [
         'Datatables' => Yajra\DataTables\Facades\DataTables::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

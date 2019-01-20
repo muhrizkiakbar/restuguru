@@ -203,22 +203,7 @@ class AngsuranPengeluaranController extends Controller
                             ->orderBy('created_at','desc')
                             ->paginate(50);
 
-            // $datas=Transaksi_Pengeluaran::leftJoin('Users','Transaksi_Pengeluarans.user_id','=','Users.id')
-            //                             ->leftJoin('Users as UserClient','Transaksi_Pengeluarans.clientuser_id','=','UserClient.id')                                        
-            //                             ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
-            //                             ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
-            //                             ->leftJoin('Jenis_Pengeluaran','Transaksi_Pengeluarans.jenispengeluaran_id','=','Jenis_Pengeluaran.id')
-            //                             ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username as username2','Suppliers.nama_supplier','Jenis_Pengeluaran.jenis_pengeluaran')                                        
-            //                             ->where('Transaksi_Pengeluarans.cabang_id','=','1')
-            //                             ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
-            //                             ->where('Transaksi_Pengeluarans.jenispengeluaran_id','like','%'.$request->jenispengeluaran.'%')                                                                                
-            //                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
-            //                             ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
-            //                             ->where('Transaksi_Pengeluarans.tanggal_pengeluaran','like','%'.$request->tanggal.'%')
-            //                             ->where('Transaksi_Pengeluarans.sisa_pengeluaran','>','0')
-            //                             ->where('Jenis_Pengeluarans.sifat_angsuran','=','1')
-            //                             ->orderBy('Transaksi_Pengeluarans.created_at','desc')
-            //                             ->paginate(50);
+            
         }
         elseif ($request->periode=="semua"){
             $datas=Angsuran_Pengeluarans::leftJoin('Transaksi_Pengeluarans','Angsuran_Pengeluarans.transaksipengeluaran_id','=','Transaksi_Pengeluarans.id')
@@ -234,21 +219,7 @@ class AngsuranPengeluaranController extends Controller
                             ->orderBy('created_at','desc')
                             ->paginate(50);
 
-            // $datas=Transaksi_Pengeluaran::leftJoin('Users','Transaksi_Pengeluarans.user_id','=','Users.id')
-                                        // ->leftJoin('Users as UserClient','Transaksi_Pengeluarans.clientuser_id','=','UserClient.id')                                        
-                                        // ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
-                                        // ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
-                                        // ->leftJoin('Jenis_Pengeluaran','Transaksi_Pengeluarans.jenispengeluaran_id','=','Jenis_Pengeluaran.id')
-                                        // ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username as username2','Suppliers.nama_supplier','Jenis_Pengeluaran.jenis_pengeluaran')                                        
-                                        // ->where('Transaksi_Pengeluarans.cabang_id','=','1')
-                                        // ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
-                                        // ->where('Transaksi_Pengeluarans.jenispengeluaran_id','like','%'.$request->jenispengeluaran.'%')                                                                                                                      
-                                        // ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
-                                        // ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                        // ->where('Jenis_Pengeluarans.sifat_angsuran','=','1')
-                                        // ->where('Transaksi_Pengeluarans.sisa_pengeluaran','>','0')                                        
-                                        // ->orderBy('Transaksi_Pengeluarans.created_at','desc')
-                                        // ->paginate(50);
+            
         }
         elseif ($request->periode=="bulan"){
             $tanggal=explode("-",$request->tanggal);
@@ -270,23 +241,7 @@ class AngsuranPengeluaranController extends Controller
                             ->orderBy('created_at','desc')
                             ->paginate(50);
 
-            // $datas=Transaksi_Pengeluaran::leftJoin('Users','Transaksi_Pengeluarans.user_id','=','Users.id')
-            //                             ->leftJoin('Users as UserClient','Transaksi_Pengeluarans.clientuser_id','=','UserClient.id')                                        
-            //                             ->leftJoin('Cabangs','Transaksi_Pengeluarans.cabang_id','=','Cabangs.id')
-            //                             ->leftJoin('Suppliers','Transaksi_Pengeluarans.supplier_id','=','Suppliers.id')
-            //                             ->leftJoin('Jenis_Pengeluaran','Transaksi_Pengeluarans.jenispengeluaran_id','=','Jenis_Pengeluaran.id')
-            //                             ->select('Transaksi_Pengeluarans.*','Cabangs.Nama_Cabang','Users.username','UserClient.username as username2','Suppliers.nama_supplier','Jenis_Pengeluaran.jenis_pengeluaran')
-            //                             ->where('Transaksi_Pengeluarans.cabang_id','=','1')
-            //                             ->where('Transaksi_Pengeluarans.id','like','%'.$request->nonota.'%')
-            //                             ->where('Transaksi_Pengeluarans.jenispengeluaran_id','like','%'.$request->jenispengeluaran.'%')                                                                                                                      
-            //                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$request->namapelanggan.'%')
-            //                             ->where('Transaksi_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
-            //                             ->whereMonth('Transaksi_Pengeluarans.tanggal_pengeluaran','=',$bulan)
-            //                             ->whereYear('Transaksi_Pengeluarans.tanggal_pengeluaran','=',$tahun)  
-            //                             ->where('Transaksi_Pengeluarans.sisa_pengeluaran','>','0')                                                                              
-            //                             ->where('Jenis_Pengeluarans.sifat_angsuran','=','1')
-            //                             ->orderBy('created_at','desc')
-            //                             ->paginate(50);
+            
         }
         elseif ($request->periode=="tahun")
         {

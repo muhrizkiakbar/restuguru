@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use App\Exports\TransaksiPenjualan\TransaksiListReport;
+use Excel;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class TransaksiController extends Controller
@@ -407,14 +409,15 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function listtransaksi(Request $request){
+    public function listtransaksi(TransaksiListReport $transaksiReport,Request $request){
+        
         $date=date('d-m-Y');
         if ($request->tanggal==""){
             $request->tanggal=$date;
         }
         else
         {
-            
+              
             $request->tanggal=date('d-m-Y',strtotime($request->tanggal));
             $date=$request->tanggal;
         }
@@ -505,13 +508,29 @@ class TransaksiController extends Controller
                                         ->orderBy('created_at','desc')
                                         ->paginate(50);
         }
-        
-        
-        return view('transaksis.transaksilist',['date'=>$date,'datas'=>$datas,
+        //dd($datas);
+
+        if (($request->submitpelanggan == "export"))
+        {
+          return (new TransaksiListReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan)->download('laporantransaksi.xls');
+          
+          
+          
+        }
+        else
+        {
+          return view('transaksis.transaksilist',['date'=>$date,'datas'=>$datas,
                                                 'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
                                                 'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
                                                 'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
+          
+        }
+
+         
     }
+
+    
+
 
     public function datatransaksispesific(Request $request){
         $request->id=decrypt($request->id);

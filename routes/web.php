@@ -63,6 +63,8 @@ Route::group(['middleware' => 'auth'], function() {
         //list transaksi
         Route::get('/transaksi/list',['middleware' => ['permission:manage-transaksipenjualan'], 'uses' => 'TransaksiController@listtransaksi'])->name('transaksipenjualanmanageindex');
         Route::post('/transaksi/list',['middleware' => ['permission:manage-transaksipenjualan'], 'uses' => 'TransaksiController@listtransaksi'])->name('transaksilist');
+        Route::post('/transaksi/list/export',['middleware' => ['permission:manage-transaksipenjualan'], 'uses' => 'TransaksiController@exporttransaksi'])->name('transaksilistexport');
+
         Route::get('/trasaksi/list/spesific',['middleware' => ['permission:manage-transaksipenjualan'], 'uses' => 'TransaksiController@datatransaksispesific'])->name('datatransaksispesific');
         Route::get('/trasaksi/list/spesific/subtransaksi',['middleware' => ['permission:manage-transaksipenjualan'], 'uses' => 'TransaksiController@showsubtransaksi'])->name('showsubtransaksi');
 
