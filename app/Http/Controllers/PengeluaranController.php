@@ -11,7 +11,8 @@ use App\CSuppliers;
 use App\stokbahanbaku;
 use Illuminate\Http\Request;
 use PDF;
-
+use App\Exports\TransaksiPengeluaran\TransaksiListPengeluaranReport;
+use Excel;
 
 use Datatables;
 use Illuminate\Support\Facades\Auth;
@@ -397,6 +398,7 @@ class PengeluaranController extends Controller
                                         ->whereYear('Transaksi_Pengeluarans.tanggal_pengeluaran','=',$tahun)
                                         ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                                         ->paginate(50);
+                                        
         }
         elseif ($request->periode=="semua"){
 
@@ -465,10 +467,17 @@ class PengeluaranController extends Controller
                                         ->paginate(50);
         }
         
-        return view('transaksis.pengeluaran.transaksilist',['date'=>$date,'datas'=>$datas,
-                                                'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
-                                                'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
-                                                'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
+        if (($request->submitpelanggan == "export"))
+        {
+          return (new TransaksiListPengeluaranReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan)->download('laporanpengeluaran.xls');  
+        }
+        else
+        {
+            return view('transaksis.pengeluaran.transaksilist',['date'=>$date,'datas'=>$datas,
+                                                    'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
+                                                    'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
+                                                    'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
+        }
     }
 
     public function pengeluarandeleted(Request $request){

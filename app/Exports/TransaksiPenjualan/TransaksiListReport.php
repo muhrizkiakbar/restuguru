@@ -175,7 +175,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                           'Transaksi_Penjualans.total_harga','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)                                                    
                                         ->orderBy('created_at','desc')
-                                        ->get;
+                                        ->get();
         }
         // dd($datas);
         return $datas;

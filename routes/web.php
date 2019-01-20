@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/transaksi/pengeluaran/delete',['middleware' => ['permission:delete-transaksipengeluaran'], 'uses' => 'PengeluaranController@destroytransaksipengeluaran'])->name('destroytransaksipengeluaran');
         Route::get('/transaksi/pengeluaran/deleted',['middleware' => ['permission:deleted-transaksipengeluaran'], 'uses' => 'PengeluaranController@pengeluarandeleted'])->name('pengeluarandeletedindex');
         Route::post('/transaksi/pengeluaran/deleted',['middleware' => ['permission:deleted-transaksipengeluaran'], 'uses' => 'PengeluaranController@pengeluarandeleted'])->name('pengeluarandeleted');
+        Route::post('/transaksi/pengeluaran/exportpengeluaran',['middleware' => ['permission:manage-transaksipengeluaran'], 'uses' => 'PengeluaranController@exporttransaksi'])->name('transaksilistexport');
 
         Route::get('/transaksi/pengeluaran/angsuran/list',['middleware' => ['permission:list-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@angsuranlist'])->name('listangsuranpengeluaranindex');
         Route::post('/transaksi/pengeluaran/angsuran/list',['middleware' => ['permission:list-angsuranpengeluaran'], 'uses' => 'AngsuranPengeluaranController@angsuranlist'])->name('listangsuranpengeluaran');

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Sub_Tpengeluaran;
 use Illuminate\Http\Request;
+use App\Exports\TransaksiPengeluaran\AngsuranPengeluaran\AngsuranPengeluaranReport;
 
 class AngsuranPengeluaranController extends Controller
 {
@@ -278,13 +279,20 @@ class AngsuranPengeluaranController extends Controller
                             ->paginate(50);
         }
         // dd($datas);
-        $jenispengeluaran=Jenis_Pengeluaran::all();
-        return view('transaksis.pengeluaran.piutang.angsuranlist',['date'=>$date,'datas'=>$datas,
-                                                'datajenispengeluarans'=>$jenispengeluaran,
-                                                'jenispengeluaran'=>$request->jenispengeluaran,
-                                                'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
-                                                'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
-                                                'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
+        if (($request->submitpelanggan == "export"))
+        {
+          return (new AngsuranPengeluaranReport)->proses($request->tanggal,$request->periode,$request->pembayaran2,$request->nonota,$request->namapelanggan, $request->jenispengeluaran)->download('laporanangsuranpengeluaran.xls');
+          
+        }
+        else{
+            $jenispengeluaran=Jenis_Pengeluaran::all();
+            return view('transaksis.pengeluaran.piutang.angsuranlist',['date'=>$date,'datas'=>$datas,
+                                                    'datajenispengeluarans'=>$jenispengeluaran,
+                                                    'jenispengeluaran'=>$request->jenispengeluaran,
+                                                    'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
+                                                    'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
+                                                    'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
+        }
     }
 
     public function angsurandeleted(Request $request)

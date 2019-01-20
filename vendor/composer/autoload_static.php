@@ -508,6 +508,8 @@ class ComposerStaticInit4db0f252e22f6b885143c54f85af8c38
         'App\\CUsers' => __DIR__ . '/../..' . '/app/CUsers.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Exports\\TransaksiPenjualan\\AngsuranPenjualan\\AngsuranPenjualanReport' => __DIR__ . '/../..' . '/app/Exports/TransaksiPenjualan/AngsuranPenjualan/AngsuranPenjualanReport.php',
+        'App\\Exports\\TransaksiPenjualan\\TransaksiListReport' => __DIR__ . '/../..' . '/app/Exports/TransaksiPenjualan/TransaksiListReport.php',
         'App\\Http\\Composers\\NavigasiComposer' => __DIR__ . '/../..' . '/app/Http/Composers/NavigasiComposer.php',
         'App\\Http\\Composers\\NotificationComposer' => __DIR__ . '/../..' . '/app/Http/Composers/NotificationComposer.php',
         'App\\Http\\Controllers\\ActivityLogController' => __DIR__ . '/../..' . '/app/Http/Controllers/ActivityLogController.php',
