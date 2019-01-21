@@ -253,7 +253,7 @@ class AngsuranPenjualanController extends Controller
 
         if (($request->submitpelanggan == "export"))
         {
-          return (new AngsuranPenjualanReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan)->download('laporantransaksi.xls');
+          return (new AngsuranPenjualanReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan)->download('laporanangsuranpenjualan.xls');
           
         }
         else
