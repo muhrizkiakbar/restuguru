@@ -203,7 +203,7 @@ class TransaksiController extends Controller
     {
         //
         $nonow=CTransaksi_Penjualans::latest()->withTrashed()->first();
-
+        dd($nonow->id);
         if ($nonow==null){
             $nonota=1;
             // return $nonota;
