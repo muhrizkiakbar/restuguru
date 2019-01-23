@@ -554,54 +554,61 @@ class TransaksiController extends Controller
 
         $subtransaksis=CSub_Tpenjualans::where('penjualan_id','=',$id)->get();
 
-        foreach($subtransaksis as $subtransaksi){
-            $relasibahanbakus=CRelasiBahanBakus::where('produk_id','=',$subtransaksi->produk_id)
-                                                 ->get();
-            // dd($relasibahanbakus);
-            foreach( $relasibahanbakus as $key=>$relasibahanbaku ){
-                $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
-                                            ->where('cabang_id','=',Auth::user()->cabangs->id)
-                                            ->count();
+        if ($subtransaksis==null)
+        {
+            $stokbahanbakustatus=true;
+        }
+        else
+        {
+            foreach($subtransaksis as $subtransaksi){
+                $relasibahanbakus=CRelasiBahanBakus::where('produk_id','=',$subtransaksi->produk_id)
+                                                    ->get();
+                // dd($relasibahanbakus);
+                foreach( $relasibahanbakus as $key=>$relasibahanbaku ){
+                    $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
+                                                ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                ->count();
 
-                $bahanbakugethitungluas=CBahanBakus::find($relasibahanbaku->bahanbaku_id);
-                // dd($stokbahanbaku);
-                $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
-                                            ->where('cabang_id','=',Auth::user()->cabangs->id)
-                                            ->first();
+                    $bahanbakugethitungluas=CBahanBakus::find($relasibahanbaku->bahanbaku_id);
+                    // dd($stokbahanbaku);
+                    $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
+                                                ->where('cabang_id','=',Auth::user()->cabangs->id)
+                                                ->first();
 
-                if (($subtransaksi->satuan=="CENTIMETER") || ($subtransaksi->satuan=="METER"))
-                {
-                    // dd('jancok');
-                    if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($subtransaksi->satuan=="METER"))
+                    if (($subtransaksi->satuan=="CENTIMETER") || ($subtransaksi->satuan=="METER"))
                     {
-                        $luas=($subtransaksi->panjang*100)*($subtransaksi->lebar*100)*$subtransaksi->banyak;
+                        // dd('jancok');
+                        if (($bahanbakugethitungluas->satuan=="CENTIMETER") && ($subtransaksi->satuan=="METER"))
+                        {
+                            $luas=($subtransaksi->panjang*100)*($subtransaksi->lebar*100)*$subtransaksi->banyak;
+                        }
+                        elseif (($bahanbakugethitungluas->satuan==$subtransaksi->satuan))
+                        {
+                            $luas=($subtransaksi->panjang)*($subtransaksi->lebar)*$subtransaksi->banyak;
+                        }
+                        elseif (($bahanbakugethitungluas->satuan=="METER") && ($subtransaksi->satuan=="CENTIMETER"))
+                        {
+                            $luas=($subtransaksi->panjang/100)*($subtransaksi->lebar/100)*$subtransaksi->banyak;
+                        }
+
+                        $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $luas * $relasibahanbaku->qtypertrx );
                     }
-                    elseif (($bahanbakugethitungluas->satuan==$subtransaksi->satuan))
+                    else
                     {
-                        $luas=($subtransaksi->panjang)*($subtransaksi->lebar)*$subtransaksi->banyak;
+                        $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $subtransaksi->banyak * $relasibahanbaku->qtypertrx );
                     }
-                    elseif (($bahanbakugethitungluas->satuan=="METER") && ($subtransaksi->satuan=="CENTIMETER"))
+                    // dd($stokbahanbaku->banyakstok);
+                    // dd($stokbahanbaku->banyakstok);
+
+                    if ($stokbahanbaku->save())
                     {
-                        $luas=($subtransaksi->panjang/100)*($subtransaksi->lebar/100)*$subtransaksi->banyak;
+                        $stokbahanbakustatus = true;
+                    }else{
+                        $stokbahanbakustatus = false;
                     }
 
-                    $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $luas * $relasibahanbaku->qtypertrx );
-                }
-                else
-                {
-                    $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $subtransaksi->banyak * $relasibahanbaku->qtypertrx );
-                }
-                // dd($stokbahanbaku->banyakstok);
-                // dd($stokbahanbaku->banyakstok);
 
-                if ($stokbahanbaku->save())
-                {
-                    $stokbahanbakustatus = true;
-                }else{
-                    $stokbahanbakustatus = false;
                 }
-
-
             }
         }
 
