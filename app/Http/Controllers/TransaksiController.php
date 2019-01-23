@@ -203,7 +203,7 @@ class TransaksiController extends Controller
     {
         //
         $nonow=CTransaksi_Penjualans::withTrashed()->orderBy('id', 'desc')->first();
-        dd($nonow->id);
+        
         if ($nonow==null){
             $nonota=1;
             // return $nonota;
@@ -212,7 +212,7 @@ class TransaksiController extends Controller
         {
             $nonota=$nonow->id+1;
         }
-        dd($nonota);
+        // dd($nonota);
         // dd($request->json('inputpelanggan'));
         $transaksi= new CTransaksi_Penjualans;
         $transaksi->nomor_nota=$nonota;
