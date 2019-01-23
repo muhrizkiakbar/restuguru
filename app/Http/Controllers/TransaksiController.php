@@ -548,7 +548,7 @@ class TransaksiController extends Controller
         //
         $id=decrypt($request->json('id'));
         // dd($id);
-        
+        $stokbahanbakustatus=false;
         $table=CTransaksi_Penjualans::where('id','=',$id)
                     ->first();
 
