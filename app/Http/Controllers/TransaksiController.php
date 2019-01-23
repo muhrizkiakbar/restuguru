@@ -212,7 +212,7 @@ class TransaksiController extends Controller
         {
             $nonota=$nonow->id+1;
         }
-        // dd($nonota);
+        dd($nonota);
         // dd($request->json('inputpelanggan'));
         $transaksi= new CTransaksi_Penjualans;
         $transaksi->nomor_nota=$nonota;
