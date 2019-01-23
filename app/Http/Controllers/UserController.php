@@ -230,38 +230,58 @@ class UserController extends Controller
     public function changepassword(Request $request){
 
     // dd("asdads");
-        $this->validate($request, [
-            'password' => 'required',
-            'passwordbaru' => 'required|string|min:8',
-            'konfirmasipassword' => 'required|string|min:8|same:passwordbaru'
-        ]);
 
+        if (($request->cabang_id != Auth::user()->cabang_id) && !isset($request->password) && !isset($request->passwordbaru) && !isset($request->konfirmasipassword))
+        {
 
+            request()->user()->fill([
+                'password' => Hash::make(request()->input('passwordbaru')),
+                'cabang_id'=>$request->cabang_id
+            ])->save();
 
-        if (Hash::check($request->password,Hash::make($request->password))) {
-            // dd("berubah");
-            if ($request->cabang_id!=null)
-            {
-                request()->user()->fill([
-                    'password' => Hash::make(request()->input('passwordbaru')),
-                    'cabang_id'=>$request->cabang_id
-                ])->save();
-            }
-            else
-            {
-                request()->user()->fill([
-                    'password' => Hash::make(request()->input('passwordbaru'))
-                ])->save();
-            }
-            
-            $isi=Auth::user()->username." telah mengubah password.";
-            $save=$this->createlog($isi,"edit");
-
-            return redirect()->back()->with('statussucces','Password berhasil di ubah.');
+            return redirect()->back()->with('statussucces','User berhasil pindah cabang.');
         }
-        else{
-            return redirect()->back()->with('statuserror','Password Salah');
+        else if (($request->cabang_id == Auth::user()->cabang_id) && isset($request->password) && isset($request->passwordbaru) && isset($request->konfirmasipassword))
+        {
+            $this->validate($request, [
+                'password' => 'required',
+                'passwordbaru' => 'required|string|min:8',
+                'konfirmasipassword' => 'required|string|min:8|same:passwordbaru'
+            ]);
+
+    
+
+            if (Hash::check($request->password,Hash::make($request->password))) {
+                // dd("berubah");
+                if ($request->cabang_id!=null)
+                {
+                    request()->user()->fill([
+                        'password' => Hash::make(request()->input('passwordbaru')),
+                        'cabang_id'=>$request->cabang_id
+                    ])->save();
+                }
+                else
+                {
+                    request()->user()->fill([
+                        'password' => Hash::make(request()->input('passwordbaru'))
+                    ])->save();
+                }
+                
+                $isi=Auth::user()->username." telah mengubah password.";
+                $save=$this->createlog($isi,"edit");
+
+                return redirect()->back()->with('statussucces','Password berhasil di ubah.');
+            }
+            else{
+                return redirect()->back()->with('statuserror','Password Salah.');
+            }
         }
+        else
+        {
+            return redirect()->back()->with('statuserror','Gagal mengubah user.');
+        }
+
+        
 
 
     }
