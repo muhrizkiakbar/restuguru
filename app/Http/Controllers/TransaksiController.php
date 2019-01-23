@@ -202,7 +202,7 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         //
-        $nonow=CTransaksi_Penjualans::latest()->withTrashed()->first();
+        $nonow=CTransaksi_Penjualans::withTrashed()->orderBy('id', 'desc')->first();
         dd($nonow->id);
         if ($nonow==null){
             $nonota=1;
