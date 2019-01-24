@@ -33,6 +33,7 @@ class CabangController extends Controller
     public function loaddatacabang(){
         $tables=CCabangs::leftJoin('Users','Cabangs.user_id','=','Users.id')
                 ->select('Cabangs.*','Users.username')
+                ->where('Cabangs.id','!=',Auth::user()->id)
                 ->get();
         return Datatables::of($tables)
             -> addColumn ('action', function ($tables) {
