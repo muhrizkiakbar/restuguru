@@ -208,8 +208,12 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         //
-        $table=User::where('id','=',decrypt($request->deliduser))
-                            ->first();
+        // $table=User::where('id','=',decrypt($request->deliduser))
+        //                     ->first();
+
+        $table=User::findOrFail(decrypt($request->deliduser));
+        $table->deleted_at=date('Y-m-d H:i:s');
+
         if ($table->delete()){
            
             $isi=Auth::user()->username." telah menghapus username bernama ".$table->username.".";
@@ -235,13 +239,12 @@ class UserController extends Controller
         {
 
             request()->user()->fill([
-                'password' => Hash::make(request()->input('passwordbaru')),
                 'cabang_id'=>$request->cabang_id
             ])->save();
 
             return redirect()->back()->with('statussucces','User berhasil pindah cabang.');
         }
-        else if (($request->cabang_id != Auth::user()->cabang_id) && isset($request->password) && isset($request->passwordbaru) && isset($request->konfirmasipassword))
+        else
         {
             $this->validate($request, [
                 'password' => 'required',
@@ -276,10 +279,10 @@ class UserController extends Controller
                 return redirect()->back()->with('statuserror','Password Salah.');
             }
         }
-        else
-        {
-            return redirect()->back()->with('statuserror','Gagal mengubah user.');
-        }
+        // else
+        // {
+        //     return redirect()->back()->with('statuserror','Gagal mengubah user.');
+        // }
 
         
 

@@ -25,6 +25,8 @@ return array(
     'App\\CUsers' => $baseDir . '/app/CUsers.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Exports\\TransaksiPengeluaran\\AngsuranPengeluaran\\AngsuranPengeluaranReport' => $baseDir . '/app/Exports/TransaksiPengeluaran/AngsuranPengeluaran/AngsuranPengeluaranReport.php',
+    'App\\Exports\\TransaksiPengeluaran\\TransaksiListPengeluaranReport' => $baseDir . '/app/Exports/TransaksiPengeluaran/TransaksiListPengeluaranReport.php',
     'App\\Exports\\TransaksiPenjualan\\AngsuranPenjualan\\AngsuranPenjualanReport' => $baseDir . '/app/Exports/TransaksiPenjualan/AngsuranPenjualan/AngsuranPenjualanReport.php',
     'App\\Exports\\TransaksiPenjualan\\TransaksiListReport' => $baseDir . '/app/Exports/TransaksiPenjualan/TransaksiListReport.php',
     'App\\Http\\Composers\\NavigasiComposer' => $baseDir . '/app/Http/Composers/NavigasiComposer.php',
