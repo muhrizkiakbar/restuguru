@@ -241,7 +241,7 @@ class UserController extends Controller
 
             return redirect()->back()->with('statussucces','User berhasil pindah cabang.');
         }
-        else if (($request->cabang_id == Auth::user()->cabang_id) && isset($request->password) && isset($request->passwordbaru) && isset($request->konfirmasipassword))
+        else if (($request->cabang_id != Auth::user()->cabang_id) && isset($request->password) && isset($request->passwordbaru) && isset($request->konfirmasipassword))
         {
             $this->validate($request, [
                 'password' => 'required',
