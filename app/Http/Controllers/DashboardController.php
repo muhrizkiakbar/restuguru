@@ -100,16 +100,13 @@ class DashboardController extends Controller
         $userId=Auth::user()->id;
         $cabangId=Auth::user()->cabang_id;
         $data=array();
-        $jumlahTransaksi=CTransaksi_Penjualans::where('user_id',$userId)
-                                                ->where('cabang_id',$cabangId)
+        $jumlahTransaksi=CTransaksi_Penjualans::where('cabang_id',$cabangId)
                                                 ->whereDate('tanggal',date('Y-m-d'))
                                                 ->count();
-        $jumlahMasukan=CTransaksi_Penjualans::where('user_id',$userId)
-                                                ->where('cabang_id',$cabangId)
+        $jumlahMasukan=CTransaksi_Penjualans::where('cabang_id',$cabangId)
                                                 ->whereDate('tanggal',date('Y-m-d'))
                                                 ->sum('jumlah_pembayaran');
-        $jumlahPengeluaran=Transaksi_Pengeluaran::where('user_id',$userId)
-                                                ->where('cabang_id',$cabangId)
+        $jumlahPengeluaran=Transaksi_Pengeluaran::where('cabang_id',$cabangId)
                                                 ->whereDate('tanggal_pengeluaran',date('Y-m-d'))
                                                 ->sum('pembayaran_pengeluaran');
         $pendapatanBersih = $jumlahMasukan-$jumlahPengeluaran;
