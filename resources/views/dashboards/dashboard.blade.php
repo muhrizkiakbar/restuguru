@@ -85,7 +85,7 @@
                     <div class="col-lg-3 col-xs-6">
                         <div class="small-box bg-green">
                             <div class="inner">
-                                <b><span id="income" class="pemasukan" style="font-size:25px">Rp. {{number_format($data[1],2,',','.')}}</span></b>
+                                <b><span id="income" class="pemasukan" style="font-size:25px">Rp. {{number_format($data[1],0,',','.')}}</span></b>
                     
                                 <p>Total Pemasukan<br>{{date('d-M-Y')}}</p>
                             </div>
@@ -101,7 +101,7 @@
                     <div class="col-lg-3 col-xs-6">
                         <div class="small-box bg-red">
                             <div class="inner">
-                                <b><span class="pengeluaran" style="font-size:25px">Rp. {{number_format($data[2],2,',','.')}}</span></b>
+                                <b><span class="pengeluaran" style="font-size:25px">Rp. {{number_format($data[2],0,',','.')}}</span></b>
                     
                                 <p>Total Pengeluaran<br>{{date('d-M-Y')}}</p>
                             </div>
@@ -117,7 +117,7 @@
                     <div class="col-lg-3 col-xs-6">
                         <div class="small-box bg-aqua">
                             <div class="inner">
-                                <b><span class="pendapatan" style="font-size:25px">Rp. {{number_format($data[3],2,',','.')}}</span></b>
+                                <b><span class="pendapatan" style="font-size:25px">Rp. {{number_format($data[3],0,',','.')}}</span></b>
                     
                                 <p>Total Pendapatan Bersih<br>{{date('d-M-Y')}}</p>
                             </div>
