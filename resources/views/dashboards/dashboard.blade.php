@@ -77,7 +77,7 @@
                                 <i class="fa fa-shopping-cart"></i>
                             </div>
                             <a href="{{route('transaksipenjualanmanageindex')}}?nonota=&namapelanggan=&pembayaran=semua&tanggal={{date('d-m-Y')}}&periode=hari" class="small-box-footer">
-                            More info <i class="fa fa-arrow-circle-right"></i>
+                            Detail <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                                 <i class="fa fa-arrow-down"></i>
                             </div>
                             <a href="{{route('laporan')}}" class="small-box-footer">
-                            More info <i class="fa fa-arrow-circle-right"></i>
+                            Detail <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                                 <i class="fa fa-arrow-up"></i>
                             </div>
                             <a href="{{route('laporan')}}" class="small-box-footer">
-                            More info <i class="fa fa-arrow-circle-right"></i>
+                            Detail <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                                 <i class="fa fa-usd"></i>
                             </div>
                                 <a href="{{route('laporan')}}" class="small-box-footer">
-                                More info <i class="fa fa-arrow-circle-right"></i>
+                                Detail <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
