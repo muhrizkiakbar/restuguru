@@ -592,10 +592,12 @@ class TransaksiController extends Controller
                         }
 
                         $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $luas * $relasibahanbaku->qtypertrx );
+                        dd('atas'.$stokbahanbaku->banyakstok);
                     }
                     else
                     {
                         $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $subtransaksi->banyak * $relasibahanbaku->qtypertrx );
+                        dd('bawah'.$stokbahanbaku->banyakstok);
                     }
                     // dd($stokbahanbaku->banyakstok);
                     // dd($stokbahanbaku->banyakstok);
