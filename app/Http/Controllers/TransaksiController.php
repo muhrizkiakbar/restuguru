@@ -563,7 +563,7 @@ class TransaksiController extends Controller
             foreach($subtransaksis as $subtransaksi){
                 $relasibahanbakus=CRelasiBahanBakus::where('produk_id','=',$subtransaksi->produk_id)
                                                     ->get();
-                dd($relasibahanbakus);
+                // dd($relasibahanbakus);
                 foreach( $relasibahanbakus as $key=>$relasibahanbaku ){
                     $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
                                                 ->where('cabang_id','=',Auth::user()->cabangs->id)
@@ -592,12 +592,12 @@ class TransaksiController extends Controller
                         }
 
                         $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $luas * $relasibahanbaku->qtypertrx );
-                        dd('atas'.$stokbahanbaku->banyakstok);
+                        // dd('atas'.$stokbahanbaku->banyakstok);
                     }
                     else
                     {
                         $stokbahanbaku->banyakstok=$stokbahanbaku->banyakstok+( $subtransaksi->banyak * $relasibahanbaku->qtypertrx );
-                        dd('bawah'.$stokbahanbaku->banyakstok);
+                        // dd('bawah'.$stokbahanbaku->banyakstok);
                     }
                     // dd($stokbahanbaku->banyakstok);
                     // dd($stokbahanbaku->banyakstok);
@@ -613,7 +613,7 @@ class TransaksiController extends Controller
                 }
             }
         }
-        dd($stokbahanbakustatus);
+        // dd($stokbahanbakustatus);
         if ($stokbahanbakustatus){
             if ($table->delete()){
                 $tableangsuran=Angsuran::where('transaksipenjualan_id','=',$id)
