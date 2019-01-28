@@ -611,7 +611,7 @@ class TransaksiController extends Controller
                 }
             }
         }
-
+        dd($stokbahanbakustatus);
         if ($stokbahanbakustatus){
             if ($table->delete()){
                 $tableangsuran=Angsuran::where('transaksipenjualan_id','=',$id)
