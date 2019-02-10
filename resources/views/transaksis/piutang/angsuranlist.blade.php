@@ -238,7 +238,7 @@
                                 @endif
                                 <td style="width: 150px;min-width:140px;">Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
                                 <td>{{$data->metode_pembayaran}}</td>
-                                <td><a href="/transaksi/angsuran/report/{{encrypt($data->idtrans)}}" target="_blank">#{{$data->idtrans}}</a></td>
+                                <td><a href="/transaksi/report/{{encrypt($data->idtrans)}}" target="_blank">#{{$data->idtrans}}</a></td>
                                 <td>{{$data->Nama_Cabang}}</td> 
                                 <td>{{$data->username}}</td>    
                                 <td style="width: 150px;min-width:50px;">
