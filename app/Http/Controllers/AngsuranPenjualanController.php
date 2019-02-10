@@ -206,7 +206,7 @@ class AngsuranPenjualanController extends Controller
                             ->whereMonth('Angsurans.tanggal_angsuran','=',$bulan)
                             ->whereYear('Angsurans.tanggal_angsuran','=',$tahun)
                             ->orderBy('created_at','desc')
-                            ->get();
+                            ->paginate(50);
 
         }
         elseif ($request->periode=="tahun")
