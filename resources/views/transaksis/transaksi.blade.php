@@ -1172,6 +1172,17 @@
             $('#sisa').val(numeral(hitungsisa(total, bayardp)).format('$ 0,0'));
         });
 
+        $('#bayardp').blur(function(){
+            $(this).val(numeral($(this).val()).format('$ 0,0'));
+            total2=numeral($('#total2').val()).value();
+            diskon=numeral($('#diskon').val()).value();
+            pajak=numeral($('#pajak').val()).value();
+            $('#total').val(numeral(hitungdiskonpajak(total2, pajak, diskon)).format('$ 0,0'));
+            total=numeral($('#total').val()).value();
+            bayardp=numeral($('#bayardp').val()).value();
+            $('#sisa').val(numeral(hitungsisa(total, bayardp)).format('$ 0,0'));
+        });        
+
         $('#bayardp').focus(function(){
             $('#metodelunas').iCheck('uncheck');
             $('#metodedp').iCheck('uncheck');
