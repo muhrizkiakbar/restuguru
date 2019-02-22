@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\TransaksiPenjualan\AngsuranPenjualan\AngsuranPenjualanReport;
-
+use App\Exports\TransaksiPenjualan\AngsuranPenjualan\DataPiutangReport;
+use Excel;
 
 class AngsuranPenjualanController extends Controller
 {
@@ -128,11 +129,21 @@ class AngsuranPenjualanController extends Controller
                                         ->paginate(50);
         }
         
-        
+        if (($request->submitpelanggan == "export"))
+        {
+          return (new DataPiutangReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan)->download('laporandatapiutang.xls');
+          
+          
+          
+        }
+        else
+        {
         return view('transaksis.piutang.piutanglist',['date'=>$date,'datas'=>$datas,
                                                 'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
                                                 'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
                                                 'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
+    
+        }
     }
 
     public function angsuranlist(Request $request){

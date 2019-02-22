@@ -84,10 +84,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/transaksi/angsuran/list',['middleware' => ['permission:list-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@angsuranlist'])->name('listangsuranpenjualanindex');
         Route::post('/transaksi/angsuran/list',['middleware' => ['permission:list-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@angsuranlist'])->name('listangsuranpenjualan');
 
-
         Route::get('/transaksi/angsuran',['middleware' => ['permission:manage-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@index'])->name('angsuranpenjualanindex');
         Route::post('/transaksi/angsuran',['middleware' => ['permission:manage-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@index'])->name('angsuranpenjualan');
         Route::get('/transaksi/angsuran/show',['middleware' => ['permission:manage-angsuranpenjualan|manage-transaksipenjualan'], 'uses' => 'AngsuranPenjualanController@showangsuran'])->name('showangsuranpenjualan');
+        Route::post('/transaksi/angsuran/export',['middleware' => ['permission:manage-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@exportangsuran'])->name('angsuranlistexport');
 
         Route::post('/transaksi/angsuran/add/all',['middleware' => ['permission:add-angsuranpenjualan'], 'uses' => 'AngsuranPenjualanController@storeall'])->name('angsuranpenjualanstoreall');
 

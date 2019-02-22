@@ -193,6 +193,7 @@
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="submit" id="submitpelanggan" class="btn btn-success btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
+                                <button type="submit" id="submitpelanggan" name="submitpelanggan" value="export" class="btn btn-success btn-sm">Export <i class="fa fa-file-excel-o"></i></button>                            
                             </div>
                             </form>  
                                                 
