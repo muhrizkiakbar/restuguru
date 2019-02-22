@@ -86,7 +86,7 @@ class AngsuranPengeluaranReport implements FromCollection, WithHeadings
                             ->where('Transaksi_Pengeluarans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->where('Angsuran_Pengeluarans.tanggal_angsuran','like','%'.date('Y-m-d',strtotime($this->tanggal)).'%')
-                            ->orderBy('created_at','desc')        
+                            ->orderBy('Transaksi_Pengeluarans.created_at','desc')        
                             ->get();
         }
         elseif ($this->periode=="semua"){
@@ -113,7 +113,7 @@ class AngsuranPengeluaranReport implements FromCollection, WithHeadings
                             ->where('Transaksi_Pengeluarans.jenispengeluaran_id','like','%'.$jenispengeluaran.'%')
                             ->where('Transaksi_Pengeluarans.namapenerima','like','%'.$this->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
-                            ->orderBy('created_at','desc')
+                            ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                             ->get();
         }
         elseif ($this->periode=="bulan"){
@@ -145,7 +145,7 @@ class AngsuranPengeluaranReport implements FromCollection, WithHeadings
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->whereMonth('Angsuran_Pengeluarans.tanggal_angsuran','=',$bulan)
                             ->whereYear('Angsuran_Pengeluarans.tanggal_angsuran','=',$tahun)
-                            ->orderBy('created_at','desc')
+                            ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                             ->get();
         }
         elseif ($this->periode=="tahun")
@@ -177,7 +177,7 @@ class AngsuranPengeluaranReport implements FromCollection, WithHeadings
                             ->where('Transaksi_Pengeluarans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                             ->where('Angsuran_Pengeluarans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->whereYear('Angsuran_Pengeluarans.tanggal_angsuran','=',$tahun)
-                            ->orderBy('created_at','desc')
+                            ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                             ->get();
         }
         else
@@ -204,7 +204,7 @@ class AngsuranPengeluaranReport implements FromCollection, WithHeadings
                                         'Cabangs.Nama_Cabang',
                                         'Users.username')
                             ->where('Angsuran_Pengeluarans.cabang_id','=',Auth::user()->cabangs->id)
-                            ->orderBy('created_at','desc')
+                            ->orderBy('Transaksi_Pengeluarans.created_at','desc')
                             ->get();
         }
         // dd($datas);
