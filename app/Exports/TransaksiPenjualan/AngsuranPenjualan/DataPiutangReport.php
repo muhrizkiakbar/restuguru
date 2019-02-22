@@ -72,7 +72,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>','0')
-                                        ->orderBy('created_at','desc')
+                                        ->orderBy('Transaksi_Penjualans.created_at','desc')
                                         ->paginate(50);
         }
         elseif ($this->periode=="semua"){
@@ -123,7 +123,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)  
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                              
-                                        ->orderBy('created_at','desc')
+                                        ->orderBy('Transaksi_Penjualans.created_at','desc')
                                         ->paginate(50);
         }
         elseif ($this->periode=="tahun")
@@ -151,7 +151,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)  
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                              
-                                        ->orderBy('created_at','desc')
+                                        ->orderBy('Transaksi_Penjualans.created_at','desc')
                                         ->paginate(50);
         }
         else
@@ -176,7 +176,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         // ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')                                           
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                                                                         
-                                        ->orderBy('created_at','desc')
+                                        ->orderBy('Transaksi_Penjualans.created_at','desc')
                                         ->paginate(50);
         }
         return $datas;
