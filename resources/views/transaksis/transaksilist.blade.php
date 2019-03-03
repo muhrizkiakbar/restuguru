@@ -207,7 +207,7 @@
                         <table class="table table-hover table-bordered">
                             <thead>
                             <tr>
-                                <th>No. Nota</th>
+                                <th style='width: 71px'>No. Nota</th>
                                 <th>Nama</th>
                                 <th>Telp.</th>
                                 <th>Tanggal</th>
@@ -243,8 +243,8 @@
                                 <td>Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
                                 <td style="width: 150px;min-width:140px;">
                                     <div class="btn-group">
-                                        <button type="button" class="modal_show btn btn-primary btn-xs" data-id="{{encrypt($data->nomor_nota)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}"><i class="fa fa-eye"></i></button>
-                                        <button type="button" class="modal_showangsuran btn btn-warning btn-xs" data-toggle="modal" data-id="{{encrypt($data->nomor_nota)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}" data-target="#modal_showangsuran"><i class="fa fa-money"></i></button>
+                                        <button type="button" class="detail_show btn btn-primary btn-xs" data-id="{{encrypt($data->nomor_nota)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}"><i class="fa fa-eye"></i></button>
+                                        <button type="button" class="detail_showangsuran btn btn-warning btn-xs" data-id="{{encrypt($data->nomor_nota)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}"><i class="fa fa-money"></i></button>
                                         <!-- <button type="button" class="modal_edit btn btn-success btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-edit"></i></button> -->
                                         <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->nomor_nota)}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
                                         <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->nomor_nota)}}"><i class="fa fa-print"></i></button>
@@ -268,47 +268,6 @@
                 </div>
             </div>
           </div>
-
-            <div class="modal fade " id="modal_showangsuran">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Data Angsuran</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <th>Nota Angsuran</th>
-                                        <th>Tanggal</th>
-                                        <th>Nominal Angsuran</th>
-                                        <th>Pembayaran</th>
-                                        <th>Nota Penjualan</th>
-                                        <th>Cabang</th>
-                                        <th>Pembuat</th>
-                                        <th>Tool</th>
-                                    </thead>
-                                    <tbody  id="showdata2">
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Keluar</button>
-                            <div class="pull-right">
-                                Sisa : Rp. <label id="sisatagihanlabel"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
 
             <div class="modal modal-danger fade" id="modal_delete">
                 <div class="modal-dialog">
@@ -470,11 +429,11 @@
             gotoreport2(location.protocol,document.domain,id);
         });
 
-        $(document).on('click','.modal_show',function () {
+        $(document).on('click','.detail_show',function () {
             idtrans=$(this).data('id');
             rowselected = $(this).parent().parent().parent();
             colsize = $(this).parent().parent().parent().find('td').length;
-            if ($(rowselected).next().hasClass('detail_click')) {
+            if ($(rowselected).next().hasClass('detail_click item')) {
                 $('.detail_click').remove();
                 $(rowselected).parent('tbody').find('td').css('border','');
             } else {
@@ -491,37 +450,37 @@
                     contentType: false,
                     success:function(response){
                         console.log( response );
+                        $(rowselected).after(function() {
+                            return "\
+                                <tr class='detail_click item'>\
+                                    <td colspan="+colsize+" style='margin: 0; padding: 0 0 12px;background: #fcfcfc'>\
+                                        <table class='table table-hover' style='background:#fcfcfc'>\
+                                            <thead>\
+                                                <th style='width: 450px'>Nama Barang</th>\
+                                                <th style='width: 130px'>Harga Satuan</th>\
+                                                <th style='width: 60px'>P</th>\
+                                                <th style='width: 60px'>L</th>\
+                                                <th style='width: 60px'>Kuantitas</th>\
+                                                <th style='width: 170px'>Finishing</th>\
+                                                <th style='width: 170px'>Keterangan</th>\
+                                                <th style='width: 60px'>Diskon</th>\
+                                                <th style='width: 130px;text-align:right'>Subtotal</th>\
+                                            </thead>\
+                                            <tbody id='showdata'>\
+                                            </tbody>\
+                                        </table>\
+                                        <div class='pull-right' style='padding: 8px;'>\
+                                            Total : <label id='totalshowmodal'></label>\
+                                        </div>\
+                                    </td>\
+                                </tr>";
+                        });
+                        $(rowselected).find('td').first().css('border-left','1px solid #00a65a');
+                        $(rowselected).find('td').last().css('border-right','1px solid #00a65a');
+                        $(rowselected).next().find('td').first().css('border-left','1px solid #00a65a');
+                        $(rowselected).next().find('td').last().css('border-right','1px solid #00a65a');
                         $.each( response, function( key, value ) {
-                            $(rowselected).after(function() {
-                                return "\
-                                    <tr class='detail_click'>\
-                                        <td colspan="+colsize+" style='margin: 0; padding: 0 0 12px;background: #fcfcfc'>\
-                                            <table class='table table-hover' style='background:#fcfcfc'>\
-                                                <thead>\
-                                                    <th style='width: 450px'>Nama Barang</th>\
-                                                    <th style='width: 130px'>Harga Satuan</th>\
-                                                    <th style='width: 60px'>P</th>\
-                                                    <th style='width: 60px'>L</th>\
-                                                    <th style='width: 60px'>Kuantitas</th>\
-                                                    <th style='width: 170px'>Finishing</th>\
-                                                    <th style='width: 170px'>Keterangan</th>\
-                                                    <th style='width: 60px'>Diskon</th>\
-                                                    <th style='width: 130px;text-align:right'>Subtotal</th>\
-                                                </thead>\
-                                                <tbody id='showdata'>\
-                                                </tbody>\
-                                            </table>\
-                                            <div class='pull-right' style='padding: 8px;'>\
-                                                Total : <label id='totalshowmodal'></label>\
-                                            </div>\
-                                        </td>\
-                                    </tr>";
-                            });
-                            $(rowselected).find('td').first().css('border-left','1px solid #00a65a');
-                            $(rowselected).find('td').last().css('border-right','1px solid #00a65a');
-                            $(rowselected).next().find('td').first().css('border-left','1px solid #00a65a');
-                            $(rowselected).next().find('td').last().css('border-right','1px solid #00a65a');
-                            console.log(response[key]['penjualan_id']);
+                            // console.log(response[key]['penjualan_id']);
                             if (response[key]['keterangan']==null){
                                 var keterangan="";
                             }
@@ -543,36 +502,73 @@
             }
         });
 
-        $(document).on('click','.modal_showangsuran',function () {
-            $("#showdata2").empty();
-
-            $("#sisatagihanlabel").text($(this).data('sisa').format(2, 3, '.', ','));
+        $(document).on('click','.detail_showangsuran',function () {
+            sisatagihan = $(this).data('sisa').format(0, 3, '.', ',');
             idbaris=$(this).data('id');
             datanonota=$(this).data('nonota');
             datasisa=$(this).data('sisa');
-            $.ajax({
-                async: true,
-                type:'get',
-                url:'{{route('showangsuranpenjualan')}}',
-                data: 'id='+idbaris,
-                dataType:'json',
-                async:false,
-                processData: false,
-                contentType: false,
-                success:function(response){
-                    console.log( response );
-                    $.each( response, function( key, value ) {
+            datapembayaran=$(this).data('pembayaran');
+            rowselected = $(this).parent().parent().parent();
+            colsize = $(this).parent().parent().parent().find('td').length;
 
-                        $("#showdata2").append(
-                            '<tr id="'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+response[key]['id2']+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id3']+'" data-nominal="'+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'"><i class="fa fa-print"></i></button></div></td></tr>'
-                        );
-                    });
-                    // $('.labelnota').text(response.nonota);
-                    // $('.labelpelanggan').text(response.nama_pelanggan);
-                    // idbaris=response.nonota;
-                },
-            });
-            // alert($(this).data('namaproduk'));
+            if ($(rowselected).next().hasClass('detail_click angsuran')) {
+                $('.detail_click').remove();
+                $(rowselected).parent('tbody').find('td').css('border','');
+            } else {
+                $('.detail_click').remove();
+                $(rowselected).parent('tbody').find('td').css('border','');
+                $.ajax({
+                    async: true,
+                    type:'get',
+                    url:'{{route('showangsuranpenjualan')}}',
+                    data: 'id='+idbaris,
+                    dataType:'json',
+                    async:false,
+                    processData: false,
+                    contentType: false,
+                    success:function(response){
+                        console.log( response );
+                        $(rowselected).after(function() {
+                            return "\
+                                <tr class='detail_click angsuran'>\
+                                    <td colspan="+colsize+" style='margin: 0; padding: 0 0 12px;background: #fcfcfc'>\
+                                        <table class='table table-hover' style='background:#fcfcfc'>\
+                                            <thead>\
+                                                <th>Nota Angsuran</th>\
+                                                <th>Tanggal</th>\
+                                                <th>Nominal Angsuran</th>\
+                                                <th>Pembayaran</th>\
+                                                <th>Nota Penjualan</th>\
+                                                <th>Cabang</th>\
+                                                <th>Pembuat</th>\
+                                                <th style='text-align:right'>Tool</th>\
+                                            </thead>\
+                                            <tbody  id='showdata2'>\
+                                            </tbody>\
+                                        </table>\
+                                        <div class='pull-right' style='padding: 8px;'>\
+                                            Sisa : Rp. <label id='sisatagihanlabel'>"+sisatagihan+"</label>\
+                                        </div>\
+                                    </td>\
+                                </tr>";
+                        });
+                        $(rowselected).find('td').first().css('border-left','1px solid #00a65a');
+                        $(rowselected).find('td').last().css('border-right','1px solid #00a65a');
+                        $(rowselected).next().find('td').first().css('border-left','1px solid #00a65a');
+                        $(rowselected).next().find('td').last().css('border-right','1px solid #00a65a');
+                        $.each( response, function( key, value ) {
+
+                            $("#showdata2").append(
+                                '<tr id="'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+response[key]['id2']+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id3']+'" data-nominal="'+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'"><i class="fa fa-print"></i></button></div></td></tr>'
+                            );
+                        });
+                        // $('.labelnota').text(response.nonota);
+                        // $('.labelpelanggan').text(response.nama_pelanggan);
+                        // idbaris=response.nonota;
+                    },
+                });
+                // alert($(this).data('namaproduk'));
+            }
         });
 
         $(document).on('click','.modal_delete',function () {

@@ -4,7 +4,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- daterange picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
-  <!-- Bootstrap Color Picker --> 
+  <!-- Bootstrap Color Picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
 
 <!-- bootstrap datepicker -->
@@ -12,7 +12,7 @@
   <!-- Bootstrap time Picker -->
   <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
-  
+
   <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
@@ -99,7 +99,7 @@
           <!-- Main content -->
         <section class="content">
             <!-- form addrole         -->
-        
+
         <div class="row">
           <!-- left column -->
 
@@ -126,13 +126,13 @@
                                     <div class="form-group">
                                     <input type="text" class="form-control" id="namapelanggan" name="namapelanggan" value="{{$namapelanggan}}" placeholder="Nama Pelanggan">
                                     </div>
-                                    
+
                                     <div class="form-group">
                                     <select id="pelanggan" name="pelanggan" class="form-control select2" style="width:100%;" type="text"></select>
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control " id="pembayaran2" name="pembayaran2" style="width: 100%;">
-                                            
+
                                             @if ($pembayaran=="semua")
                                                 <option value="semua" selected>Semua Metode Pembayaran</option>
                                             @else
@@ -148,9 +148,9 @@
                                             @else
                                                 <option value="Transfer">Transfer</option>
                                             @endif
-                                            
+
                                         </select>
-                                    </label> 
+                                    </label>
                                     </div>
 
                                     <div class="form-group">
@@ -183,22 +183,22 @@
                                             @endif
                                         </select>
                                     </div>
-                                    
 
-                                    
+
+
                                 </div>
                                 </div>
                             </div>
-                            
+
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="submit" id="submitpelanggan" class="btn btn-success btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
-                                <button type="submit" id="submitpelanggan" name="submitpelanggan" value="export" class="btn btn-success btn-sm">Export <i class="fa fa-file-excel-o"></i></button>                            
+                                <button type="submit" id="submitpelanggan" name="submitpelanggan" value="export" class="btn btn-success btn-sm">Export <i class="fa fa-file-excel-o"></i></button>
                             </div>
-                            </form>  
-                                                
+                            </form>
+
                         </div>
-                    </div>    
+                    </div>
                 </div>
 
                 <div class="row">
@@ -226,17 +226,17 @@
                                                         <option value="Transfer">Transfer</option>
                                                     </select>
                                                 </div>
-                                                
+
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- /.box-body -->
                                 <div class="box-footer">
                                     <button type="button" id="submitangsuran" class="btn btn-primary btn-sm">Simpan <i class="fa fa-chevron-circle-right"></i></button>
                                 </div>
-                                
+
                             </div>
                         </form>
                     </div>
@@ -288,26 +288,26 @@
                                         Rp. {{number_format(floatval($data->sisa_tagihan),0,',','.')}}
                                         </span></td>
                                     @else
-                                        <td id="sisa{{$data->nomor_nota}}" style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->sisa_tagihan),0,',','.')}}</td>                 
+                                        <td id="sisa{{$data->nomor_nota}}" style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->sisa_tagihan),0,',','.')}}</td>
                                     @endif
                                     <td style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->total_harga),0,',','.')}}</td>
                                     <td style="width: 150px;min-width:140px;">
                                         <div class="btn-group">
-                                            <button type="button" id="showtombol{{$data->nomor_nota}}" class="modal_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}" data-pembayaran="{{$data->jumlah_pembayaran}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
-                                            <button type="button" class="buttonprint btn btn-danger btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>                                        
+                                            <button type="button" id="showtombol{{$data->nomor_nota}}" class="detail_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}" data-pembayaran="{{$data->jumlah_pembayaran}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
+                                            <button type="button" class="buttonprint btn btn-danger btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
                                             <button type="button" id="simpantombol{{$data->nomor_nota}}" class="modal_add btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{$data->sisa_tagihan}}" data-total="{{$data->total_harga}}" data-pembayaran="{{$data->jumlah_pembayaran}}" data-target="#modal_add"><i class="fa fa-plus"></i> Angsuran</button>
                                         </div>
                                     </td>
-                                    <td>{{$data->Nama_Cabang}}</td> 
-                                    <td>{{$data->username}}</td>                                                               
+                                    <td>{{$data->Nama_Cabang}}</td>
+                                    <td>{{$data->username}}</td>
                                 </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
-                            
+
                     </div>
-                    
+
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <ul class="pagination pagination-sm no-margin pull-right">
@@ -315,47 +315,6 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-
-            <div class="modal fade " id="modal_show">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Data Angsuran</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <th>Nota Angsuran</th>
-                                        <th>Tanggal</th>
-                                        <th>Nominal Angsuran</th>
-                                        <th>Pembayaran</th>
-                                        <th>Nota Penjualan</th>
-                                        <th>Cabang</th>
-                                        <th>Pembuat</th>
-                                        <th>Tool</th>                                        
-                                    </thead>
-                                    <tbody  id="showdata">
-                                        
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Keluar</button>
-                            <div class="pull-right">
-                                Sisa : Rp. <label id="sisatagihanlabel"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
             </div>
 
             <div class="modal fade " id="modal_add">
@@ -399,17 +358,17 @@
                             <div class="pull-right">
                                 Total Tagihan : Rp. <label id="totaltagihanlabel"></label>
                                 <button type="button" id="simpanangsuran" class="btn btn-success">Simpan</button>
-                                
+
                             </div>
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Keluar</button>
-                            
+
                         </div>
                     </div>
                     <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
             </div>
-            
+
             <div class="modal modal-danger fade" id="modal_delete">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -526,7 +485,7 @@
 
         /**
         * Number.prototype.format(n, x, s, c)
-        * 
+        *
         * @param integer n: length of decimal
         * @param integer x: length of whole part
         * @param mixed   s: sections delimiter
@@ -535,10 +494,10 @@
         Number.prototype.format = function(n, x, s, c) {
             var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
                 num = this.toFixed(Math.max(0, ~~n));
-            
+
             return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
         };
-        
+
         $('.select2').select2();
         $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
             checkboxClass: 'icheckbox_minimal-blue',
@@ -558,7 +517,7 @@
         $(function(){
             numeral.locale('idr');
 
-            
+
             // $('#nominalangsuran').maskMoney({thousands:'.', decimal:',',allowZero:true});
 
             $('#select_all').on('ifChanged', function(event){
@@ -572,26 +531,26 @@
                 $('.checkbox').iCheck('update');
             });
 
-            // $('#add_nominal').maskMoney({thousands:'.',precision:0, decimal:',',allowZero:true}); 
+            // $('#add_nominal').maskMoney({thousands:'.',precision:0, decimal:',',allowZero:true});
 
             $('input[name="tanggal"]').datepicker({
                 format: "dd-mm-yyyy",
             });
 
-            
+
             $('#pelanggan').select2({
                 placeholder: "Pilih Pelanggan.",
                 minimumInputLength: 1,
                 ajax: {
                     url: '{{route('pelanggancari')}}',
                     dataType: 'json',
-                    data: function (params) 
+                    data: function (params)
                     {
                         return {
                             q: $.trim(params.term)
                         };
                     },
-                    processResults: function (data) 
+                    processResults: function (data)
                     {
                         return {
                             results: data
@@ -600,9 +559,9 @@
                     cache: true
                 }
             });
-            
+
         });
-      
+
 
     //   bagian form
         $('.checkbox').on('ifChecked',function () {
@@ -617,8 +576,8 @@
             $('#nominalangsuran').val(numeral(nominalangsuran).format('$ 0,0'));
         });
 
-        $('.checkbox').on('ifUnchecked',function () { 
-            var i = arrayidtrans.indexOf(this.value);  
+        $('.checkbox').on('ifUnchecked',function () {
+            var i = arrayidtrans.indexOf(this.value);
             if(i != -1) {
                 arrayidtrans.splice(i, 1);
             }
@@ -645,7 +604,7 @@
                         // window.location.href = "/transaksi/angsuran";
                         // location.reload();
                     });
-                
+
             }
             else
             {
@@ -658,7 +617,7 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        async: true, 
+                        async: true,
                         type:'post',
                         url:'{{route('angsuranpenjualanstoreall')}}',
                         data: JSON.stringify({
@@ -672,7 +631,7 @@
                         contentType: false,
                         success:function(response){
                             if (response['msg']=="success"){
-                                
+
                                 swal({
                                 icon: "success",
                                 title: "Berhasi!",
@@ -697,7 +656,7 @@
                                 });
                             }
                         },
-                    }); 
+                    });
                 }
                 else
                 {
@@ -713,10 +672,10 @@
         });
 
         $('#pelanggan').on('select2:select', function (e) {
-                
+
             var id=e.params.data.id;
             $.ajax({
-                async: true, 
+                async: true,
                 type:'get',
                 url:'{{route('pelanggandetail')}}',
                 data: 'id='+id,
@@ -731,45 +690,78 @@
             });
         });
 
-        $(document).on('click','.modal_show',function () {
-            $("#showdata").empty();
-
-            $("#sisatagihanlabel").text($(this).data('sisa').format(0, 3, '.', ','));
+        $(document).on('click','.detail_show',function () {
+            sisatagihan = $(this).data('sisa').format(0, 3, '.', ',');
             idbaris=$(this).data('id');
             datanonota=$(this).data('nonota');
             datasisa=$(this).data('sisa');
             datapembayaran=$(this).data('pembayaran');
+            rowselected = $(this).parent().parent().parent();
+            colsize = $(this).parent().parent().parent().find('td').length;
 
-            // console.log(datasisa);
-            $.ajax({
-                async: true, 
-                type:'get',
-                url:'{{route('showangsuranpenjualan')}}',
-                data: 'id='+idbaris,
-                dataType:'json',
-                async:false,
-                processData: false,
-                contentType: false,
-                success:function(response){
-                    console.log( response );
-                    $.each( response, function( key, value ) {
-                        
-                        $("#showdata").append(
-                            '<tr id="show'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(0, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idbaris+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id3']+'" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
-                        );
-                    });
-                    // $('.labelnota').text(response.nonota);
-                    // $('.labelpelanggan').text(response.nama_pelanggan);
-                    // idbaris=response.nonota;
-                },
-            });          
-            // alert($(this).data('namaproduk'));
+            if ($(rowselected).next().hasClass('detail_click')) {
+                $('.detail_click').remove();
+                $(rowselected).parent('tbody').find('td').css('border','');
+            } else {
+                $('.detail_click').remove();
+                $(rowselected).parent('tbody').find('td').css('border','');
+                $.ajax({
+                    async: true,
+                    type:'get',
+                    url:'{{route('showangsuranpenjualan')}}',
+                    data: 'id='+idbaris,
+                    dataType:'json',
+                    async:false,
+                    processData: false,
+                    contentType: false,
+                    success:function(response){
+                        console.log( response );
+                        $(rowselected).after(function() {
+                            return "\
+                                <tr class='detail_click'>\
+                                    <td colspan="+colsize+" style='margin: 0; padding: 0 0 12px;background: #fcfcfc'>\
+                                        <table class='table table-hover' style='background:#fcfcfc'>\
+                                            <thead>\
+                                                <th>Nota Angsuran</th>\
+                                                <th>Tanggal</th>\
+                                                <th>Nominal Angsuran</th>\
+                                                <th>Pembayaran</th>\
+                                                <th>Nota Penjualan</th>\
+                                                <th>Cabang</th>\
+                                                <th>Pembuat</th>\
+                                                <th style='text-align:right'>Tool</th>\
+                                            </thead>\
+                                            <tbody  id='showdata'>\
+                                            </tbody>\
+                                        </table>\
+                                        <div class='pull-right' style='padding: 8px;'>\
+                                            Sisa : Rp. <label id='sisatagihanlabel'>"+sisatagihan+"</label>\
+                                        </div>\
+                                    </td>\
+                                </tr>";
+                        });
+                        $(rowselected).find('td').first().css('border-left','1px solid #00a65a');
+                        $(rowselected).find('td').last().css('border-right','1px solid #00a65a');
+                        $(rowselected).next().find('td').first().css('border-left','1px solid #00a65a');
+                        $(rowselected).next().find('td').last().css('border-right','1px solid #00a65a');
+                        $.each( response, function( key, value ) {
+                            $("#showdata").append(
+                                '<tr id="show'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(0, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+idbaris+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td style="text-align:right"><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id3']+'" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-print"></i></button></div></td></tr>'
+                            );
+                        });
+                        // $('.labelnota').text(response.nonota);
+                        // $('.labelpelanggan').text(response.nama_pelanggan);
+                        // idbaris=response.nonota;
+                    },
+                });
+                // alert($(this).data('namaproduk'));
+            }
         });
 
         $(document).on('click','.modal_add',function () {
             $("#nonotapenjualan").text($(this).data('nonota'));
             $("#totaltagihanlabel").text($(this).data('total').format(0, 3, '.', ','));
-            $("#sisaangsuranlabel").text($(this).data('sisa').format(0, 3, '.', ','));            
+            $("#sisaangsuranlabel").text($(this).data('sisa').format(0, 3, '.', ','));
             idtrans=$(this).data('id');
             idbaris=$(this).data('nonota');
             datatotal=parseFloat($(this).data('total'));
@@ -779,7 +771,7 @@
             $('#add_nominal').val('0');
         });
 
-        
+
         $(document).on('click','#simpanangsuran',function (){
             $('simpanangsuran').attr('disabled',true);
             var token=$('input[name="_token"]').val();
@@ -791,7 +783,7 @@
             }
             else if (nominal > datasisa)
             {
-                swal("Error !", "Nominal lebih dari sisa tagihan !", "error");                
+                swal("Error !", "Nominal lebih dari sisa tagihan !", "error");
             }
             else
             {
@@ -833,7 +825,7 @@
                                 {
                                     $('#sisa'+datanonota).empty();
                                     $('#'+datanonota).remove();
-                                    $('#sisa'+datanonota).text('Rp. '+datasisa.format(0, 3, '.', ','));                                    
+                                    $('#sisa'+datanonota).text('Rp. '+datasisa.format(0, 3, '.', ','));
                                 }
                                 console.log(datasisa);
                                 // datasisa=0;
@@ -851,21 +843,21 @@
                     }
                 });
             }
-            
+
         });
         $(document).on('click','.deletebutton',function () {
             idtrans=$(this).data('id');
             $(".labelnoangsuran").text($(this).data('id'));
             datanominal=$(this).data('nominal');
         });
-        
+
         $(document).on('click','#deleteangsuran',function (){
             var token=$('input[name="_token"]').val();
             var sisatagihan=datasisa+datanominal;
             datapembayaran=datapembayaran-datanominal;
             // console.log(sisapembayaran)
             // console.log(sisatagihan+'='+datasisa+'+'+datanominal)
-            var sisapembayaran=datapembayaran;  
+            var sisapembayaran=datapembayaran;
             $.ajax({
                 headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -891,14 +883,14 @@
                             $('#simpantombol'+datanonota).data('sisa',datasisa);
                             $('#showtombol'+datanonota).data('pembayaran',sisapembayaran);
                             $('#simpantombol'+datanonota).data('pembayaran',sisapembayaran);
-                            // datasisa=0;                            
+                            // datasisa=0;
                             $('#modal_delete').modal('hide');
                         }
                         else{
                             // datasisa=0;
                             swal("Error !", "Gagal menghapus angsuran !", "error");
                             $('#modal_delete').modal('hide');
-                            
+
                         }
                 },
                 error:function(response){
@@ -906,7 +898,7 @@
                             $('#modal_delete').modal('hide');
                 }
             });
-            
+
 
         });
 
@@ -920,9 +912,9 @@
             gotoreport2(location.protocol,document.domain,id);
         });
       // bagian modal delete
-      
+
     </script>
-    
+
 
     </body>
 @endsection
