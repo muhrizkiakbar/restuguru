@@ -128,7 +128,7 @@
     <!-- FastClick -->
 
     <!-- sweet alert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{asset('bower_components/sweetalert/sweetalert.min.js')}}"></script>
 
     <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
     <!-- AdminLTE App -->

@@ -240,7 +240,7 @@
     <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <!-- FastClick -->
 
-    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="{{asset('bower_components/jquery-ui/jquery-ui-new.js')}}"></script>
 
     <!-- iCheck 1.0.1 -->
     <script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>

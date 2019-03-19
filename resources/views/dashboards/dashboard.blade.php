@@ -183,7 +183,7 @@
     <script src="{{asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script> --}}
     <!-- MaskMoney -->
     {{-- <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="{{asset('bower_components/chartjs/Chart.js')}}"></script>
 
     <!-- jQuery 3 -->
     <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>

@@ -400,7 +400,7 @@
     <script src="{{asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script> --}}
     <!-- ChartJS -->
     {{-- <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="{{asset('bower_components/chartjs/Chart.js')}}"></script>
     <!-- MaskMoney -->
     <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script>
     <!-- date-range-picker -->

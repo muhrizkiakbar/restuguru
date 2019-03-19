@@ -187,7 +187,7 @@ option{
     <!-- iCheck 1.0.1 -->
     <script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- sweet alert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{asset('bower_components/sweetalert/sweetalert.min.js')}}"></script>
 
     <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
     <!-- AdminLTE App -->

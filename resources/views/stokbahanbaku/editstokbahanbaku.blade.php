@@ -142,7 +142,7 @@
     <!-- iCheck 1.0.1 -->
     <script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- sweet alert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{asset('bower_components/sweetalert/sweetalert.min.js')}}"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>    
 
