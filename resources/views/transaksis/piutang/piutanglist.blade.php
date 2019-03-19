@@ -293,7 +293,7 @@
                                     <td style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->total_harga),0,',','.')}}</td>
                                     <td style="width: 150px;min-width:140px;">
                                         <div class="btn-group">
-                                            <button type="button" id="showtombol{{$data->nomor_nota}}" class="detail_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}" data-pembayaran="{{$data->jumlah_pembayaran}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
+                                            <button type="button" id="showtombol{{$data->nomor_nota}}" class="detail_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}" data-pembayaran="{{$data->jumlah_pembayaran}}"><i class="fa fa-eye"></i></button>
                                             <button type="button" class="buttonprint btn btn-danger btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
                                             <button type="button" id="simpantombol{{$data->nomor_nota}}" class="modal_add btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{$data->sisa_tagihan}}" data-total="{{$data->total_harga}}" data-pembayaran="{{$data->jumlah_pembayaran}}" data-target="#modal_add"><i class="fa fa-plus"></i> Angsuran</button>
                                         </div>
