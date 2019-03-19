@@ -178,7 +178,7 @@ class AngsuranPenjualanController extends Controller
                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                             ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->where('Angsurans.tanggal_angsuran','like','%'.date('Y-m-d',strtotime($request->tanggal)).'%')
-                            ->orderBy('Transaksi_Penjualans.created_at','desc')
+                            ->orderBy('Transaksi_Penjualans.created_at','asc')
                             ->paginate(50);
 
            
@@ -194,7 +194,7 @@ class AngsuranPenjualanController extends Controller
                             ->where('Angsurans.cabang_id','=',Auth::user()->cabangs->id) 
                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                             ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
-                            ->orderBy('Transaksi_Penjualans.created_at','desc')
+                            ->orderBy('Transaksi_Penjualans.created_at','asc')
                             ->paginate(50);
 
             
@@ -216,7 +216,7 @@ class AngsuranPenjualanController extends Controller
                             ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->whereMonth('Angsurans.tanggal_angsuran','=',$bulan)
                             ->whereYear('Angsurans.tanggal_angsuran','=',$tahun)
-                            ->orderBy('Transaksi_Penjualans.created_at','desc')
+                            ->orderBy('Transaksi_Penjualans.created_at','asc')
                             ->paginate(50);
 
         }
@@ -237,7 +237,7 @@ class AngsuranPenjualanController extends Controller
                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                             ->where('Angsurans.metode_pembayaran','like','%'.$pembayaran.'%')
                             ->whereYear('Angsurans.tanggal_angsuran','=',$tahun)
-                            ->orderBy('Transaksi_Penjualans.created_at','desc')
+                            ->orderBy('Transaksi_Penjualans.created_at','asc')
                             ->paginate(50);
 
          
@@ -256,7 +256,7 @@ class AngsuranPenjualanController extends Controller
                                     ,'Transaksi_Penjualans.nama_pelanggan','Transaksi_Penjualans.hp_pelanggan')
                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                            
-                            ->orderBy('Transaksi_Penjualans.created_at','desc')
+                            ->orderBy('Transaksi_Penjualans.created_at','asc')
                             ->paginate(50);
 
         }
@@ -693,10 +693,10 @@ class AngsuranPenjualanController extends Controller
     public function reportangsuran($id)
     {
         $id=decrypt($id);
-        $data=Angsuran::where('id','=',$id)->withTrashed()->get();
+        $data=Angsuran::where('transaksipenjualan_id','=',$id)->withTrashed()->get();
         // dd('sdsd');
         // dd($data);
-
+        // dd($id);
         $transaksi=CTransaksi_Penjualans::leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                     ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                     ->leftJoin('role_user','role_user.user_id','=','Users.id')
