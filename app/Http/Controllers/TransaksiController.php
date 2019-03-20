@@ -157,11 +157,12 @@ class TransaksiController extends Controller
                             'Users.nama','Jenispelanggans.jenis_pelanggan','roles.display_name')
                     ->withTrashed()
                     ->where('Transaksi_Penjualans.id','=',$id)->first();
+        dd($transaksi);
         $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
                         ->select('Sub_Tpenjualans.*','Produks.nama_produk')
                         ->where('penjualan_id','=',$id)->get();
 
-        $data=Angsuran::where('transaksipenjualan_id','=',$transaksi->id)->get();
+        $data=Angsuran::where('transaksipenjualan_id','=',$id)->get();
         return view('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis, 'angsurans'=>$data]);
         // $pdf=PDF::loadView('report.reporttranspenjualan',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis]);
         // // return $pdf->setPaper('F4', 'landscape')->download('laporanharian.pdf');
@@ -202,7 +203,7 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         //
-        $nonow=CTransaksi_Penjualans::withTrashed()->orderBy('id', 'desc')->first();
+        $nonow=CTransaksi_Penjualans::withTrashed()->latest()->first();
         
         if ($nonow==null){
             $nonota=1;
@@ -286,7 +287,7 @@ class TransaksiController extends Controller
         foreach ($detailitem as $key=>$value){
             
             $subtransaksi=new CSub_Tpenjualans;
-            $subtransaksi->penjualan_id=$nonota;
+            $subtransaksi->penjualan_id=$transaksi->id;
             $subtransaksi->produk_id=$value['id'];
             $subtransaksi->harga_satuan=$value['harga'];
             $subtransaksi->panjang=$value['panjang'];
