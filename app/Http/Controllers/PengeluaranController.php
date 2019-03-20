@@ -106,7 +106,7 @@ class PengeluaranController extends Controller
     public function store(Request $request)
     {
         //
-        $nonow=Transaksi_Pengeluaran::withTrashed()->orderBy('id', 'desc')->first();
+        $nonow=Transaksi_Pengeluaran::withTrashed()->latest()->first();
 
         if ($nonow==null){
             $nonota=1;

@@ -224,8 +224,8 @@
                             </thead>
                             <tbody>
                             @foreach ($datas as $key=>$data)
-                            <tr id="{{$data->nomor_nota}}">
-                                <td>#{{$data->nomor_nota}}</td>
+                            <tr id="{{$data->id}}">
+                                <td>#{{$data->id}}</td>
                                 <td>{{$data->nama_pelanggan}}</td>
                                 <td>{{$data->hp_pelanggan}}</td>
                                 <td>{{date("d-m-Y",strtotime($data->tanggal))}} {{date("H:i:s",strtotime($data->created_at))}}</td>
@@ -243,11 +243,11 @@
                                 <td>Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
                                 <td style="width: 150px;min-width:140px;">
                                     <div class="btn-group">
-                                        <button type="button" class="detail_show btn btn-primary btn-xs" data-id="{{encrypt($data->nomor_nota)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}"><i class="fa fa-eye"></i></button>
-                                        <button type="button" class="detail_showangsuran btn btn-warning btn-xs" data-id="{{encrypt($data->nomor_nota)}}" data-idsisa="sisa{{$data->nomor_nota}}" data-nonota="{{$data->nomor_nota}}" data-sisa="{{ $data->sisa_tagihan}}"><i class="fa fa-money"></i></button>
+                                        <button type="button" class="detail_show btn btn-primary btn-xs" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}"><i class="fa fa-eye"></i></button>
+                                        <button type="button" class="detail_showangsuran btn btn-warning btn-xs" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_tagihan}}"><i class="fa fa-money"></i></button>
                                         <!-- <button type="button" class="modal_edit btn btn-success btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-edit"></i></button> -->
-                                        <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->nomor_nota)}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
-                                        <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->nomor_nota)}}"><i class="fa fa-print"></i></button>
+                                        <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
                                     </div>
                                 </td>
                                 <td>{{$data->Nama_Cabang}}</td>

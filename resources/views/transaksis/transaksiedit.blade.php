@@ -149,7 +149,7 @@
                     <div class="box-body">
 
                       <div class="form-group">
-                        <label for="no">No. Nota : </label><span id="nonota"> {{$transaksi->nomor_nota}}</span>
+                        <label for="no">No. Nota : </label><span id="nonota"> {{$transaksi->id}}</span>
                       </div>
 
 

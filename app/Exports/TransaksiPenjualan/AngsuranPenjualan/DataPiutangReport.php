@@ -53,7 +53,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select( 'Transaksi_Penjualans.nomor_nota',
+                                        ->select( 'Transaksi_Penjualansid',
                                                   'Transaksi_Penjualans.nama_pelanggan',
                                                   'Transaksi_Penjualans.hp_pelanggan',
                                                   'Transaksi_Penjualans.tanggal',
@@ -65,7 +65,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
                                                   'Transaksi_Penjualans.total_harga',
                                                   'Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
-                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$this->nonota.'%')
+                                        ->where('Transaksi_Penjualansid','like','%'.$this->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereDay('Transaksi_Penjualans.tanggal','=',$this->tanggal)
@@ -79,7 +79,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select( 'Transaksi_Penjualans.nomor_nota',
+                                        ->select( 'Transaksi_Penjualansid',
                                                   'Transaksi_Penjualans.nama_pelanggan',
                                                   'Transaksi_Penjualans.hp_pelanggan',
                                                   'Transaksi_Penjualans.tanggal',
@@ -91,7 +91,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
                                                   'Transaksi_Penjualans.total_harga',
                                                   'Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
-                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$this->nonota.'%')
+                                        ->where('Transaksi_Penjualansid','like','%'.$this->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>','0')                                        
@@ -105,7 +105,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select( 'Transaksi_Penjualans.nomor_nota',
+                                        ->select( 'Transaksi_Penjualansid',
                                                   'Transaksi_Penjualans.nama_pelanggan',
                                                   'Transaksi_Penjualans.hp_pelanggan',
                                                   'Transaksi_Penjualans.tanggal',
@@ -117,7 +117,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
                                                   'Transaksi_Penjualans.total_harga',
                                                   'Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
-                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$this->nonota.'%')
+                                        ->where('Transaksi_Penjualansid','like','%'.$this->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
@@ -134,7 +134,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select( 'Transaksi_Penjualans.nomor_nota',
+                                        ->select( 'Transaksi_Penjualansid',
                                                   'Transaksi_Penjualans.nama_pelanggan',
                                                   'Transaksi_Penjualans.hp_pelanggan',
                                                   'Transaksi_Penjualans.tanggal',
@@ -146,7 +146,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
                                                   'Transaksi_Penjualans.total_harga',
                                                   'Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
-                                        ->where('Transaksi_Penjualans.nomor_nota','like','%'.$this->nonota.'%')
+                                        ->where('Transaksi_Penjualansid','like','%'.$this->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)  
@@ -162,7 +162,7 @@ class DataPiutangReport implements FromCollection, WithHeadings
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->select( 'Transaksi_Penjualans.nomor_nota',
+                                        ->select( 'Transaksi_Penjualansid',
                                                   'Transaksi_Penjualans.nama_pelanggan',
                                                   'Transaksi_Penjualans.hp_pelanggan',
                                                   'Transaksi_Penjualans.tanggal',
