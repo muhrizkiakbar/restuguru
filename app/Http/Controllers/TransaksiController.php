@@ -216,7 +216,7 @@ class TransaksiController extends Controller
         // dd($nonota);
         // dd($request->json('inputpelanggan'));
         $transaksi= new CTransaksi_Penjualans;
-        $transaksi->nomor_nota=$nonota;
+        // $transaksi->nomor_nota=$nonota;
         $transaksi->hp_pelanggan=$request->json('inputnomorpelanggan');
         $transaksi->nama_pelanggan=$request->json('inputnamapelanggan');
         $transaksi->pelanggan_id=$request->json('inputpelanggan');

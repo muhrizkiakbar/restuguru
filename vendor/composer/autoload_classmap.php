@@ -28,6 +28,7 @@ return array(
     'App\\Exports\\TransaksiPengeluaran\\AngsuranPengeluaran\\AngsuranPengeluaranReport' => $baseDir . '/app/Exports/TransaksiPengeluaran/AngsuranPengeluaran/AngsuranPengeluaranReport.php',
     'App\\Exports\\TransaksiPengeluaran\\TransaksiListPengeluaranReport' => $baseDir . '/app/Exports/TransaksiPengeluaran/TransaksiListPengeluaranReport.php',
     'App\\Exports\\TransaksiPenjualan\\AngsuranPenjualan\\AngsuranPenjualanReport' => $baseDir . '/app/Exports/TransaksiPenjualan/AngsuranPenjualan/AngsuranPenjualanReport.php',
+    'App\\Exports\\TransaksiPenjualan\\AngsuranPenjualan\\DataPiutangReport' => $baseDir . '/app/Exports/TransaksiPenjualan/AngsuranPenjualan/DataPiutangReport.php',
     'App\\Exports\\TransaksiPenjualan\\TransaksiListReport' => $baseDir . '/app/Exports/TransaksiPenjualan/TransaksiListReport.php',
     'App\\Http\\Composers\\NavigasiComposer' => $baseDir . '/app/Http/Composers/NavigasiComposer.php',
     'App\\Http\\Composers\\NotificationComposer' => $baseDir . '/app/Http/Composers/NotificationComposer.php',

@@ -24,7 +24,7 @@ class FakerTransaksiTableSeeder extends Seeder
             $nonow=CTransaksi_Penjualans::withTrashed()->orderBy('id','desc')->first();
             // dd($nonow->id);
             $transaksi=new CTransaksi_Penjualans;
-            $transaksi->nomor_nota=$nonow->id+1;
+            // $transaksi->nomor_nota=$nonow->id+1;
             $transaksi->hp_pelanggan="08115130555";
             $transaksi->nama_pelanggan=$faker->name;
             $transaksi->tanggal=$faker->dateTimeBetween($startDate = '-30 years', $endDate = 'now', $timezone = null);
