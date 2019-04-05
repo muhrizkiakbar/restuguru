@@ -601,7 +601,7 @@ class TransaksiController extends Controller
                         // dd('bawah'.$stokbahanbaku->banyakstok);
                     }
                     // dd($stokbahanbaku->banyakstok);
-                    dd($stokbahanbaku->banyakstok);
+                    // dd($stokbahanbaku->banyakstok);
 
                     if ($stokbahanbaku->save())
                     {
