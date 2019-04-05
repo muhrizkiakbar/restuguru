@@ -574,7 +574,7 @@ class TransaksiController extends Controller
                     $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
                                                 ->where('cabang_id','=',Auth::user()->cabangs->id)
                                                 ->first();
-                    dd($stokbahanbaku);
+                    // dd($stokbahanbaku);
 
                     if (($subtransaksi->satuan=="CENTIMETER") || ($subtransaksi->satuan=="METER"))
                     {
@@ -601,7 +601,7 @@ class TransaksiController extends Controller
                         // dd('bawah'.$stokbahanbaku->banyakstok);
                     }
                     // dd($stokbahanbaku->banyakstok);
-                    // dd($stokbahanbaku->banyakstok);
+                    dd($stokbahanbaku->banyakstok);
 
                     if ($stokbahanbaku->save())
                     {
