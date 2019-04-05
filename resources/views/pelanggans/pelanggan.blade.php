@@ -108,12 +108,12 @@
                                                 <input id="tambah_hppelanggan" name="tambah_hppelanggan" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
-                                                <label>Perusahaan</label>
-                                                <input id="tambah_namaperusahaan" name="tambah_namaperusahaan" class="form-control pull-right" type="text">
+                                                <label>Telepon Perusahaan</label>
+                                                <input id="tambah_teleponpelanggan" name="tambah_teleponpelanggan" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
-                                                <label>Telepon Kantor</label>
-                                                <input id="tambah_teleponpelanggan" name="tambah_teleponpelanggan" class="form-control pull-right" type="text" maxlength="13">
+                                                <label>Nama Perusahaan (Terlampir Di Nota)</label>
+                                                <input id="tambah_namaperusahaan" name="tambah_namaperusahaan" class="form-control pull-right" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -197,12 +197,12 @@
                                                 <input id="edit_hppelanggan" name="edit_hppelanggan" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
-                                                <label>Perusahaan</label>
-                                                <input id="edit_namaperusahaan" name="edit_namaperusahaan" class="form-control pull-right" type="text">
+                                                <label>Telepon Perusahaan</label>
+                                                <input id="edit_teleponpelanggan" name="edit_teleponpelanggan" class="form-control pull-right" type="text" maxlength="13">
                                             </div>
                                             <div class="form-group">
-                                                <label>Telepon Kantor</label>
-                                                <input id="edit_teleponpelanggan" name="edit_teleponpelanggan" class="form-control pull-right" type="text" maxlength="13">
+                                                <label>Nama Perusahaan (Terlampir Di Nota)</label>
+                                                <input id="edit_namaperusahaan" name="edit_namaperusahaan" class="form-control pull-right" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email</label>

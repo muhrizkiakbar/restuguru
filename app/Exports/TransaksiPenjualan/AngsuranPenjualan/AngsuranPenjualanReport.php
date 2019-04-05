@@ -174,7 +174,7 @@ class AngsuranPenjualanReport implements FromCollection, WithHeadings
                               'Users.username')
                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                             ->orderBy('Transaksi_Penjualans.created_at','desc')
-                            ->get;
+                            ->get();
         }
         // dd($datas);
         return $datas;
