@@ -571,10 +571,10 @@ class TransaksiController extends Controller
                                                 ->count();
 
                     $bahanbakugethitungluas=CBahanBakus::find($relasibahanbaku->bahanbaku_id);
-                    // dd($stokbahanbaku);
                     $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
                                                 ->where('cabang_id','=',Auth::user()->cabangs->id)
                                                 ->first();
+                    dd($stokbahanbaku);
 
                     if (($subtransaksi->satuan=="CENTIMETER") || ($subtransaksi->satuan=="METER"))
                     {
