@@ -75,10 +75,10 @@ class SupplierController extends Controller
         $rules=array(
             'tambah_nama_supplier'     =>  'required',
             'tambah_pemilik_supplier'  =>  'required',
-            'tambah_telpon_supplier'   =>  'required | numeric | digits_between:8,13',
-            'tambah_email_supplier'    =>  'required | email',
+            'tambah_telpon_supplier'   =>  'required | numeric',
+            // 'tambah_email_supplier'    =>  'required | email',
             'tambah_alamat_supplier'   =>  'required',
-            'tambah_rekening_suppliers'    =>  'required | numeric | digits_between:5,30',
+            // 'tambah_rekening_suppliers'    =>  'numeric',
             'tambah_keterangan_suppliers'  =>  'required',
         );
 
@@ -140,10 +140,10 @@ class SupplierController extends Controller
         $rules=array(
             'edit_nama_supplier'     =>  'required',
             'edit_pemilik_supplier'  =>  'required',
-            'edit_telpon_supplier'   =>  'required | numeric | digits_between:8,13',
-            'edit_email_supplier'    =>  'required | email',
+            'edit_telpon_supplier'   =>  'required | numeric',
+            // 'edit_email_supplier'    =>  'required | email',
             'edit_alamat_supplier'   =>  'required',
-            'edit_rekening_suppliers'    =>  'required | numeric | digits_between:5,30',
+            // 'edit_rekening_suppliers'    =>  'required | numeric | digits_between:5,30',
             'edit_keterangan_suppliers'  =>  'required',
         );
 
