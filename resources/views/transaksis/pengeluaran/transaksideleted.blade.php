@@ -389,7 +389,7 @@
         var idbaris='';
 
         function gotoreport(protocol,url,id){
-            var url2 = protocol+'//'+url + '/transaksi/report/' + id;
+            var url2 = protocol+'//'+url + '/transaksi/pengeluaran/report/' + id;
             window.open(url2, '_blank');
         }
 
