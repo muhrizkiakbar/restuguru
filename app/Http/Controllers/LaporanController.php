@@ -88,6 +88,7 @@ class LaporanController extends Controller
                                                     ->select(DB::raw('jumlah_pembayaran - SUM( if (Angsurans.nominal_angsuran is not null,Angsurans.nominal_angsuran,0)) as total'))
                                                     ->whereBetween('Transaksi_Penjualans.tanggal', [$request->startDate, $request->endDate])
                                                     ->where('Transaksi_Penjualans.metode_pembayaran', 'Cash')
+                                                    ->where('Transaksi_Penjualans.cabang_id', $cabangId)
                                                     ->groupBy('Transaksi_Penjualans.id')
                                                     ->get();                                           
 
@@ -95,6 +96,7 @@ class LaporanController extends Controller
                                                     ->select(DB::raw('jumlah_pembayaran - SUM( if (Angsurans.nominal_angsuran is not null,Angsurans.nominal_angsuran,0)) as total'))
                                                     ->whereBetween('Transaksi_Penjualans.tanggal', [$request->startDate, $request->endDate])
                                                     ->where('Transaksi_Penjualans.metode_pembayaran', 'Transfer')
+                                                    ->where('Transaksi_Penjualans.cabang_id', $cabangId)
                                                     ->groupBy('Transaksi_Penjualans.id')
                                                     ->get();
 
