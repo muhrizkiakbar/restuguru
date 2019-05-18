@@ -234,11 +234,11 @@
                                 <td>{{number_format(floatval($data->diskon),2,',','.')}} %</td>
                                 <td>Rp. {{number_format(floatval($data->pajak),2,',','.')}}</td>
                                 @if ($data->sisa_tagihan!=0)
-                                    <td><span class="badge bg-red">
+                                    <td><span class="badge bg-red" id="sisa{{$data->id}}">
                                     Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}
                                     </span></td>
                                 @else
-                                    <td>Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}</td>
+                                    <td id="sisa{{$data->id}}">Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}</td>
                                 @endif
                                 <td>Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
                                 <td style="width: 150px;min-width:140px;">
@@ -297,6 +297,33 @@
                 <!-- /.modal-dialog -->
             </div>
 
+            <div class="modal modal-danger fade" id="modal_delete_angsuran">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Hapus Angsuran</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formdeleteangsuran" action="" method="post" role="form" enctype="multipart/form-data">
+                                    <h4>
+                                        <i class="icon fa fa-ban"></i>
+                                        Peringatan
+                                    </h4>
+                                    {{csrf_field()}}
+                                    Yakin ingin menghapus angsuran #<span class="labelnoangsuran"></span> ?
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Keluar</button>
+                                <button type="button" id="deleteangsuran" class="btn btn-outline">Simpan</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+            </div>
         </div>
 
         </section>
@@ -341,6 +368,18 @@
     <script>
         var idtrans='';
         var idbaris='';
+        var idsisa='';
+        var idtombol='';
+
+        var nominalangsuran=0;
+        var arrayidtrans=[];
+
+        var dataid=0;
+        var datasisa=0;
+        var datanonota=0;
+        var datatotal=0;
+        var datanominal=0;
+        var datapembayaran=0;
 
         function gotoreport(protocol,url,id){
             var url2 = protocol+'//'+url + '/transaksi/report/' + id;
@@ -510,6 +549,7 @@
             datapembayaran=$(this).data('pembayaran');
             rowselected = $(this).parent().parent().parent();
             colsize = $(this).parent().parent().parent().find('td').length;
+            // console.log(rowselected)
 
             if ($(rowselected).next().hasClass('detail_click angsuran')) {
                 $('.detail_click').remove();
@@ -559,7 +599,7 @@
                         $.each( response, function( key, value ) {
 
                             $("#showdata2").append(
-                                '<tr id="'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+response[key]['id2']+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td style="text-align:right"><div class="btn-group"><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id3']+'" data-nominal="'+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'"><i class="fa fa-print"></i></button></div></td></tr>'
+                                '<tr id="show'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+response[key]['id2']+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td style="text-align:right"><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete_angsuran" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id3']+'" data-nominal="'+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'"><i class="fa fa-print"></i></button></div></td></tr>'
                             );
                         });
                         // $('.labelnota').text(response.nonota);
@@ -629,8 +669,63 @@
 
         });
 
-      // bagian modal delete
+        // modal delete angsuran
+        $(document).on('click','.deletebutton',function () {
+            idtrans=$(this).data('id');
+            $(".labelnoangsuran").text($(this).data('id'));
+            datanominal=$(this).data('nominal');
+        });
 
+        $(document).on('click','#deleteangsuran',function (){
+            var token=$('input[name="_token"]').val();
+            var sisatagihan=datasisa+datanominal;
+            datapembayaran=datapembayaran-datanominal;
+            // console.log(sisapembayaran)
+            console.log(sisatagihan+'='+datasisa+'+'+datanominal)
+            var sisapembayaran=datapembayaran;
+            $.ajax({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type:'POST',
+                url:'{{route('destroyangsuran')}}',
+                data: JSON.stringify({idtrans:idtrans,_token:token}),
+                dataType:'json',
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                        // console.log(response['msg']);
+                        if (response['msg']=="success"){
+                            swal("Berhasil !", "Berhasil menghapus angsuran !", "success");
+                            $('#show'+idtrans+'').remove();
+                            $('#sisatagihanlabel').text(sisatagihan.format(0, 3, '.', ','));
+                            datasisa=sisatagihan;
+                            // console.log(sisapembayaran)
+                            $('#sisa'+datanonota).html('<span class="badge bg-red">Rp. '+sisatagihan.format(0, 3,'.',',')+'</span>');
+                            $('#pembayaran'+datanonota).html('Rp. '+sisapembayaran.format(0, 3, '.', ','));
+                            $('#showtombol'+datanonota).data('sisa',datasisa);
+                            $('#simpantombol'+datanonota).data('sisa',datasisa);
+                            $('#showtombol'+datanonota).data('pembayaran',sisapembayaran);
+                            $('#simpantombol'+datanonota).data('pembayaran',sisapembayaran);
+                            // datasisa=0;
+                            $('#modal_delete_angsuran').modal('hide');
+                        }
+                        else{
+                            // datasisa=0;
+                            swal("Error !", "Gagal menghapus angsuran !", "error");
+                            $('#modal_delete_angsuran').modal('hide');
+
+                        }
+                },
+                error:function(response){
+                            swal("Error !", "Gagal menghapus angsuran !", "error");
+                            $('#modal_delete_angsuran').modal('hide');
+                }
+            });
+
+
+        });
     </script>
 
 

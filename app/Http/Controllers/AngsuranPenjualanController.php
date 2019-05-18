@@ -638,7 +638,7 @@ class AngsuranPenjualanController extends Controller
         // dd($idtrans);
         $tableangsuran=Angsuran::where('id','=',$idtrans)
                         ->first();
-            // dd($tableangsuran->transaksipenjualan_id);
+            // dd($tableangsuran);
             $transaksi=CTransaksi_Penjualans::where('id','=',$tableangsuran->transaksipenjualan_id)
             ->first();
 
