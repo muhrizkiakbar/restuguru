@@ -555,7 +555,7 @@ class TransaksiController extends Controller
 
         $subtransaksis=CSub_Tpenjualans::where('penjualan_id','=',$id)->get();
 
-        if ($subtransaksis==null)
+        if ($subtransaksis->count()==0)
         {
             $stokbahanbakustatus=true;
         }
