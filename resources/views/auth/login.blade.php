@@ -46,7 +46,7 @@
                             </div>
                         @endif
                     @endif
-                    <p><small>Dikembangkan oleh <a href="https://www.instagram.com/bilalteknologi/">Bilal Teknologi</a> &copy; 2018</small></p>
+                    <p><small>Dikembangkan oleh <a href="https://www.instagram.com/runcode.id">runcode </a> &copy; 2018</small></p>
 
                     </div>
                     <!-- /.col -->
