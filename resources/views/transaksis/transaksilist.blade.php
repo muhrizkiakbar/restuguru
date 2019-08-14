@@ -654,10 +654,15 @@
                             $('#'+idbaris+'').remove();
                             $('#modal_delete').modal('hide');
                         }
-                        else{
+                        else if (response['msg']=="failed") {
                             swal("Error !", "Gagal menghapus transaksi !", "error");
                             $('#modal_delete').modal('hide');
 
+                        }
+                        else
+                        {
+                            swal("Gagal !",response['msg'], "error");
+                            $('#modal_delete').modal('hide'); 
                         }
                 },
                 error:function(response){

@@ -564,7 +564,11 @@ class TransaksiController extends Controller
             foreach($subtransaksis as $subtransaksi){
                 $relasibahanbakus=CRelasiBahanBakus::where('produk_id','=',$subtransaksi->produk_id)
                                                     ->get();
-                // dd($relasibahanbakus);
+                                
+                if ($relasibahanbakus->count()==0)
+                {
+                    return "{\"msg\":\"Relasi Bahan Baku Tidak Ditemukan !!\"}"; 
+                }
                 foreach( $relasibahanbakus as $key=>$relasibahanbaku ){
                     $stokbahanbaku=stokbahanbaku::where('bahanbaku_id','=',$relasibahanbaku->bahanbaku_id)
                                                 ->where('cabang_id','=',Auth::user()->cabangs->id)
