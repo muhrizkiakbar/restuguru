@@ -1360,6 +1360,7 @@
                                         $('#pelanggan').removeAttr('disabled');
                                         $('#kepadalabel').text('');
                                         $('#handphonelabel').text('');                                                                                
+                                        location.reload();  
                                     } else {
                                         $('tbody').empty();
                                         $('#diskon').val('0').removeAttr('disabled');
@@ -1379,6 +1380,8 @@
                                         $('#submitpelanggan').removeAttr('disabled');
                                         $('#kepadalabel').text('');
                                         $('#handphonelabel').text('');               
+                                        location.reload();  
+
                                     }
                                     });
                         }

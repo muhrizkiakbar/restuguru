@@ -1048,6 +1048,7 @@
 
                 sifat_angsuran=0;
 
+
         });
     //
 
@@ -1269,6 +1270,8 @@
                                         $('#jenispengeluaran').removeAttr('disabled');            
                                         $('#jenispengeluaran').select2('val',null);       
                                         $('#handphonelabel').text('');                                                                                
+                                        location.reload();  
+
                                     } else {
                                         $('tbody').empty();
                                         $('#bayardp').val('0').removeAttr('disabled');
@@ -1290,6 +1293,8 @@
                                         $('#jenispengeluaran').removeAttr('disabled');            
                                         $('#jenispengeluaran').select2('val',null);
                                         $('#handphonelabel').text('');           
+                                        location.reload();  
+
                                     }
                                     });
                             sifat_angsuran=0;
