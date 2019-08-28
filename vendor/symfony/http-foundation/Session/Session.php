@@ -11,12 +11,12 @@
 
 namespace Symfony\Component\HttpFoundation\Session;
 
-use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 /**
  * @author Fabien Potencier <fabien@symfony.com>
@@ -28,7 +28,7 @@ class Session implements SessionInterface, \IteratorAggregate, \Countable
 
     private $flashName;
     private $attributeName;
-    private $data = array();
+    private $data = [];
     private $usageIndex = 0;
 
     /**
@@ -138,7 +138,7 @@ class Session implements SessionInterface, \IteratorAggregate, \Countable
      */
     public function count()
     {
-        return count($this->getAttributeBag()->all());
+        return \count($this->getAttributeBag()->all());
     }
 
     /**
@@ -209,7 +209,9 @@ class Session implements SessionInterface, \IteratorAggregate, \Countable
      */
     public function setId($id)
     {
-        $this->storage->setId($id);
+        if ($this->storage->getId() !== $id) {
+            $this->storage->setId($id);
+        }
     }
 
     /**
@@ -251,7 +253,9 @@ class Session implements SessionInterface, \IteratorAggregate, \Countable
      */
     public function getBag($name)
     {
-        return $this->storage->getBag($name)->getBag();
+        $bag = $this->storage->getBag($name);
+
+        return method_exists($bag, 'getBag') ? $bag->getBag() : $bag;
     }
 
     /**
