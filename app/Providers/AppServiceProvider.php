@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(ViewFactory $view)
     {
         //
+        Schema::defaultStringLength(191);
         $view->composer('*', 'App\Http\Composers\NavigasiComposer');
         $view->composer('*', 'App\Http\Composers\NotificationComposer');
     }
