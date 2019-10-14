@@ -323,6 +323,10 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=21; 
                 } 
+                else
+                {
+                    $baris=$this->baris; 
+                }
                 $event->sheet->getDelegate()->getRowDimension($baris+5)->setRowHeight(35);
                 $event->sheet->getStyle('A'.($baris+5))->getAlignment()->setWrapText(true);
                 $event->sheet->getStyle('A'.($baris+4))->applyFromArray($boldtextArray); //styling font
@@ -336,10 +340,18 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=21; 
                 }
+                else
+                {
+                    $baris=$this->baris; 
+                }
                 $event->sheet->getStyle('A21:I'.$baris)->applyFromArray($styleArray); //styling border isi data
                 if ($this->baris==0)
                 {
                     $baris=36; 
+                }
+                else
+                {
+                    $baris=$this->baris; 
                 }
                 $event->sheet->getStyle('A2:I'.$baris)->applyFromArray($styleGlobalArray); //styling font
 
@@ -350,6 +362,10 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=21; 
                 }
+                else
+                {
+                    $baris=$this->baris; 
+                }
                 $event->sheet->getStyle('A21:I'.$baris)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $event->sheet->getStyle('A21:I'.$baris)->getAlignment()->setWrapText(true);
                 $event->sheet->getStyle('C9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
@@ -358,12 +374,20 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=29; 
                 }
+                else
+                {
+                    $baris=$this->baris; 
+                }
                 $event->sheet->getStyle('H'.$baris)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
 
                 if ($this->baris==0)
                 {
                     $baris=33; 
+                }
+                else
+                {
+                    $baris=$this->baris; 
                 }
                 $event->sheet->getStyle('H'.$baris)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $event->sheet->getStyle('H'.($baris+1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -372,6 +396,10 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 if ($this->baris==0)
                 {
                     $baris=22; 
+                }
+                else
+                {
+                    $baris=$this->baris; 
                 }
                 $event->sheet->getStyle('F22:F'.$baris)->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
                 $event->sheet->getStyle('G22:G'.$baris)->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
