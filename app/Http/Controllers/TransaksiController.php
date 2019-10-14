@@ -423,7 +423,9 @@ class TransaksiController extends Controller
             $request->tanggal=date('d-m-Y',strtotime($request->tanggal));
             $date=$request->tanggal;
         }
-        // dd($request->tanggal);
+      
+
+
 
         if ($request->pembayaran=="semua"){
             $pembayaran="";
@@ -531,6 +533,11 @@ class TransaksiController extends Controller
             $datas=$datas->where('Sub_Tpenjualans.produk_id','=',$request_produk);
         }
         
+        if ($request->sisa_tagihan=="sisa_tagihan")
+        {
+            $datas=$datas->where('Transaksi_Penjualans.sisa_tagihan','>',0); 
+        }
+
 
         $dataproduks=CProduks::all();
 
@@ -722,7 +729,8 @@ class TransaksiController extends Controller
                                                 'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
                                                 'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
                                                 'tanggal'=>$request->tanggal,'periode'=>$request->periode,'produk_request'=>encrypt($request_produk),
-                                                'produks'=>$dataproduks]);
+                                                'produks'=>$dataproduks,
+                                                'sisa_tagihan'=>$request->sisa_tagihan]);
           
         }
 

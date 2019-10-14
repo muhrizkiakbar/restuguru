@@ -199,6 +199,13 @@
                                 @endforeach
                             </select>
                       </div>
+                      <div class="form-group">
+                            @if ($sisa_tagihan=="sisa_tagihan") 
+                                <input type="checkbox" class="flat-red checkbox" id="sisa_tagihan" checked name="sisa_tagihan" value="sisa_tagihan"> Filter Sisa Tagihan
+                            @else
+                                <input type="checkbox" class="flat-red checkbox" id="sisa_tagihan" name="sisa_tagihan" value="sisa_tagihan"> Filter Sisa Tagihan
+                            @endif
+                      </div>
                       </form>
 
 
@@ -209,9 +216,13 @@
 
                 <!-- /.box-body -->
                 <div class="box-footer">
-                        <button type="submit" id="submitpelanggan" name="submitpelanggan" value="cari" class="btn btn-primary btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
-                        <button type="submit" id="submitpelanggan" name="submitpelanggan" value="export" class="btn btn-success btn-sm">Export <i class="fa fa-file-excel-o"></i></button>
-                        <button type="submit" id="submitpelanggan" name="submitpelanggan" value="tagihan" class="btn btn-warning btn-sm">Tagihan <i class="fa fa-file-excel-o"></i></button>
+                        <div class="form-group">
+                            <button type="submit" id="submitpelanggan" name="submitpelanggan" value="cari" class="btn btn-primary btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
+                            <button type="submit" id="submitpelanggan" name="submitpelanggan" value="export" class="btn btn-success btn-sm">Export <i class="fa fa-file-excel-o"></i></button>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="submitpelanggan" name="submitpelanggan" value="tagihan" class="btn btn-warning btn-sm">Tagihan <i class="fa fa-file-excel-o"></i></button>
+                        </div>
                 </div>
             </div>
           </div>
@@ -425,6 +436,21 @@
         };
 
       $(function(){
+
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass   : 'iradio_minimal-blue'
+        })
+        //Red color scheme for iCheck
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+            checkboxClass: 'icheckbox_minimal-red',
+            radioClass   : 'iradio_minimal-red'
+        })
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass   : 'iradio_flat-green'
+        })
 
         $('input[name="tanggal"]').datepicker({
             format: "dd-mm-yyyy",
