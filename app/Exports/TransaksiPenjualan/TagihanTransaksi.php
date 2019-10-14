@@ -87,6 +87,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                                         ->select(
                                             // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                             'Transaksi_Penjualans.id',
+                                            'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang',
                                             'Transaksi_Penjualans.tanggal',
                                             'Produks.nama_produk',
@@ -121,6 +122,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                                         ->select(
                                              // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                              'Transaksi_Penjualans.id',
+                                            'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang', 
                                             'Transaksi_Penjualans.tanggal',
                                             'Produks.nama_produk',
@@ -155,6 +157,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                                         ->select(
                                              // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                              'Transaksi_Penjualans.id',
+                                            'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang', 
                                              'Transaksi_Penjualans.tanggal',
                                             'Produks.nama_produk',
@@ -192,6 +195,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                                         ->select(
                                            // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                            'Transaksi_Penjualans.id',
+                                            'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang', 
                                            'Transaksi_Penjualans.tanggal',
                                           'Produks.nama_produk',
@@ -228,6 +232,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                                         ->select(
                                              // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                              'Transaksi_Penjualans.id',
+                                            'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang', 
                                              'Transaksi_Penjualans.tanggal',
                                             'Produks.nama_produk',
