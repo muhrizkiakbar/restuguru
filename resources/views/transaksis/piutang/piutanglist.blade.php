@@ -3,19 +3,19 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- daterange picker -->
-  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
 
 <!-- bootstrap datepicker -->
-<link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+<link rel="stylesheet" href="{{secure_asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
   <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
-  <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
 
-  <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('bower_components/select2/dist/css/select2.css')}}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('bower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- daterange picker -->
   <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css"> -->
   <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"> -->
@@ -73,16 +73,16 @@
     .ui-helper-hidden-accessible { display:none; }
   </style>
   <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
   <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="{{asset('plugins/iCheck/all.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('plugins/iCheck/all.css')}}">
   <!-- Select2 -->
-  <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('bower_components/select2/dist/css/select2.min.css')}}">
 
-  <link rel="stylesheet" href="{{asset('plugins/iCheck/square/blue.css')}}">
-  <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('plugins/iCheck/square/blue.css')}}">
+  <link rel="stylesheet" href="{{secure_asset('dist/css/skins/_all-skins.min.css')}}">
 @endpush
 
 @section('body')
@@ -291,9 +291,10 @@
                                         <td id="sisa{{$data->id}}" style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->sisa_tagihan),0,',','.')}}</td>
                                     @endif
                                     <td style="width: 450px;min-width:140px;">Rp. {{number_format(floatval($data->total_harga),0,',','.')}}</td>
-                                    <td style="width: 150px;min-width:140px;">
+                                    <td style="width: 159px;min-width:159px;">
                                         <div class="btn-group">
-                                            <button type="button" id="showtombol{{$data->id}}" class="detail_show btn btn-primary btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_tagihan}}" data-pembayaran="{{$data->jumlah_pembayaran}}"><i class="fa fa-eye"></i></button>
+                                            <button type="button" class="detail_show btn btn-primary btn-xs" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}"><i class="fa fa-eye"></i></button>
+                                            <button type="button" id="showtombol{{$data->id}}" class="detail_showangsuran btn btn-warning btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_tagihan}}" data-pembayaran="{{$data->jumlah_pembayaran}}"><i class="fa fa-money"></i></button>
                                             <button type="button" class="buttonprint btn btn-danger btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
                                             <button type="button" id="simpantombol{{$data->id}}" class="modal_add btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-nonota="{{$data->id}}" data-sisa="{{$data->sisa_tagihan}}" data-total="{{$data->total_harga}}" data-pembayaran="{{$data->jumlah_pembayaran}}" data-target="#modal_add"><i class="fa fa-plus"></i> Angsuran</button>
                                         </div>
@@ -409,37 +410,37 @@
     <!-- ./wrapper -->
 
     <!-- jQuery 3 -->
-    <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{secure_asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap 3.3.7 -->
-    <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <script src="{{secure_asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Select2 -->
-    <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{secure_asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
-    <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{secure_asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{secure_asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <!-- FastClick -->
 
-    <script src="{{asset('bower_components/jquery-ui/jquery-ui-new.js')}}"></script>
+    <script src="{{secure_asset('bower_components/jquery-ui/jquery-ui-new.js')}}"></script>
 
     <!-- iCheck 1.0.1 -->
-    <script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
+    <script src="{{secure_asset('plugins/iCheck/icheck.min.js')}}"></script>
 
     <!-- bootstrap datepicker -->
-    <script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{secure_asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
 
-    <!-- <script src="{{asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> -->
-    <!-- <script src="{{asset('bower_components/jquery-number/jquery.number.js')}}"></script> -->
+    <!-- <script src="{{secure_asset('bower_components/jquery-maskmoney/jquery.maskMoney.js')}}"></script> -->
+    <!-- <script src="{{secure_asset('bower_components/jquery-number/jquery.number.js')}}"></script> -->
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
 
     <!-- sweet alert -->
-    <script src="{{asset('bower_components/sweetalert/sweetalert.min.js')}}"></script>
+    <script src="{{secure_asset('bower_components/sweetalert/sweetalert.min.js')}}"></script>
 
-    <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
+    <script src="{{secure_asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
     <!-- AdminLTE App -->
-    <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+    <script src="{{secure_asset('dist/js/adminlte.min.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
     <script>
         var idtrans='';
@@ -691,6 +692,79 @@
         });
 
         $(document).on('click','.detail_show',function () {
+            idtrans=$(this).data('id');
+            rowselected = $(this).parent().parent().parent();
+            colsize = $(this).parent().parent().parent().find('td').length;
+            if ($(rowselected).next().hasClass('detail_click item')) {
+                $('.detail_click').remove();
+                $(rowselected).parent('tbody').find('td').css('border','');
+            } else {
+                $('.detail_click').remove();
+                $(rowselected).parent('tbody').find('td').css('border','');
+                $.ajax({
+                    async: true,
+                    type:'get',
+                    url:'{{route('showsubtransaksi')}}',
+                    data: 'id='+idtrans,
+                    dataType:'json',
+                    async:false,
+                    processData: false,
+                    contentType: false,
+                    success:function(response){
+                        console.log( response );
+                        $(rowselected).after(function() {
+                            return "\
+                                <tr class='detail_click item'>\
+                                    <td colspan="+colsize+" style='margin: 0; padding: 0 0 12px;background: #fcfcfc'>\
+                                        <table class='table table-hover' style='background:#fcfcfc'>\
+                                            <thead>\
+                                                <th style='width: 450px'>Nama Barang</th>\
+                                                <th style='width: 130px'>Harga Satuan</th>\
+                                                <th style='width: 60px'>P</th>\
+                                                <th style='width: 60px'>L</th>\
+                                                <th style='width: 60px'>Kuantitas</th>\
+                                                <th style='width: 170px'>Finishing</th>\
+                                                <th style='width: 170px'>Keterangan</th>\
+                                                <th style='width: 60px'>Diskon</th>\
+                                                <th style='width: 130px;text-align:right'>Subtotal</th>\
+                                            </thead>\
+                                            <tbody id='showdata'>\
+                                            </tbody>\
+                                        </table>\
+                                        <div class='pull-right' style='padding: 8px;'>\
+                                            Total : <label id='totalshowmodal'></label>\
+                                        </div>\
+                                    </td>\
+                                </tr>";
+                        });
+                        $(rowselected).find('td').first().css('border-left','1px solid #00a65a');
+                        $(rowselected).find('td').last().css('border-right','1px solid #00a65a');
+                        $(rowselected).next().find('td').first().css('border-left','1px solid #00a65a');
+                        $(rowselected).next().find('td').last().css('border-right','1px solid #00a65a');
+                        $.each( response, function( key, value ) {
+                            // console.log(response[key]['penjualan_id']);
+                            if (response[key]['keterangan']==null){
+                                var keterangan="";
+                            }
+                            else
+                            {
+                                var keterangan=response[key]['keterangan'];
+                            }
+                            $("#showdata").append(
+                                '<tr><td>'+response[key]['nama_produk']+'</td><td>'+response[key]['harga_satuan'].format(2, 3, '.', ',')+'</td><td>'+response[key]['panjang'].format(2, 3, '.', ',')+'</td><td>'+response[key]['lebar'].format(2, 3, '.', ',')+'</td><td>'+response[key]['banyak'].format(2, 3, '.', ',')+'</td><td>'+response[key]['finishing']+'</td><td style="width: 170px;word-break: break-all;">'+keterangan+'</td><td>'+response[key]['diskon'].format(2, 3, '.', ',')+'</td><td style="text-align:right">'+response[key]['subtotal'].format(2, 3, '.', ',')+'</td></tr>'
+                            );
+                        });
+                        $('.labelnota').text(response.nonota);
+                        $('.labelpelanggan').text(response.nama_pelanggan);
+                        idbaris=response.nonota;
+                    },
+                });
+                // alert($(this).data('namaproduk'));
+                $('#totalshowmodal').text($(this).data('total'));
+            }
+        });
+
+        $(document).on('click','.detail_showangsuran',function () {
             sisatagihan = $(this).data('sisa').format(0, 3, '.', ',');
             idbaris=$(this).data('id');
             datanonota=$(this).data('nonota');
@@ -699,7 +773,7 @@
             rowselected = $(this).parent().parent().parent();
             colsize = $(this).parent().parent().parent().find('td').length;
 
-            if ($(rowselected).next().hasClass('detail_click')) {
+            if ($(rowselected).next().hasClass('detail_click angsuran')) {
                 $('.detail_click').remove();
                 $(rowselected).parent('tbody').find('td').css('border','');
             } else {
@@ -718,7 +792,7 @@
                         console.log( response );
                         $(rowselected).after(function() {
                             return "\
-                                <tr class='detail_click'>\
+                                <tr class='detail_click angsuran'>\
                                     <td colspan="+colsize+" style='margin: 0; padding: 0 0 12px;background: #fcfcfc'>\
                                         <table class='table table-hover' style='background:#fcfcfc'>\
                                             <thead>\
@@ -759,6 +833,12 @@
         });
 
         $(document).on('click','.modal_add',function () {
+            rowselected = $(this).parent().parent().parent();
+            if ($(rowselected).next().hasClass('detail_click item')) {
+                $(this).parent().find('.detail_show').addClass('clickresume');
+            } else if ($(rowselected).next().hasClass('detail_click angsuran')) {
+                $(this).parent().find('.detail_showangsuran').addClass('clickresume');
+            }
             $("#nonotapenjualan").text($(this).data('nonota'));
             $("#totaltagihanlabel").text($(this).data('total').format(0, 3, '.', ','));
             $("#sisaangsuranlabel").text($(this).data('sisa').format(0, 3, '.', ','));
@@ -807,6 +887,9 @@
                     contentType: false,
                     success:function(response){
                             // console.log(response['msg']);
+                            $('.detail_click').remove();
+                            $(rowselected).parent('tbody').find('td').css('border','');
+                            // ---------------
                             if (response['msg']=="success"){
                                 swal("Berhasil !", "Berhasil mennyimpan angsuran !", "success");
                                 datasisa=datasisa-nominal;
@@ -836,10 +919,15 @@
                                 // datasisa=0;
                                 $('#modal_add').modal('hide');
                             }
+                            // ------------------
+                            $('.clickresume').click();
+                            $('.clickresume').removeClass('clickresume');
                     },
                     error:function(response){
                                 swal("Error !", "Gagal menyimpan angsuran !", "error");
                                 $('#modal_add').modal('hide');
+                                // -----------------
+                                $('.clickresume').removeClass('clickresume');
                     }
                 });
             }

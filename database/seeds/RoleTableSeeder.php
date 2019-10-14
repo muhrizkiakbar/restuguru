@@ -20,7 +20,7 @@ class RoleTableSeeder extends Seeder
         		'name' => 'admin',
         		'display_name' => 'Admin',
         		'description' => 'Hak Akses Paling Tinggi'
-            ],
+            ]
         ];
         foreach ($users as $key => $value) {
             $role=Role::create($value);
@@ -42,7 +42,7 @@ class RoleTableSeeder extends Seeder
                     'gaji' => '50000',
                     'Alamat' => 'Jl. Gt. Paikat, Komplek. Buana Permai No. Blok B',
                     'cabang_id'=> '1'
-                ],
+                ]
             ];
             foreach ($users as $key => $value) {
                 $user=User::create($value);
