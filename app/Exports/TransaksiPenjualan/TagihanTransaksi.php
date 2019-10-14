@@ -36,7 +36,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             $this->pembayaran=$pembayaran;
             $this->produk=$produk;
             $this->baris=$baris;
-            // dd($baris);
+            dd($baris);
             return $this;
     }
 
