@@ -154,7 +154,7 @@
                         <input type="text" class="form-control" id="tanggal" readonly name="tanggal" value="{{$date}}" placeholder="Tanggal">
                       </div>
                       <div class="form-group">
-                            <select class="form-control  pull-right" id="periode" name="periode" style="width: 100%;">
+                            <select class="form-control" id="periode" name="periode" style="width: 100%;">
                                 @if ($periode=="semua")
                                     <option value="semua" selected>Semua</option>
                                 @else
@@ -180,6 +180,25 @@
                                 @endif
                             </select>
                       </div>
+
+                      <div class="form-group">
+                            <select class="form-control select2" id="produk" name="produk" style="width: 100%;">
+                                
+                                @if (decrypt($produk_request)=="semua")
+                                    <option value="semua" selected>Semua</option>
+                                @else
+                                    <option value="semua" >Semua</option>
+                                @endif
+
+                                @foreach ($produks as $key => $produk)
+                                    @if (decrypt($produk_request)==$produk->id)
+                                        <option value="{{encrypt($produk->id)}}" selected>{{$produk->nama_produk}}</option>
+                                    @else
+                                        <option value="{{encrypt($produk->id)}}" >{{$produk->nama_produk}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                      </div>
                       </form>
 
 
@@ -190,8 +209,9 @@
 
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <button type="submit" id="submitpelanggan" name="submitpelanggan" value="cari" class="btn btn-primary btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
-                  <button type="submit" id="submitpelanggan" name="submitpelanggan" value="export" class="btn btn-success btn-sm">Export <i class="fa fa-file-excel-o"></i></button>
+                        <button type="submit" id="submitpelanggan" name="submitpelanggan" value="cari" class="btn btn-primary btn-sm">Submit <i class="fa fa-chevron-circle-right"></i></button>
+                        <button type="submit" id="submitpelanggan" name="submitpelanggan" value="export" class="btn btn-success btn-sm">Export <i class="fa fa-file-excel-o"></i></button>
+                        <button type="submit" id="submitpelanggan" name="submitpelanggan" value="tagihan" class="btn btn-warning btn-sm">Tagihan <i class="fa fa-file-excel-o"></i></button>
                 </div>
             </div>
           </div>
@@ -234,13 +254,13 @@
                                 <td>{{number_format(floatval($data->diskon),2,',','.')}} %</td>
                                 <td>Rp. {{number_format(floatval($data->pajak),2,',','.')}}</td>
                                 @if ($data->sisa_tagihan!=0)
-                                    <td><span class="badge bg-red" id="sisa{{$data->id}}">
+                                    <td style="background: #ffff99;"><span class="badge bg-red" id="sisa{{$data->id}}">
                                     Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}
                                     </span></td>
                                 @else
-                                    <td id="sisa{{$data->id}}">Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}</td>
+                                    <td style="background: #ffc2b3;" id="sisa{{$data->id}}">Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}</td>
                                 @endif
-                                <td>Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
+                                <td style="background: #e6e6e6;" >Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
                                 <td style="width: 150px;min-width:140px;">
                                     <div class="btn-group">
                                         <button type="button" class="detail_show btn btn-primary btn-xs" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}"><i class="fa fa-eye"></i></button>
@@ -254,6 +274,12 @@
                                 <td>{{$data->username}}</td>
                             </tr>
                             @endforeach
+                            <tr style="background: #d9d9d9;">
+                                <td colspan="8" align="center"><strong>Total</strong></td>
+                                <td>Rp. {{number_format(floatval($datas->sum('sisa_tagihan')),2,',','.')}}</td>
+                                <td>Rp. {{number_format(floatval($datas->sum('total_harga')),2,',','.')}}</td>
+                                <td colspan="3"></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -404,7 +430,7 @@
             format: "dd-mm-yyyy",
         });
 
-
+        $('#produk').select2()
         $('#pelanggan').select2({
             placeholder: "Pilih Pelanggan.",
             minimumInputLength: 1,

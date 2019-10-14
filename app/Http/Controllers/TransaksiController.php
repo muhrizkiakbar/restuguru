@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use App\Exports\TransaksiPenjualan\TagihanTransaksi;
 use App\Exports\TransaksiPenjualan\TransaksiListReport;
 use Excel;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -422,6 +423,7 @@ class TransaksiController extends Controller
             $request->tanggal=date('d-m-Y',strtotime($request->tanggal));
             $date=$request->tanggal;
         }
+        // dd($request->tanggal);
 
         if ($request->pembayaran=="semua"){
             $pembayaran="";
@@ -439,6 +441,7 @@ class TransaksiController extends Controller
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
@@ -447,20 +450,19 @@ class TransaksiController extends Controller
                                         ->whereDay('Transaksi_Penjualans.tanggal','=',$request->tanggal)
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
-                                        ->orderBy('created_at','desc')
-                                        ->paginate(50);
+                                        ->orderBy('created_at','desc');
         }
         elseif ($request->periode=="semua"){
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                        ->orderBy('created_at','desc')
-                                        ->paginate(50);
+                                        ->orderBy('created_at','desc');
         }
         elseif ($request->periode=="bulan"){
             $tanggal=explode("-",$request->tanggal);
@@ -469,6 +471,7 @@ class TransaksiController extends Controller
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
@@ -476,8 +479,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
-                                        ->orderBy('created_at','desc')
-                                        ->paginate(50);
+                                        ->orderBy('created_at','desc');
         }
         elseif ($request->periode=="tahun")
         {
@@ -487,14 +489,14 @@ class TransaksiController extends Controller
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
-                                        ->orderBy('created_at','desc')
-                                        ->paginate(50);
+                                        ->orderBy('created_at','desc');
         }
         else
         {
@@ -504,26 +506,218 @@ class TransaksiController extends Controller
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)                                                    
-                                        ->orderBy('created_at','desc')
-                                        ->paginate(50);
+                                        ->orderBy('created_at','desc');
         }
         //dd($datas);
-
-        if (($request->submitpelanggan == "export"))
+        $request_produk=($request->produk);
+        if (($request_produk=="") || ($request_produk=="semua"))
         {
-          return (new TransaksiListReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan)->download('laporantransaksi.xls');
-          
-          
-          
+            if ($request_produk=="")
+            {
+                $request_produk=("semua");
+            }
         }
         else
         {
-          return view('transaksis.transaksilist',['date'=>$date,'datas'=>$datas,
+            $request_produk=decrypt($request->produk);
+            $datas=$datas->where('Sub_Tpenjualans.produk_id','=',$request_produk);
+        }
+        
+
+        $dataproduks=CProduks::all();
+
+        if (($request->submitpelanggan == "export"))
+        {
+          return (new TransaksiListReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan,$request_produk)->download('laporantransaksi.xls');
+        }
+        elseif (($request->submitpelanggan == "tagihan")) 
+        {
+            if ($request->periode=="hari"){
+                // dd("hari");    
+                $tanggal=explode("-",$request->tanggal);
+                $bulan=$tanggal[1];
+                $tahun=$tanggal[2];
+                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            ->select(
+                                                // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                'Transaksi_Penjualans.id',
+                                                'Cabangs.kode_cabang',
+                                                'Transaksi_Penjualans.tanggal',
+                                                'Produks.nama_produk',
+                                                'Sub_Tpenjualans.panjang',
+                                                'Sub_Tpenjualans.lebar',
+                                                'Bahanbakus.nama_bahan',
+                                                'Sub_Tpenjualans.harga_satuan',
+                                                DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                                'Sub_Tpenjualans.banyak',
+                                                'Sub_Tpenjualans.subtotal'
+                                                )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                                            ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
+                                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
+                                            ->whereDay('Transaksi_Penjualans.tanggal','=',$request->tanggal)
+                                            ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+            elseif ($request->periode=="semua"){
+    
+    
+                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            ->select(
+                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                 'Transaksi_Penjualans.id',
+                                                'Cabangs.kode_cabang', 
+                                                'Transaksi_Penjualans.tanggal',
+                                                'Produks.nama_produk',
+                                                'Sub_Tpenjualans.panjang',
+                                                'Sub_Tpenjualans.lebar',
+                                                'Bahanbakus.nama_bahan',
+                                                'Sub_Tpenjualans.harga_satuan',
+                                                DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                                'Sub_Tpenjualans.banyak',
+                                                'Sub_Tpenjualans.subtotal'
+                                                )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
+                                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+            elseif ($request->periode=="bulan"){
+                // dd("bulan");    
+    
+                $tanggal=explode("-",$request->tanggal);
+                $bulan=$tanggal[1];
+                $tahun=$tanggal[2];
+                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            ->select(
+                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                 'Transaksi_Penjualans.id',
+                                                'Cabangs.kode_cabang', 
+                                                 'Transaksi_Penjualans.tanggal',
+                                                'Produks.nama_produk',
+                                                'Sub_Tpenjualans.panjang',
+                                                'Sub_Tpenjualans.lebar',
+                                                'Bahanbakus.nama_bahan',
+                                                'Sub_Tpenjualans.harga_satuan',
+                                                DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                                'Sub_Tpenjualans.banyak',
+                                                'Sub_Tpenjualans.subtotal'
+                                                )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                                            ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
+                                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
+                                            ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
+                                            ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+            elseif ($request->periode=="tahun")
+            {
+                // dd("tahun");    
+                
+                $tanggal=explode("-",$request->tanggal);
+                $bulan=$tanggal[1];
+                $tahun=$tanggal[2];
+                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            ->select(
+                                               // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                               'Transaksi_Penjualans.id',
+                                                'Cabangs.kode_cabang', 
+                                               'Transaksi_Penjualans.tanggal',
+                                              'Produks.nama_produk',
+                                              'Sub_Tpenjualans.panjang',
+                                              'Sub_Tpenjualans.lebar',
+                                              'Bahanbakus.nama_bahan',
+                                              'Sub_Tpenjualans.harga_satuan',
+                                              DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                              'Sub_Tpenjualans.banyak',
+                                              'Sub_Tpenjualans.subtotal'
+                                              )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                                            ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
+                                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)        
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+            else
+            {
+                // dd("kintil");    
+    
+                $tanggal=explode("-",$request->tanggal);
+                $bulan=$tanggal[1];
+                $tahun=$tanggal[2];
+                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            ->select(
+                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                 'Transaksi_Penjualans.id',
+                                                'Cabangs.kode_cabang', 
+                                                 'Transaksi_Penjualans.tanggal',
+                                                'Produks.nama_produk',
+                                                'Sub_Tpenjualans.panjang',
+                                                'Sub_Tpenjualans.lebar',
+                                                'Bahanbakus.nama_bahan',
+                                                'Sub_Tpenjualans.harga_satuan',
+                                                DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                                'Sub_Tpenjualans.banyak',
+                                                'Sub_Tpenjualans.subtotal'
+                                                )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)           
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+            // dd($datas->get()->count());
+            return Excel::download(new TagihanTransaksi($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan,$request_produk,$datas->get()->count()), 'tagihantransaksi.xlsx');
+        }
+        else
+        {
+
+            // dd(decrypt($request_produk));
+            return view('transaksis.transaksilist',['date'=>$date,'datas'=>$datas->paginate(50),
                                                 'nonota'=>$request->nonota,'namapelanggan'=>$request->namapelanggan,
                                                 'pelanggan'=>$request->pelanggan,'pembayaran'=>$request->pembayaran,
-                                                'tanggal'=>$request->tanggal,'periode'=>$request->periode]);
+                                                'tanggal'=>$request->tanggal,'periode'=>$request->periode,'produk_request'=>encrypt($request_produk),
+                                                'produks'=>$dataproduks]);
           
         }
 
@@ -531,6 +725,134 @@ class TransaksiController extends Controller
     }
 
     
+    private function tagihanexport($namaFile, $instansi, $periodeH, $atts, $jumlahbaris){
+        //for not repeat function in another function
+        //excel for month report
+        //data header
+        $headerdata_1 = array('NIP','Nama','Periode','Hari Kerja (WA | TWA)','Hadir (WA | TWA)','Apel (WA | TWA)', 'Akumulasi Jam Kerja');
+        $headerdata_2 = array('Tanpa Kabar (WA | TWA)','Izin (WA | TWA)','Izin Terlambat (WA | TWA)','Izin Pulang Cepat (WA | TWA)',
+                            'Sakit (WA | TWA)','Cuti (WA | TWA)','Tugas Luar (WA | TWA)','Tugas Belajar (WA | TWA)','Ijin Kepentingan Lain (WA | TWA)',
+                            'Terlambat (WA | TWA)','Akumulasi Jam Terlambat','Pulang Cepat (WA | TWA)');
+        $headerdata_3 = array('Tidak Masuk Kerja','Melanggar Ketentuan Jam Kerja');
+  
+        return Excel::create($namaFile,function($excel) use ($instansi, $periodeH, $headerdata_1, $headerdata_2, $headerdata_3, $atts, $jumlahbaris ){ // create('namaFilenya',function($excel) use ($atts)
+                //dd(); cek ouput
+                $excel->sheet('Laporan',function($sheet) use ($instansi, $periodeH, $headerdata_1, $headerdata_2, $headerdata_3, $atts, $jumlahbaris){
+                        $sheet->setPrintArea('A1:S'.$jumlahbaris); //set printing area
+                        $sheet->setOrientation('portrait');
+                        $sheet->setFitToPage(1);
+                        $sheet->setFitToWidth(1);  // fit allcolumn in one page
+                        $sheet->setFitToHeight(0);
+                        $sheet->setRowsToRepeatAtTop(1,5);
+                        $sheet->setFreeze('A7');
+  
+                        $sheet->setAutoSize(array('A','B','C'));
+                        $sheet->setWidth(array( 'D' => 8.43, 'F' => 8.43, 'G' => 14.29, 'H' => 8.43, 'J' => 11, 'K' => 8.43, 'N' => 8.43, 'O' => 8.43, 'P' => 14.29, 'Q' => 8.43, 'R' => 13.57, 'S' => 14.57 ));
+                        $sheet->getStyle('D2:S2')->getAlignment()->setWrapText(true);
+                        $sheet->getStyle('D6:S6')->getAlignment()->setWrapText(true); //wrap text nama instansi
+  
+                        //HEADER UTAMA//
+                        $sheet->mergeCells('B1:S1');
+                        $sheet->cell('B1',function ($cell){
+                          $cell->setAlignment('center');
+                          $cell->setValue('REKAPITULASI DAFTAR HADIR PEGAWAI NEGERI SIPIL');
+                          $cell->setFontWeight('bold');
+                          $cell->setFontSize(25);
+                        });
+  
+                        $sheet->cell('B2',function ($cell) { $cell->setAlignment('left'); $cell->setValignment('center'); $cell->setValue('UNIT'); $cell->setFontWeight('bold'); $cell->setFontSize(20); });
+                        $sheet->cell('C2',function ($cell) { $cell->setAlignment('left'); $cell->setValignment('center'); $cell->setValue(':'); $cell->setFontWeight('bold'); $cell->setFontSize(20); });
+                        $sheet->mergeCells('D2:S2');
+                        $sheet->cell('D2',function ($cell) use ($instansi){
+                          $cell->setAlignment('left');
+                          $cell->setValignment('center');
+                          $cell->setValue($instansi.' PROVINSI KALIMANTAN SELATAN');
+                          $cell->setFontWeight('bold');
+                          $cell->setFontSize(20);
+                        });
+  
+                        $sheet->cell('B3',function ($cell) { $cell->setAlignment('left');$cell->setValignment('top'); $cell->setValue('PERIODE'); $cell->setFontWeight('bold'); $cell->setFontSize(20); });
+                        $sheet->cell('C3',function ($cell) { $cell->setAlignment('left');$cell->setValignment('top'); $cell->setValue(':'); $cell->setFontWeight('bold'); $cell->setFontSize(20); });
+                        $sheet->mergeCells('D3:S3');
+                        $sheet->cell('D3',function ($cell) use ($periodeH){
+                          $cell->setAlignment('left');
+                          $cell->setValignment('top');
+                          $cell->setValue($periodeH);
+                          $cell->setFontWeight('bold');
+                          $cell->setFontSize(22);
+                        });
+  
+                        $objDrawing = new PHPExcel_Worksheet_Drawing;
+                        $objDrawing->setPath(public_path('dist/img/kop.jpg')); //your image path
+                        $objDrawing->setCoordinates('A1');
+                        $objDrawing->setResizeProportional(false);
+                        $objDrawing->setWidth(65);
+                        $objDrawing->setHeight(200);
+                        $objDrawing->setWorksheet($sheet);
+                        $sheet->setHeight(array(1=>45,2=>62,3=>45)); //pas
+                        $sheet->mergeCells('A1:A3');
+                        //$sheet->cell('A3',function($cell){$cell->setBorder('none','none','thick','none');});
+                        $sheet->cell('A4:S4',function($cell){$cell->setBorder('thick','none','none','none');});
+                        //HEADER UTAMA//
+  
+                        $sheet->getStyle('A5:S5')->getAlignment()->setWrapText(true);
+                        $sheet->cell('A5:S6',function ($cell){
+                          $cell->setBackground('#a9abb1');
+                          $cell->setAlignment('center');
+                          $cell->setValignment('center');
+                          $cell->setFontWeight('bold');
+                          $cell->setFontSize(12);
+                        });
+                        $sheet->cell('C',function ($cell){ $cell->setAlignment('center'); });
+                        $sheet->cell('G',function ($cell){ $cell->setAlignment('center'); });
+                        $sheet->cell('R',function ($cell){ $cell->setAlignment('center'); });
+                        //Merge for header data
+                        $sheet->setMergeColumn(array(
+                            'columns' => array('A','B','C','D','E','F','G'),
+                            'rows' => array(
+                                array(5,6)
+                            )
+                        ));
+                        $sheet->mergeCells('H5:P5');
+                        $sheet->mergeCells('Q5:S5');
+                        //styling isi data
+                        $sheet->setBorder('A5:S'.$jumlahbaris, 'thin'); //styling border isi data
+  
+                        //data nama header, data akan ditambahkan pada baris array data berikutnya
+                        $sheet->cell('A5:S6',function ($cell) use ($headerdata_3){ 
+                            $cell->setAlignment('center');$cell->setValignment('center');$cell->setValue($headerdata_3[0]);$cell->setFontWeight('bold');
+                        });
+                        $sheet->cell('A5',function ($cell) use ($headerdata_1){ $cell->setValue($headerdata_1[0]);});
+                        $sheet->cell('B5',function ($cell) use ($headerdata_1){ $cell->setValue($headerdata_1[1]);});
+                        $sheet->cell('C5',function ($cell) use ($headerdata_1){ $cell->setValue($headerdata_1[2]);});
+                        $sheet->cell('D5',function ($cell) use ($headerdata_1){ $cell->setValue($headerdata_1[3]);});
+                        $sheet->cell('E5',function ($cell) use ($headerdata_1){ $cell->setValue($headerdata_1[4]);});
+                        $sheet->cell('F5',function ($cell) use ($headerdata_1){ $cell->setValue($headerdata_1[5]);});
+                        $sheet->cell('G5',function ($cell) use ($headerdata_1){ $cell->setValue($headerdata_1[6]);});
+                        $sheet->cell('H5',function ($cell) use ($headerdata_3){ $cell->setValue($headerdata_3[0]);});
+                        $sheet->cell('Q5',function ($cell) use ($headerdata_3){ $cell->setValue($headerdata_3[1]);});
+                        $sheet->cell('H6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[0]);});
+                        $sheet->cell('I6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[1]);});
+                        $sheet->cell('J6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[2]);});
+                        $sheet->cell('K6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[3]);});
+                        $sheet->cell('L6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[4]);});
+                        $sheet->cell('M6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[5]);});
+                        $sheet->cell('N6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[6]);});
+                        $sheet->cell('O6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[7]);});
+                        $sheet->cell('P6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[8]);});
+                        $sheet->cell('Q6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[9]);});
+                        $sheet->cell('R6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[10]);});
+                        $sheet->cell('S6',function ($cell) use ($headerdata_2){ $cell->setValue($headerdata_2[11]);});
+                        //$sheet->cell('Q5',function ($cell) use ($headerdata_3){ $cell->setAlignment('center');$cell->setValignment('center');$cell->setValue($headerdata_3[1]);$cell->setFontWeight('bold');});
+                        $sheet->fromArray($atts, null, 'A7', true, false); //data jumlah absensi. data header ditambahkan kesini
+                        //dd($sheet->fromArray()); //for check data from sheet array
+  
+                        //paremeter ke 4 untuk mengubah nilai 0 ditulis sebagai 0, bukan sebagai null data
+                        //array use ->fromArray($source, $nullValue, $startCell, $strictNullComparison, $headingGeneration) inside the sheet closure.
+  
+                    });
+            })->download('xls');
+    }
 
 
     public function datatransaksispesific(Request $request){
