@@ -7,7 +7,7 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
             <div class="login-logo" style="padding-bottom:0px;">
-                <img src="{{secure_asset('dist/img/rg.png')}}"alt="">
+                <img src="{{asset('dist/img/rg.png')}}"alt="">
             </div>
             <div style="font-size: 25px;text-align: center;max-width: 100%;" style="padding-top:0px;">
                 <strong>RESTU GURU</strong><br>

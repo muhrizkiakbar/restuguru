@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @push('style')
-<link rel="stylesheet" href="{{secure_asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
+<link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
 <!-- bootstrap datepicker -->
-<link rel="stylesheet" href="{{secure_asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+<link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <!-- iCheck for checkboxes and radio inputs -->
-<link rel="stylesheet" href="{{secure_asset('plugins/iCheck/all.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/iCheck/all.css')}}">
 <!-- Bootstrap Color Picker -->
-<link rel="stylesheet" href="{{secure_asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
+<link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
 <!-- Bootstrap time Picker -->
-<link rel="stylesheet" href="{{secure_asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
-<link rel="stylesheet" href="{{secure_asset('dist/css/skins/_all-skins.min.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
+<link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
 @endpush
 
 @section('body')
@@ -146,36 +146,36 @@
     </div>
     <!-- ./wrapper -->
 
-    <script src="{{secure_asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
     <!-- jQuery 3 -->
-    <script src="{{secure_asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap 3.3.7 -->
-    <script src="{{secure_asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- SlimScroll -->
 
     <!-- Select2 -->
-    <script src="{{secure_asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- InputMask -->
-    <script src="{{secure_asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
-    <script src="{{secure_asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
-    <script src="{{secure_asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+    <script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
+    <script src="{{asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+    <script src="{{asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
     <!-- date-range-picker -->
-    <script src="{{secure_asset('bower_components/moment/min/moment.min.js')}}"></script>
-    <script src="{{secure_asset('bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{asset('bower_components/moment/min/moment.min.js')}}"></script>
+    <script src="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
     <!-- bootstrap datepicker -->
-    <script src="{{secure_asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <!-- bootstrap color picker -->
-    <script src="{{secure_asset('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
+    <script src="{{asset('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
     <!-- bootstrap time picker -->
-    <script src="{{secure_asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
     <!-- SlimScroll -->
-    <script src="{{secure_asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+    <script src="{{asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
     <!-- iCheck 1.0.1 -->
-    <script src="{{secure_asset('plugins/iCheck/icheck.min.js')}}"></script>
+    <script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- FastClick -->
-    <script src="{{secure_asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
+    <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
     <!-- AdminLTE App -->
-    <script src="{{secure_asset('dist/js/adminlte.min.js')}}"></script>
+    <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 
     </body>
 @endsection
