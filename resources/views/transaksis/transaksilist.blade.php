@@ -300,7 +300,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <ul class="pagination pagination-sm no-margin pull-right">
-                        {{$datas->appends(['nonota'=>($nonota),'namapelanggan'=>($namapelanggan),'pelanggan'=>($pelanggan),'pembayaran'=>$pembayaran,'tanggal'=>$tanggal,'periode'=>$periode,'sisa_tagihan'=>$sisa_tagihan,'produk'=>$produk_request])->links()}}
+                        {{$datas->appends(['nonota'=>($nonota),'namapelanggan'=>($namapelanggan),'pelanggan'=>($pelanggan),'pembayaran'=>$pembayaran,'tanggal'=>$tanggal,'periode'=>$periode,'sisa_tagihan'=>$sisa_tagihan,'produk'=>decrypt($produk_request)])->links()}}
                     </ul>
                 </div>
             </div>
