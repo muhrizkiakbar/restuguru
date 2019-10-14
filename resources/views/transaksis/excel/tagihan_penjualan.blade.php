@@ -48,6 +48,14 @@ bentuk penagihan kepada perusahaan anda dengan data sebagai berikut:</th></tr>
             <td style="width: 170px;">{{$subtransaksi->subtotal}}</td>
         </tr>
         @endforeach
+       
+        @if ($subtransaksis==null)
+            <tr><td colspan="8">Jumlah</td><td>0</td></tr>
+            <tr><td colspan="8">PPN</td><td>0</td></tr>
+        @else
+            <tr><td colspan="8">Jumlah</td><td>{{$subtransaksis->sum('subtotal')}}</td></tr>
+            <tr><td colspan="8">PPN</td><td>{{$subtransaksis->sum('subtotal')*0.1}}</td></tr>
+        @endif
         <tr></tr>
         <tr><td colspan="9">Pembayaran dapat dilakukan ke rekening dibawah : </td></tr>
         <tr><td colspan="9">REK. BANK MANDIRI BISNIS Atas nama CV. RESTU GURU PROMOSINDO </td></tr>

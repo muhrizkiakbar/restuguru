@@ -35,7 +35,14 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             $this->namapelanggan=$namapelanggan;
             $this->pembayaran=$pembayaran;
             $this->produk=$produk;
-            $this->baris=$baris+21;
+            if (($baris==0))
+            {
+                $this->baris=$baris;
+            }
+            else
+            {
+                $this->baris=$baris+21;
+            }
             // dd($this->baris);
             return $this;
     }
@@ -327,10 +334,10 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=$this->baris; 
                 }
-                $event->sheet->getDelegate()->getRowDimension($baris+5)->setRowHeight(35);
-                $event->sheet->getStyle('A'.($baris+5))->getAlignment()->setWrapText(true);
-                $event->sheet->getStyle('A'.($baris+4))->applyFromArray($boldtextArray); //styling font
-                $event->sheet->getStyle('A'.($baris+3))->applyFromArray($boldtextArray); //styling font
+                $event->sheet->getDelegate()->getRowDimension($baris+7)->setRowHeight(35);
+                $event->sheet->getStyle('A'.($baris+7))->getAlignment()->setWrapText(true);
+                $event->sheet->getStyle('A'.($baris+6))->applyFromArray($boldtextArray); //styling font
+                $event->sheet->getStyle('A'.($baris+5))->applyFromArray($boldtextArray); //styling font
 
                 
 
@@ -347,7 +354,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 $event->sheet->getStyle('A21:I'.$baris)->applyFromArray($styleArray); //styling border isi data
                 if ($this->baris==0)
                 {
-                    $baris=36; 
+                    $baris=38; 
                 }
                 else
                 {
@@ -372,7 +379,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
 
                 if ($this->baris==0)
                 {
-                    $baris=29; 
+                    $baris=31; 
                 }
                 else
                 {
@@ -383,15 +390,17 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
 
                 if ($this->baris==0)
                 {
-                    $baris=33; 
+                    $baris=35; 
                 }
                 else
                 {
                     $baris=$this->baris; 
                 }
-                $event->sheet->getStyle('H'.$baris)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                // dd($baris);
+                $event->sheet->getStyle('H'.($baris))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $event->sheet->getStyle('H'.($baris+1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
+                $event->sheet->getStyle('H'.($baris))->applyFromArray($boldtextArray); //styling font
+                $event->sheet->getStyle('H'.($baris+1))->applyFromArray($boldtextArray); //styling font
                 //set format currency
                 if ($this->baris==0)
                 {
@@ -403,9 +412,9 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 }
                 $event->sheet->getStyle('F22:F'.$baris)->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
                 $event->sheet->getStyle('G22:G'.$baris)->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
-                $event->sheet->getStyle('I22:I'.$baris)->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
+                $event->sheet->getStyle('I22:I'.($baris+2))->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
 
-                $event->sheet->getPageSetup()->setPrintArea('A1:I'.($baris+15));
+                $event->sheet->getPageSetup()->setPrintArea('A1:I'.($baris+17));
                 $event->sheet->getPageSetup()->setFitToWidth(1);
 
             },
