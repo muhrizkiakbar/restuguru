@@ -43,7 +43,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             {
                 $this->baris=$baris+21;
             }
-            // dd($this->baris);
+            // dd($baris);
             return $this;
     }
 
@@ -351,16 +351,17 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=$this->baris; 
                 }
-                $event->sheet->getStyle('A21:I'.$baris)->applyFromArray($styleArray); //styling border isi data
+                $event->sheet->getStyle('A21:I'.($baris+2))->applyFromArray($styleArray); //styling border isi data
+
                 if ($this->baris==0)
                 {
-                    $baris=38; 
+                    $baris=21; 
                 }
                 else
                 {
                     $baris=$this->baris; 
                 }
-                $event->sheet->getStyle('A2:I'.$baris)->applyFromArray($styleGlobalArray); //styling font
+                $event->sheet->getStyle('A2:I'.($baris+15))->applyFromArray($styleGlobalArray); //styling font
 
                 //header table wraptext
                 $event->sheet->getStyle('A19')->getAlignment()->setWrapText(true);
@@ -379,28 +380,29 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
 
                 if ($this->baris==0)
                 {
-                    $baris=31; 
-                }
-                else
-                {
-                    $baris=$this->baris; 
-                }
-                $event->sheet->getStyle('H'.$baris)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-
-                if ($this->baris==0)
-                {
-                    $baris=35; 
+                    $baris=21; 
                 }
                 else
                 {
                     $baris=$this->baris; 
                 }
                 // dd($baris);
-                $event->sheet->getStyle('H'.($baris))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $event->sheet->getStyle('H'.($baris+1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $event->sheet->getStyle('H'.($baris))->applyFromArray($boldtextArray); //styling font
-                $event->sheet->getStyle('H'.($baris+1))->applyFromArray($boldtextArray); //styling font
+                $event->sheet->getStyle('H'.($baris+10))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+
+                if ($this->baris==0)
+                {
+                    $baris=21; 
+                }
+                else
+                {
+                    $baris=$this->baris; 
+                }
+                // dd($baris);
+                $event->sheet->getStyle('H'.($baris+14))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $event->sheet->getStyle('H'.($baris+15))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $event->sheet->getStyle('H'.($baris+14))->applyFromArray($boldtextArray); //styling font
+                $event->sheet->getStyle('H'.($baris+15))->applyFromArray($boldtextArray); //styling font
                 //set format currency
                 if ($this->baris==0)
                 {
