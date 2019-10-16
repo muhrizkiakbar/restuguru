@@ -222,6 +222,7 @@
                         </div>
                         <div class="form-group">
                             <button type="submit" id="submitpelanggan" name="submitpelanggan" value="tagihan" class="btn btn-warning btn-sm">Tagihan <i class="fa fa-file-excel-o"></i></button>
+                            <button type="submit" id="submitpelanggan" name="submitpelanggan" value="export_detail" class="btn btn-success btn-sm">Full Export <i class="fa fa-file-excel-o"></i></button>
                         </div>
                 </div>
             </div>

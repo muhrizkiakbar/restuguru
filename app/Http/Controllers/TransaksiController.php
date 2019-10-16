@@ -452,7 +452,7 @@ class TransaksiController extends Controller
                                         ->whereDay('Transaksi_Penjualans.tanggal','=',$request->tanggal)
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
-                                        ->distinct('Sub_Tpenjualans.penjualan_id')
+                                        ->groupBy('Transaksi_Penjualans.id')
                                         ->orderBy('created_at','desc');
         }
         elseif ($request->periode=="semua"){
@@ -465,7 +465,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                        ->distinct('Sub_Tpenjualans.penjualan_id')
+                                        ->groupBy('Transaksi_Penjualans.id')
                                         ->orderBy('created_at','desc');
         }
         elseif ($request->periode=="bulan"){
@@ -483,7 +483,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
-                                        ->distinct('Sub_Tpenjualans.penjualan_id')
+                                        ->groupBy('Transaksi_Penjualans.id')
                                         ->orderBy('created_at','desc');
         }
         elseif ($request->periode=="tahun")
@@ -501,7 +501,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
-                                        ->distinct('Sub_Tpenjualans.penjualan_id')
+                                        ->groupBy('Transaksi_Penjualans.id')
                                         ->orderBy('created_at','desc');
         }
         else
@@ -515,10 +515,10 @@ class TransaksiController extends Controller
                                         ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)                                                    
-                                        ->distinct('Sub_Tpenjualans.penjualan_id')
+                                        ->groupBy('Transaksi_Penjualans.id')
                                         ->orderBy('created_at','desc');
         }
-        // dd($datas->get());
+        // dd($datas->get()->count());
         $request_produk=($request->produk);
         if (($request_produk=="") || ($request_produk=="semua"))
         {

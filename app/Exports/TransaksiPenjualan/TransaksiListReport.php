@@ -3,17 +3,20 @@
 namespace App\Exports\TransaksiPenjualan;
 
 use App\CTransaksi_Penjualans;
+use App\CSub_Tpenjualans;
+
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Illuminate\Support\Facades\DB;
 
 class TransaksiListReport implements FromCollection, WithHeadings
 {
   use Exportable;
 
-  public function proses($tanggal,$periode,$pembayaran,$nonota,$namapelanggan,$produk)
+  public function proses($tanggal,$periode,$pembayaran,$nonota,$namapelanggan,$produk,$submitpelanggan)
   {
         $this->tanggal = $tanggal;
         $this->periode=$periode;
@@ -22,6 +25,8 @@ class TransaksiListReport implements FromCollection, WithHeadings
         $this->namapelanggan=$namapelanggan;
         $this->pembayaran=$pembayaran;
         $this->produk=$produk;
+        $this->submitpelanggan=$submitpelanggan;
+        // dd($this);
         return $this;
   }
 
@@ -76,7 +81,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->whereDay('Transaksi_Penjualans.tanggal','=',$this->tanggal)
                                             ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
-                                            ->distinct('Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->groupBy('Transaksi_Penjualans.id')
                                             ->orderBy('created_at','desc');
             }
             elseif ($this->periode=="semua"){
@@ -101,8 +106,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                             ->orderBy('created_at','desc')
-                                            ->distinct('Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
-                                            ->groupBy('Sub_Tpenjualans.penjualan_id');
+                                            ->groupBy('Transaksi_Penjualans.id');
             }
             elseif ($this->periode=="bulan"){
                 // dd("bulan");    
@@ -131,8 +135,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
                                             ->orderBy('created_at','desc')
-                                            ->distinct('Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
-                                            ->groupBy('Sub_Tpenjualans.penjualan_id');
+                                            ->groupBy('Transaksi_Penjualans.id');
             }
             elseif ($this->periode=="tahun")
             {
@@ -160,8 +163,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
-                                            ->groupBy('Sub_Tpenjualans.penjualan_id')
-                                            ->distinct('Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->groupBy('Transaksi_Penjualans.id')
                                             ->orderBy('created_at','desc');
             }
             else
@@ -186,22 +188,22 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                               'Transaksi_Penjualans.sisa_tagihan',
                                               'Transaksi_Penjualans.total_harga','Cabangs.Nama_Cabang','Users.username')
                                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)                                                    
-                                            ->groupBy('Sub_Tpenjualans.penjualan_id')
-                                            ->distinct('Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->groupBy('Transaksi_Penjualans.id')
                                             ->orderBy('created_at','desc');
             }
         }
-        else
+        elseif ($this->submitpelanggan=="export_detail")
         {
             if ($this->periode=="hari"){
                 // dd("hari");    
                 $tanggal=explode("-",$this->tanggal);
                 $bulan=$tanggal[1];
                 $tahun=$tanggal[2];
-                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                $datas=CSub_Tpenjualans::leftJoin('Transaksi_Penjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
                                             ->select('Transaksi_Penjualans.id',
                                               'Transaksi_Penjualans.nama_pelanggan',
@@ -235,10 +237,11 @@ class TransaksiListReport implements FromCollection, WithHeadings
             elseif ($this->periode=="semua"){
 
 
-                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                $datas=CSub_Tpenjualans::leftJoin('Transaksi_Penjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
                                             ->select('Transaksi_Penjualans.id',
                                               'Transaksi_Penjualans.nama_pelanggan',
@@ -264,8 +267,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.id','like','%'.$this->nonota.'%')
                                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                            ->orderBy('created_at','desc')
-                                            ->groupBy('Sub_Tpenjualans.penjualan_id');
+                                            ->orderBy('created_at','desc');
             }
             elseif ($this->periode=="bulan"){
                 // dd("bulan");    
@@ -273,10 +275,11 @@ class TransaksiListReport implements FromCollection, WithHeadings
                 $tanggal=explode("-",$this->tanggal);
                 $bulan=$tanggal[1];
                 $tahun=$tanggal[2];
-                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                $datas=CSub_Tpenjualans::leftJoin('Transaksi_Penjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
                                             ->select('Transaksi_Penjualans.id',
                                               'Transaksi_Penjualans.nama_pelanggan',
@@ -304,8 +307,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                             ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
-                                            ->orderBy('created_at','desc')
-                                            ->groupBy('Sub_Tpenjualans.penjualan_id');
+                                            ->orderBy('created_at','desc');
             }
             elseif ($this->periode=="tahun")
             {
@@ -314,10 +316,11 @@ class TransaksiListReport implements FromCollection, WithHeadings
                 $tanggal=explode("-",$this->tanggal);
                 $bulan=$tanggal[1];
                 $tahun=$tanggal[2];
-                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                $datas=CSub_Tpenjualans::leftJoin('Transaksi_Penjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
                                             ->select('Transaksi_Penjualans.id',
                                               'Transaksi_Penjualans.nama_pelanggan',
@@ -344,7 +347,6 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
-                                            ->groupBy('Sub_Tpenjualans.penjualan_id')
                                             ->orderBy('created_at','desc');
             }
             else
@@ -354,10 +356,11 @@ class TransaksiListReport implements FromCollection, WithHeadings
                 $tanggal=explode("-",$this->tanggal);
                 $bulan=$tanggal[1];
                 $tahun=$tanggal[2];
-                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                $datas=CSub_Tpenjualans::leftJoin('Transaksi_Penjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
                                             ->select('Transaksi_Penjualans.id',
                                               'Transaksi_Penjualans.nama_pelanggan',
@@ -380,7 +383,6 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                               'Sub_Tpenjualans.keterangan'
                                               )
                                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)                                                    
-                                            ->groupBy('Sub_Tpenjualans.penjualan_id')
                                             ->orderBy('created_at','desc');
             } 
         }
@@ -409,29 +411,49 @@ class TransaksiListReport implements FromCollection, WithHeadings
 
   public function headings(): array
     {
-        return [
-            'No. Nota',
-            'Nama',
-            'Hp Pelanggan',
-            'Tanggal',
-            'Jumlah Pembayaran',
-            'Metode Pembayaran',
-            'Diskon',
-            'Pajak',
-            'Sisa Tagihan',
-            'Total',
-            'Cabang',
-            'Pengguna',
-            'Produk',
-            'Panjang',
-            'Lebar',
-            'Finishing',
-            'Harga Barang',
-            'Harga Satuan',
-            'Banyak',
-            'Subtotal',
-            'Keterangan'
-        ];
+        if ($this->submitpelanggan=="export")
+        {
+            return [
+                'No. Nota',
+                'Nama',
+                'Hp Pelanggan',
+                'Tanggal',
+                'Jumlah Pembayaran',
+                'Metode Pembayaran',
+                'Diskon',
+                'Pajak',
+                'Sisa Tagihan',
+                'Total',
+                'Cabang',
+                'Pengguna'
+            ];
+        }
+        elseif ($this->submitpelanggan=="export_detail")
+        {
+            return [
+                'No. Nota',
+                'Nama',
+                'Hp Pelanggan',
+                'Tanggal',
+                'Jumlah Pembayaran',
+                'Metode Pembayaran',
+                'Diskon',
+                'Pajak',
+                'Sisa Tagihan',
+                'Total',
+                'Cabang',
+                'Pengguna',
+                'Produk',
+                'Panjang',
+                'Lebar',
+                'Finishing',
+                'Harga Barang',
+                'Harga Satuan',
+                'Banyak',
+                'Subtotal',
+                'Keterangan'
+            ];
+        }
     }
 
 }
