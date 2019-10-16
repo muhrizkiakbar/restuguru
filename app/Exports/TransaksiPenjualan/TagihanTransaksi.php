@@ -80,24 +80,25 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
-                                        ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                        ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                        ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                        // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                        // ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                        // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                        // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                         ->select(
                                             // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                             'Transaksi_Penjualans.id',
                                             'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang',
                                             'Transaksi_Penjualans.tanggal',
-                                            'Produks.nama_produk',
-                                            'Sub_Tpenjualans.panjang',
-                                            'Sub_Tpenjualans.lebar',
-                                            'Bahanbakus.nama_bahan',
-                                            'Sub_Tpenjualans.harga_satuan',
-                                            DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                            'Sub_Tpenjualans.banyak',
-                                            'Sub_Tpenjualans.subtotal'
+                                            'Transaksi_Penjualans.total_harga'
+                                            // 'Produks.nama_produk',
+                                            // 'Sub_Tpenjualans.panjang',
+                                            // 'Sub_Tpenjualans.lebar',
+                                            // 'Bahanbakus.nama_bahan',
+                                            // 'Sub_Tpenjualans.harga_satuan',
+                                            // DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                            // 'Sub_Tpenjualans.banyak',
+                                            // 'Sub_Tpenjualans.subtotal'
                                             )
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.id','like','%'.$this->nonota.'%')
@@ -107,6 +108,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                                         ->whereDay('Transaksi_Penjualans.tanggal','=',$this->tanggal)
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
+                                        // ->distinct('Transaksi_Penjualans.id')
                                         ->orderBy('Transaksi_Penjualans.created_at','desc');
         }
         elseif ($this->periode=="semua"){
@@ -115,30 +117,32 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
-                                        ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                        ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                        ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                        // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                        // ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                        // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                        // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                         ->select(
                                              // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                              'Transaksi_Penjualans.id',
                                             'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang', 
                                             'Transaksi_Penjualans.tanggal',
-                                            'Produks.nama_produk',
-                                            'Sub_Tpenjualans.panjang',
-                                            'Sub_Tpenjualans.lebar',
-                                            'Bahanbakus.nama_bahan',
-                                            'Sub_Tpenjualans.harga_satuan',
-                                            DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                            'Sub_Tpenjualans.banyak',
-                                            'Sub_Tpenjualans.subtotal'
+                                            'Transaksi_Penjualans.total_harga'
+                                            // 'Produks.nama_produk',
+                                            // 'Sub_Tpenjualans.panjang',
+                                            // 'Sub_Tpenjualans.lebar',
+                                            // 'Bahanbakus.nama_bahan',
+                                            // 'Sub_Tpenjualans.harga_satuan',
+                                            // DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                            // 'Sub_Tpenjualans.banyak',
+                                            // 'Sub_Tpenjualans.subtotal'
                                             )
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.id','like','%'.$this->nonota.'%')
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
+                                        // ->distinct('Transaksi_Penjualans.id')
                                         ->orderBy('Transaksi_Penjualans.created_at','desc');
         }
         elseif ($this->periode=="bulan"){
@@ -150,24 +154,25 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
-                                        ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                        ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                        ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                        // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                        // ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                        // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                        // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                         ->select(
                                              // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                              'Transaksi_Penjualans.id',
                                             'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang', 
                                              'Transaksi_Penjualans.tanggal',
-                                            'Produks.nama_produk',
-                                            'Sub_Tpenjualans.panjang',
-                                            'Sub_Tpenjualans.lebar',
-                                            'Bahanbakus.nama_bahan',
-                                            'Sub_Tpenjualans.harga_satuan',
-                                            DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                            'Sub_Tpenjualans.banyak',
-                                            'Sub_Tpenjualans.subtotal'
+                                           'Transaksi_Penjualans.total_harga'
+                                            // 'Produks.nama_produk',
+                                            // 'Sub_Tpenjualans.panjang',
+                                            // 'Sub_Tpenjualans.lebar',
+                                            // 'Bahanbakus.nama_bahan',
+                                            // 'Sub_Tpenjualans.harga_satuan',
+                                            // DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                            // 'Sub_Tpenjualans.banyak',
+                                            // 'Sub_Tpenjualans.subtotal'
                                             )
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.id','like','%'.$this->nonota.'%')
@@ -176,6 +181,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
+                                        // ->distinct('Transaksi_Penjualans.id')
                                         ->orderBy('Transaksi_Penjualans.created_at','desc');
         }
         elseif ($this->periode=="tahun")
@@ -188,24 +194,25 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
-                                        ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                        ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                        ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                        // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                        // ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                        // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                        // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                         ->select(
                                            // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                            'Transaksi_Penjualans.id',
                                             'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang', 
                                            'Transaksi_Penjualans.tanggal',
-                                          'Produks.nama_produk',
-                                          'Sub_Tpenjualans.panjang',
-                                          'Sub_Tpenjualans.lebar',
-                                          'Bahanbakus.nama_bahan',
-                                          'Sub_Tpenjualans.harga_satuan',
-                                          DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                          'Sub_Tpenjualans.banyak',
-                                          'Sub_Tpenjualans.subtotal'
+                                           'Transaksi_Penjualans.total_harga'
+                                        //   'Produks.nama_produk',
+                                        //   'Sub_Tpenjualans.panjang',
+                                        //   'Sub_Tpenjualans.lebar',
+                                        //   'Bahanbakus.nama_bahan',
+                                        //   'Sub_Tpenjualans.harga_satuan',
+                                        //   DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                        //   'Sub_Tpenjualans.banyak',
+                                        //   'Sub_Tpenjualans.subtotal'
                                           )
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                         ->where('Transaksi_Penjualans.id','like','%'.$this->nonota.'%')
@@ -213,6 +220,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)        
+                                        // ->distinct('Transaksi_Penjualans.id')
                                         ->orderBy('Transaksi_Penjualans.created_at','desc');
         }
         else
@@ -225,27 +233,28 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                         ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                         ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
-                                        ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
-                                        ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                        ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                        ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                        // ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                        // ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                        // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                        // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                         ->select(
                                              // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
                                              'Transaksi_Penjualans.id',
                                             'Transaksi_Penjualans.sisa_tagihan',
                                             'Cabangs.kode_cabang', 
-                                             'Transaksi_Penjualans.tanggal',
-                                            'Produks.nama_produk',
-                                            'Sub_Tpenjualans.panjang',
-                                            'Sub_Tpenjualans.lebar',
-                                            'Bahanbakus.nama_bahan',
-                                            'Sub_Tpenjualans.harga_satuan',
-                                            DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                            'Sub_Tpenjualans.banyak',
-                                            'Sub_Tpenjualans.subtotal'
+                                             'Transaksi_Penjualans.tanggal'
+                                            // 'Produks.nama_produk',
+                                            // 'Sub_Tpenjualans.panjang',
+                                            // 'Sub_Tpenjualans.lebar',
+                                            // 'Bahanbakus.nama_bahan',
+                                            // 'Sub_Tpenjualans.harga_satuan',
+                                            // DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                            // 'Sub_Tpenjualans.banyak',
+                                            // 'Sub_Tpenjualans.subtotal'
                                             )
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)           
                                         ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                        // ->distinct('Transaksi_Penjualans.id')
                                         ->orderBy('Transaksi_Penjualans.created_at','desc');
         }
 
@@ -265,13 +274,13 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             $request_produk=($this->produk);
             // dd($request_produk);
 
-            $datas=$datas->where('Sub_Tpenjualans.produk_id','=',$request_produk);
+            // $datas=$datas->where('Sub_Tpenjualans.produk_id','=',$request_produk);
         }
         // dd($datas->get());
 
         // return $datas->get();
         return view('transaksis.excel.tagihan_penjualan', [
-            'subtransaksis' => $datas->get(),
+            'transaksis' => $datas->get(),
             'nama_pelanggan' =>$this->namapelanggan
         ]);
     }
@@ -289,7 +298,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
         $drawing->setDescription('This is my logo');
         $drawing->setPath(public_path('dist/img/kop.png'));
         $drawing->setResizeProportional(true);
-        $drawing->setHeight(171.4);
+        $drawing->setHeight(202);
         $drawing->setCoordinates('A1');
 
         return $drawing;
@@ -300,14 +309,15 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
         return [
             AfterSheet::class    => function(AfterSheet $event) {
                 $event->sheet->getDelegate()->getColumnDimension('A')->setWidth(13);
-                $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(18);
-                $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(6);
-                $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(6);
-                $event->sheet->getDelegate()->getColumnDimension('E')->setWidth(12);
-                $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(12);
-                $event->sheet->getDelegate()->getColumnDimension('G')->setWidth(12);
-                $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(8);
-                $event->sheet->getDelegate()->getColumnDimension('I')->setWidth(13);
+                $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(7);
+                $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(7);
+                $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(11);
+                $event->sheet->getDelegate()->getColumnDimension('E')->setWidth(14);
+                $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(14);
+                $event->sheet->getDelegate()->getColumnDimension('G')->setWidth(7);
+                $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('I')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('J')->setWidth(15);
                 $styleArray = [
                     'borders' => [
                         'allBorders' => [
@@ -356,7 +366,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=$this->baris; 
                 }
-                $event->sheet->getStyle('A21:I'.($baris+2))->applyFromArray($styleArray); //styling border isi data
+                $event->sheet->getStyle('A21:J'.($baris+2))->applyFromArray($styleArray); //styling border isi data
 
                 if ($this->baris==0)
                 {
@@ -366,7 +376,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=$this->baris; 
                 }
-                $event->sheet->getStyle('A2:I'.($baris+15))->applyFromArray($styleGlobalArray); //styling font
+                $event->sheet->getStyle('A2:J'.($baris+15))->applyFromArray($styleGlobalArray); //styling font
 
                 //header table wraptext
                 $event->sheet->getStyle('A19')->getAlignment()->setWrapText(true);
@@ -379,8 +389,8 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=$this->baris; 
                 }
-                $event->sheet->getStyle('A21:I'.$baris)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $event->sheet->getStyle('A21:I'.$baris)->getAlignment()->setWrapText(true);
+                $event->sheet->getStyle('A21:J'.$baris)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $event->sheet->getStyle('A21:J'.$baris)->getAlignment()->setWrapText(true);
                 $event->sheet->getStyle('C9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
 
                 if ($this->baris==0)
@@ -417,12 +427,15 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=$this->baris; 
                 }
+                $event->sheet->getStyle('E22:E'.$baris)->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
                 $event->sheet->getStyle('F22:F'.$baris)->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
-                $event->sheet->getStyle('G22:G'.$baris)->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
+                $event->sheet->getStyle('H22:H'.$baris)->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
                 $event->sheet->getStyle('I22:I'.($baris+2))->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
+                $event->sheet->getStyle('I22:J'.($baris+2))->getNumberFormat()->setFormatCode('_("Rp"* #,##0_);_("Rp"* \(#,##0\);_("Rp"* "-"??_);_(@_)');
 
-                $event->sheet->getPageSetup()->setPrintArea('A1:I'.($baris+17));
+                $event->sheet->getPageSetup()->setPrintArea('A1:J'.($baris+17));
                 $event->sheet->getPageSetup()->setFitToWidth(1);
+                $event->sheet->getPageSetup()->setFitToHeight(0);
 
             },
         ];

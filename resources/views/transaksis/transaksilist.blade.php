@@ -263,7 +263,7 @@
                                 <td>Rp. {{number_format(floatval($data->jumlah_pembayaran),2,',','.')}}</td>
                                 <td>{{$data->metode_pembayaran}}</td>
                                 <td>{{number_format(floatval($data->diskon),2,',','.')}} %</td>
-                                <td>Rp. {{number_format(floatval($data->pajak),2,',','.')}}</td>
+                                <td>{{number_format(floatval($data->pajak),2,',','.')}} %</td>
                                 @if ($data->sisa_tagihan!=0)
                                     <td style="background: #ffff99;"><span class="badge bg-red" id="sisa{{$data->id}}">
                                     Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}

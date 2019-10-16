@@ -15,4 +15,14 @@ class CSub_Tpenjualans extends Model
 
     protected $dates = ['deleted_at'];
 
+    public function penjualan()
+    {
+        return $this->belongsTo('App\CTransaksi_Penjualans');
+    }
+
+    public function produk()
+    {
+        return $this->hasOne('App\CProduks', 'id', 'produk_id');
+    }
+
 }

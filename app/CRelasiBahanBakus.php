@@ -15,4 +15,13 @@ class CRelasiBahanBakus extends Model
 
     protected $dates = ['deleted_at'];
 
+    public function produk()
+    {
+        return $this->belongsTo('App\CProduks', 'id', 'produk_id');
+    }
+
+    public function bahanbaku()
+    {
+        return $this->belongsTo('App\CBahanBakus', 'id', 'bahanbaku_id');
+    }
 }

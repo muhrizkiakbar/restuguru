@@ -15,4 +15,5 @@ class CBahanBakus extends Model
 
     protected $dates = ['deleted_at'];
 
+    
 }

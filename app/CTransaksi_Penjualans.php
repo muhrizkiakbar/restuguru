@@ -15,4 +15,10 @@ class CTransaksi_Penjualans extends Model
 
     protected $dates = ['deleted_at'];
 
+
+    public function sub_penjualans()
+    {
+        return $this->hasMany('App\CSub_Tpenjualans', 'penjualan_id', 'id');
+    }
+
 }

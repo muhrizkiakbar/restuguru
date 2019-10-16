@@ -452,7 +452,7 @@ class TransaksiController extends Controller
                                         ->whereDay('Transaksi_Penjualans.tanggal','=',$request->tanggal)
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
-                                        ->distinct('Transaksi_Penjualans.id')
+                                        ->distinct('Sub_Tpenjualans.penjualan_id')
                                         ->orderBy('created_at','desc');
         }
         elseif ($request->periode=="semua"){
@@ -465,7 +465,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                        ->distinct('Transaksi_Penjualans.id')
+                                        ->distinct('Sub_Tpenjualans.penjualan_id')
                                         ->orderBy('created_at','desc');
         }
         elseif ($request->periode=="bulan"){
@@ -483,7 +483,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
-                                        ->distinct('Transaksi_Penjualans.id')
+                                        ->distinct('Sub_Tpenjualans.penjualan_id')
                                         ->orderBy('created_at','desc');
         }
         elseif ($request->periode=="tahun")
@@ -501,7 +501,7 @@ class TransaksiController extends Controller
                                         ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
                                         ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                         ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
-                                        ->distinct('Transaksi_Penjualans.id')
+                                        ->distinct('Sub_Tpenjualans.penjualan_id')
                                         ->orderBy('created_at','desc');
         }
         else
@@ -515,7 +515,7 @@ class TransaksiController extends Controller
                                         ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                         ->select('Transaksi_Penjualans.*','Cabangs.Nama_Cabang','Users.username')
                                         ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)                                                    
-                                        ->distinct('Transaksi_Penjualans.id')
+                                        ->distinct('Sub_Tpenjualans.penjualan_id')
                                         ->orderBy('created_at','desc');
         }
         // dd($datas->get());
@@ -541,9 +541,14 @@ class TransaksiController extends Controller
 
         $dataproduks=CProduks::all();
 
+        // dd($datas->get()->count());
         if (($request->submitpelanggan == "export"))
         {
-          return (new TransaksiListReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan,$request_produk)->download('laporantransaksi.xls');
+          return (new TransaksiListReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan,$request_produk,$request->submitpelanggan)->download('laporantransaksi.xls');
+        }
+        if (($request->submitpelanggan == "export_detail"))
+        {
+          return (new TransaksiListReport)->proses($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan,$request_produk,$request->submitpelanggan)->download('laporantransaksi.xls');
         }
         elseif (($request->submitpelanggan == "tagihan")) 
         {
@@ -557,21 +562,204 @@ class TransaksiController extends Controller
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                             ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                             ->select(
                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
-                                                'Transaksi_Penjualans.id',
-                                                'Cabangs.kode_cabang',
-                                                'Transaksi_Penjualans.tanggal',
-                                                'Produks.nama_produk',
-                                                'Sub_Tpenjualans.panjang',
-                                                'Sub_Tpenjualans.lebar',
-                                                'Bahanbakus.nama_bahan',
-                                                'Sub_Tpenjualans.harga_satuan',
-                                                DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                                'Sub_Tpenjualans.banyak',
-                                                'Sub_Tpenjualans.subtotal'
+                                                'Transaksi_Penjualans.id'
+                                                // 'Cabangs.kode_cabang',
+                                                // 'Transaksi_Penjualans.tanggal',
+                                                // 'Produks.nama_produk',
+                                                // 'Sub_Tpenjualans.panjang',
+                                                // 'Sub_Tpenjualans.lebar',
+                                                // 'Bahanbakus.nama_bahan',
+                                                // 'Sub_Tpenjualans.harga_satuan',
+                                                // DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                                // 'Sub_Tpenjualans.banyak',
+                                                // 'Sub_Tpenjualans.subtotal'
+                                                )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                                            ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
+                                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
+                                            ->whereDay('Transaksi_Penjualans.tanggal','=',$request->tanggal)
+                                            ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
+                                            ->distinct('Sub_Tpenjualans.penjualan_id')
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+            elseif ($request->periode=="semua"){
+    
+    
+                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            ->select(
+                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                 'Transaksi_Penjualans.id'
+                                                // 'Cabangs.kode_cabang', 
+                                                // 'Transaksi_Penjualans.tanggal',
+                                                // 'Produks.nama_produk',
+                                                // 'Sub_Tpenjualans.panjang',
+                                                // 'Sub_Tpenjualans.lebar',
+                                                // 'Bahanbakus.nama_bahan',
+                                                // 'Sub_Tpenjualans.harga_satuan',
+                                                // DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                                // 'Sub_Tpenjualans.banyak',
+                                                // 'Sub_Tpenjualans.subtotal'
+                                                )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
+                                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
+                                            ->distinct('Sub_Tpenjualans.penjualan_id')
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+            elseif ($request->periode=="bulan"){
+                // dd("bulan");    
+    
+                $tanggal=explode("-",$request->tanggal);
+                $bulan=$tanggal[1];
+                $tahun=$tanggal[2];
+                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            ->select(
+                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                 'Transaksi_Penjualans.id'
+                                                // 'Cabangs.kode_cabang', 
+                                                //  'Transaksi_Penjualans.tanggal',
+                                                // 'Produks.nama_produk',
+                                                // 'Sub_Tpenjualans.panjang',
+                                                // 'Sub_Tpenjualans.lebar',
+                                                // 'Bahanbakus.nama_bahan',
+                                                // 'Sub_Tpenjualans.harga_satuan',
+                                                // DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                                // 'Sub_Tpenjualans.banyak',
+                                                // 'Sub_Tpenjualans.subtotal'
+                                                )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                                            ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
+                                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
+                                            ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
+                                            ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)                                        
+                                            ->distinct('Sub_Tpenjualans.penjualan_id')
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+            elseif ($request->periode=="tahun")
+            {
+                // dd("tahun");    
+                
+                $tanggal=explode("-",$request->tanggal);
+                $bulan=$tanggal[1];
+                $tahun=$tanggal[2];
+                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            ->select(
+                                               // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                               'Transaksi_Penjualans.id'
+                                            //     'Cabangs.kode_cabang', 
+                                            //    'Transaksi_Penjualans.tanggal',
+                                            //   'Produks.nama_produk',
+                                            //   'Sub_Tpenjualans.panjang',
+                                            //   'Sub_Tpenjualans.lebar',
+                                            //   'Bahanbakus.nama_bahan',
+                                            //   'Sub_Tpenjualans.harga_satuan',
+                                            //   DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                            //   'Sub_Tpenjualans.banyak',
+                                            //   'Sub_Tpenjualans.subtotal'
+                                              )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
+                                            ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
+                                            ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
+                                            ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)        
+                                            ->distinct('Sub_Tpenjualans.penjualan_id')
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+            else
+            {
+                // dd("kintil");    
+    
+                $tanggal=explode("-",$request->tanggal);
+                $bulan=$tanggal[1];
+                $tahun=$tanggal[2];
+                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            // ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
+                                            // ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
+                                            ->select(
+                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                 'Transaksi_Penjualans.id'
+                                                // 'Cabangs.kode_cabang', 
+                                                //  'Transaksi_Penjualans.tanggal',
+                                                // 'Produks.nama_produk',
+                                                // 'Sub_Tpenjualans.panjang',
+                                                // 'Sub_Tpenjualans.lebar',
+                                                // 'Bahanbakus.nama_bahan',
+                                                // 'Sub_Tpenjualans.harga_satuan',
+                                                // DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
+                                                // 'Sub_Tpenjualans.banyak',
+                                                // 'Sub_Tpenjualans.subtotal'
+                                                )
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)           
+                                            ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
+                                            ->distinct('Sub_Tpenjualans.penjualan_id')
+                                            ->orderBy('Transaksi_Penjualans.created_at','desc');
+            }
+
+
+            if (($request_produk=="") || ($request_produk=="semua"))
+            {
+                if ($request_produk=="")
+                {
+                    $request_produk=("semua");
+                }
+            }
+            else
+            {
+                $request_produk=decrypt($request->produk);
+                $datas=$datas->where('Sub_Tpenjualans.produk_id','=',$request_produk);
+            }
+            
+
+            // dd($datas->get()->count());
+
+            // untuk subtransaksi
+            if ($request->periode=="hari"){
+                // dd("hari");    
+                $tanggal=explode("-",$request->tanggal);
+                $bulan=$tanggal[1];
+                $tahun=$tanggal[2];
+                $datasub=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                                            ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                                            ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                                            ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
+                                            ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
+                                            ->select(
+                                                // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                'Sub_Tpenjualans.id'
                                                 )
                                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                             ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
@@ -586,26 +774,14 @@ class TransaksiController extends Controller
             elseif ($request->periode=="semua"){
     
     
-                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                $datasub=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                             ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                             ->select(
-                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
-                                                 'Transaksi_Penjualans.id',
-                                                'Cabangs.kode_cabang', 
-                                                'Transaksi_Penjualans.tanggal',
-                                                'Produks.nama_produk',
-                                                'Sub_Tpenjualans.panjang',
-                                                'Sub_Tpenjualans.lebar',
-                                                'Bahanbakus.nama_bahan',
-                                                'Sub_Tpenjualans.harga_satuan',
-                                                DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                                'Sub_Tpenjualans.banyak',
-                                                'Sub_Tpenjualans.subtotal'
+                                                // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                'Sub_Tpenjualans.id'
                                                 )
                                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                             ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
@@ -620,26 +796,14 @@ class TransaksiController extends Controller
                 $tanggal=explode("-",$request->tanggal);
                 $bulan=$tanggal[1];
                 $tahun=$tanggal[2];
-                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                $datasub=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                             ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                             ->select(
-                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
-                                                 'Transaksi_Penjualans.id',
-                                                'Cabangs.kode_cabang', 
-                                                 'Transaksi_Penjualans.tanggal',
-                                                'Produks.nama_produk',
-                                                'Sub_Tpenjualans.panjang',
-                                                'Sub_Tpenjualans.lebar',
-                                                'Bahanbakus.nama_bahan',
-                                                'Sub_Tpenjualans.harga_satuan',
-                                                DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                                'Sub_Tpenjualans.banyak',
-                                                'Sub_Tpenjualans.subtotal'
+                                                // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                'Sub_Tpenjualans.id'
                                                 )
                                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                             ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
@@ -657,27 +821,15 @@ class TransaksiController extends Controller
                 $tanggal=explode("-",$request->tanggal);
                 $bulan=$tanggal[1];
                 $tahun=$tanggal[2];
-                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                $datasub=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                             ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                             ->select(
-                                               // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
-                                               'Transaksi_Penjualans.id',
-                                                'Cabangs.kode_cabang', 
-                                               'Transaksi_Penjualans.tanggal',
-                                              'Produks.nama_produk',
-                                              'Sub_Tpenjualans.panjang',
-                                              'Sub_Tpenjualans.lebar',
-                                              'Bahanbakus.nama_bahan',
-                                              'Sub_Tpenjualans.harga_satuan',
-                                              DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                              'Sub_Tpenjualans.banyak',
-                                              'Sub_Tpenjualans.subtotal'
-                                              )
+                                                // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                'Sub_Tpenjualans.id'
+                                                )
                                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)
                                             ->where('Transaksi_Penjualans.id','like','%'.$request->nonota.'%')
                                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$request->namapelanggan.'%')
@@ -693,33 +845,25 @@ class TransaksiController extends Controller
                 $tanggal=explode("-",$request->tanggal);
                 $bulan=$tanggal[1];
                 $tahun=$tanggal[2];
-                $datas=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                $datasub=CTransaksi_Penjualans::leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
                                             ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
                                             ->leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
                                             ->leftJoin('Sub_Tpenjualans','Transaksi_Penjualans.id','Sub_Tpenjualans.penjualan_id')
                                             ->leftJoin('Produks','Produks.id','=','Sub_Tpenjualans.produk_id')
-                                            ->leftJoin('Produkbahanbakus','Produkbahanbakus.produk_id','=','Produks.id')
-                                            ->leftJoin('Bahanbakus','Bahanbakus.id','=','Produkbahanbakus.bahanbaku_id')
                                             ->select(
-                                                 // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
-                                                 'Transaksi_Penjualans.id',
-                                                'Cabangs.kode_cabang', 
-                                                 'Transaksi_Penjualans.tanggal',
-                                                'Produks.nama_produk',
-                                                'Sub_Tpenjualans.panjang',
-                                                'Sub_Tpenjualans.lebar',
-                                                'Bahanbakus.nama_bahan',
-                                                'Sub_Tpenjualans.harga_satuan',
-                                                DB::raw("(Sub_Tpenjualans.subtotal/Sub_Tpenjualans.banyak) as harga_satuan_item"),
-                                                'Sub_Tpenjualans.banyak',
-                                                'Sub_Tpenjualans.subtotal'
+                                                // DB::raw("concat'Transaksi_Penjualans.id,' ''Transaksi_Penjualans.tanggal) as tanggal"),
+                                                'Sub_Tpenjualans.id'
                                                 )
                                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)           
                                             ->where('Transaksi_Penjualans.sisa_tagihan','>',0)
                                             ->orderBy('Transaksi_Penjualans.created_at','desc');
             }
-            // dd($datas->get()->count());
-            return Excel::download(new TagihanTransaksi($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan,$request_produk,$datas->get()->count()), 'tagihantransaksi.xlsx');
+
+            $baris = ($datas->get()->count()*3)+$datasub->get()->count();
+            // dd($baris);
+
+            // dd($datasub->get()->count());
+            return Excel::download(new TagihanTransaksi($request->tanggal,$request->periode,$request->pembayaran,$request->nonota,$request->namapelanggan,$request_produk,$baris-1), 'tagihantransaksi.xlsx');
         }
         else
         {

@@ -15,4 +15,10 @@ class CProduks extends Model
 
     protected $dates = ['deleted_at'];
 
+    public function sub_penjualan()
+    {
+        return $this->belongsTo('App\CSub_Tpenjualans');
+    }
+
+
 }
