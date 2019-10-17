@@ -27,6 +27,7 @@ Route::post('/login','Auth\LoginController@postLogin');
 
 
 Route::get('/transaksi/report/{id}','TransaksiController@report');
+Route::get('/transaksi/report/jpg/{id}','TransaksiController@report_to_image');
 
 
 Auth::routes();

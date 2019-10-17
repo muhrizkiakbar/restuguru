@@ -9,7 +9,64 @@
         <tr></tr>
         <tr></tr>
         <tr></tr>
-        <tr><th>No </th><th>:</th><th colspan="8">Banjarbaru, Bulan Tahun</th></tr>
+        <?php
+            function dateIndonesia($date){
+                if($date != '0000 00 00'){
+                    $date = explode(' ', $date);
+         
+                    $data = $date[2] . ' ' . bulan($date[1]) . ' '. $date[0];
+                }else{
+                    $data = 'Format tanggal salah';
+                }
+         
+                return $data;
+            }
+         
+            function bulan($bln) {
+                $bulan = $bln;
+         
+                switch ($bulan) {
+                    case 1:
+                        $bulan = "Januari";
+                        break;
+                    case 2:
+                        $bulan = "Februari";
+                        break;
+                    case 3:
+                        $bulan = "Maret";
+                        break;
+                    case 4:
+                        $bulan = "April";
+                        break;
+                    case 5:
+                        $bulan = "Mei";
+                        break;
+                    case 6:
+                        $bulan = "Juni";
+                        break;
+                    case 7:
+                        $bulan = "Juli";
+                        break;
+                    case 8:
+                        $bulan = "Agustus";
+                        break;
+                    case 9:
+                        $bulan = "September";
+                        break;
+                    case 10:
+                        $bulan = "Oktober";
+                        break;
+                    case 11:
+                        $bulan = "November";
+                        break;
+                    case 12:
+                        $bulan = "Desember";
+                        break;
+                }
+                return $bulan;
+            }
+        ?>
+        <tr><th>No </th><th>:</th><th colspan="8">Banjarbaru, {{dateIndonesia(date("Y m d"))}}</th></tr>
         <tr><th>Perihal</th><th>: PENAGIHAN</th></tr>
         <tr><th>Lampiran</th><th>: NOTA TAGIHAN</th></tr>
         <tr></tr>
@@ -19,7 +76,7 @@
         <tr></tr>
         <tr></tr>
         <tr><th>Dengan Hormat,</th></tr>
-        <tr><th colspan="7">Bersama ini kami sampaikan daftar pekerjaan yang telah kami kerjakan sebagai
+        <tr><th colspan="10">Bersama ini kami sampaikan daftar pekerjaan yang telah kami kerjakan sebagai
 bentuk penagihan kepada perusahaan anda dengan data sebagai berikut:</th></tr>
         <tr></tr>
         
@@ -66,11 +123,13 @@ bentuk penagihan kepada perusahaan anda dengan data sebagai berikut:</th></tr>
         @endforeach
        
         @if ($transaksis==null)
-            <tr><td colspan="8">Jumlah</td><td>0</td><td>0</td></tr>
-            <tr><td colspan="8">PPN</td><td>0</td><td>0</td></tr>
+            <tr><td colspan="9">Sisa Tagihan</td><td>0</td></tr>
+            <tr><td colspan="9">PPN</td><td>0</td></tr>
+            <tr><td colspan="9">Total</td><td>0</td></tr>
         @else
-            <tr><td colspan="8">Jumlah</td><td>{{$transaksis->sum('sisa_tagihan')}}</td><td>{{$transaksis->sum('total_harga')}}</td></tr>
-            <tr><td colspan="8">PPN</td><td>{{$transaksis->sum('sisa_tagihan')*0.1}}</td><td>{{$transaksis->sum('total_harga')*0.1}}</td></tr>
+            <tr><td colspan="9">Sisa Tagihan</td><td>{{$transaksis->sum('sisa_tagihan')}}</td></tr>
+            <tr><td colspan="9">PPN</td><td>{{$transaksis->sum('sisa_tagihan')*0.1}}</td></tr>
+            <tr><td colspan="9">Total</td><td>{{$transaksis->sum('total_harga')}}</td></tr>
         @endif
         <tr></tr>
         <tr><td colspan="10">Pembayaran dapat dilakukan ke rekening dibawah : </td></tr>
@@ -102,7 +161,7 @@ kami mengucapkan terima kasih.</td></tr>
             <td></td>
             <td></td>
             <td></td>
-            <td colspan="2">Managing Director</td>
+            <td colspan="2">Manager</td>
         </tr>
         <tr>
             <td></td>
@@ -112,7 +171,7 @@ kami mengucapkan terima kasih.</td></tr>
             <td></td>
             <td></td>
             <td></td>
-            <td colspan="2">Putra Qomalludin A.N</td>
+            <td colspan="2">Beti Sulistilawati</td>
         </tr>
     </tbody>
 </table>

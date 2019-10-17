@@ -268,7 +268,14 @@
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
-
+    <script type="text/javascript">
+        $(function() {
+            html2canvas(document.querySelector(".lebarkwitansi")).then(canvas => {
+                document.body.appendChild(canvas)
+            });
+        })
+    </script>
+    
 
     </body>
 @endsection

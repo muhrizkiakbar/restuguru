@@ -169,6 +169,29 @@ class TransaksiController extends Controller
         // // return $pdf->setPaper('F4', 'landscape')->download('laporanharian.pdf');
         // return $pdf->setPaper('a4', 'landscape')->stream('filename.pdf',array('Attachment'=>1));
     }
+
+    public function report_to_image($id){
+        $id=decrypt($id);
+        $transaksi=CTransaksi_Penjualans::leftJoin('Cabangs','Transaksi_Penjualans.cabang_id','=','Cabangs.id')
+                    ->leftJoin('Users','Transaksi_Penjualans.user_id','=','Users.id')
+                    ->leftJoin('role_user','role_user.user_id','=','Users.id')
+                    ->leftJoin('roles','role_user.role_id','=','roles.id') 
+                    ->leftJoin('Pelanggans','Transaksi_Penjualans.pelanggan_id','=','Pelanggans.id')
+                    ->leftJoin('Jenispelanggans','Pelanggans.jenispelanggan_id','=','Jenispelanggans.id')
+                    ->select('Transaksi_Penjualans.*','Cabangs.Kode_Cabang','Cabangs.Nama_Cabang',
+                            'Cabangs.No_Telepon','Cabangs.Email','Cabangs.Alamat','Cabangs.Jenis_Cabang',
+                            'Users.nama','Jenispelanggans.jenis_pelanggan','roles.display_name')
+                    ->withTrashed()
+                    ->where('Transaksi_Penjualans.id','=',$id)->first();
+        // dd($transaksi);
+        $subtransaksis=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
+                        ->select('Sub_Tpenjualans.*','Produks.nama_produk')
+                        ->where('penjualan_id','=',$id)->get();
+
+        $data=Angsuran::where('transaksipenjualan_id','=',$id)->get();
+        return view('report.reporttranspenjualanimage',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis, 'angsurans'=>$data]);
+
+    }
     /**
      * Show the form for creating a new resource.
      *

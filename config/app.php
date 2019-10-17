@@ -220,7 +220,6 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
     ],
 
 ];

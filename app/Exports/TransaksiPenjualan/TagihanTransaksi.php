@@ -41,7 +41,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
             }
             else
             {
-                $this->baris=$baris+21;
+                $this->baris=$baris+22;
             }
             // dd($baris);
             return $this;
@@ -349,7 +349,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=$this->baris; 
                 }
-                $event->sheet->getDelegate()->getRowDimension($baris+7)->setRowHeight(35);
+                // $event->sheet->getDelegate()->getRowDimension($baris+7)->setRowHeight(35);
                 $event->sheet->getStyle('A'.($baris+7))->getAlignment()->setWrapText(true);
                 $event->sheet->getStyle('A'.($baris+6))->applyFromArray($boldtextArray); //styling font
                 $event->sheet->getStyle('A'.($baris+5))->applyFromArray($boldtextArray); //styling font
@@ -389,7 +389,9 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
                 {
                     $baris=$this->baris; 
                 }
-                $event->sheet->getStyle('A21:J'.$baris)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                // $event->sheet->getStyle('A21:J'.$baris)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $event->sheet->getStyle('A21:J'.$baris)->getAlignment()->setHorizontal('center');
+                $event->sheet->getStyle('A21:J'.$baris)->getAlignment()->setVertical('center');
                 $event->sheet->getStyle('A21:J'.$baris)->getAlignment()->setWrapText(true);
                 $event->sheet->getStyle('C9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
 
