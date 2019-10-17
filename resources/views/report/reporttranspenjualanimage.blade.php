@@ -53,6 +53,12 @@
         border: 1px solid black;
     }
 
+    .invoice
+    {
+        border: 1px solid black !important; 
+
+    }
+
     .lebarkwitansi
     {
         width: 21cm;
