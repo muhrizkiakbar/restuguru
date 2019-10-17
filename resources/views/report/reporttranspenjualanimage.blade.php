@@ -77,7 +77,7 @@
     <body class="lebarkwitansi">
     <div class="wrapper">
         <!-- Main content -->
-        <section class="invoice">
+        <section class="invoice print">
             <!-- title row -->
             <div class="row">
                 <div class="col-xs-12">
@@ -236,14 +236,15 @@
                     <img src="{{asset('dist/img/brush_lunas.png')}}" class="status">
                 @endif
 
+        <a id="test" href="#"></a> 
             <!-- /.col -->
             </div>
             <!-- /.row -->
         </section>
         <!-- /.content -->
+       
     </div>
     <!-- ./wrapper -->
-
     <!-- jQuery 3 -->
     <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap 3.3.7 -->
@@ -270,9 +271,34 @@
     <!-- AdminLTE for demo purposes -->
     <script type="text/javascript">
         $(function() {
-            html2canvas(document.querySelector(".lebarkwitansi")).then(canvas => {
-                document.body.appendChild(canvas)
+            // html2canvas(document.querySelector(".lebarkwitansi")).then(canvas => {
+            //     document.body.appendChild(canvas)
+            // });
+
+            // var canvas = document.getElementById(".lebarkwitansi");
+            // var ctx = canvas.getContext("2d");
+            // var ox = canvas.width / 2;
+            // var oy = canvas.height / 2;
+            // ctx.font = "42px serif";
+            // ctx.textAlign = "center";
+            // ctx.textBaseline = "middle";
+            // ctx.fillStyle = "#800";
+            // ctx.fillRect(ox / 2, oy / 2, ox, oy);
+
+            // download_img = function(el) {
+            // var image = canvas.toDataURL("image/jpg");
+            // // el.href = image;
+            // };
+
+
+
+            html2canvas(document.querySelector(".print")).then(canvas => {
+                    // $('#capture').append(canvas);
+                    $('#test').attr('href', canvas.toDataURL('image/png'));
+                    $('#test').attr('download', '<?php echo $id ?>.png');
+                    $('#test')[0].click();
             });
+           
         })
     </script>
     

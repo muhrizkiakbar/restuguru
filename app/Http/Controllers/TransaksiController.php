@@ -189,7 +189,7 @@ class TransaksiController extends Controller
                         ->where('penjualan_id','=',$id)->get();
 
         $data=Angsuran::where('transaksipenjualan_id','=',$id)->get();
-        return view('report.reporttranspenjualanimage',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis, 'angsurans'=>$data]);
+        return view('report.reporttranspenjualanimage',['transaksi'=>$transaksi,'subtransaksis'=>$subtransaksis,'id'=>$id, 'angsurans'=>$data]);
 
     }
     /**

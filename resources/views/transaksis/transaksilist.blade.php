@@ -280,6 +280,7 @@
                                         <!-- <button type="button" class="modal_edit btn btn-success btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-edit"></i></button> -->
                                         <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
                                         <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
+                                        <button type="button" class="buttonprintjpg btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
                                     </div>
                                 </td>
                                 <td>{{$data->Nama_Cabang}}</td>
@@ -424,6 +425,11 @@
             window.open(url2, '_blank');
         }
 
+        function gotoreportjpg(protocol,url,id){
+            var url2 = protocol+'//'+url + '/transaksi/report_to_image/' + id;
+            window.open(url2, '_blank');
+        }
+
         function gotoreport2(protocol,url,id){
             var url2 = protocol+'//'+url + '/transaksi/angsuran/report/detail/' + id;
             window.open(url2, '_blank');
@@ -514,6 +520,11 @@
         $(document).on('click','.buttonprint',function () {
             id=$(this).data('id');
             gotoreport(location.protocol,document.domain,id);
+        });
+
+        $(document).on('click','.buttonprintjpg',function () {
+            id=$(this).data('id');
+            gotoreportjpg(location.protocol,document.domain,id);
         });
 
         $(document).on('click','.printbutton2',function () {
