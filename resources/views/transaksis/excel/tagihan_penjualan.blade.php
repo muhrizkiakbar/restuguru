@@ -128,14 +128,14 @@ bentuk penagihan kepada perusahaan anda dengan data sebagai berikut:</th></tr>
             <tr><td colspan="9">Total</td><td>0</td></tr>
         @else
             <tr><td colspan="9">Sisa Tagihan</td><td>{{$transaksis->sum('sisa_tagihan')}}</td></tr>
-            <tr><td colspan="9">PPN</td><td>{{$transaksis->sum('sisa_tagihan')*0.1}}</td></tr>
-            <tr><td colspan="9">Total</td><td>{{$transaksis->sum('total_harga')}}</td></tr>
+            <tr><td colspan="9">PPN</td><td>{{($transaksis->sum('sisa_tagihan')*0.1)}}</td></tr>
+            <tr><td colspan="9">Total</td><td>{{$transaksis->sum('sisa_tagihan')+($transaksis->sum('sisa_tagihan')*0.1)}}</td></tr>
         @endif
         <tr></tr>
-        <tr><td colspan="10">Pembayaran dapat dilakukan ke rekening dibawah : </td></tr>
+        <tr><td colspan="10">Pembayaran dapat dilakukan ke rekening dibawah ini : </td></tr>
         <tr><td colspan="10">REK. BANK MANDIRI BISNIS Atas nama CV. RESTU GURU PROMOSINDO </td></tr>
         <tr><td colspan="10">Rekening 031-00-1288777-7</td></tr>
-        <tr><td colspan="10">Demikian yang dapat kami sampaikan, besar harapan kita untuk dapat bekerjasama. Atas perhatiannya
+        <tr><td colspan="10">Demikian yang dapat kami sampaikan, besar harapan kami untuk terus bekerjasama dengan perusahaan anda. Atas perhatiannya
 kami mengucapkan terima kasih.</td></tr>
         <tr></tr>
         <tr></tr>
