@@ -298,7 +298,7 @@ class TagihanTransaksi implements FromView, WithCustomStartCell, WithDrawings, W
         $drawing->setDescription('This is my logo');
         $drawing->setPath(public_path('dist/img/kop.png'));
         $drawing->setResizeProportional(true);
-        $drawing->setHeight(202);
+        $drawing->setHeight(205);
         $drawing->setCoordinates('A1');
 
         return $drawing;
