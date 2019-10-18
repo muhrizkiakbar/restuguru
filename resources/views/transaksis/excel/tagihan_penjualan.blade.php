@@ -90,7 +90,7 @@ bentuk penagihan kepada perusahaan anda dengan data sebagai berikut:</th></tr>
             <th>Total</th>
         </tr>
         <tr>
-            <td style="word-break: break-all;">{{$transaksi->kode_cabang}}.{{$transaksi->id}}<br></td>
+            <td style="word-break: break-all;">{{$transaksi->kode_cabang}}.{{$transaksi->id}}</td>
             <td style="word-break: break-all;" colspan="7">{{date("d-m-Y",strtotime($transaksi->tanggal))}}</td>
             <td>{{$transaksi->sisa_tagihan}}</td>
             <td>{{$transaksi->total_harga}}</td>
