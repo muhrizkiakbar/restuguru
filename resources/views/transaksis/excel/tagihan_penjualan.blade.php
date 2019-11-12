@@ -171,7 +171,7 @@ kami mengucapkan terima kasih.</td></tr>
             <td></td>
             <td></td>
             <td></td>
-            <td colspan="2">Beti Sulistilawati</td>
+            <td colspan="2">Beti Susilawati</td>
         </tr>
     </tbody>
 </table>
