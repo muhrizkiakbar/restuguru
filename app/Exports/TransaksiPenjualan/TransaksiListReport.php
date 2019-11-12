@@ -81,7 +81,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->whereDay('Transaksi_Penjualans.tanggal','=',$this->tanggal)
                                             ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')         
                                             ->groupBy('Transaksi_Penjualans.id')
                                             ->orderBy('created_at','desc');
             }
@@ -106,7 +106,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.id','like','%'.$this->nonota.'%')
                                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')         
                                             ->orderBy('created_at','desc')
                                             ->groupBy('Transaksi_Penjualans.id');
             }
@@ -136,7 +136,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                             ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)  
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)                                      
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')                                         
                                             ->orderBy('created_at','desc')
                                             ->groupBy('Transaksi_Penjualans.id');
             }
@@ -166,7 +166,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)    
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)                                    
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')                                    
                                             ->groupBy('Transaksi_Penjualans.id')
                                             ->orderBy('created_at','desc');
             }
@@ -191,8 +191,8 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                               'Transaksi_Penjualans.pajak',
                                               'Transaksi_Penjualans.sisa_tagihan',
                                               'Transaksi_Penjualans.total_harga','Cabangs.Nama_Cabang','Users.username')
-                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)              
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)                                      
+                                            ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)   
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')                              
                                             ->groupBy('Transaksi_Penjualans.id')
                                             ->orderBy('created_at','desc');
             }
@@ -237,7 +237,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->whereDay('Transaksi_Penjualans.tanggal','=',$this->tanggal)
                                             ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')         
                                             ->orderBy('created_at','desc');
             }
             elseif ($this->periode=="semua"){
@@ -273,7 +273,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.id','like','%'.$this->nonota.'%')
                                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')         
                                             ->orderBy('created_at','desc');
             }
             elseif ($this->periode=="bulan"){
@@ -314,7 +314,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                             ->whereMonth('Transaksi_Penjualans.tanggal','=',$bulan)
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)  
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)                                      
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')                                              
                                             ->orderBy('created_at','desc');
             }
             elseif ($this->periode=="tahun")
@@ -355,7 +355,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                             ->where('Transaksi_Penjualans.nama_pelanggan','like','%'.$this->namapelanggan.'%')
                                             ->where('Transaksi_Penjualans.metode_pembayaran','like','%'.$pembayaran.'%')
                                             ->whereYear('Transaksi_Penjualans.tanggal','=',$tahun)         
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)                               
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')                        
                                             ->orderBy('created_at','desc');
             }
             else
@@ -392,7 +392,7 @@ class TransaksiListReport implements FromCollection, WithHeadings
                                               'Sub_Tpenjualans.keterangan'
                                               )
                                             ->where('Transaksi_Penjualans.cabang_id','=',Auth::user()->cabangs->id)                 
-                                            ->where('Transaksi_Penjualans.deleted_at','!=',null)                                   
+                                            ->whereNull('Transaksi_Penjualans.deleted_at')                                   
                                             ->orderBy('created_at','desc');
             } 
         }
