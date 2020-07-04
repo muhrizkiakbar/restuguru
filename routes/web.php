@@ -54,8 +54,8 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::get('/transaksi',['middleware' => ['permission:add-transaksipenjualan'], 'uses' => 'TransaksiController@transaksi'])->name('addtransaksiindex');
         Route::post('/transaksi/store',['middleware' => ['permission:add-transaksipenjualan'], 'uses' => 'TransaksiController@store'])->name('storetransaksi');
-        Route::get('/transaksi/list/edit/{id}',['middleware' => ['permission:edit-transaksipenjualan'], 'uses' => 'TransaksiController@show'])->name('edittransaksi');
-        Route::post('/transaksi/list/edit',['middleware' => ['permission:edit-transaksipenjualan'], 'uses' => 'TransaksiController@update'])->name('updatetransaksi');
+        Route::get('/transaksi/edit/{id}',['middleware' => ['permission:edit-transaksipenjualan'], 'uses' => 'TransaksiController@edit'])->name('edittransaksi');
+        Route::post('/transaksi/edit/{id}',['middleware' => ['permission:edit-transaksipenjualan'], 'uses' => 'TransaksiController@update'])->name('updatetransaksi');
         Route::post('/trasaksi/list/destroy',['middleware' => ['permission:delete-transaksipenjualan'], 'uses' => 'TransaksiController@destroytransaksi'])->name('destroytransaksi');
         Route::get('/produk/cari',['middleware' => ['permission:add-transaksipenjualan|edit-transaksipenjualan'], 'uses' => 'ProdukController@produkcari'])->name('produkcari');
         Route::get('/produk/harga',['middleware' => ['permission:add-transaksipenjualan|edit-transaksipenjualan'], 'uses' => 'ProdukController@produkharga'])->name('produkharga');

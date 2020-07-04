@@ -557,11 +557,14 @@ class AngsuranPengeluaranController extends Controller
             $transaksi->sisa_pengeluaran=$sisa;
             $transaksi->save();
 
-        if ($tableangsuran->delete())
-        {
-            $isi=Auth::user()->username." telah menghapus angsuran pengeluaran dengan No. Angsuran ".$tableangsuran->id."pada No. Transaksi Penjualan ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi,"delete");
-            return "{\"msg\":\"success\"}";
+        $tableangsuran->reason_on_delete = $request->json('reason_on_delete');
+        if ($tableangsuran->save()) {
+          if ($tableangsuran->delete())
+          {
+              $isi=Auth::user()->username." telah menghapus angsuran pengeluaran dengan No. Angsuran ".$tableangsuran->id."pada No. Transaksi Penjualan ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+              $save=$this->createlog($isi,"delete");
+              return "{\"msg\":\"success\"}";
+          }
         }
         else
         {

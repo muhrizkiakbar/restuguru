@@ -1133,16 +1133,19 @@ class PengeluaranController extends Controller
             }
         }
         
-        if ($table->delete()){
-            
+        $table->reason_on_delete = $request->json('reason_on_delete');
+        if ($table->save()) {
+          if ($table->delete()){
+              
 
 
-            $tableangsuran=Angsuran_Pengeluarans::where('transaksipengeluaran_id','=',$id)
-                        ->delete();
+              $tableangsuran=Angsuran_Pengeluarans::where('transaksipengeluaran_id','=',$id)
+                          ->delete();
 
-            $isi=Auth::user()->username." telah menghapus transaksi pengeluaran dengan Nota ".$table->id." di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-            $save=$this->createlog($isi,"delete");
-            return "{\"msg\":\"success\"}";
+              $isi=Auth::user()->username." telah menghapus transaksi pengeluaran dengan Nota ".$table->id." di cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+              $save=$this->createlog($isi,"delete");
+              return "{\"msg\":\"success\"}";
+          }
         }
         else
         {

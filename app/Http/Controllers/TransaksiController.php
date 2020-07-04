@@ -992,17 +992,20 @@ class TransaksiController extends Controller
         }
         // dd($stokbahanbakustatus);
         if ($stokbahanbakustatus){
-            if ($table->delete()){
-                $tableangsuran=Angsuran::where('transaksipenjualan_id','=',$id)
-                            ->delete();
-    
-                $isi=Auth::user()->username." telah menghapus transaksi penjualan dengan No. ".$id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-                $save=$this->createlog($isi,"delete");
-                return "{\"msg\":\"success\"}";
-            }
-            else
-            {
-                return "{\"msg\":\"failed\"}";
+            $table->reason_on_delete = $request->json('reason_on_delete');
+            if ($table->save()) {
+                if ($table->delete()){
+                    $tableangsuran=Angsuran::where('transaksipenjualan_id','=',$id)
+                                ->delete();
+        
+                    $isi=Auth::user()->username." telah menghapus transaksi penjualan dengan No. ".$id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+                    $save=$this->createlog($isi,"delete");
+                    return "{\"msg\":\"success\"}";
+                }
+                else
+                {
+                    return "{\"msg\":\"failed\"}";
+                }
             }
         }else{
             return "{\"msg\":\"failed\"}";
@@ -1050,9 +1053,11 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id,Request $request)
     {
-        //
+      //
+      $transaksi = CTransaksi_Penjualans::where('id','=',decrypt($id))->first();
+      return view('transaksis.edittransaksi',['transaksi'=>$transaksi]);
     }
 
     /**
