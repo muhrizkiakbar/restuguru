@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Mail;
+use App\Mail\NotificationDeletedEmail;
 
 class Controller extends BaseController
 {
@@ -21,14 +22,14 @@ class Controller extends BaseController
         $table = new CActivityLog;
         $table->log = $log;
         $table->category = $category;
+        $table->save();
 
-        Mail::send('email', ['nama' => $request->nama, 'pesan' => $request->pesan], function ($message) use ($request)
+        if ($category=="delete")
         {
-            $message->subject($request->judul);
-            $message->from('donotreply@kiddy.com', 'Kiddy');
-            $message->to($request->email);
-        });
+            Mail::to('development.restuguru@gmail.com')->queue(new NotificationDeletedEmail($log));
+        }
 
-        return $table->save();
+
+        return true ;
     }
 }
