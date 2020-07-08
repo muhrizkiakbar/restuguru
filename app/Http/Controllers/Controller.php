@@ -26,7 +26,7 @@ class Controller extends BaseController
 
         if ($category=="delete")
         {
-            Mail::to('development.restuguru@gmail.com')->queue(new NotificationDeletedEmail($log));
+            Mail::to('rizkiakbarzein@gmail.com')->queue(new NotificationDeletedEmail($log));
         }
 
 
