@@ -15,9 +15,9 @@ class CProduks extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function sub_penjualan()
+    public function sub_penjualans()
     {
-        return $this->belongsTo('App\CSub_Tpenjualans');
+        return $this->hasMany('App\CSub_Tpenjualans', 'produk_id', 'id');
     }
 
 

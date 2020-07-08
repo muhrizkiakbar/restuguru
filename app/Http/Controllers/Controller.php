@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Mail;
 
 class Controller extends BaseController
 {
@@ -20,6 +21,14 @@ class Controller extends BaseController
         $table = new CActivityLog;
         $table->log = $log;
         $table->category = $category;
+
+        Mail::send('email', ['nama' => $request->nama, 'pesan' => $request->pesan], function ($message) use ($request)
+        {
+            $message->subject($request->judul);
+            $message->from('donotreply@kiddy.com', 'Kiddy');
+            $message->to($request->email);
+        });
+
         return $table->save();
     }
 }

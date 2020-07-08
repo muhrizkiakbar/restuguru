@@ -15,4 +15,5 @@ class Transaksi_Pengeluaran extends Model
 
     protected $dates = ['deleted_at'];
 
+
 }
