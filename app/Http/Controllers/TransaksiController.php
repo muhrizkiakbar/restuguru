@@ -1057,8 +1057,9 @@ class TransaksiController extends Controller
     {
       //
       $transaksi = CTransaksi_Penjualans::where('id','=',decrypt($id))->first();
+      $produks=CProduks::all();
     //   dd($transaksi->sub_penjualans());
-      return view('transaksis.transaksiedit',['transaksi'=>$transaksi]);
+      return view('transaksis.transaksiedit',['transaksi'=>$transaksi, 'produks'=>$produks]);
     }
 
     /**
