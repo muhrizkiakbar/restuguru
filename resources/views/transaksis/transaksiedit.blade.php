@@ -1019,7 +1019,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type:'POST',
-            url:'{{route('updatetransaksi')}}' + '{{encrypt($transaksi->id)}}',
+            url:'{{route('updatetransaksi', ['id'=> encrypt($transaksi->id)])}}',
             data: transaction,
             async: false,
             processData: false,
