@@ -15,4 +15,8 @@ class Angsuran extends Model
 
     protected $dates = ['deleted_at'];
 
+    public function penjualan()
+    {
+      $this->belongsTo("App\CTransaksi_Penjualans");
+    }
 }

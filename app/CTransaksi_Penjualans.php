@@ -21,4 +21,9 @@ class CTransaksi_Penjualans extends Model
         return $this->hasMany('App\CSub_Tpenjualans', 'penjualan_id', 'id');
     }
 
+    public function angsurans()
+    {
+      return $this->hasMany('App\Angsuran', 'penjualan_id', 'id');
+    }
+
 }

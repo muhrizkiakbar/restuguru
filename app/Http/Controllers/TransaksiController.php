@@ -229,14 +229,6 @@ class TransaksiController extends Controller
         //
         $nonow=CTransaksi_Penjualans::withTrashed()->latest()->first();
         
-        if ($nonow==null){
-            $nonota=1;
-            // return $nonota;
-        }
-        else
-        {
-            $nonota=$nonow->id+1;
-        }
         // dd($nonota);
         // dd($request->json('inputpelanggan'));
         $transaksi= new CTransaksi_Penjualans;
@@ -414,7 +406,7 @@ class TransaksiController extends Controller
             if ($subtransaksi->save()){
 
                 $isi=Auth::user()->username." telah menambah transaksi penjualan dengan No. ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-                $save=$this->createlog($isi,"add");
+                $this->createlog($isi,"add");
                 $status="Success";
             }else
             {
@@ -1075,6 +1067,7 @@ class TransaksiController extends Controller
         // dd($nonota);
         $transaksi=CTransaksi_Penjualans::where('id','=',decrypt($request->json('inputtransaksiid')))
                         ->first();
+        $sum_angsuran = $transaksi->angsurans()->sum('nominal_angsuran');
 
         $transaksi->total_harga=$request->json('inputtotal');
         $transaksi->diskon=$request->json('inputdiskon');
@@ -1082,7 +1075,7 @@ class TransaksiController extends Controller
         $transaksi->jumlah_pembayaran=$request->json('inputbayardp');
         $transaksi->sisa_tagihan=$request->json('inputsisa');
         $transaksi->pajak=$request->json('inputpajak');        
-        $transaksi->user_id=1;
+        $transaksi->user_id=Auth::user()->id;
         $transaksi->save();
             
 
