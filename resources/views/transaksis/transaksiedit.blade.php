@@ -103,7 +103,7 @@
             <div class="col-md-12">
               <div class="box box-warning">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Penjualan <i class="fa  fa-shopping-cart"></i></h3>
+                  <h3 class="box-title">Edit Penjualan <i class="fa  fa-shopping-cart"></i></h3>
                 </div>
 
                   <div class="row">
@@ -490,35 +490,6 @@
             </div>
             <!-- /.modal-dialog -->
           </div>
-
-        <!--
-          <p>{{ $transaksi->id }}</p>       
-          <p>{{ $transaksi->nama_perusahaan }}</p>       
-          <p>{{ $transaksi->hp_pelanggan }}</p>       
-          <p>{{ $transaksi->tanggal }}</p>       
-          <p>{{ $transaksi->total_harga }}</p>       
-          <p>{{ $transaksi->diskon }}</p>       
-          <p>{{ $transaksi->metode_pembayaran }}</p>       
-          <p>{{ $transaksi->jumlah_pembayaran }}</p>       
-          <p>{{ $transaksi->sisa_tagihan }}</p>
-          <p>{{ $transaksi->pajak }}</p>
-                 
-          <p>=======</p>
-
-          @foreach ($transaksi->sub_penjualans()->get() as $key=>$data)
-            <p>{{ $data->produk->nama_produk }}</p>
-            <p>{{ $data->harga_satuan }}</p>
-            <p>{{ $data->panjang }}</p>
-            <p>{{ $data->lebar }}</p>
-            <p>{{ $data->satuan }}</p>
-            <p>{{ $data->banyak }}</p>
-            <p>{{ $data->subtotal }}</p>
-            <p>{{ $data->diskon }}</p>
-            <p>{{ $data->finishing }}</p>
-            <p>{{ $data->subtotal }}</p>
-            <p>{{ $data->keterangan }}</p>
-          @endforeach
-        -->
         </section>
             <!-- /.content -->
         </div>
@@ -678,7 +649,6 @@
       $('.val-quantity').blur(function() { $(this).val(convert.toNumber($(this).val().replace(/[.,\s]/g,''))) });
 
       $('.val-percentage, .val-currency, .val-metric, .val-quantity').focus(function() { $(this).val('') });
-      console.log(transaction);
     </script>
 
     <script>
@@ -1260,21 +1230,26 @@
         if (transaction.purchased.after.paidOff > transaction.purchased.after.amount) {
           swal("Gagal", "Pembayaran DP lebih dari total.", "error");
         } else {
-          console.log(transaction);
-          // $.ajax({
-          //   headers: {
-          //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          //   },
-          //   type:'POST',
-          //   url:'{{route('updatetransaksi', ['id'=> encrypt($transaksi->id)])}}',
-          //   data: transaction,
-          //   async: false,
-          //   processData: false,
-          //   contentType: 'application/json; charset=utf-8',
-          //   success:function(response){
-          //     console.log('ok');
-          //   },
-          // })
+          $.ajax({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'POST',
+            url:'{{route('updatetransaksi', ['id'=> encrypt($transaksi->id)])}}',
+            data: transaction,
+            async: false,
+            processData: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function(response){
+              swal("Berhasil !", "Berhasil mengubah transaksi !", "success")
+              .then(function(value) {
+                window.location = '{{route('transaksilist')}}'
+              })
+            },
+            error: function(response) {
+              swal("Error !", "Gagal mengubah transaksi !", "error");
+            }
+          })
         }
       })
     </script>
