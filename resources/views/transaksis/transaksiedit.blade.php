@@ -567,6 +567,7 @@
               @foreach ($transaksi->sub_penjualans()->get() as $key=>$data)
                 {
                   rowId: '{{$loop->iteration}}',
+                  id: '{{encrypt($data->id)}}',
                   productId: '{{ $data->produk->id }}',
                   productName: '{{ $data->produk->nama_produk }}',
                   metric: '{{ $data->satuan }}',
@@ -594,6 +595,7 @@
               @foreach ($transaksi->sub_penjualans()->get() as $key=>$data)
                 {
                   rowId: '{{$loop->iteration}}',
+                  id: '{{encrypt($data->id)}}',
                   productId: '{{ $data->produk->id }}',
                   productName: '{{ $data->produk->nama_produk }}',
                   metric: '{{ $data->satuan }}',
@@ -1236,7 +1238,7 @@
             },
             type:'POST',
             url:'{{route('updatetransaksi', ['id'=> encrypt($transaksi->id)])}}',
-            data: transaction,
+            data: JSON.stringify(transaction),
             async: false,
             processData: false,
             contentType: 'application/json; charset=utf-8',

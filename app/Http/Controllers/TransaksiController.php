@@ -1002,6 +1002,7 @@ class TransaksiController extends Controller
         }else{
             return "{\"msg\":\"failed\"}";
         }
+
         
 
     }
@@ -1061,116 +1062,100 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update($id,Request $request)
     {
+      //
         //
         
         // dd($nonota);
-        $transaksi=CTransaksi_Penjualans::where('id','=',decrypt($request->json('inputtransaksiid')))
+        $detail_befores = $this->decrypt_attribute($request->json('purchased')["before"]["items"]);
+        $detail_afters = $this->decrypt_attribute($request->json("purchased")["after"]["items"]);
+
+        $datareturn=[];
+
+        $transaksi=CTransaksi_Penjualans::where('id','=',decrypt($request->json('id')))
                         ->first();
-        $sum_angsuran = $transaksi->angsurans()->sum('nominal_angsuran');
 
-        $transaksi->total_harga=$request->json('inputtotal');
-        $transaksi->diskon=$request->json('inputdiskon');
-        $transaksi->metode_pembayaran=$request->json('inputpembayaran');
-        $transaksi->jumlah_pembayaran=$request->json('inputbayardp');
-        $transaksi->sisa_tagihan=$request->json('inputsisa');
-        $transaksi->pajak=$request->json('inputpajak');        
+        $transaksi->total_harga=$request->json("purchased")["after"]["amountItems"];
+        $transaksi->diskon=$request->json("purchased")["after"]["discount"];
+        $transaksi->metode_pembayaran=$request->json("purchased")["after"]["pmentMethod"];
+        $transaksi->jumlah_pembayaran=$request->json("purchased")["after"]["paidOff"];
+        $transaksi->sisa_tagihan=$request->json("purchased")["after"]["debit"];
+        $transaksi->pajak=$request->json("purchased")["after"]["tax"];        
         $transaksi->user_id=Auth::user()->id;
-        $transaksi->save();
-            
-
-        $detailitem=[];
-        foreach ($request->json('jsonprodukid') as $keyproduk=> $dataprodukid){
-            $subdetail=[];
-            
-            $subdetail['id']=$dataprodukid['value'];
-            // dd($request->json('jsonsubtransid'));
-            foreach ($request->json('jsonsubtransid') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['subtransid']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonharga') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['harga']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonpanjang') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['panjang']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonlebar') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['lebar']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonkuantitas') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['kuantitas']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonfinishing') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['finishing']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsondiskon') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['diskonnow']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonketerangan') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['keterangan']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonsubtotal') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['subtotal']=$data['value'];
-                }
-            }
-            foreach ($request->json('jsonsatuan') as $key=>$data){
-                if ($key==$keyproduk){
-                    $subdetail['satuan']=$data['value'];
-                }
-            }
-            array_push($detailitem,$subdetail);
+        if ($transaksi->save())
+        {
+          $datareturn['status']="Success";
+          $datareturn['id']=encrypt($transaksi->id);
+          $isi=Auth::user()->username." telah mengedit transaksi penjualan dengan No. ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
+          $save=$this->createlog($isi,"edit");
+        }    
+        else
+        {
+        
+          $datareturn['status']="Failed";
+          $datareturn['id']=encrypt($transaksi->id);
+          return $datareturn;
         }
-        $deletesubpenjualan=CSub_Tpenjualans::where('penjualan_id','=',decrypt($request->json('inputtransaksiid')))->forceDelete();
 
-        foreach ($detailitem as $key=>$value){
-            // dd($value['subtransid']);
-            // $subtransaksi=CSub_Tpenjualans::where('id','=',$value['subtransid'])->first();
+        $must_delete=[];
+        foreach ($detail_befores as $key => $detail_before)
+        {
+
+          if  (array_search($detail_before["id"],$detail_afters[$key])=="id") 
+          {
+            //change data
+            
+          }
+          else
+          {
+            //remove data
+            array_push($must_delete,$detail_before["id"]);
+          }
+        }
+
+        CSub_Tpenjualans::whereIn('id', $must_delete)->delete();
+
+        foreach ($detail_afters as $detail_after)
+        {
+          if ($detail_after["id"]==null)
+          {
             $subtransaksi=new CSub_Tpenjualans;
             $subtransaksi->penjualan_id=$transaksi->id;
-            $subtransaksi->produk_id=$value['id'];
-            $subtransaksi->harga_satuan=$value['harga'];
-            $subtransaksi->panjang=$value['panjang'];
-            $subtransaksi->lebar=$value['lebar'];
-            $subtransaksi->banyak=$value['kuantitas'];
-            $subtransaksi->keterangan=$value['keterangan'];
-            $subtransaksi->user_id=1;
-            $subtransaksi->subtotal=$value['subtotal'];
-            $subtransaksi->finishing=$value['finishing'];
-            $subtransaksi->satuan=$value['satuan'];
-            $subtransaksi->diskon=$value['diskonnow'];
+            $subtransaksi->produk_id=$detail_after["diskon"];
+            $subtransaksi->harga_satuan=$detail_after["price"];
+            $subtransaksi->panjang=$detail_after["width"];
+            $subtransaksi->lebar=$detail_after["length"];
+            $subtransaksi->banyak=$detail_after["quantity"];
+            $subtransaksi->keterangan=$detail_after["info"];
+            $subtransaksi->user_id=Auth::user()->id;
+            $subtransaksi->subtotal=$detail_after["totalPrice"];
+            $subtransaksi->finishing=$detail_after["finishing"];
+            $subtransaksi->satuan=$detail_after["metric"];
+            $subtransaksi->diskon=$detail_after["discount"];
+            $subtransaksi->save();
+          }
+          else
+          {
+            $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_after["id"])->first();
+            $subtransaksi->produk_id=$detail_after["diskon"];
+            $subtransaksi->harga_satuan=$detail_after["price"];
+            $subtransaksi->panjang=$detail_after["width"];
+            $subtransaksi->lebar=$detail_after["length"];
+            $subtransaksi->banyak=$detail_after["quantity"];
+            $subtransaksi->keterangan=$detail_after["info"];
+            $subtransaksi->user_id=Auth::user()->id;
+            $subtransaksi->subtotal=$detail_after["totalPrice"];
+            $subtransaksi->finishing=$detail_after["finishing"];
+            $subtransaksi->satuan=$detail_after["metric"];
+            $subtransaksi->diskon=$detail_after["discount"];
+            $subtransaksi->save();
+          }
             
-            if ($subtransaksi->save()){
 
-                $isi=Auth::user()->username." telah mengedit transaksi penjualan dengan No. ".decrypt($request->json('inputtransaksiid'))." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-                $save=$this->createlog($isi,"edit");
-                $status="Success";
-            }else
-            {
-                $status="Failed";                
-            }
-            
         }
-        $datareturn=[];
-        $datareturn['status']=$status;
-        $datareturn['id']=encrypt($transaksi->id);
+
+
         return $datareturn;
     }
 
@@ -1324,6 +1309,18 @@ class TransaksiController extends Controller
         return $pelanggans;
     }
 
+    private function decrypt_attribute($arr)
+    {
+      foreach ($arr as $key => $data ) 
+      {
+        if ($arr[$key]["id"]!=null)
+        {
+          $arr[$key]["id"] = decrypt($data["id"]);
+        }
+      }
+
+      return $arr;
+    }
 
    
 }
