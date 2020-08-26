@@ -324,6 +324,10 @@
                                 </h4>
                                 {{csrf_field()}}
                                 Yakin ingin menghapus transaksi dengan nomor nota #<span class="labelnota"></span> a.n <span class="labelpelanggan"></span>?
+                                <div class="form-group">
+                                    <label class="text-white">Alasan</label>
+                                    <textarea name="delete-reason" id="delete-reason" rows="3" class="form-control"></textarea>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -698,42 +702,47 @@
         });
 
         $(document).on('click','#deleteitem',function (){
-            $('#deleteitem').attr('disabled',true);
             var token=$('input[name="_token"]').val();
-            $.ajax({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type:'POST',
-                url:'{{route('destroytransaksi')}}',
-                data: JSON.stringify({id:idtrans,_token:token}),
-                dataType:'json',
-                async:false,
-                processData: false,
-                contentType: false,
-                success:function(response){
-                        // console.log(response['msg']);
-                        if (response['msg']=="success"){
-                            swal("Berhasil !", "Berhasil menghapus transaksi !", "success");
-                            $('#'+idbaris+'').remove();
-                            $('#modal_delete').modal('hide');
-                        }
-                        else if (response['msg']=="failed") {
-                            swal("Error !", "Gagal menghapus transaksi !", "error");
-                            $('#modal_delete').modal('hide');
-
-                        }
-                        else
-                        {
-                            swal("Gagal !",response['msg'], "error");
-                            $('#modal_delete').modal('hide'); 
-                        }
-                },
-                error:function(response){
-                            swal("Error !", "Gagal menghapus transaksi !", "error");
-                            $('#modal_delete').modal('hide');
-                }
-            });
+            var reason = $('#delete-reason').val();
+            if (reason != '') {
+                
+                $.ajax({
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type:'POST',
+                    url:'{{route('destroytransaksi')}}',
+                    data: JSON.stringify({id:idtrans, _token:token, reason: reason}),
+                    dataType:'json',
+                    async:false,
+                    processData: false,
+                    contentType: false,
+                    success:function(response){
+                            // console.log(response['msg']);
+                            if (response['msg']=="success"){
+                                swal("Berhasil !", "Berhasil menghapus transaksi !", "success");
+                                $('#deleteitem').attr('disabled',true);
+                                $('#'+idbaris+'').remove();
+                                $('#modal_delete').modal('hide');
+                            }
+                            else if (response['msg']=="failed") {
+                                swal("Error !", "Gagal menghapus transaksi !", "error");
+                                $('#modal_delete').modal('hide');
+                            }
+                            else
+                            {
+                                swal("Gagal !",response['msg'], "error");
+                                $('#modal_delete').modal('hide');
+                            }
+                    },
+                    error:function(response){
+                                swal("Error !", "Gagal menghapus transaksi !", "error");
+                                $('#modal_delete').modal('hide');
+                    }
+                });
+            } else {
+                swal("Error !", "Alasan Wajib diisi !", "error");
+            }
 
 
         });

@@ -103,7 +103,7 @@
             <div class="col-md-12">
               <div class="box box-warning">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Penjualan <i class="fa  fa-shopping-cart"></i></h3>
+                  <h3 class="box-title">Edit Penjualan <i class="fa  fa-shopping-cart"></i></h3>
                 </div>
 
                   <div class="row">
@@ -170,16 +170,16 @@
                                   <div class="btn-group">
                                     <button 
                                       type="button" 
-                                      class="modal_edit btn btn-success btn-sm" 
-                                      data-toggle="modal" 
-                                      data-target="#modal_edit">
+                                      class="modal_edit btn btn-success btn-sm"
+                                      data-id="{{$loop->iteration}}">
                                       <i class="fa fa-edit"></i>
                                     </button>
                                     <button 
                                       type="button" 
                                       class="modal_delete btn btn-danger btn-sm" 
                                       data-toggle="modal" 
-                                      data-target="#modal_delete">
+                                      data-target="#modal_delete"
+                                      data-id="{{$loop->iteration}}">
                                       <i class="fa fa-trash"></i>
                                     </button>
                                   </div>
@@ -208,7 +208,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label>Diskon %
-                                    <input id="diskon" name="diskon" value="{{ $transaksi->diskon }}" placeholder="0,00%" class="form-control val-percentage" type="text">
+                                    <input id="diskon" name="diskon" value="{{ $transaksi->diskon }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
                                 </label>                                  
                             </div>
                             <div class="col-md-3">
@@ -227,7 +227,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label>Bayar
-                                    <input id="bayardp" name="bayardp" value="{{ $transaksi->jumlah_pembayaran }}" placeholder="Rp 0" class="form-control val-currency" type="text">
+                                    <input id="bayardp" name="bayardp" value="{{ $transaksi->jumlah_pembayaran }}" placeholder="Rp 0" class="form-control val-currency" type="text" autocomplete="off">
                                 </label>                                  
                             </div>
                             <div class="col-md-3">
@@ -272,7 +272,7 @@
                             </div>
                             <div class="col-md-3">
                                   <label>Pajak %
-                                      <input id="pajak" name="pajak"  value="{{ $transaksi->pajak }}" placeholder="0,00%" class="form-control val-percentage" type="text">
+                                      <input id="pajak" name="pajak"  value="{{ $transaksi->pajak }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
                                   </label>                     
                             </div>
                             <div class="col-md-3">
@@ -287,7 +287,7 @@
                     <div class="row">
                         <div class="col-md-12">
                           <div class="btn-grp pull-right">                           
-                              <button type="button" id="transaksibaru" class="btn btn-warning btn-sm"><i class="fa fa-cart-plus"> </i> Transaksi Baru</button>
+                              <!--button type="button" id="transaksibaru" class="btn btn-warning btn-sm"><i class="fa fa-cart-plus"> </i> Transaksi Baru</!--button-->
                               <button type="button" id="submittransaksi" class="btn btn-success btn-sm"><i class="fa fa-check-circle"> </i> Simpan</button> 
                           </div>
                               
@@ -322,16 +322,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Harga</label>
-                                    <input id="add_harga" name="add_harga" class="form-control val-currency" type="text">
+                                    <input id="add_harga" name="add_harga" class="form-control val-currency" type="text" autocomplete="off">
                                     <!-- {{csrf_field()}} -->
                                 </div>
                                 <div class="form-group">
                                     <label>P</label>
-                                    <input id="add_panjang" name="add_panjang" class="form-control pull-right val-metric" type="text">
+                                    <input id="add_panjang" name="add_panjang" class="form-control pull-right val-metric" type="text" autocomplete="off">
                                 </div>
                                 <div class="form-group">
                                     <label>L</label>
-                                    <input id="add_lebar" name="add_lebar" class="form-control pull-right val-metric" type="text">
+                                    <input id="add_lebar" name="add_lebar" class="form-control pull-right val-metric" type="text" autocomplete="off">
                                 </div>
                                 <div class="form-group">
                                     <label>Satuan  :</label>
@@ -342,7 +342,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Kuantitas</label>
-                                    <input id="add_kuantitas" name="add_kuantitas" class="form-control pull-right val-metric" type="text">
+                                    <input id="add_kuantitas" name="add_kuantitas" class="form-control pull-right val-quantity" type="text" autocomplete="off">
                                 </div>
                                 <div class="form-group">
                                     <label>Finishing</label>
@@ -361,11 +361,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Diskon %</label>
-                                    <input id="add_diskon" name="add_diskon" class="form-control pull-right val-percentage" type="text">
+                                    <input id="add_diskon" name="add_diskon" class="form-control pull-right val-percentage" type="text" autocomplete="off">
                                 </div>
                                 <div class="form-group">
                                     <label>Subtotal</label>
-                                    <input id="add_subtotal" name="add_subtotal" readonly class="form-control pull-right val-currency" type="text">
+                                    <input id="add_subtotal" name="add_subtotal" disabled class="form-control pull-right val-currency" type="text">
                                 </div>
                                 <!-- /.form-group -->
                             </div>
@@ -404,15 +404,15 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Harga</label>
-                                          <input id="edit_harga" name="edit_harga" class="form-control val-currency edit-input" type="text">
+                                          <input id="edit_harga" name="edit_harga" class="form-control val-currency edit-input" type="text" autocomplete="off">
                                       </div>
                                       <div class="form-group">
                                           <label>P</label>
-                                          <input id="edit_panjang" name="edit_panjang" class="form-control pull-right val-metric edit-input" type="text">
+                                          <input id="edit_panjang" name="edit_panjang" class="form-control pull-right val-metric edit-input" type="text" autocomplete="off">
                                       </div>
                                       <div class="form-group">
                                           <label>L</label>
-                                          <input id="edit_lebar" name="edit_lebar" class="form-control pull-right val-metric edit-input" type="text">
+                                          <input id="edit_lebar" name="edit_lebar" class="form-control pull-right val-metric edit-input" type="text" autocomplete="off">
                                       </div>
                                       <div class="form-group">
                                           <label>Satuan  :</label>
@@ -424,7 +424,7 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Kuantitas</label>
-                                          <input id="edit_kuantitas" name="edit_kuantitas" class="form-control pull-right edit-input" type="text">
+                                          <input id="edit_kuantitas" name="edit_kuantitas" class="form-control pull-right edit-input val-quantity" type="text" autocomplete="off">
                                       </div>
                                       <div class="form-group">
                                           <label>Finishing</label>
@@ -443,11 +443,11 @@
                                       </div>
                                       <div class="form-group">
                                           <label>Diskon %</label>
-                                          <input id="edit_diskon" name="edit_diskon" class="form-control pull-right edit-input val-percentage" type="text">
+                                          <input id="edit_diskon" name="edit_diskon" class="form-control pull-right edit-input val-percentage" type="text" autocomplete="off">
                                       </div>
                                       <div class="form-group">
                                           <label>Subtotal</label>
-                                          <input id="edit_subtotal" name="edit_subtotal" readonly class="form-control pull-right val-currency" type="text">
+                                          <input id="edit_subtotal" name="edit_subtotal" disabled class="form-control pull-right val-currency" type="text">
                                       </div>
                                       <!-- /.form-group -->
                                   </div>
@@ -456,7 +456,7 @@
                       <div class="modal-footer">
                           
                           <button type="button" class="btn btn-default pull-left" id="closeitem" data-dismiss="modal">Keluar</button>
-                          <button type="button" id="edititem" class="btn btn-success" disabled>Simpan</button>
+                          <button type="button" id="edititem" class="btn btn-success">Simpan</button>
                       </div>
                   </div>
                   <!-- /.modal-content -->
@@ -490,35 +490,6 @@
             </div>
             <!-- /.modal-dialog -->
           </div>
-
-        <!--
-          <p>{{ $transaksi->id }}</p>       
-          <p>{{ $transaksi->nama_perusahaan }}</p>       
-          <p>{{ $transaksi->hp_pelanggan }}</p>       
-          <p>{{ $transaksi->tanggal }}</p>       
-          <p>{{ $transaksi->total_harga }}</p>       
-          <p>{{ $transaksi->diskon }}</p>       
-          <p>{{ $transaksi->metode_pembayaran }}</p>       
-          <p>{{ $transaksi->jumlah_pembayaran }}</p>       
-          <p>{{ $transaksi->sisa_tagihan }}</p>
-          <p>{{ $transaksi->pajak }}</p>
-                 
-          <p>=======</p>
-
-          @foreach ($transaksi->sub_penjualans()->get() as $key=>$data)
-            <p>{{ $data->produk->nama_produk }}</p>
-            <p>{{ $data->harga_satuan }}</p>
-            <p>{{ $data->panjang }}</p>
-            <p>{{ $data->lebar }}</p>
-            <p>{{ $data->satuan }}</p>
-            <p>{{ $data->banyak }}</p>
-            <p>{{ $data->subtotal }}</p>
-            <p>{{ $data->diskon }}</p>
-            <p>{{ $data->finishing }}</p>
-            <p>{{ $data->subtotal }}</p>
-            <p>{{ $data->keterangan }}</p>
-          @endforeach
-        -->
         </section>
             <!-- /.content -->
         </div>
@@ -672,51 +643,84 @@
       $('.val-currency').each(function() {$(this).val(convert.toIDR($(this).val())) });
       $('.val-percentage').each(function() {$(this).val(convert.toFixed($(this).val()) + ' %') });
       $('.val-metric').each(function() { $(this).val(convert.toFixed($(this).val())) });
+      $('.val-quantity').each(function() { $(this).val(convert.toNumber($(this).val())) });
 
       $('.val-currency').blur(function() {$(this).val(convert.toIDR($(this).val())) });
       $('.val-percentage').blur(function() {$(this).val(convert.toFixed($(this).val()) + ' %');});
       $('.val-metric').blur(function() { $(this).val(convert.toFixed($(this).val())) });
+      $('.val-quantity').blur(function() { $(this).val(convert.toNumber($(this).val().replace(/[.,\s]/g,''))) });
 
-      $('.val-percentage, .val-currency, .val-metric').focus(function() { $(this).val('') });
-      console.log(transaction);
+      $('.val-percentage, .val-currency, .val-metric, .val-quantity').focus(function() { $(this).val('') });
     </script>
 
     <script>
-      var appendTr = function(data) {
+      var appendTr = function(data, event) {
         var prefix = (data.metric === 'METER') ? 'm' : 'cm';
         var w = (data.width !== 0) ? (convert.toFixed(data.width) + ' ' + prefix ) : '-';
         var l = (data.length !== 0) ? (convert.toFixed(data.length) + ' ' + prefix ) : '-';
-        return (
-          '<tr id="'+data.rowId+'">\
-            <td>'+data.productName+'</td>\
-            <td class="td-currency">'+convert.toIDR(data.price)+'</td>\
-            <td class="td-units">'+w+'</td>\
-            <td class="td-units">'+l+'</td>\
-            <td>'+data.quantity+'</td>\
-            <td>'+data.finishing+'</td>\
-            <td>'+data.info+'</td>\
-            <td class="td-discount">'+convert.toFixed(data.discount)+' %</td>\
-            <td class="td-currency">'+convert.toIDR(data.totalPrice)+'</td>\
-            <td>\
-              <div class="btn-group">\
-                <button \
-                  type="button" \
-                  class="modal_edit btn btn-success btn-sm" \
-                  data-toggle="modal" \
-                  data-target="#modal_edit">\
-                  <i class="fa fa-edit"></i>\
-                </button>\
-                <button \
-                  type="button" \
-                  class="modal_delete btn btn-danger btn-sm" \
-                  data-toggle="modal" \
-                  data-target="#modal_delete">\
-                  <i class="fa fa-trash"></i>\
-                </button>\
-              </div>\
-            </td>\
-          </tr>'
-        )
+        if (event == 'add') {
+          return (
+            '<tr id="'+data.rowId+'">\
+              <td>'+data.productName+'</td>\
+              <td class="td-currency">'+convert.toIDR(data.price)+'</td>\
+              <td class="td-units">'+w+'</td>\
+              <td class="td-units">'+l+'</td>\
+              <td>'+data.quantity+'</td>\
+              <td>'+data.finishing+'</td>\
+              <td>'+data.info+'</td>\
+              <td class="td-discount">'+convert.toFixed(data.discount)+' %</td>\
+              <td class="td-currency">'+convert.toIDR(data.totalPrice)+'</td>\
+              <td>\
+                <div class="btn-group">\
+                  <button \
+                    type="button" \
+                    class="modal_edit btn btn-success btn-sm" \
+                    data-id="'+data.rowId+'">\
+                    <i class="fa fa-edit"></i>\
+                  </button>\
+                  <button \
+                    type="button" \
+                    class="modal_delete btn btn-danger btn-sm" \
+                    data-toggle="modal" \
+                    data-target="#modal_delete" \
+                    data-id="'+data.rowId+'">\
+                    <i class="fa fa-trash"></i>\
+                  </button>\
+                </div>\
+              </td>\
+            </tr>'
+          )
+        } else if (event == 'edit') {
+          return (
+            '<td>'+data.productName+'</td>\
+             <td class="td-currency">'+convert.toIDR(data.price)+'</td>\
+             <td class="td-units">'+w+'</td>\
+             <td class="td-units">'+l+'</td>\
+             <td>'+data.quantity+'</td>\
+             <td>'+data.finishing+'</td>\
+             <td>'+data.info+'</td>\
+             <td class="td-discount">'+convert.toFixed(data.discount)+' %</td>\
+             <td class="td-currency">'+convert.toIDR(data.totalPrice)+'</td>\
+             <td>\
+               <div class="btn-group">\
+                 <button \
+                   type="button" \
+                   class="modal_edit btn btn-success btn-sm" \
+                   data-id="'+data.rowId+'">\
+                   <i class="fa fa-edit"></i>\
+                 </button>\
+                 <button \
+                   type="button" \
+                   class="modal_delete btn btn-danger btn-sm" \
+                   data-toggle="modal" \
+                   data-target="#modal_delete" \
+                   data-id="'+data.rowId+'">\
+                   <i class="fa fa-trash"></i>\
+                 </button>\
+               </div>\
+             </td>'
+          )
+        }
       }
 
       var calculate = {
@@ -736,14 +740,23 @@
           t = (isArea) ? a * p * q : p * q;
           return t - (t * d)
         },
-        payment: function(a, d, t, pay) {
+        payment: function(a, d, t) {
           var aDiscount = a - (a * d);
           var aTax = aDiscount + (aDiscount * t);
-          var debt = aTax - pay;
-          return {
-            aFinal: aTax,
-            debt: (debt < 0) ? 0 : debt
+          return aTax;
+        },
+        paidOff: function(a, method) {
+          if (method == 'lunas') {
+            return a;
+          } else if (method == 'dp') {
+            return a/2;
+          } else {
+            return 0;
           }
+        },
+        debt: function(a, p) {
+          var debt = p - a;
+          return (debt < 0) ? debt * -1 : 0;
         }
       }
 
@@ -778,6 +791,48 @@
                 }
                 else if (this[i][0].type == 'text') {
                   if (this[i][0].id == 'add_panjang' || this[i][0].id == 'add_lebar') {
+                    this[i].prop('disabled', true);
+                  }
+                  this[i].val(0).trigger('change');
+                }
+              }
+            }
+            this.metric.allPrefixes.each(function() {
+              $(this).prop('disabled', true);
+              $(this).prop('checked', false);
+            });
+          }
+        },
+        modalEditItem: {
+          selectProduct: $('#edit_produk'),
+          price: $('#edit_harga'),
+          width: $('#edit_panjang'),
+          length: $('#edit_lebar'),
+          metric: {
+            allPrefixes: $('input[name="r2edit"]'),
+            prefixes: {
+              m: $('#r2editm'),
+              cm: $('#r2editcm'),
+            }
+          },
+          quantity: $('#edit_kuantitas'),
+          selectFinishing: $('#edit_finishing'),
+          info: $('#edit_keterangan'),
+          discount: $('#edit_diskon'),
+          totalPrice: $('#edit_subtotal'),
+          saveButton: $('#edititem'),
+          cBlur: $('#edit_harga, #edit_panjang, #edit_lebar, #edit_kuantitas, #edit_diskon'),
+          reset: function() {
+            for(var i in this) {
+              if (this[i][0] !== undefined) {
+                if (this[i][0].type == 'select-one') {
+                  this[i].prop('selectedIndex', 0).trigger('change');
+                }
+                else if (this[i][0].type == 'textarea') {
+                  this[i].val('').trigger('change');
+                }
+                else if (this[i][0].type == 'text') {
+                  if (this[i][0].id == 'edit_panjang' || this[i][0].id == 'edit_lebar') {
                     this[i].prop('disabled', true);
                   }
                   this[i].val(0).trigger('change');
@@ -840,6 +895,19 @@
           info: function() { return $('#add_keterangan').val() },
           discount: function() { return convert.toNumber($('#add_diskon').val()) },
           totalPrice: function() { return convert.toNumber($('#add_subtotal').val()) },
+        },
+        modalEditItem: {
+          selectedProductName: function() { return $('#edit_produk option:selected').text() },
+          selectedProductId: function() { return $('#edit_produk option:selected').val() },
+          price: function() { return convert.toNumber($('#edit_harga').val()) },
+          width: function() { return convert.toNumber($('#edit_panjang').val()) },
+          length: function() { return convert.toNumber($('#edit_lebar').val()) },
+          prefix: function() { return ($('input[name="r2edit"]:checked').val() == undefined) ? '' : $('input[name="r2edit"]:checked').val() },
+          quantity: function() { return convert.toNumber($('#edit_kuantitas').val()) },
+          selectedFinishing: function() { return $('#edit_finishing option:selected').text() },
+          info: function() { return $('#edit_keterangan').val() },
+          discount: function() { return convert.toNumber($('#edit_diskon').val()) },
+          totalPrice: function() { return convert.toNumber($('#edit_subtotal').val()) },
         }
       }
 
@@ -916,13 +984,17 @@
               isArea
             )
           ));
-        })
+        });
 
       });
 
       input.modalAddItem.saveButton.click(function() {
-        var rowId = transaction.purchased.after.items.length + 1
-        var amount = 0
+        var rowId = parseInt(
+          transaction.purchased.after.items[
+            transaction.purchased.after.items.length - 1
+          ].rowId
+        ) + 1;
+        var amount = 0;
         addItem.rowId = rowId.toString();
         addItem.productId = getHtml.modalAddItem.selectedProductId();
         addItem.productName = getHtml.modalAddItem.selectedProductName();
@@ -935,9 +1007,8 @@
         addItem.finishing = getHtml.modalAddItem.selectedFinishing();
         addItem.info = getHtml.modalAddItem.info();
         addItem.totalPrice = getHtml.modalAddItem.totalPrice().toString();
-        setHtml.tBody(appendTr(addItem));
+        setHtml.tBody(appendTr(addItem, 'add'));
         transaction.purchased.after.items.push(addItem);
-        // console.log(addItem);
         addItem = {};
         $('#modal_add').modal('hide');
         input.modalAddItem.reset();
@@ -951,57 +1022,203 @@
       $('#modal_add').on('hide.bs.modal', function() {
         input.modalAddItem.reset();
       })
+    </script>
 
+    <script>
+      var eR = undefined;
+      $(document).on('click', '.modal_edit', function() {
+        eR = $(this).data('id');
+        input.modalEditItem.reset();
+        $('#modal_edit').modal('show');
+      });
+
+      $('#modal_edit').on('show.bs.modal', function() {
+        var item = {};
+        transaction.purchased.after.items.forEach(function(v,k) {
+          if (v.rowId == eR) {
+            item = v;
+          }
+        });
+        var isArea, prefix;
+        $.ajax({
+          async: false,
+          type: 'get',
+          url: ajaxParams.url,
+          data: ajaxParams.data(item.productId),
+          dataType: 'json',
+          success: function(response) {
+            input.modalEditItem.selectProduct.val(
+              item.productId
+            ).trigger('change');
+            input.modalEditItem.price.val(
+              convert.toIDR(item.price)
+            );
+            input.modalEditItem.quantity.val(item.quantity);
+            input.modalEditItem.selectFinishing.val(item.finishing).trigger('change');
+            input.modalEditItem.info.val(item.info);
+            input.modalEditItem.discount.val(convert.toFixed(item.discount) + ' %');
+            prefix = response.satuan;
+            isArea = (response.hitung_luas == '0') ? false : true;
+            setHtml.modalItem.metric(
+              input.modalEditItem.width, 
+              input.modalEditItem.length,
+              input.modalEditItem.metric.prefixes.cm,
+              input.modalEditItem.metric.prefixes.m,
+              item.metric, isArea, 
+              item.width, 
+              item.length
+            );
+            input.modalEditItem.totalPrice.val(convert.toIDR(item.totalPrice));
+          }
+        });
+        input.modalEditItem.selectProduct.on('select2:select', function(e) {
+          $.ajax({
+            async: false,
+            type: 'get',
+            url: ajaxParams.url,
+            data: ajaxParams.data(e.params.data.id),
+            dataType: 'json',
+            success: function(response) {
+              var price = response.harga_jual;
+              prefix = response.satuan;
+              isArea = (response.hitung_luas == '0') ? false : true;
+              input.modalEditItem.price.val(convert.toIDR(price));
+              setHtml.modalItem.metric(
+                input.modalEditItem.width, 
+                input.modalEditItem.length,
+                input.modalEditItem.metric.prefixes.cm,
+                input.modalEditItem.metric.prefixes.m,
+                prefix, isArea, 
+                getHtml.modalEditItem.width(), 
+                getHtml.modalEditItem.length()
+              );
+              input.modalEditItem.totalPrice.val(convert.toIDR(
+                calculate.totalPrice(price, 
+                  getHtml.modalEditItem.discount(),
+                  getHtml.modalEditItem.quantity(),
+                  calculate.area(
+                    getHtml.modalEditItem.width(), 
+                    getHtml.modalEditItem.length(), 
+                    prefix, getHtml.modalEditItem.prefix()), 
+                  isArea
+                )
+              ));
+            }
+          });
+        });
+        input.modalEditItem.cBlur.blur(function() {
+          input.modalEditItem.totalPrice.val(convert.toIDR(
+            calculate.totalPrice(
+              getHtml.modalEditItem.price(), 
+              getHtml.modalEditItem.discount(),
+              getHtml.modalEditItem.quantity(),
+              calculate.area(
+                getHtml.modalEditItem.width(), 
+                getHtml.modalEditItem.length(), 
+                prefix, getHtml.modalEditItem.prefix()), 
+              isArea
+            )
+          ));
+        });
+        input.modalEditItem.metric.allPrefixes.click(function() {
+          input.modalEditItem.totalPrice.val(convert.toIDR(
+            calculate.totalPrice(
+              getHtml.modalEditItem.price(), 
+              getHtml.modalEditItem.discount(),
+              getHtml.modalEditItem.quantity(),
+              calculate.area(
+                getHtml.modalEditItem.width(), 
+                getHtml.modalEditItem.length(), 
+                prefix, getHtml.modalEditItem.prefix()), 
+              isArea
+            )
+          ));
+        });
+      });
+
+      input.modalEditItem.saveButton.click(function() {
+        var editItem = {};
+        var amount = 0;
+        editItem.rowId = eR.toString();
+        editItem.productName = getHtml.modalEditItem.selectedProductName();
+        editItem.metric = getHtml.modalEditItem.prefix();
+        editItem.discount = (getHtml.modalEditItem.discount() * 100).toString();
+        editItem.productId = getHtml.modalEditItem.selectedProductId();
+        editItem.price = getHtml.modalEditItem.price().toString();
+        editItem.width = getHtml.modalEditItem.width().toString();
+        editItem.length = getHtml.modalEditItem.length().toString();
+        editItem.quantity = getHtml.modalEditItem.quantity().toString();
+        editItem.finishing = getHtml.modalEditItem.selectedFinishing();
+        editItem.info = getHtml.modalEditItem.info();
+        editItem.totalPrice = getHtml.modalEditItem.totalPrice().toString();
+        $('#'+eR).html(appendTr(editItem, 'edit'));
+        transaction.purchased.after.items[eR-1] = editItem;
+        $('#modal_edit').modal('hide');
+        input.modalEditItem.reset();
+        transaction.purchased.after.items.forEach(function(v,k) {
+          amount += parseFloat(v.totalPrice);
+        });
+        transaction.purchased.after.amountItems = amount;
+        input.transaction.amount.val(convert.toIDR(amount)).trigger('change');
+        eR = undefined;
+      });
+
+      $('#modal_edit').on('hide.bs.modal', function() {
+        input.modalEditItem.reset();
+      })
+    </script>
+
+    <script>
       input.transaction.paidOffMethod.change(function() {
         input.transaction.paidOff.val(
           ($(this).val() == 'lunas') ? input.transaction.amount.val() : convert.toIDR(
             convert.toNumber(input.transaction.amount.val()) / 2
           )
         ).trigger('change');
-      })
+      });
 
-      input.transaction.discount.blur(function() {
-        var result = calculate.payment(
-          transaction.purchased.after.amountItems,
-          $(this).val().split(' ')[0]/100,
-          input.transaction.tax.val().split(' ')[0]/100,
-          convert.toNumber(input.transaction.paidOff.val())
-        )
-        input.transaction.amount.val(convert.toIDR(result.aFinal));
-        input.transaction.debit.val(convert.toIDR(result.debt));
-      })
-
-      input.transaction.tax.blur(function() {
+      input.transaction.discount.add(
+        input.transaction.tax
+      ).add(
+        input.transaction.amount
+      ).on('change blur', function() {
         var result = calculate.payment(
           transaction.purchased.after.amountItems,
           input.transaction.discount.val().split(' ')[0]/100,
-          $(this).val().split(' ')[0]/100,
-          convert.toNumber(input.transaction.paidOff.val())
+          input.transaction.tax.val().split(' ')[0]/100
+        );
+        var method;
+        input.transaction.paidOffMethod.each(function(i) {
+          if ($(this).prop('checked')) {
+            method = $(this).val();
+          }
+        })
+        var pay = calculate.paidOff(
+          result,
+          method
+        );
+        input.transaction.amount.val(convert.toIDR(result));
+        input.transaction.paidOff.val(
+          convert.toIDR(pay)
+        );
+        input.transaction.debit.val(
+          convert.toIDR(
+            calculate.debt(result, pay)
+          )
         )
-        input.transaction.amount.val(convert.toIDR(result.aFinal));
-        input.transaction.debit.val(convert.toIDR(result.debt));
-      })
+      });
 
       input.transaction.paidOff.on('change blur', function() {
-        var result = calculate.payment(
-          transaction.purchased.after.amountItems,
-          input.transaction.discount.val().split(' ')[0]/100,
-          input.transaction.tax.val().split(' ')[0]/100,
-          convert.toNumber($(this).val())
-        )
-        input.transaction.amount.val(convert.toIDR(result.aFinal));
-        input.transaction.debit.val(convert.toIDR(result.debt));
-      })
-
-      input.transaction.amount.on('change', function() {
-        var result = calculate.payment(
-          transaction.purchased.after.amountItems,
-          input.transaction.discount.val().split(' ')[0]/100,
-          input.transaction.tax.val().split(' ')[0]/100,
-          convert.toNumber(input.transaction.paidOff.val())
-        )
-        input.transaction.amount.val(convert.toIDR(result.aFinal));
-        input.transaction.debit.val(convert.toIDR(result.debt));
+        input.transaction.debit.val(
+          convert.toIDR(
+            convert.toIDR(
+              calculate.debt(
+                convert.toNumber(input.transaction.amount.val()),
+                convert.toNumber($(this).val())
+              )
+            )
+          )
+        );
       })
 
       input.transaction.save.click(function() {
@@ -1015,7 +1232,6 @@
         if (transaction.purchased.after.paidOff > transaction.purchased.after.amount) {
           swal("Gagal", "Pembayaran DP lebih dari total.", "error");
         } else {
-          console.log(transaction);
           $.ajax({
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1026,190 +1242,41 @@
             async: false,
             processData: false,
             contentType: 'application/json; charset=utf-8',
-            success:function(response){
-              console.log('ok');
+            success: function(response){
+              swal("Berhasil !", "Berhasil mengubah transaksi !", "success")
+              .then(function(value) {
+                window.location = '{{route('transaksilist')}}'
+              })
+            },
+            error: function(response) {
+              swal("Error !", "Gagal mengubah transaksi !", "error");
             }
           })
         }
       })
+    </script>
 
-
-      
-      // $('.select2').select2();
-
-      // $(function(){
-      //   numeral.locale('idr');
-      //   $('#sisa, #bayardp, #total').each(function() {
-      //     $(this).val(
-      //       numeral(this.value).format(idr)
-      //     );
-      //   });
-      //   $('.td-currency').each(function() {
-      //     $(this).text(
-      //       numeral($(this).text()).format(idr)
-      //     );
-      //   });
-      //   $('.td-units').each(function() {
-      //     var satuanText = ($(this).closest('tr').data('satuan')) === 'METER' ? 'm' : ($(this).closest('tr').data('satuan')) === 'CENTIMETER' ? 'cm' : '';
-      //     var valueBefore = $(this).text();
-      //     $(this).text(
-      //       (satuanText != '') ? numeral(valueBefore).format(toFixed2) + " " + satuanText : '-'
-      //     );
-      //   });
-      //   $('.td-discount').each(function() {
-      //     $(this).text(
-      //       numeral($(this).text()).format(toFixed2) + " %"
-      //     );
-      //   });
-      // });
-
-      // $('.mata-uang').on('change keyup', function() {
-      //   $(this).val(
-      //     numeral(this.value).format(idr)
-      //   )
-      // });
-
-      // $('.percentage').blur(function() {
-      //   $(this).val(
-      //     numeral(this.value).format(toFixed2)
-      //   )
-      // });
-
-      // $('.percentage').focus(function() {
-      //   $(this).val('');
-      // })
-
-      // var data = {};
-      // $('.modal_edit').on('click', function() {
-      //   var tr = $(this).closest('tr');
-      //   data = {
-      //     ...data,
-      //     rowId: tr.data('row_id'),
-      //     produkId: tr.data('produk_id'),
-      //     namaProduk: tr.data('nama_produk'),
-      //     satuan: tr.data('satuan'),
-      //     diskon: tr.data('diskon'),
-      //     harga: tr.data('harga'),
-      //     panjang: tr.data('panjang'),
-      //     lebar: tr.data('lebar'),
-      //     kuantitas: tr.data('kuantitas'),
-      //     finishing: tr.data('finishing'),
-      //     keterangan: tr.data('keterangan'),
-      //     subtotal: tr.data('subtotal'),
-      //   }
-
-      //   $.ajax({
-      //     async: false,
-      //     type: 'get',
-      //     url: produkUrl,
-      //     data: produkData(data.produkId, pelanggan),
-      //     dataType: 'json',
-      //     success: function(response) {
-      //       var hitung_luas = (response.hitung_luas == 0) ? false : true;
-      //       var baseUnit = response.satuan
-      //       data = {...data, hitung_luas, baseUnit};
-      //     }
-      //   });
-      // })
-
-      // $('#modal_edit').on('shown.bs.modal', function() {
-      //   var input = {
-      //     i: $('#edit_produk'),
-      //     h: $('#edit_harga'),
-      //     p: $('#edit_panjang'),
-      //     l: $('#edit_lebar'),
-      //     rUnit: $('input[name="r2edit"]'),
-      //     rCM: $('#r2editcm'),
-      //     rM: $('#r2editm'),
-      //     q: $('#edit_kuantitas'),
-      //     f: $('#edit_finishing'),
-      //     k: $('#edit_keterangan'),
-      //     d: $('#edit_diskon'),
-      //     sT: $('#edit_subtotal')
-      //   }
-
-      //   var calculate = {
-      //     modal: {
-      //         subtotal: function(
-      //         p, l, metric, metric, 
-      //         price, q, d ) {
-      //           return calcSubtotal(
-      //             calcLuas(
-      //               numeral(input.p.val()).value(),
-      //               numeral(input.l.val()).value(),
-      //               $('input[name="r2edit"]:checked').val(),
-      //               $('#editBaseUnit').val()
-      //             ),
-      //             data.hitung_luas,
-      //             numeral(input.h.val()).value(),
-      //             numeral(input.q.val()).value(),
-      //             numeral(input.d.val()).value()
-      //           )
-      //       }
-      //     }
-      //   }
-      //   setHtml.modal.price(input.h, data.harga)
-      //   setHtml.modal.units(
-      //     input.p, input.l, input.rCM, input.rM, 
-      //     data.panjang, data.lebar, data.satuan, data.hitung_luas
-      //   )
-      //   input.q.val(data.kuantitas);
-      //   input.f.val(data.finishing);
-      //   input.k.val(data.keterangan);
-      //   input.d.val(data.diskon);
-      //   input.sT.val(data.subtotal).trigger('change');
-      //   $('.edit-input').on('change', function() {
-      //     $('#edititem').prop('disabled', false);
-      //   })
-
-      //   $('.editbesaran').add(input.q).focus(function() { $(this).val(0) });
-
-      //   $('.editbesaran').keyup(function() {
-      //     $(this).val(numeral(this.value).format(toFixed2));
-      //     input.sT.val(
-      //       numeral(
-      //         calculate.modal.subtotal(
-      //           numeral(input.p.val()).value(),
-      //           numeral(input.l.val()).value(),
-      //           $('input[name="r2edit"]:checked').val(),
-      //           data.baseUnit, 
-      //         )
-      //       ).format(idr));
-      //   })
-
-      //   input.h.add(input.q).add(input.d).keyup(function() {
-      //     input.sT.val(numeral(calculate.subtotal()).format(idr));
-      //   })
-
-      //   input.rUnit.click(function() {
-      //     input.sT.val(numeral(calculate.subtotal()).format(idr));
-      //   });
-
-      //   input.i.on('select2:select', function (e) {
-      //     $.ajax({
-      //       async: false,
-      //       type: 'get',
-      //       url: produkUrl,
-      //       data: produkData(e.params.data.id, pelanggan),
-      //       dataType: 'json',
-      //       success: function(response) {
-      //         var hitung_luas = (response.hitung_luas == 0) ? false : true;
-      //         var baseUnit = response.satuan;
-      //         var harga = response.harga_jual;
-      //         data = {...data, hitung_luas, baseUnit};
-      //         setHtml.modal.price(input.h, harga);
-      //         setHtml.modal.units(
-      //           input.p, input.l, input.rCM, input.rM, 
-      //           0, 0, baseUnit, hitung_luas
-      //         );
-      //       }
-      //     });
-      //   })
-
-      //   $('#edititem').click(function() {
-          
-      //   })        
-      // })
+    <script>
+      var deleteRow = undefined;
+      $(document).on('click', '.modal_delete', function() {
+        deleteRow = $(this).data('id');
+      })
+      $('#deleteitem').click(function() {
+        var amount = 0;
+        transaction.purchased.after.items.forEach(function(v,k) {
+          if (v.rowId == deleteRow) {
+            transaction.purchased.after.items.splice(k, 1);
+          }
+        });
+        transaction.purchased.after.items.forEach(function(v,k) {
+          amount += parseFloat(v.totalPrice);
+        });
+        transaction.purchased.after.amountItems = amount;
+        input.transaction.amount.val(convert.toIDR(amount)).trigger('change');
+        $('#modal_delete').modal('hide');
+        $('tr#'+deleteRow).remove();
+        deleteRow = undefined;
+      })
     </script>
 
     </body>
