@@ -326,7 +326,7 @@
                                 Yakin ingin menghapus transaksi dengan nomor nota #<span class="labelnota"></span> a.n <span class="labelpelanggan"></span>?
                                 <div class="form-group">
                                     <label class="text-white">Alasan</label>
-                                    <textarea name="delete-reason" id="delete-reason" rows="3" class="form-control"></textarea>
+                                    <textarea name="delete-reason" id="reason-transaksi" rows="3" class="form-control"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -356,6 +356,10 @@
                                     </h4>
                                     {{csrf_field()}}
                                     Yakin ingin menghapus angsuran #<span class="labelnoangsuran"></span> ?
+                                    <div class="form-group">
+                                        <label class="text-white">Alasan</label>
+                                        <textarea name="delete-reason" id="reason-angsuran" rows="3" class="form-control"></textarea>
+                                    </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -703,7 +707,7 @@
 
         $(document).on('click','#deleteitem',function (){
             var token=$('input[name="_token"]').val();
-            var reason = $('#delete-reason').val();
+            var reason = $('#reason-transaksi').val();
             if (reason != '') {
                 
                 $.ajax({
@@ -712,7 +716,13 @@
                     },
                     type:'POST',
                     url:'{{route('destroytransaksi')}}',
-                    data: JSON.stringify({id:idtrans, _token:token, reason: reason}),
+                    data: JSON.stringify(
+                        {
+                            id:idtrans,
+                            _token:token,
+                            reason_on_delete: reason
+                        }
+                    ),
                     dataType:'json',
                     async:false,
                     processData: false,
@@ -761,46 +771,58 @@
             // console.log(sisapembayaran)
             console.log(sisatagihan+'='+datasisa+'+'+datanominal)
             var sisapembayaran=datapembayaran;
-            $.ajax({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type:'POST',
-                url:'{{route('destroyangsuran')}}',
-                data: JSON.stringify({idtrans:idtrans,_token:token}),
-                dataType:'json',
-                async:false,
-                processData: false,
-                contentType: false,
-                success:function(response){
-                        // console.log(response['msg']);
-                        if (response['msg']=="success"){
-                            swal("Berhasil !", "Berhasil menghapus angsuran !", "success");
-                            $('#show'+idtrans+'').remove();
-                            $('#sisatagihanlabel').text(sisatagihan.format(0, 3, '.', ','));
-                            datasisa=sisatagihan;
-                            // console.log(sisapembayaran)
-                            $('#sisa'+datanonota).html('<span class="badge bg-red">Rp. '+sisatagihan.format(0, 3,'.',',')+'</span>');
-                            $('#pembayaran'+datanonota).html('Rp. '+sisapembayaran.format(0, 3, '.', ','));
-                            $('#showtombol'+datanonota).data('sisa',datasisa);
-                            $('#simpantombol'+datanonota).data('sisa',datasisa);
-                            $('#showtombol'+datanonota).data('pembayaran',sisapembayaran);
-                            $('#simpantombol'+datanonota).data('pembayaran',sisapembayaran);
-                            // datasisa=0;
-                            $('#modal_delete_angsuran').modal('hide');
+            var reason = $('#reason-angsuran').val();
+            alert(reason);
+            if (reason != '') {
+                $.ajax({
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type:'POST',
+                    url:'{{route('destroyangsuran')}}',
+                    data: JSON.stringify(
+                        {
+                            idtrans:idtrans,
+                            _token:token,
+                            reason_on_delete: reason
                         }
-                        else{
-                            // datasisa=0;
-                            swal("Error !", "Gagal menghapus angsuran !", "error");
-                            $('#modal_delete_angsuran').modal('hide');
+                    ),
+                    dataType:'json',
+                    async:false,
+                    processData: false,
+                    contentType: false,
+                    success:function(response){
+                            // console.log(response['msg']);
+                            if (response['msg']=="success"){
+                                swal("Berhasil !", "Berhasil menghapus angsuran !", "success");
+                                $('#show'+idtrans+'').remove();
+                                $('#sisatagihanlabel').text(sisatagihan.format(0, 3, '.', ','));
+                                datasisa=sisatagihan;
+                                // console.log(sisapembayaran)
+                                $('#sisa'+datanonota).html('<span class="badge bg-red">Rp. '+sisatagihan.format(0, 3,'.',',')+'</span>');
+                                $('#pembayaran'+datanonota).html('Rp. '+sisapembayaran.format(0, 3, '.', ','));
+                                $('#showtombol'+datanonota).data('sisa',datasisa);
+                                $('#simpantombol'+datanonota).data('sisa',datasisa);
+                                $('#showtombol'+datanonota).data('pembayaran',sisapembayaran);
+                                $('#simpantombol'+datanonota).data('pembayaran',sisapembayaran);
+                                // datasisa=0;
+                                $('#modal_delete_angsuran').modal('hide');
+                            }
+                            else{
+                                // datasisa=0;
+                                swal("Error !", "Gagal menghapus angsuran !", "error");
+                                $('#modal_delete_angsuran').modal('hide');
 
-                        }
-                },
-                error:function(response){
-                            swal("Error !", "Gagal menghapus angsuran !", "error");
-                            $('#modal_delete_angsuran').modal('hide');
-                }
-            });
+                            }
+                    },
+                    error:function(response){
+                                swal("Error !", "Gagal menghapus angsuran !", "error");
+                                $('#modal_delete_angsuran').modal('hide');
+                    }
+                });
+            } else {
+                swal("Error !", "Alasan Wajib diisi !", "error");
+            }
 
 
         });
