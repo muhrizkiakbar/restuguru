@@ -1290,9 +1290,9 @@
             contentType: 'application/json; charset=utf-8',
             success: function(response){
               swal("Berhasil !", "Berhasil mengubah transaksi !", "success")
-              //.then(function(value) {
-              //  window.location = '{{route('transaksilist')}}'
-              //})
+              .then(function(value) {
+               window.location = '{{route('transaksilist')}}'
+              })
             },
             error: function(response) {
               swal("Error !", "Gagal mengubah transaksi !", "error");
