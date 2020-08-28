@@ -1155,7 +1155,7 @@ class TransaksiController extends Controller
           if  (array_search($detail_before["id"],$detail_afters[$key])=="id") 
           {
             //change data
-            
+            dd("masuk");
           }
           else
           {

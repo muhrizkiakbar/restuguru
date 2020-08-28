@@ -154,7 +154,7 @@
                               <th  style="width: 130px">Subtotal</th>
                               <th style="width: 100px">Tool</th>
                             </thead>
-                            <tbody>
+                            <tbody id="items">
                             @foreach ($transaksi->sub_penjualans()->get() as $key=>$data)
                               <tr id="{{$loop->iteration}}">
                                 <td>{{ $data->produk->nama_produk }}</td>
@@ -204,11 +204,11 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>Pembayaran DP : &nbsp;</label><span class="text-currency"> 70452</span>
+                        <label>Pembayaran DP : &nbsp;</label><span class="text-currency"> {{$transaksi->jumlah_pembayaran - $angsurans->sum('nominal_angsuran')}}</span>
                       </div>
                       <div class="table-responsive no-padding">
                         <table class="table table-striped">
-                          <tr class="tr">
+                          <tr>
                             <th>Pembayaran Angsuran</th>
                             <th>Tanggal</th>
                           </tr>
@@ -223,6 +223,14 @@
                             <td>{{$value->tanggal_angsuran}}</td>
                           </tr>
                           @endforeach
+                          <tr>
+                            <th class="text-currency">{{$angsurans->sum('nominal_angsuran')}}</th>
+                            <th>Total Angsuran</th>
+                          </tr>
+                          <tr>
+                            <th class="text-currency">{{$transaksi->jumlah_pembayaran}}</th>
+                            <th>Total Terbayarkan</th>
+                          </tr>
                         </table>
                       </div>
                     </div>
@@ -895,7 +903,7 @@
         },
         tBody: function(row) {
           if (row == undefined) { return }
-          $('tbody').append(row);
+          $('#items').append(row);
         }
       }
       
