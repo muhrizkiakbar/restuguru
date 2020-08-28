@@ -1050,9 +1050,10 @@ class TransaksiController extends Controller
     {
       //
       $transaksi = CTransaksi_Penjualans::where('id','=',decrypt($id))->first();
+      $angsurans = Angsuran::where('transaksipenjualan_id','=',decrypt($id))->get();
       $produks=CProduks::all();
     //   dd($transaksi->sub_penjualans());
-      return view('transaksis.transaksiedit',['transaksi'=>$transaksi, 'produks'=>$produks]);
+      return view('transaksis.transaksiedit',['transaksi'=>$transaksi, 'produks'=>$produks, 'angsurans'=> $angsurans]);
     }
 
     /**
@@ -1064,7 +1065,6 @@ class TransaksiController extends Controller
      */
     public function update($id,Request $request)
     {
-      //
         //
         
         // dd($nonota);
@@ -1076,11 +1076,61 @@ class TransaksiController extends Controller
         $transaksi=CTransaksi_Penjualans::where('id','=',decrypt($request->json('id')))
                         ->first();
 
+        $dataAngsuran = Angsuran::where('transaksipenjualan_id','=',$transaksi->id);
+
+        $sum_angsuran = $dataAngsuran->sum('nominal_angsuran');
+        $substractPaidOffBefore = $transaksi->jumlah_pembayaran-$sum_angsuran;
+        $substractPaidOffAfter = ($request->json("purchased")["after"]["paidOff"]-$sum_angsuran);
+
+        #total = 431.404
+        #itemsubstrct= 45.140
+        #paidOff= 395.000
+        #sisa = 36.404
+
+        if ($substractPaidOffAfter < 0)
+        {
+          $sisaPaidAfter = $substractPaidOffAfter;
+          foreach($dataAngsuran->get() as $key => $value)
+          {
+            if ($sisaPaidAfter == 0)
+            {
+              break;
+            }
+            
+            $changeAngsuran = Angsuran::find($value->id);
+            if ($changeAngsuran->nominal_angsuran >= $substractPaidOffAfter){
+              $changeAngsuran->nominal_angsuran = $changeAngsuran->nominal_angsuran - $substractPaidOffAfter;
+              $changeAngsuran->save();
+              $sisaPaidAfter = 0;
+            }
+            else
+            {
+              $sisaPaidAfter = $sisaPaidAfter - $changeAngsuran->nominal_angsuran;
+              $changeAngsuran->nominal_angsuran = 0; 
+              $changeAngsuran->save();
+            }
+          }
+          $paidOff = $dataAngsuran->sum('nominal_angsuran');
+        }
+        else
+        {
+          $paidOff =  $request->json("purchased")["after"]["paidOff"];
+        }
+
+
         $transaksi->total_harga=$request->json("purchased")["after"]["amountItems"];
         $transaksi->diskon=$request->json("purchased")["after"]["discount"];
         $transaksi->metode_pembayaran=$request->json("purchased")["after"]["pmentMethod"];
-        $transaksi->jumlah_pembayaran=$request->json("purchased")["after"]["paidOff"];
-        $transaksi->sisa_tagihan=$request->json("purchased")["after"]["debit"];
+        $transaksi->jumlah_pembayaran=$paidOff;
+        if ($paidOff == $request->json("purchased")["after"]["amountItems"]){
+          $sisaInvoice = 0;
+        }
+        else
+        {
+          $sisaInvoice = $request->json("purchased")["after"]["amountItems"] - $paidOff;
+        }
+        #$transaksi->sisa_tagihan=$request->json("purchased")["after"]["debit"];
+        $transaksi->sisa_tagihan=$sisaInvoice;
         $transaksi->pajak=$request->json("purchased")["after"]["tax"];        
         $transaksi->user_id=Auth::user()->id;
         if ($transaksi->save())
