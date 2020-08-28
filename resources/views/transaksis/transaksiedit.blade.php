@@ -210,10 +210,12 @@
                                       <th>Pembayaran</th>
                                       <th>Tanggal</th>
                                     </tr>
+                                    @foreach ($angsurans as $key => $value)
                                     <tr>
-                                      <td></td>
-                                      <td></td>
+                                      <td>{{$value->tanggal_angsuran}}</td>
+                                      <td>{{$value->nominal_angsuran}}</td>
                                     </tr>
+                                    @endforeach
                                   </table>
                                 </div>                  
                             </div>
