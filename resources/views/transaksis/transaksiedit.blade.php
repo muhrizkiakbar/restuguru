@@ -202,106 +202,99 @@
                   </div>
                   <br>
                   <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <div class="table-responsive no-padding">
-                                  <table class="table table-striped">
-                                    <tr class="tr">
-                                      <th>Pembayaran</th>
-                                      <th>Tanggal</th>
-                                    </tr>
-                                    @foreach ($angsurans as $key => $value)
-                                    <tr>
-                                      <td>{{$value->tanggal_angsuran}}</td>
-                                      <td>{{$value->nominal_angsuran}}</td>
-                                    </tr>
-                                    @endforeach
-                                  </table>
-                                </div>                  
-                            </div>
-                            <div class="col-md-3">
-                                <label>Diskon %
-                                    <input id="diskon" name="diskon" value="{{ $transaksi->diskon }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
-                                </label>                                  
-                            </div>
-                            <div class="col-md-3">
-                                <label>Total
-                                    <input id="total" name="total" disabled value="{{ $transaksi->total_harga }}" placeholder="Rp 0" class="form-control val-currency" type="text">
-                                    <input id="total2" name="total2" disabled hidden value="{{ $transaksi->total_harga }}" type="text">
-                                </label>                                  
-                            </div>
-                        </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Pembayaran DP : &nbsp;</label><span class="text-currency"> 70452</span>
+                      </div>
+                      <div class="table-responsive no-padding">
+                        <table class="table table-striped">
+                          <tr class="tr">
+                            <th>Pembayaran Angsuran</th>
+                            <th>Tanggal</th>
+                          </tr>
+                          @if ($angsurans->isEmpty())
+                            <tr>
+                              <td colspan="2" class="text-center">Tidak ada angsuran</td>
+                            </tr>
+                          @endif
+                          @foreach ($angsurans as $key => $value)
+                          <tr>
+                            <td class="text-currency">{{$value->nominal_angsuran}}</td>
+                            <td>{{$value->tanggal_angsuran}}</td>
+                          </tr>
+                          @endforeach
+                        </table>
+                      </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                                      
-                            </div>
-                            <div class="col-md-3">
-                                <label>Bayar
-                                    <input id="bayardp" name="bayardp" value="{{ $transaksi->jumlah_pembayaran }}" placeholder="Rp 0" class="form-control val-currency" type="text" autocomplete="off">
-                                </label>                                  
-                            </div>
-                            <div class="col-md-3">
-                              <label>Pembayaran
-                                <select class="form-control  pull-right"  id="pembayaran" name="pembayaran" style="width: 100%;">
-                                    @if ($transaksi->metode_pembayaran === "Cash")
-                                      <option value="Cash" selected>Cash</option>
-                                      <option value="Transfer">Transfer</option>
-                                    @elseif ($transaksi->metode_pembayaran === "Transfer")
-                                      <option value="Cash" >Cash</option>
-                                      <option value="Transfer" selected>Transfer</option>
-                                    @else
-                                      <option value="Cash" >Cash</option>
-                                      <option value="Transfer">Transfer</option>
-                                    @endif
-                                </select>
-                              </label>           
-                            </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-6">
+                            <label>Diskon %
+                                <input id="diskon" name="diskon" value="{{ $transaksi->diskon }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
+                            </label>                                  
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                                      
-                            </div>
-                            <div class="col-md-3">
-                                  <label for="">Kembali
-                                    <input type="text" class="form-control val-currency" disabled>
-                                  </label>
-                                  
-                            </div>
-                            <div class="col-md-3">
-                                  <label>
-                                      <input type="radio" name="metode" id="metodelunas" value="lunas" class="minimal-red">
-                                      Lunas
-                                      <input type="radio" name="metode" id="metodedp" value="dp" class="minimal-red">
-                                      DP 50%     
-                                  </label>
-                                                
-                            </div>
+                        <div class="col-md-6">
+                            <label>Total
+                                <input id="total" name="total" disabled value="{{ $transaksi->total_harga }}" placeholder="Rp 0" class="form-control val-currency" type="text">
+                                <input id="total2" name="total2" disabled hidden value="{{ $transaksi->total_harga }}" type="text">
+                            </label>                                  
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                                      
-                            </div>
-                            <div class="col-md-3">
-                                  <label>Pajak %
-                                      <input id="pajak" name="pajak"  value="{{ $transaksi->pajak }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
-                                  </label>                     
-                            </div>
-                            <div class="col-md-3">
-                                  <label>Sisa
-                                      <input id="sisa" name="sisa"  value="{{ $transaksi->sisa_tagihan }}" placeholder="Rp 0" class="form-control val-currency" disabled type="text">
-                                  </label>  
-                                                
-                            </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                            <label>Bayar
+                                <input id="bayardp" name="bayardp" value="{{ $transaksi->jumlah_pembayaran }}" placeholder="Rp 0" class="form-control val-currency" type="text" autocomplete="off">
+                            </label>                                  
                         </div>
+                        <div class="col-md-6">
+                          <label>Pembayaran
+                            <select class="form-control  pull-right"  id="pembayaran" name="pembayaran" style="width: 100%;">
+                                @if ($transaksi->metode_pembayaran === "Cash")
+                                  <option value="Cash" selected>Cash</option>
+                                  <option value="Transfer">Transfer</option>
+                                @elseif ($transaksi->metode_pembayaran === "Transfer")
+                                  <option value="Cash" >Cash</option>
+                                  <option value="Transfer" selected>Transfer</option>
+                                @else
+                                  <option value="Cash" >Cash</option>
+                                  <option value="Transfer">Transfer</option>
+                                @endif
+                            </select>
+                          </label>           
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                              <label for="">Kembali
+                                <input id="kembali" type="text" class="form-control val-currency" disabled>
+                              </label>
+                              
+                        </div>
+                        <div class="col-md-6">
+                              <label>
+                                  <input type="radio" name="metode" id="metodelunas" value="lunas" class="minimal-red">
+                                  Lunas
+                                  <input type="radio" name="metode" id="metodedp" value="dp" class="minimal-red">
+                                  DP 50%     
+                              </label>
+                                            
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                              <label>Pajak %
+                                  <input id="pajak" name="pajak"  value="{{ $transaksi->pajak }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
+                              </label>                     
+                        </div>
+                        <div class="col-md-6">
+                              <label>Sisa
+                                  <input id="sisa" name="sisa"  value="{{ $transaksi->sisa_tagihan }}" placeholder="Rp 0" class="form-control val-currency" disabled type="text">
+                              </label>  
+                                            
+                        </div>
+                      </div>
                     </div>
+                  </div>
                   <hr>
                     <div class="row">
                         <div class="col-md-12">
@@ -776,6 +769,10 @@
         debt: function(a, p) {
           var debt = p - a;
           return (debt < 0) ? debt * -1 : 0;
+        },
+        ret: function(a, p) {
+          var ret = p - a;
+          return (ret < 0) ? 0 : ret;
         }
       }
 
@@ -871,6 +868,7 @@
           amount: $('#total'),
           pmentMethod: $('#pembayaran'),
           paidOffMethod: $('input[name="metode"]'),
+          ret: $('#kembali'),
           debit: $('#sisa'),
           save: $('#submittransaksi')
         }
@@ -1225,6 +1223,11 @@
             calculate.debt(result, pay)
           )
         )
+        input.transaction.ret.val(
+          convert.toIDR(
+            calculate.ret(result, pay)
+          )
+        )
       });
 
       input.transaction.paidOff.on('change blur', function() {
@@ -1238,6 +1241,16 @@
             )
           )
         );
+        input.transaction.ret.val(
+          convert.toIDR(
+            convert.toIDR(
+              calculate.ret(
+                convert.toNumber(input.transaction.amount.val()),
+                convert.toNumber($(this).val())
+              )
+            )
+          )
+        )
       })
 
       input.transaction.save.click(function() {
