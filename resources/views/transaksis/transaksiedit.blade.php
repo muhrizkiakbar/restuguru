@@ -325,6 +325,7 @@
                                 <div class="form-group ui-widget">
                                   <label>Produk</label>
                                   <select id="add_produk" name="add_produk" class="form-control select2" style="width:100%;" type="text">
+                                    <option></option>
                                   @foreach ($produks as $produk))
                                     <option value="{{$produk->id}}">{{$produk->nama_produk}}</option>
                                   @endforeach
@@ -407,6 +408,7 @@
                                       <div class="form-group ui-widget">
                                           <label>Produk</label>
                                           <select id="edit_produk" name="edit_produk"  class="form-control select2 edit-input" style="width:100%;" type="text">
+                                              <option></option>
                                             @foreach ($produks as $produk))
                                               <option value="{{$produk->id}}">{{$produk->nama_produk}}</option>
                                             @endforeach
@@ -560,7 +562,7 @@
           }
       });
       numeral.locale('idr');
-      $('.select2').select2();
+      $('.select2').select2({placeholder: ''});
       $('input[name="tanggal"]').datepicker({
         format: "yyyy-mm-dd",
       });

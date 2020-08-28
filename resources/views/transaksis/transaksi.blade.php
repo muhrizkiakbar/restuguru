@@ -697,6 +697,20 @@
             $("input.addbesaran").focus(function(){
                 $(this).val(0);
             });
+            
+            $("#add_harga").blur(function(){
+                var panjang=numeral($('#add_panjang').val()).value();
+                var lebar=numeral($('#add_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,$('input[name=r2]:checked').val());
+                hargasatuan=numeral($('#add_harga').val()).value();
+                kuantitas=numeral($('#add_kuantitas').val()).value();
+                var besardiskon=numeral($('#add_diskon').val()).value();
+                $('#add_subtotal').val(
+                    numeral(diskonitem(hitungsubtotal(hargasatuan, (luas == undefined) ? 1 : luas, kuantitas), besardiskon)).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas, besardiskon);
+                
+            });
 
             $("input.addbesaran").blur(function(){
                 $(this).val(numeral($(this).val()).format('0[.]00'));
@@ -708,6 +722,20 @@
                 var besardiskon=numeral($('#add_diskon').val()).value();
                 $('#add_subtotal').val(
                     numeral(diskonitem(hitungsubtotal(hargasatuan, luas, kuantitas), besardiskon)).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas, besardiskon);
+                
+            });
+
+            $("#edit_harga").blur(function(){
+                var panjang=numeral($('#edit_panjang').val()).value();
+                var lebar=numeral($('#edit_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,$('input[name=r2edit]:checked').val());
+                hargasatuan=numeral($('#edit_harga').val()).value();
+                kuantitas=numeral($('#edit_kuantitas').val()).value();
+                var besardiskon=numeral($('#edit_diskon').val()).value();
+                $('#edit_subtotal').val(
+                    numeral(diskonitem(hitungsubtotal(hargasatuan, (luas == undefined) ? 1 : luas, kuantitas), besardiskon)).format('$ 0,0')
                 );
                 console.log(luas, hargasatuan, kuantitas, besardiskon);
                 
