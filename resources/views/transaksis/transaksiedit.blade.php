@@ -200,11 +200,22 @@
                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" id="buttonmodal_add" data-target="#modal_add"><i class="fa fa-plus"> </i> Item</button>
                         </div>
                   </div>
-
+                  <br>
                   <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-6">
-                                                      
+                                <div class="table-responsive no-padding">
+                                  <table class="table table-striped">
+                                    <tr class="tr">
+                                      <th>Pembayaran</th>
+                                      <th>Tanggal</th>
+                                    </tr>
+                                    <tr>
+                                      <td></td>
+                                      <td></td>
+                                    </tr>
+                                  </table>
+                                </div>                  
                             </div>
                             <div class="col-md-3">
                                 <label>Diskon %
@@ -251,8 +262,14 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-9">
+                            <div class="col-md-6">
                                                       
+                            </div>
+                            <div class="col-md-3">
+                                  <label for="">Kembali
+                                    <input type="text" class="form-control val-currency" disabled>
+                                  </label>
+                                  
                             </div>
                             <div class="col-md-3">
                                   <label>
