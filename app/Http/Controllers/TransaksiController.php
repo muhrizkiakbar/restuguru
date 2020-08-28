@@ -1073,7 +1073,7 @@ class TransaksiController extends Controller
 
         $datareturn=[];
 
-        $transaksi=CTransaksi_Penjualans::where('id','=',decrypt($request->json('id')))
+        $transaksi=CTransaksi_Penjualans::where('id','=',($request->json('id')))
                         ->first();
 
         $dataAngsuran = Angsuran::where('transaksipenjualan_id','=',$transaksi->id);
@@ -1082,14 +1082,10 @@ class TransaksiController extends Controller
         $substractPaidOffBefore = $transaksi->jumlah_pembayaran-$sum_angsuran;
         $substractPaidOffAfter = ($request->json("purchased")["after"]["paidOff"]-$sum_angsuran);
 
-        #total = 431.404
-        #itemsubstrct= 45.140
-        #paidOff= 395.000
-        #sisa = 36.404
-
+        $tes = 0;
         if ($substractPaidOffAfter < 0)
         {
-          $sisaPaidAfter = $substractPaidOffAfter;
+          $sisaPaidAfter = $substractPaidOffAfter*-1;
           foreach($dataAngsuran->get() as $key => $value)
           {
             if ($sisaPaidAfter == 0)
@@ -1098,8 +1094,8 @@ class TransaksiController extends Controller
             }
             
             $changeAngsuran = Angsuran::find($value->id);
-            if ($changeAngsuran->nominal_angsuran >= $substractPaidOffAfter){
-              $changeAngsuran->nominal_angsuran = $changeAngsuran->nominal_angsuran - $substractPaidOffAfter;
+            if ($changeAngsuran->nominal_angsuran >= $sisaPaidAfter){
+              $changeAngsuran->nominal_angsuran = $changeAngsuran->nominal_angsuran - $sisaPaidAfter;
               $changeAngsuran->save();
               $sisaPaidAfter = 0;
             }
@@ -1116,7 +1112,6 @@ class TransaksiController extends Controller
         {
           $paidOff =  $request->json("purchased")["after"]["paidOff"];
         }
-
 
         $transaksi->total_harga=$request->json("purchased")["after"]["amountItems"];
         $transaksi->diskon=$request->json("purchased")["after"]["discount"];
@@ -1155,7 +1150,19 @@ class TransaksiController extends Controller
           if  (array_search($detail_before["id"],$detail_afters[$key])=="id") 
           {
             //change data
-            dd("masuk");
+            $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_afters[$key]["id"])->first();
+            $subtransaksi->produk_id=$detail_afters[$key]["productId"];
+            $subtransaksi->harga_satuan=$detail_afters[$key]["price"];
+            $subtransaksi->panjang=$detail_afters[$key]["width"];
+            $subtransaksi->lebar=$detail_afters[$key]["length"];
+            $subtransaksi->banyak=$detail_afters[$key]["quantity"];
+            $subtransaksi->keterangan=$detail_afters[$key]["info"];
+            $subtransaksi->user_id=Auth::user()->id;
+            $subtransaksi->subtotal=$detail_afters[$key]["totalPrice"];
+            $subtransaksi->finishing=$detail_afters[$key]["finishing"];
+            $subtransaksi->satuan=$detail_afters[$key]["metric"];
+            $subtransaksi->diskon=$detail_afters[$key]["discount"];
+            $subtransaksi->save();
           }
           else
           {
@@ -1172,7 +1179,7 @@ class TransaksiController extends Controller
           {
             $subtransaksi=new CSub_Tpenjualans;
             $subtransaksi->penjualan_id=$transaksi->id;
-            $subtransaksi->produk_id=$detail_after["diskon"];
+            $subtransaksi->produk_id=$detail_after["productId"];
             $subtransaksi->harga_satuan=$detail_after["price"];
             $subtransaksi->panjang=$detail_after["width"];
             $subtransaksi->lebar=$detail_after["length"];
@@ -1188,7 +1195,7 @@ class TransaksiController extends Controller
           else
           {
             $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_after["id"])->first();
-            $subtransaksi->produk_id=$detail_after["diskon"];
+            $subtransaksi->produk_id=$detail_after["productId"];
             $subtransaksi->harga_satuan=$detail_after["price"];
             $subtransaksi->panjang=$detail_after["width"];
             $subtransaksi->lebar=$detail_after["length"];
