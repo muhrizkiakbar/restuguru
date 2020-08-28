@@ -209,8 +209,8 @@
                       <div class="table-responsive no-padding">
                         <table class="table table-striped">
                           <tr>
-                            <th>Pembayaran Angsuran</th>
                             <th>Tanggal</th>
+                            <th>Pembayaran Angsuran</th>
                           </tr>
                           @if ($angsurans->isEmpty())
                             <tr>
@@ -219,18 +219,20 @@
                           @endif
                           @foreach ($angsurans as $key => $value)
                           <tr>
-                            <td class="text-currency">{{$value->nominal_angsuran}}</td>
                             <td>{{$value->tanggal_angsuran}}</td>
+                            <td class="text-currency">{{$value->nominal_angsuran}}</td>
                           </tr>
                           @endforeach
-                          <tr>
-                            <th class="text-currency">{{$angsurans->sum('nominal_angsuran')}}</th>
-                            <th>Total Angsuran</th>
-                          </tr>
-                          <tr>
-                            <th class="text-currency">{{$transaksi->jumlah_pembayaran}}</th>
-                            <th>Total Terbayarkan</th>
-                          </tr>
+                          <tfoot>
+                            <tr>
+                              <th>Total Angsuran</th>
+                              <th class="text-currency">{{$angsurans->sum('nominal_angsuran')}}</th>
+                            </tr>
+                            <tr>
+                              <th>Total Terbayarkan</th>
+                              <th class="text-currency">{{$transaksi->jumlah_pembayaran}}</th>
+                            </tr>
+                          </tfoot>
                         </table>
                       </div>
                     </div>
@@ -333,6 +335,7 @@
                                 <div class="form-group ui-widget">
                                   <label>Produk</label>
                                   <select id="add_produk" name="add_produk" class="form-control select2" style="width:100%;" type="text">
+                                    <option></option>
                                   @foreach ($produks as $produk))
                                     <option value="{{$produk->id}}">{{$produk->nama_produk}}</option>
                                   @endforeach
@@ -415,6 +418,7 @@
                                       <div class="form-group ui-widget">
                                           <label>Produk</label>
                                           <select id="edit_produk" name="edit_produk"  class="form-control select2 edit-input" style="width:100%;" type="text">
+                                              <option></option>
                                             @foreach ($produks as $produk))
                                               <option value="{{$produk->id}}">{{$produk->nama_produk}}</option>
                                             @endforeach
@@ -568,7 +572,7 @@
           }
       });
       numeral.locale('idr');
-      $('.select2').select2();
+      $('.select2').select2({placeholder: ''});
       $('input[name="tanggal"]').datepicker({
         format: "yyyy-mm-dd",
       });
@@ -1020,6 +1024,7 @@
           ].rowId
         ) + 1;
         var amount = 0;
+        addItem.id = null;
         addItem.rowId = rowId.toString();
         addItem.productId = getHtml.modalAddItem.selectedProductId();
         addItem.productName = getHtml.modalAddItem.selectedProductName();
@@ -1164,6 +1169,7 @@
       input.modalEditItem.saveButton.click(function() {
         var editItem = {};
         var amount = 0;
+        editItem.id = null;
         editItem.rowId = eR.toString();
         editItem.productName = getHtml.modalEditItem.selectedProductName();
         editItem.metric = getHtml.modalEditItem.prefix();
