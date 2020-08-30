@@ -242,7 +242,7 @@
                                         <button type="button" class="detail_show btn btn-primary btn-xs" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_pengeluaran),2,',','.')}}"><i class="fa fa-eye"></i></button>
                                         <button type="button" class="detail_showangsuran btn btn-warning btn-xs" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_pengeluaran}}"><i class="fa fa-money"></i></button>
                                         <!-- <button type="button" class="modal_edit btn btn-success btn-xs" data-id="{{encrypt($data->id)}}"><i class="fa fa-edit"></i></button> -->
-                                        <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-target="#modal_delete" data-backdrop="static" data-keyboard="false"><i class="fa fa-trash"></i></button>
                                         <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
                                     </div>
                                 </td>
@@ -267,7 +267,7 @@
 
             <div class="modal modal-danger fade" id="modal_delete">
                 <div class="modal-dialog">
-                    <div class="modal-content">
+                    <div class="modal-content box">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
@@ -290,6 +290,9 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Keluar</button>
                             <button type="button" id="deleteitem" class="btn btn-outline">Simpan</button>
+                        </div>
+                        <div class="overlay" style="display: none">
+                            <i class="fa fa-refresh fa-spin"></i>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -609,9 +612,15 @@
                         }
                     ),
                     dataType:'json',
-                    async:false,
+                    async:true,
                     processData: false,
                     contentType: false,
+                    beforeSend: function() {
+                        $('#modal_delete.in > .modal-dialog > .modal-content.box > .overlay').css('display', 'block');
+                    },
+                    complete: function() { 
+                        $('#modal_delete.in > .modal-dialog > .modal-content.box > .overlay').css('display', 'none');
+                    },
                     success:function(response){
                             // console.log(response['msg']);
                             if (response['msg']=="success"){
@@ -637,6 +646,11 @@
 
 
         });
+
+        $('#modal_delete').on('hide.bs.modal', function() {
+            $('#reason-transaksi').val('');
+            $('#modal_delete > .modal-dialog > .modal-content.box > .overlay').css('display', 'none');
+        })
 
       // bagian modal delete
 

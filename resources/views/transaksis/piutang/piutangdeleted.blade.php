@@ -184,6 +184,7 @@
                                 <th>Nominal Angsuran</th>
                                 <th>Pembayaran</th>
                                 <th>Nota Pengeluaran</th>
+                                <th>Alasan</th>
                                 <th>Cabang</th>
                                 <th>Pembuat</th>
                                 <th>Tool</th>
@@ -197,6 +198,7 @@
                                     <td>Rp. {{number_format(floatval($data->nominal_angsuran),2,',','.')}}</td>
                                     <td>{{$data->metode_pembayaran}}</td>
                                     <td><a href="/transaksi/report/{{encrypt($data->idtrans)}}" target="_blank">#{{$data->idtrans}}</td>
+                                    <td>Isi Alasan</td>
                                     <td>{{$data->Nama_Cabang}}</td>                                
                                     <td>{{$data->username}}</td>                                
                                     <td style="width: 150px;min-width:140px;">

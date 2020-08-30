@@ -189,6 +189,7 @@
                                 <th>Pajak</th>
                                 <th>Sisa Tagihan</th>
                                 <th>Total</th>
+                                <th>Alasan</th>
                                 <th>Tool</th>
                                 <th>Cabang</th>
                                 <th>Pembuat</th>
@@ -213,6 +214,7 @@
                                     <td>Rp. {{number_format(floatval($data->sisa_tagihan),2,',','.')}}</td>
                                 @endif
                                 <td>Rp. {{number_format(floatval($data->total_harga),2,',','.')}}</td>
+                                <td>Alasan</td>
                                 <td style="width: 150px;min-width:140px;">
                                     <div class="btn-group">
                                         <button type="button" class="modal_show btn btn-info btn-xs" data-toggle="modal" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}" data-target="#modal_show"><i class="fa fa-eye"></i></button>
