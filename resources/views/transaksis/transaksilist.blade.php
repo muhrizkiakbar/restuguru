@@ -71,6 +71,7 @@
     }
 
     .ui-helper-hidden-accessible { display:none; }
+    tr.active>td{background-color: #e8e8e8;}
   </style>
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
@@ -553,9 +554,11 @@
             if ($(rowselected).next().hasClass('detail_click item')) {
                 $('.detail_click').remove();
                 $(rowselected).parent('tbody').find('td').css('border','');
+                $(rowselected).removeClass('active');
             } else {
                 $('.detail_click').remove();
                 $(rowselected).parent('tbody').find('td').css('border','');
+                $(rowselected).parent('tbody').find('tr.active').removeClass('active');
                 $.ajax({
                     async: true,
                     type:'get',
@@ -571,7 +574,14 @@
                             return "\
                                 <tr class='detail_click item'>\
                                     <td colspan="+colsize+" style='margin: 0; padding: 0 0 12px;background: #fcfcfc'>\
-                                        <table class='table table-hover' style='background:#fcfcfc'>\
+                                        <table class='table table-hover table-detail' style='background:#fcfcfc; margin-bottom: 0'>\
+                                            <thead>\
+                                                <tr style='background-color:#00a65a'>\
+                                                    <th colspan='9' class='text-center'>\
+                                                        Produk Dibeli\
+                                                    </th>\
+                                                </tr>\
+                                            </thead>\
                                             <thead>\
                                                 <th style='width: 450px'>Nama Barang</th>\
                                                 <th style='width: 130px'>Harga Satuan</th>\
@@ -585,17 +595,36 @@
                                             </thead>\
                                             <tbody id='showdata'>\
                                             </tbody>\
+                                            <thead>\
+                                                <tr style='background-color:#dd4b39'>\
+                                                    <th colspan='9' class='text-center'>\
+                                                        Produk Sebelumnya\
+                                                    </th>\
+                                                </tr>\
+                                            </thead>\
+                                            <thead>\
+                                                <th style='width: 450px'>Nama Barang</th>\
+                                                <th style='width: 130px'>Harga Satuan</th>\
+                                                <th style='width: 60px'>P</th>\
+                                                <th style='width: 60px'>L</th>\
+                                                <th style='width: 60px'>Kuantitas</th>\
+                                                <th style='width: 170px'>Finishing</th>\
+                                                <th style='width: 170px'>Keterangan</th>\
+                                                <th style='width: 60px'>Diskon</th>\
+                                                <th style='width: 130px;text-align:right'>Subtotal</th>\
+                                            </thead>\
+                                            <tbody id='last-product'>\
+                                            </tbody>\
                                         </table>\
-                                        <div class='pull-right' style='padding: 8px;'>\
-                                            Total : <label id='totalshowmodal'></label>\
-                                        </div>\
                                     </td>\
                                 </tr>";
                         });
-                        $(rowselected).find('td').first().css('border-left','1px solid #00a65a');
-                        $(rowselected).find('td').last().css('border-right','1px solid #00a65a');
-                        $(rowselected).next().find('td').first().css('border-left','1px solid #00a65a');
-                        $(rowselected).next().find('td').last().css('border-right','1px solid #00a65a');
+                        $(rowselected).addClass('active');
+                        $('.detail_click.item').find('td').first().css('border-left','1px solid #3c8dbc');
+                        $('.detail_click.item').find('td').last().css('border-right','1px solid #3c8dbc');
+                        $('.detail_click.item').find('td').last().css('border-bottom','1px solid #3c8dbc');
+                        $('.detail_click.item').next().find('td').first().css('border-left','1px solid #3c8dbc');
+                        $('.detail_click.item').next().find('td').last().css('border-right','1px solid #3c8dbc');
                         $.each( response, function( key, value ) {
                             // console.log(response[key]['penjualan_id']);
                             if (response[key]['keterangan']==null){
@@ -609,6 +638,10 @@
                                 '<tr><td>'+response[key]['nama_produk']+'</td><td>'+response[key]['harga_satuan'].format(2, 3, '.', ',')+'</td><td>'+response[key]['panjang'].format(2, 3, '.', ',')+'</td><td>'+response[key]['lebar'].format(2, 3, '.', ',')+'</td><td>'+response[key]['banyak'].format(2, 3, '.', ',')+'</td><td>'+response[key]['finishing']+'</td><td style="width: 170px;word-break: break-all;">'+keterangan+'</td><td>'+response[key]['diskon'].format(2, 3, '.', ',')+'</td><td style="text-align:right">'+response[key]['subtotal'].format(2, 3, '.', ',')+'</td></tr>'
                             );
                         });
+                        $("#showdata").append("<tr>\
+                            <th colspan='8' class='text-right'>Total : </th>\
+                            <th id='totalshowmodal' class='text-right'></th>\
+                        </tr>");
                         $('.labelnota').text(response.nonota);
                         $('.labelpelanggan').text(response.nama_pelanggan);
                         idbaris=response.nonota;
