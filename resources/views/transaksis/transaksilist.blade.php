@@ -258,7 +258,11 @@
                             <tbody>
                             @foreach ($datas as $key=>$data)
                             <tr id="{{$data->id}}">
-                                <td>#{{$data->id}}</td>
+                                <td>#{{$data->id}}
+                                @if ($data->sub_penjualans()->onlyTrashed()->count() != 0)
+                                <span class="label label-success pull-left">edited</span>
+                                @endif
+                                </td>
                                 <td>{{$data->nama_pelanggan}}</td>
                                 <td>{{$data->hp_pelanggan}}</td>
                                 <td>{{date("d-m-Y",strtotime($data->tanggal))}} {{date("H:i:s",strtotime($data->created_at))}}</td>

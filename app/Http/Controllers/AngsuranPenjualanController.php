@@ -411,22 +411,32 @@ class AngsuranPenjualanController extends Controller
         $showsubtransaksis=Angsuran::leftJoin('Cabangs','Angsurans.cabang_id','=','Cabangs.id')
                             ->leftJoin('Users','Angsurans.user_id','=','Users.id')
                             ->select('Angsurans.*','Cabangs.Nama_Cabang','Users.username')
-                            ->where('Angsurans.transaksipenjualan_id','=',$request->id)
-                            // ->withTrashed()
-                            ->get();
+                            ->where('Angsurans.transaksipenjualan_id','=',$request->id);
         $transaksi=[];
-        foreach ($showsubtransaksis as $key => $value){
-            $sub=[];
-            $sub['id']=$value->id;
-            $sub['id3']=encrypt($value->id);
-            $sub['id2']=encrypt($request->id);
-            $sub['tanggal_angsuran']=date("d-m-Y",strtotime($value->tanggal_angsuran)).' '.date("H:i:s",strtotime($value->created_at));
-            $sub['nominal_angsuran']=$value->nominal_angsuran;
-            $sub['metode_pembayaran']=$value->metode_pembayaran;
-            $sub['transaksipenjualan_id']=$value->transaksipenjualan_id;
-            $sub['Nama_Cabang']=$value->Nama_Cabang;
-            $sub['username']=$value->username;
-            array_push($transaksi,$sub);
+        $transaksi["current"]=null;
+        $transaksi["deleted"]=null;
+        foreach ($showsubtransaksis->get() as $key => $value){
+            $transaksi["current"][$key]['id']=$value->id;
+            $transaksi["current"][$key]['id3']=encrypt($value->id);
+            $transaksi["current"][$key]['id2']=encrypt($request->id);
+            $transaksi["current"][$key]['tanggal_angsuran']=date("d-m-Y",strtotime($value->tanggal_angsuran)).' '.date("H:i:s",strtotime($value->created_at));
+            $transaksi["current"][$key]['nominal_angsuran']=$value->nominal_angsuran;
+            $transaksi["current"][$key]['metode_pembayaran']=$value->metode_pembayaran;
+            $transaksi["current"][$key]['transaksipenjualan_id']=$value->transaksipenjualan_id;
+            $transaksi["current"][$key]['Nama_Cabang']=$value->Nama_Cabang;
+            $transaksi["current"][$key]['username']=$value->username;
+        }                            
+        foreach ($showsubtransaksis->onlyTrashed()->get() as $key => $value){
+            $transaksi["deleted"][$key]['id']=$value->id;
+            $transaksi["deleted"][$key]['id3']=encrypt($value->id);
+            $transaksi["deleted"][$key]['id2']=encrypt($request->id);
+            $transaksi["deleted"][$key]['tanggal_angsuran']=date("d-m-Y",strtotime($value->tanggal_angsuran)).' '.date("H:i:s",strtotime($value->created_at));
+            $transaksi["deleted"][$key]['nominal_angsuran']=$value->nominal_angsuran;
+            $transaksi["deleted"][$key]['metode_pembayaran']=$value->metode_pembayaran;
+            $transaksi["deleted"][$key]['transaksipenjualan_id']=$value->transaksipenjualan_id;
+            $transaksi["deleted"][$key]['Nama_Cabang']=$value->Nama_Cabang;
+            $transaksi["deleted"][$key]['username']=$value->username;
+            $transaksi["deleted"][$key]['deleted_at']=date($value->deleted_at);
         }                            
         return $transaksi;
     }
