@@ -1013,8 +1013,8 @@ class TransaksiController extends Controller
                             ->select('Sub_Tpenjualans.*','Produks.nama_produk')
                             ->where('penjualan_id','=',$request->id);
         $data = [];
-        $data["current"] = $showsubtransaksi->get()->toJson();
-        $showsubtransaksideleted = $showsubtransaksi->onlyTrashed()->get()->toJson();
+        $data["current"] = $showsubtransaksi->get();
+        $showsubtransaksideleted = $showsubtransaksi->onlyTrashed()->get();
         $data["deleted"] = $showsubtransaksideleted;
         return $data;                            
     }
@@ -1098,15 +1098,37 @@ class TransaksiController extends Controller
             
             $changeAngsuran = Angsuran::find($value->id);
             if ($changeAngsuran->nominal_angsuran >= $sisaPaidAfter){
-              $changeAngsuran->nominal_angsuran = $changeAngsuran->nominal_angsuran - $sisaPaidAfter;
-              $changeAngsuran->save();
+
+              
+              
+              $table=new Angsuran;
+              $table->tanggal_angsuran=$changeAngsuran->tanggal_angsuran;
+              $table->nominal_angsuran=$changeAngsuran->nominal_angsuran-$sisaPaidAfter;
+              $table->user_id=Auth::user()->id;
+              $table->cabang_id=$changeAngsuran->cabang_id;
+              $table->transaksipenjualan_id=$changeAngsuran->transaksipenjualan_id;
+              $table->metode_pembayaran=$changeAngsuran->metode_pembayaran;
+              
+              $table->sisa_angsuran=$changeAngsuran->sisa_angsuran;
+              $table->save();
+              
+              $changeAngsuran->delete();
               $sisaPaidAfter = 0;
             }
             else
             {
+              $table=new Angsuran;
+              $table->tanggal_angsuran=$changeAngsuran->tanggal_angsuran;
+              $table->nominal_angsuran=0;
+              $table->user_id=Auth::user()->id;
+              $table->cabang_id=$changeAngsuran->cabang_id;
+              $table->transaksipenjualan_id=$changeAngsuran->transaksipenjualan_id;
+              $table->metode_pembayaran=$changeAngsuran->metode_pembayaran;
+              $table->sisa_angsuran=$changeAngsuran->sisa_angsuran;
+              $table->save();
+
               $sisaPaidAfter = $sisaPaidAfter - $changeAngsuran->nominal_angsuran;
-              $changeAngsuran->nominal_angsuran = 0; 
-              $changeAngsuran->save();
+              $changeAngsuran->delete();
             }
           }
           $paidOff = $dataAngsuran->sum('nominal_angsuran');
