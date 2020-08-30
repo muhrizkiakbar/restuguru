@@ -282,7 +282,7 @@
                                         <button type="button" class="detail_show btn btn-primary btn-xs" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}"><i class="fa fa-eye"></i></button>
                                         <button type="button" class="detail_showangsuran btn btn-warning btn-xs" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_tagihan}}"><i class="fa fa-money"></i></button>
                                         <a class="btn btn-success btn-xs" href="/transaksi/edit/{{encrypt($data->id)}}" ><i class="fa fa-edit"></i></a>
-                                        <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-target="#modal_delete"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-target="#modal_delete" data-backdrop="static" data-keyboard="false"><i class="fa fa-trash"></i></button>
                                         <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
                                         <button type="button" class="buttonprintjpg btn btn-success btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
                                     </div>
@@ -314,13 +314,13 @@
 
             <div class="modal modal-danger fade" id="modal_delete">
                 <div class="modal-dialog">
-                    <div class="modal-content">
+                    <div class="modal-content box">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title">Hapus Transaksi</h4>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body box-body">
                             <form id="formdeleteuser" action="" method="post" role="form" enctype="multipart/form-data">
                                 <h4>
                                     <i class="icon fa fa-ban"></i>
@@ -338,6 +338,9 @@
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Keluar</button>
                             <button type="button" id="deleteitem" class="btn btn-outline">Simpan</button>
                         </div>
+                        <div class="overlay" style="display: none">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -346,7 +349,7 @@
 
             <div class="modal modal-danger fade" id="modal_delete_angsuran">
                     <div class="modal-dialog">
-                        <div class="modal-content">
+                        <div class="modal-content box">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
@@ -369,6 +372,9 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Keluar</button>
                                 <button type="button" id="deleteangsuran" class="btn btn-outline">Simpan</button>
+                            </div>
+                            <div class="overlay" style="display: none">
+                                <i class="fa fa-refresh fa-spin"></i>
                             </div>
                         </div>
                         <!-- /.modal-content -->
@@ -675,7 +681,7 @@
                         $.each( response, function( key, value ) {
 
                             $("#showdata2").append(
-                                '<tr id="show'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+response[key]['id2']+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td style="text-align:right"><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete_angsuran" data-nominal="'+response[key]['nominal_angsuran']+'"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id3']+'" data-nominal="'+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'"><i class="fa fa-print"></i></button></div></td></tr>'
+                                '<tr id="show'+response[key]['id']+'"><td>#'+response[key]['id']+'</td><td>'+response[key]['tanggal_angsuran']+'</td><td>Rp. '+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+'</td><td>'+response[key]['metode_pembayaran']+'</td><td><a href="/transaksi/report/'+response[key]['id2']+'" target="_blank">#'+response[key]['transaksipenjualan_id']+'</a></td><td>'+response[key]['Nama_Cabang']+'</td><td>'+response[key]['username']+'</td><td style="text-align:right"><div class="btn-group"><button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+response[key]['id']+'" data-target="#modal_delete_angsuran" data-nominal="'+response[key]['nominal_angsuran']+'" data-backdrop="static" data-keyboard="false"><i class="fa fa-trash"></i></button><button type="button" class="printbutton2 btn btn-success btn-xs" data-toggle="modal"  data-id="'+response[key]['id3']+'" data-nominal="'+response[key]['nominal_angsuran'].format(2, 3, '.', ',')+' "><i class="fa fa-print"></i></button></div></td></tr>'
                             );
                         });
                         // $('.labelnota').text(response.nonota);
@@ -727,8 +733,14 @@
                             reason_on_delete: reason
                         }
                     ),
+                    beforeSend: function() {
+                        $('#modal_delete.in > .modal-dialog > .modal-content.box > .overlay').css('display', 'block');
+                    },
+                    complete: function() { 
+                        $('#modal_delete.in > .modal-dialog > .modal-content.box > .overlay').css('display', 'none');
+                    },
                     dataType:'json',
-                    async:false,
+                    async:true,
                     processData: false,
                     contentType: false,
                     success:function(response){
@@ -761,6 +773,11 @@
 
         });
 
+        $('#modal_delete').on('hide.bs.modal', function() {
+            $('#reason-transaksi').val('');
+            $('#modal_delete > .modal-dialog > .modal-content.box > .overlay').css('display', 'none');
+        })
+
         // modal delete angsuran
         $(document).on('click','.deletebutton',function () {
             idtrans=$(this).data('id');
@@ -772,11 +789,9 @@
             var token=$('input[name="_token"]').val();
             var sisatagihan=datasisa+datanominal;
             datapembayaran=datapembayaran-datanominal;
-            // console.log(sisapembayaran)
             console.log(sisatagihan+'='+datasisa+'+'+datanominal)
             var sisapembayaran=datapembayaran;
             var reason = $('#reason-angsuran').val();
-            alert(reason);
             if (reason != '') {
                 $.ajax({
                     headers: {
@@ -792,9 +807,15 @@
                         }
                     ),
                     dataType:'json',
-                    async:false,
+                    async:true,
                     processData: false,
                     contentType: false,
+                    beforeSend: function() {
+                        $('#modal_delete_angsuran.in > .modal-dialog > .modal-content.box > .overlay').css('display', 'block');
+                    },
+                    complete: function() { 
+                        $('#modal_delete_angsuran.in > .modal-dialog > .modal-content.box > .overlay').css('display', 'none');
+                    },
                     success:function(response){
                             // console.log(response['msg']);
                             if (response['msg']=="success"){
@@ -814,12 +835,14 @@
                             }
                             else{
                                 // datasisa=0;
+                                console.log('succes' + response);
                                 swal("Error !", "Gagal menghapus angsuran !", "error");
                                 $('#modal_delete_angsuran').modal('hide');
 
                             }
                     },
                     error:function(response){
+                                console.log('error');
                                 swal("Error !", "Gagal menghapus angsuran !", "error");
                                 $('#modal_delete_angsuran').modal('hide');
                     }
@@ -830,6 +853,11 @@
 
 
         });
+
+        $('#modal_delete_angsuran').on('hide.bs.modal', function() {
+            $('#reason-angsuran').val('');
+            $('#modal_delete_angsuran > .modal-dialog > .modal-content.box > .overlay').css('display', 'none');
+        })
     </script>
 
 
