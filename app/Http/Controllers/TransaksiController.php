@@ -1011,9 +1011,12 @@ class TransaksiController extends Controller
         $request->id=decrypt($request->id);
         $showsubtransaksi=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
                             ->select('Sub_Tpenjualans.*','Produks.nama_produk')
-                            ->where('penjualan_id','=',$request->id)
-                            ->get();
-        return $showsubtransaksi;                            
+                            ->where('penjualan_id','=',$request->id);
+        $data = [];
+        $data["current"] = $showsubtransaksi->get()->toJson();
+        $showsubtransaksideleted = $showsubtransaksi->onlyTrashed()->get()->toJson();
+        $data["deleted"] = $showsubtransaksideleted;
+        return $data;                            
     }
 
     public function show($id)
