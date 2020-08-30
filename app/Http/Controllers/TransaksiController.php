@@ -1147,36 +1147,35 @@ class TransaksiController extends Controller
         foreach ($detail_befores as $key => $detail_before)
         {
 
-          if  (array_search($detail_before["id"],$detail_afters[$key])=="id") 
-          {
-            //change data
-            $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_afters[$key]["id"])->first();
-            $subtransaksi->produk_id=$detail_afters[$key]["productId"];
-            $subtransaksi->harga_satuan=$detail_afters[$key]["price"];
-            $subtransaksi->panjang=$detail_afters[$key]["width"];
-            $subtransaksi->lebar=$detail_afters[$key]["length"];
-            $subtransaksi->banyak=$detail_afters[$key]["quantity"];
-            $subtransaksi->keterangan=$detail_afters[$key]["info"];
-            $subtransaksi->user_id=Auth::user()->id;
-            $subtransaksi->subtotal=$detail_afters[$key]["totalPrice"];
-            $subtransaksi->finishing=$detail_afters[$key]["finishing"];
-            $subtransaksi->satuan=$detail_afters[$key]["metric"];
-            $subtransaksi->diskon=$detail_afters[$key]["discount"];
-            $subtransaksi->save();
-          }
-          else
-          {
-            //remove data
-            array_push($must_delete,$detail_before["id"]);
-          }
+          //if  (array_search($detail_before["id"],$detail_afters[$key])=="id") 
+          //{
+          //  //change data
+          //  $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_afters[$key]["id"])->first();
+          //  $subtransaksi->produk_id=$detail_afters[$key]["productId"];
+          //  $subtransaksi->harga_satuan=$detail_afters[$key]["price"];
+          //  $subtransaksi->panjang=$detail_afters[$key]["width"];
+          //  $subtransaksi->lebar=$detail_afters[$key]["length"];
+          //  $subtransaksi->banyak=$detail_afters[$key]["quantity"];
+          //  $subtransaksi->keterangan=$detail_afters[$key]["info"];
+          //  $subtransaksi->user_id=Auth::user()->id;
+          //  $subtransaksi->subtotal=$detail_afters[$key]["totalPrice"];
+          //  $subtransaksi->finishing=$detail_afters[$key]["finishing"];
+          //  $subtransaksi->satuan=$detail_afters[$key]["metric"];
+          //  $subtransaksi->diskon=$detail_afters[$key]["discount"];
+          //  $subtransaksi->save();
+          //}
+          //else
+          //{
+          //  //remove data
+          //  array_push($must_delete,$detail_before["id"]);
+          //}
+          array_push($must_delete,$detail_before["id"]);
         }
 
         CSub_Tpenjualans::whereIn('id', $must_delete)->delete();
 
         foreach ($detail_afters as $detail_after)
         {
-          if ($detail_after["id"]==null)
-          {
             $subtransaksi=new CSub_Tpenjualans;
             $subtransaksi->penjualan_id=$transaksi->id;
             $subtransaksi->produk_id=$detail_after["productId"];
@@ -1191,23 +1190,39 @@ class TransaksiController extends Controller
             $subtransaksi->satuan=$detail_after["metric"];
             $subtransaksi->diskon=$detail_after["discount"];
             $subtransaksi->save();
-          }
-          else
-          {
-            $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_after["id"])->first();
-            $subtransaksi->produk_id=$detail_after["productId"];
-            $subtransaksi->harga_satuan=$detail_after["price"];
-            $subtransaksi->panjang=$detail_after["width"];
-            $subtransaksi->lebar=$detail_after["length"];
-            $subtransaksi->banyak=$detail_after["quantity"];
-            $subtransaksi->keterangan=$detail_after["info"];
-            $subtransaksi->user_id=Auth::user()->id;
-            $subtransaksi->subtotal=$detail_after["totalPrice"];
-            $subtransaksi->finishing=$detail_after["finishing"];
-            $subtransaksi->satuan=$detail_after["metric"];
-            $subtransaksi->diskon=$detail_after["discount"];
-            $subtransaksi->save();
-          }
+          //if ($detail_after["id"]==null)
+          //{
+          //  $subtransaksi=new CSub_Tpenjualans;
+          //  $subtransaksi->penjualan_id=$transaksi->id;
+          //  $subtransaksi->produk_id=$detail_after["productId"];
+          //  $subtransaksi->harga_satuan=$detail_after["price"];
+          //  $subtransaksi->panjang=$detail_after["width"];
+          //  $subtransaksi->lebar=$detail_after["length"];
+          //  $subtransaksi->banyak=$detail_after["quantity"];
+          //  $subtransaksi->keterangan=$detail_after["info"];
+          //  $subtransaksi->user_id=Auth::user()->id;
+          //  $subtransaksi->subtotal=$detail_after["totalPrice"];
+          //  $subtransaksi->finishing=$detail_after["finishing"];
+          //  $subtransaksi->satuan=$detail_after["metric"];
+          //  $subtransaksi->diskon=$detail_after["discount"];
+          //  $subtransaksi->save();
+          //}
+          //else
+          //{
+          //  $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_after["id"])->first();
+          //  $subtransaksi->produk_id=$detail_after["productId"];
+          //  $subtransaksi->harga_satuan=$detail_after["price"];
+          //  $subtransaksi->panjang=$detail_after["width"];
+          //  $subtransaksi->lebar=$detail_after["length"];
+          //  $subtransaksi->banyak=$detail_after["quantity"];
+          //  $subtransaksi->keterangan=$detail_after["info"];
+          //  $subtransaksi->user_id=Auth::user()->id;
+          //  $subtransaksi->subtotal=$detail_after["totalPrice"];
+          //  $subtransaksi->finishing=$detail_after["finishing"];
+          //  $subtransaksi->satuan=$detail_after["metric"];
+          //  $subtransaksi->diskon=$detail_after["discount"];
+          //  $subtransaksi->save();
+          //}
             
 
         }
