@@ -1275,7 +1275,12 @@
         transaction.purchased.after.debit = convert.toNumber(input.transaction.debit.val()).toString();
         transaction.purchased.after.tax = convert.toNumber(input.transaction.tax.val()).toString();
         transaction.purchased.after.pmentMethod = $('#pembayaran :selected').val();
-        if (transaction.purchased.after.paidOff > transaction.purchased.after.amount) {
+        if (
+          parseFloat(
+            transaction.purchased.after.paidOff
+          ) > parseFloat(
+            transaction.purchased.after.amount)
+          ) {
           swal("Gagal", "Pembayaran DP lebih dari total.", "error");
         } else {
           $.ajax({
