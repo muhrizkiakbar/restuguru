@@ -901,6 +901,8 @@
           amount: $('#total'),
           pmentMethod: $('#pembayaran'),
           paidOffMethod: $('input[name="metode"]'),
+          paidOffDP: $('#metodedp'),
+          paidOffLunas: $('#metodelunas'),
           ret: $('#kembali'),
           debit: $('#sisa'),
           save: $('#submittransaksi'),
@@ -1223,11 +1225,24 @@
 
     <script>
       input.transaction.paidOffMethod.change(function() {
+        console.log($(this));
         input.transaction.paidOff.val(
           ($(this).val() == 'lunas') ? input.transaction.amount.val() : convert.toIDR(
             convert.toNumber(input.transaction.amount.val()) / 2
           )
         ).trigger('change');
+      });
+
+      input.transaction.paidOffDP.on('ifChecked', function() {
+        input.transaction.paidOff.val(
+          convert.toIDR(convert.toNumber( input.transaction.amount.val())/2)
+        )
+      });
+
+      input.transaction.paidOffLunas.on('ifChecked', function() {
+        input.transaction.paidOff.val(
+          input.transaction.amount.val()
+        )
       });
 
       input.transaction.discount.add(
@@ -1290,6 +1305,7 @@
       })
 
       input.transaction.save.click(function() {
+        var reason = $('#reason-edit').val();
         var token = "{{ csrf_token() }}";
         transaction.purchased.after.amount = convert.toNumber(input.transaction.amount.val()).toString();
         transaction.purchased.after.discount = convert.toNumber(input.transaction.discount.val()).toString();
@@ -1305,26 +1321,30 @@
           ) {
           swal("Gagal", "Pembayaran DP lebih dari total.", "error");
         } else {
-          $.ajax({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type:'POST',
-            url:'{{route('updatetransaksi', ['id'=> encrypt($transaksi->id)])}}',
-            data: JSON.stringify(transaction),
-            async: false,
-            processData: false,
-            contentType: 'application/json; charset=utf-8',
-            success: function(response){
-              swal("Berhasil !", "Berhasil mengubah transaksi !", "success")
-              .then(function(value) {
-               window.location = '{{route('transaksilist')}}'
-              })
-            },
-            error: function(response) {
-              swal("Error !", "Gagal mengubah transaksi !", "error");
-            }
-          })
+          if (reason == '') {
+            swal("Error !", "Alasan Wajib Diisi !", "error");
+          } else {
+            $.ajax({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              type:'POST',
+              url:'{{route('updatetransaksi', ['id'=> encrypt($transaksi->id)])}}',
+              data: JSON.stringify(transaction),
+              async: false,
+              processData: false,
+              contentType: 'application/json; charset=utf-8',
+              success: function(response){
+                swal("Berhasil !", "Berhasil mengubah transaksi !", "success")
+                .then(function(value) {
+                window.location = '{{route('transaksilist')}}'
+                })
+              },
+              error: function(response) {
+                swal("Error !", "Gagal mengubah transaksi !", "error");
+              }
+            })
+          }
         }
       })
     </script>
