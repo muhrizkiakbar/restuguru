@@ -239,25 +239,30 @@
                     <div class="col-md-6">
                       <div class="row">
                         <div class="col-md-6">
-                            <label>Diskon %
-                                <input id="diskon" name="diskon" value="{{ $transaksi->diskon }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
-                            </label>                                  
+                          <div class="form-group">
+                            <label>Diskon %</label>                                  
+                            <input id="diskon" name="diskon" value="{{ $transaksi->diskon }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">  
+                          </div>
                         </div>
                         <div class="col-md-6">
+                          <div class="form-group">
                             <label>Total
-                                <input id="total" name="total" disabled value="{{ $transaksi->total_harga }}" placeholder="Rp 0" class="form-control val-currency" type="text">
-                                <input id="total2" name="total2" disabled hidden value="{{ $transaksi->total_harga }}" type="text">
-                            </label>                                  
+                              <input id="total2" name="total2" disabled hidden value="{{ $transaksi->total_harga }}" type="text">
+                            </label>
+                            <input id="total" name="total" disabled value="{{ $transaksi->total_harga }}" placeholder="Rp 0" class="form-control val-currency" type="text">
+                          </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                            <label>Bayar
-                                <input id="bayardp" name="bayardp" value="{{ $transaksi->jumlah_pembayaran }}" placeholder="Rp 0" class="form-control val-currency" type="text" autocomplete="off">
-                            </label>                                  
+                          <div class="form-group">
+                            <label>Bayar</label>                                  
+                            <input id="bayardp" name="bayardp" value="{{ $transaksi->jumlah_pembayaran }}" placeholder="Rp 0" class="form-control val-currency" type="text" autocomplete="off">
+                          </div>
                         </div>
                         <div class="col-md-6">
-                          <label>Pembayaran
+                          <div class="form-group">
+                            <label>Pembayaran</label>
                             <select class="form-control  pull-right"  id="pembayaran" name="pembayaran" style="width: 100%;">
                                 @if ($transaksi->metode_pembayaran === "Cash")
                                   <option value="Cash" selected>Cash</option>
@@ -270,37 +275,50 @@
                                   <option value="Transfer">Transfer</option>
                                 @endif
                             </select>
-                          </label>           
+                          </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                              <label for="">Kembali
-                                <input id="kembali" type="text" class="form-control val-currency" disabled>
-                              </label>
-                              
+                          <div class="form-group">
+                            <label for="">Kembali</label>
+                            <input id="kembali" type="text" class="form-control val-currency" disabled>
+                          </div>
                         </div>
-                        <div class="col-md-6">
-                              <label>
-                                  <input type="radio" name="metode" id="metodelunas" value="lunas" class="minimal-red">
-                                  Lunas
-                                  <input type="radio" name="metode" id="metodedp" value="dp" class="minimal-red">
-                                  DP 50%     
-                              </label>
-                                            
+                        <div class="col-md-3">
+                          <div class="form-group" style="padding-top: 28px">
+                            <label>
+                            <input type="radio" name="metode" id="metodelunas" value="lunas" class="minimal-blue">
+                            Lunas</label>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group" style="padding-top: 28px">
+                            <label>
+                            <input type="radio" name="metode" id="metodedp" value="dp" class="minimal-blue">
+                            DP 50% </label>
+                          </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                              <label>Pajak %
-                                  <input id="pajak" name="pajak"  value="{{ $transaksi->pajak }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
-                              </label>                     
+                          <div class="form-group">
+                            <label>Pajak %</label>
+                            <input id="pajak" name="pajak"  value="{{ $transaksi->pajak }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off"> 
+                          </div>                  
                         </div>
                         <div class="col-md-6">
-                              <label>Sisa
-                                  <input id="sisa" name="sisa"  value="{{ $transaksi->sisa_tagihan }}" placeholder="Rp 0" class="form-control val-currency" disabled type="text">
-                              </label>  
-                                            
+                          <div class="form-group">
+                            <label>Sisa</label>
+                            <input id="sisa" name="sisa"  value="{{ $transaksi->sisa_tagihan }}" placeholder="Rp 0" class="form-control val-currency" disabled type="text">
+                          </div> 
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                          <label for="">Alasan</label>
+                          <textarea name="reason-edit" id="reason-edit" rows="3" class="form-control"></textarea>
                         </div>
                       </div>
                     </div>
@@ -576,6 +594,9 @@
       $('input[name="tanggal"]').datepicker({
         format: "yyyy-mm-dd",
       });
+      $('input[name="metode"]').iCheck({
+        radioClass: 'iradio_square-blue',
+      })
     </script>
 
     <script>
@@ -669,8 +690,8 @@
       $('.val-metric').each(function() { $(this).val(convert.toFixed($(this).val())) });
       $('.val-quantity').each(function() { $(this).val(convert.toNumber($(this).val())) });
 
-      $('.val-currency').blur(function() {$(this).val(convert.toIDR($(this).val())) });
-      $('.val-percentage').blur(function() {$(this).val(convert.toFixed($(this).val()) + ' %');});
+      $('.val-currency').on('keyup blur', function() {$(this).val(convert.toIDR($(this).val())) });
+      $('.val-percentage').on('blur', function() {$(this).val(convert.toFixed($(this).val()) + ' %');});
       $('.val-metric').blur(function() { $(this).val(convert.toFixed($(this).val())) });
       $('.val-quantity').blur(function() { $(this).val(convert.toNumber($(this).val().replace(/[.,\s]/g,''))) });
 
@@ -882,7 +903,8 @@
           paidOffMethod: $('input[name="metode"]'),
           ret: $('#kembali'),
           debit: $('#sisa'),
-          save: $('#submittransaksi')
+          save: $('#submittransaksi'),
+          reason: $('#reason-edit')
         }
       }
 
