@@ -239,25 +239,30 @@
                     <div class="col-md-6">
                       <div class="row">
                         <div class="col-md-6">
-                            <label>Diskon %
-                                <input id="diskon" name="diskon" value="{{ $transaksi->diskon }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
-                            </label>                                  
+                          <div class="form-group">
+                            <label>Diskon %</label>                                  
+                            <input id="diskon" name="diskon" value="{{ $transaksi->diskon }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">  
+                          </div>
                         </div>
                         <div class="col-md-6">
+                          <div class="form-group">
                             <label>Total
-                                <input id="total" name="total" disabled value="{{ $transaksi->total_harga }}" placeholder="Rp 0" class="form-control val-currency" type="text">
-                                <input id="total2" name="total2" disabled hidden value="{{ $transaksi->total_harga }}" type="text">
-                            </label>                                  
+                              <input id="total2" name="total2" disabled hidden value="{{ $transaksi->total_harga }}" type="text">
+                            </label>
+                            <input id="total" name="total" disabled value="{{ $transaksi->total_harga }}" placeholder="Rp 0" class="form-control val-currency" type="text">
+                          </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                            <label>Bayar
-                                <input id="bayardp" name="bayardp" value="{{ $transaksi->jumlah_pembayaran }}" placeholder="Rp 0" class="form-control val-currency" type="text" autocomplete="off">
-                            </label>                                  
+                          <div class="form-group">
+                            <label>Bayar</label>                                  
+                            <input id="bayardp" name="bayardp" value="{{ $transaksi->jumlah_pembayaran }}" placeholder="Rp 0" class="form-control val-currency" type="text" autocomplete="off">
+                          </div>
                         </div>
                         <div class="col-md-6">
-                          <label>Pembayaran
+                          <div class="form-group">
+                            <label>Pembayaran</label>
                             <select class="form-control  pull-right"  id="pembayaran" name="pembayaran" style="width: 100%;">
                                 @if ($transaksi->metode_pembayaran === "Cash")
                                   <option value="Cash" selected>Cash</option>
@@ -270,37 +275,50 @@
                                   <option value="Transfer">Transfer</option>
                                 @endif
                             </select>
-                          </label>           
+                          </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                              <label for="">Kembali
-                                <input id="kembali" type="text" class="form-control val-currency" disabled>
-                              </label>
-                              
+                          <div class="form-group">
+                            <label for="">Kembali</label>
+                            <input id="kembali" type="text" class="form-control val-currency" disabled>
+                          </div>
                         </div>
-                        <div class="col-md-6">
-                              <label>
-                                  <input type="radio" name="metode" id="metodelunas" value="lunas" class="minimal-red">
-                                  Lunas
-                                  <input type="radio" name="metode" id="metodedp" value="dp" class="minimal-red">
-                                  DP 50%     
-                              </label>
-                                            
+                        <div class="col-md-3">
+                          <div class="form-group" style="padding-top: 28px">
+                            <label>
+                            <input type="radio" name="metode" id="metodelunas" value="lunas" class="minimal-blue">
+                            Lunas</label>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group" style="padding-top: 28px">
+                            <label>
+                            <input type="radio" name="metode" id="metodedp" value="dp" class="minimal-blue">
+                            DP 50% </label>
+                          </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                              <label>Pajak %
-                                  <input id="pajak" name="pajak"  value="{{ $transaksi->pajak }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off">
-                              </label>                     
+                          <div class="form-group">
+                            <label>Pajak %</label>
+                            <input id="pajak" name="pajak"  value="{{ $transaksi->pajak }}" placeholder="0,00%" class="form-control val-percentage" type="text" autocomplete="off"> 
+                          </div>                  
                         </div>
                         <div class="col-md-6">
-                              <label>Sisa
-                                  <input id="sisa" name="sisa"  value="{{ $transaksi->sisa_tagihan }}" placeholder="Rp 0" class="form-control val-currency" disabled type="text">
-                              </label>  
-                                            
+                          <div class="form-group">
+                            <label>Sisa</label>
+                            <input id="sisa" name="sisa"  value="{{ $transaksi->sisa_tagihan }}" placeholder="Rp 0" class="form-control val-currency" disabled type="text">
+                          </div> 
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                          <label for="">Alasan</label>
+                          <textarea name="reason-edit" id="reason-edit" rows="3" class="form-control"></textarea>
                         </div>
                       </div>
                     </div>
@@ -576,6 +594,9 @@
       $('input[name="tanggal"]').datepicker({
         format: "yyyy-mm-dd",
       });
+      $('input[name="metode"]').iCheck({
+        radioClass: 'iradio_square-blue',
+      })
     </script>
 
     <script>
@@ -669,8 +690,8 @@
       $('.val-metric').each(function() { $(this).val(convert.toFixed($(this).val())) });
       $('.val-quantity').each(function() { $(this).val(convert.toNumber($(this).val())) });
 
-      $('.val-currency').blur(function() {$(this).val(convert.toIDR($(this).val())) });
-      $('.val-percentage').blur(function() {$(this).val(convert.toFixed($(this).val()) + ' %');});
+      $('.val-currency').on('keyup blur', function() {$(this).val(convert.toIDR($(this).val())) });
+      $('.val-percentage').on('blur', function() {$(this).val(convert.toFixed($(this).val()) + ' %');});
       $('.val-metric').blur(function() { $(this).val(convert.toFixed($(this).val())) });
       $('.val-quantity').blur(function() { $(this).val(convert.toNumber($(this).val().replace(/[.,\s]/g,''))) });
 
@@ -880,9 +901,12 @@
           amount: $('#total'),
           pmentMethod: $('#pembayaran'),
           paidOffMethod: $('input[name="metode"]'),
+          paidOffDP: $('#metodedp'),
+          paidOffLunas: $('#metodelunas'),
           ret: $('#kembali'),
           debit: $('#sisa'),
-          save: $('#submittransaksi')
+          save: $('#submittransaksi'),
+          reason: $('#reason-edit')
         }
       }
 
@@ -1201,11 +1225,24 @@
 
     <script>
       input.transaction.paidOffMethod.change(function() {
+        console.log($(this));
         input.transaction.paidOff.val(
           ($(this).val() == 'lunas') ? input.transaction.amount.val() : convert.toIDR(
             convert.toNumber(input.transaction.amount.val()) / 2
           )
         ).trigger('change');
+      });
+
+      input.transaction.paidOffDP.on('ifChecked', function() {
+        input.transaction.paidOff.val(
+          convert.toIDR(convert.toNumber( input.transaction.amount.val())/2)
+        )
+      });
+
+      input.transaction.paidOffLunas.on('ifChecked', function() {
+        input.transaction.paidOff.val(
+          input.transaction.amount.val()
+        )
       });
 
       input.transaction.discount.add(
@@ -1268,6 +1305,7 @@
       })
 
       input.transaction.save.click(function() {
+        var reason = $('#reason-edit').val();
         var token = "{{ csrf_token() }}";
         transaction.purchased.after.amount = convert.toNumber(input.transaction.amount.val()).toString();
         transaction.purchased.after.discount = convert.toNumber(input.transaction.discount.val()).toString();
@@ -1283,26 +1321,30 @@
           ) {
           swal("Gagal", "Pembayaran DP lebih dari total.", "error");
         } else {
-          $.ajax({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type:'POST',
-            url:'{{route('updatetransaksi', ['id'=> encrypt($transaksi->id)])}}',
-            data: JSON.stringify(transaction),
-            async: false,
-            processData: false,
-            contentType: 'application/json; charset=utf-8',
-            success: function(response){
-              swal("Berhasil !", "Berhasil mengubah transaksi !", "success")
-              .then(function(value) {
-               window.location = '{{route('transaksilist')}}'
-              })
-            },
-            error: function(response) {
-              swal("Error !", "Gagal mengubah transaksi !", "error");
-            }
-          })
+          if (reason == '') {
+            swal("Error !", "Alasan Wajib Diisi !", "error");
+          } else {
+            $.ajax({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              type:'POST',
+              url:'{{route('updatetransaksi', ['id'=> encrypt($transaksi->id)])}}',
+              data: JSON.stringify(transaction),
+              async: false,
+              processData: false,
+              contentType: 'application/json; charset=utf-8',
+              success: function(response){
+                swal("Berhasil !", "Berhasil mengubah transaksi !", "success")
+                .then(function(value) {
+                window.location = '{{route('transaksilist')}}'
+                })
+              },
+              error: function(response) {
+                swal("Error !", "Gagal mengubah transaksi !", "error");
+              }
+            })
+          }
         }
       })
     </script>
