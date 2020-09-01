@@ -804,7 +804,7 @@
                                     <th class='text-right'>Subtotal</th>\
                                     <th>Cabang</>\
                                     <th>Pembuat</>\
-                                    <th>Dihapus Tanggal</th>\
+                                    <th>Diubah Tanggal</th>\
                                     <th>Alasan</th>\
                                 </thead>\
                                 <tbody id='last-product'>\
@@ -942,7 +942,7 @@
                                     <th>Nota Penjualan</th>\
                                     <th>Cabang</th>\
                                     <th>Pembuat</th>\
-                                    <th>Dihapus Tanggal</th>\
+                                    <th>Diubah Tanggal</th>\
                                     <th>Alasan</th>\
                                 </thead>\
                                 <tbody  id='last-installment'>\
@@ -959,7 +959,13 @@
                                         <td>'+v.Nama_Cabang+'</td>\
                                         <td>'+v.username+'</td>\
                                         <td>'+v.deleted_at+'</td>\
-                                        <td>'+v.reason_on_delete+'</td>\
+                                        <td>'+
+                                           if (v.reason_on_delete == null) {
+                                            '<span class="label label-danger pull-left">edited</span> '+v.reason_on_delete
+                                           } else if (v.reason_on_edit == null) {
+                                            '<span class="label label-warning pull-left">edited</span> '+v.reason_on_edit
+                                           }
+                                        +'</td>\
                                     </tr>'
                                 );
                             });

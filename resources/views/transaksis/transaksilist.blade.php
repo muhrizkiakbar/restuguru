@@ -659,8 +659,8 @@
                                         <th style='width: 130px;text-align:right'>Subtotal</th>\
                                         <th style='width: 150px;'>Cabang</>\
                                         <th style='width: 150px;'>Pembuat</>\
-                                        <th style='width: 150px;'>Dihapus Tanggal</th>\
-                                        <th style='width: 200px;'>Alasan</th>\
+                                        <th style='width: 150px;'>Diubah Tanggal</th>\
+                                        <th style='width: 200px;'>Alasan Diubah</th>\
                                     </thead>\
                                     <tbody id='last-product'>\
                                     </tbody>\
@@ -808,7 +808,7 @@
                                         <th>Nota Penjualan</th>\
                                         <th>Cabang</th>\
                                         <th>Pembuat</th>\
-                                        <th>Dihapus Tanggal</th>\
+                                        <th>Diubah Tanggal</th>\
                                         <th>Alasan</th>\
                                     </thead>\
                                     <tbody  id='last-installment'>\
@@ -825,7 +825,13 @@
                                             <td>'+v.Nama_Cabang+'</td>\
                                             <td>'+v.username+'</td>\
                                             <td>'+v.deleted_at+'</td>\
-                                            <td>'+v.reason_on_delete+'</td>\
+                                            <td>'+
+                                                if (v.reason_on_delete == null) {
+                                                    '<span class="label label-danger pull-left">edited</span> '+v.reason_on_delete
+                                                } else if (v.reason_on_edit == null) {
+                                                    '<span class="label label-warning pull-left">edited</span> '+v.reason_on_edit
+                                                }
+                                            +'</td>\
                                         </tr>'
                                     );
                                 });
