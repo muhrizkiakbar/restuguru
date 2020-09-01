@@ -828,7 +828,7 @@
                                             <td>'+v.username+'</td>\
                                             <td>'+v.deleted_at+'</td>\
                                             <td>'+
-                                                (v.reason_on_delete != null ? deleted : v.reason_on_delete != null ? edited : '')
+                                                (v.reason_on_delete != null ? deleted : v.reason_on_edit != null ? edited : '')
                                             +'</td>\
                                         </tr>'
                                     );
