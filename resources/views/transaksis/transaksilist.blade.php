@@ -815,6 +815,8 @@
                                     </tbody>\
                                 ");
                                 $.each(response.deleted, function(k,v) {
+                                    var deleted = '<span class="label label-danger pull-left">edited</span>' + v.reason_on_delete;
+                                    var edited = '<span class="label label-warning pull-left">edited</span> '+v.reason_on_edit;
                                     $("#last-installment").append(
                                         '<tr>\
                                             <td>#'+v.id+'</td>\
@@ -826,11 +828,7 @@
                                             <td>'+v.username+'</td>\
                                             <td>'+v.deleted_at+'</td>\
                                             <td>'+
-                                                if (v.reason_on_delete == null) {
-                                                    '<span class="label label-danger pull-left">edited</span> '+v.reason_on_delete
-                                                } else if (v.reason_on_edit == null) {
-                                                    '<span class="label label-warning pull-left">edited</span> '+v.reason_on_edit
-                                                }
+                                                (v.reason_on_delete != null ? deleted : v.reason_on_delete != null ? edited : '')
                                             +'</td>\
                                         </tr>'
                                     );
