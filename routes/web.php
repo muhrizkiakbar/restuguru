@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
         
 
         Route::post('setwebhook', function(){
-          $response = Telegram::setWebhook(['url' => env('TELEGRAM_WEBHOOK_URL').'/YHr1bq5qGFPYBzaWYc51ajt0sIQ2DcGQhNkPKMSjZ0DPzMLJlOOGUXxX0mbYZKxxF3ihX5dkMLtKo3t1JgJNSjhn6hv6ZqlryPBZcwNL2NsKrcQ8F3kMXRW8kCG64Nbd/webhook']);
+          $response = Telegram::setWebhook(['url' => 'https://promosindo.restuguru.com/YHr1bq5qGFPYBzaWYc51ajt0sIQ2DcGQhNkPKMSjZ0DPzMLJlOOGUXxX0mbYZKxxF3ihX5dkMLtKo3t1JgJNSjhn6hv6ZqlryPBZcwNL2NsKrcQ8F3kMXRW8kCG64Nbd/webhook']);
           dd($response);
         });
 
