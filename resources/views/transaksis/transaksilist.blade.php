@@ -815,10 +815,11 @@
                                     </tbody>\
                                 ");
                                 $.each(response.deleted, function(k,v) {
-                                    var deleted = '<span class="label label-danger pull-left">edited</span>' + v.reason_on_delete;
-                                    var edited = '<span class="label label-warning pull-left">edited</span> '+v.reason_on_edit;
+                                    var color = v.reason_on_delete != null ? '#ffadad' : v.reason_on_edit != null ? '#caf0f8' : '';
                                     $("#last-installment").append(
-                                        '<tr>\
+                                        '<tr\
+                                            style="background-color: '+color+'"\
+                                        >\
                                             <td>#'+v.id+'</td>\
                                             <td>'+v.tanggal_angsuran+'</td>\
                                             <td>Rp. '+v.nominal_angsuran.format(2, 3, '.', ',')+'</td>\
@@ -828,7 +829,7 @@
                                             <td>'+v.username+'</td>\
                                             <td>'+v.deleted_at+'</td>\
                                             <td>'+
-                                                (v.reason_on_delete != null ? deleted : v.reason_on_delete != null ? edited : '')
+                                                (v.reason_on_delete != null ? v.reason_on_delete : v.reason_on_edit != null ? v.reason_on_edit : '')
                                             +'</td>\
                                         </tr>'
                                     );
