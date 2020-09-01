@@ -1324,7 +1324,7 @@
           if (reason == '') {
             swal("Error !", "Alasan Wajib Diisi !", "error");
           } else {
-            transaction.purchased.after.reason_on_edit = reason;
+            transaction.purchased.reason_on_edit = reason;
             $.ajax({
               headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
