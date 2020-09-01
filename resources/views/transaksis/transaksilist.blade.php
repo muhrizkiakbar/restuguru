@@ -281,7 +281,7 @@
                                 <td style="width: 150px;min-width:140px;">
                                     <div class="btn-group">
                                         <button type="button" class="detail_show btn btn-primary btn-xs" data-id="{{encrypt($data->id)}}" data-total="Rp. {{ number_format(floatval($data->total_harga),2,',','.')}}"><i class="fa fa-eye"></i></button>
-                                        <button type="button" class="detail_showangsuran btn btn-warning btn-xs" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="Rp. {{ $data->sisa_tagihan}}"><i class="fa fa-money"></i></button>
+                                        <button type="button" class="detail_showangsuran btn btn-warning btn-xs" data-id="{{encrypt($data->id)}}" data-idsisa="sisa{{$data->id}}" data-nonota="{{$data->id}}" data-sisa="{{ $data->sisa_tagihan}}"><i class="fa fa-money"></i></button>
                                         <a class="btn btn-success btn-xs" href="/transaksi/edit/{{encrypt($data->id)}}" ><i class="fa fa-edit"></i></a>
                                         <button type="button" class="modal_delete btn btn-danger btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}" data-target="#modal_delete" data-backdrop="static" data-keyboard="false"><i class="fa fa-trash"></i></button>
                                         <button type="button" class="buttonprint btn btn-info btn-xs" data-toggle="modal"  data-id="{{encrypt($data->id)}}"><i class="fa fa-print"></i></button>
@@ -689,7 +689,7 @@
                                             <td>'+value.Nama_Cabang+'</td>\
                                             <td>'+value.username+'</td>\
                                             <td>'+value.deleted_at+'</td>\
-                                            <td>Alasan</td>\
+                                            <td>'+value.reason_on_edit+'</td>\
                                         </tr>'
                                     );
                                 });
@@ -707,7 +707,7 @@
         });
 
         $(document).on('click','.detail_showangsuran',function () {
-            sisatagihan = $(this).data('sisa').format(0, 3, '.', ',');
+            sisatagihan = $(this).data('sisa').format(2, 3, '.', ',');
             idbaris=$(this).data('id');
             datanonota=$(this).data('nonota');
             datasisa=$(this).data('sisa');
@@ -789,7 +789,7 @@
                         });
                         $("#showdata2").append("<tr>\
                             <th colspan='7' class='text-right'>Sisa : </th>\
-                            <th colspan='2' id='sisatagihanlabel' class='text-right'>"+sisatagihan+"</th>\
+                            <th colspan='2' id='sisatagihanlabel' class='text-right'>Rp. "+sisatagihan+"</th>\
                         </tr>");
                         if (response.deleted != null) {
                             if (response.deleted.length !=0) {
@@ -825,7 +825,7 @@
                                             <td>'+v.Nama_Cabang+'</td>\
                                             <td>'+v.username+'</td>\
                                             <td>'+v.deleted_at+'</td>\
-                                            <td>alasan</td>\
+                                            <td>'+v.reason_on_delete+'</td>\
                                         </tr>'
                                     );
                                 });
