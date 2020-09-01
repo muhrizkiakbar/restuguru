@@ -726,7 +726,7 @@
                                         <table class='table table-hover' style='background:#fcfcfc; margin-bottom: 0;'>\
                                             <thead>\
                                                 <tr style='background-color:#00a65a'>\
-                                                    <th colspan='10' class='text-center'>\
+                                                    <th colspan='13' class='text-center'>\
                                                         Produk Dibeli\
                                                     </th>\
                                                 </tr>\
@@ -740,7 +740,7 @@
                                                 <th style='width: 170px'>Finishing</th>\
                                                 <th style='width: 170px'>Keterangan</th>\
                                                 <th style='width: 60px'>Diskon</th>\
-                                                <th colspan='2' style='width: 130px;text-align:right'>Subtotal</th>\
+                                                <th colspan='5' style='width: 130px;text-align:right'>Subtotal</th>\
                                             </thead>\
                                             <tbody id='showdata'>\
                                             </tbody>\
@@ -772,12 +772,12 @@
                                     <td>'+value.finishing+'</td>\
                                     <td style="width: 170px;word-break: break-all;">'+keterangan+'</td>\
                                     <td>'+value.diskon.format(2, 3, '.', ',')+'</td>\
-                                    <td coslpan="2" style="text-align:right">'+value.subtotal.format(2, 3, '.', ',')+'</td>\
+                                    <td colspan="5" style="text-align:right">'+value.subtotal.format(2, 3, '.', ',')+'</td>\
                                 </tr>'
                             );
                         });
                         $("#showdata").append("<tr>\
-                            <th colspan='8' class='text-right'>Total : </th>\
+                            <th colspan='11' class='text-right'>Total : </th>\
                             <th colspan='2' id='totalshowmodal' class='text-right'></th>\
                         </tr>");
                         // $('.labelnota').text(response.nonota);
@@ -787,46 +787,55 @@
                             $('.detail_click.item').find('table').append("\
                                 <thead>\
                                     <tr style='background-color:#dd4b39'>\
-                                        <th colspan='10' class='text-center'>\
+                                        <th colspan='13' class='text-center'>\
                                             Produk Sebelumnya\
                                         </th>\
                                     </tr>\
                                 </thead>\
                                 <thead>\
-                                    <th style='width: 450px'>Nama Barang</th>\
-                                    <th style='width: 130px'>Harga Satuan</th>\
-                                    <th style='width: 60px'>P</th>\
-                                    <th style='width: 60px'>L</th>\
-                                    <th style='width: 60px'>Kuantitas</th>\
-                                    <th style='width: 170px'>Finishing</th>\
-                                    <th style='width: 170px'>Keterangan</th>\
-                                    <th style='width: 60px'>Diskon</th>\
-                                    <th style='width: 150px;'>Dihapus Tanggal</th>\
-                                    <th style='width: 130px;text-align:right'>Subtotal</th>\
+                                    <th>Nama Barang</th>\
+                                    <th>Harga Satuan</th>\
+                                    <th>P</th>\
+                                    <th>L</th>\
+                                    <th>Kuantitas</th>\
+                                    <th>Finishing</th>\
+                                    <th>Keterangan</th>\
+                                    <th>Diskon</th>\
+                                    <th class='text-right'>Subtotal</th>\
+                                    <th>Cabang</>\
+                                    <th>Pembuat</>\
+                                    <th>Dihapus Tanggal</th>\
+                                    <th>Alasan</th>\
                                 </thead>\
                                 <tbody id='last-product'>\
                                 </tbody>\
                             ");
-                            var subtotal = 0;
                             $.each( response.deleted, function( key, value ) {
                                 // console.log(response[key]['penjualan_id']);
                                 // console.log(value);
-                                if (response.deleted[key]['keterangan']==null){
+                                if (value.keterangan==null){
                                     var keterangan="";
-                                }
-                                else
-                                {
-                                    var keterangan=response.deleted[key]['keterangan'];
+                                } else {
+                                    var keterangan=value.keterangan;
                                 }
                                 $("#last-product").append(
-                                    '<tr><td>'+response.deleted[key]['nama_produk']+'</td><td>'+response.deleted[key]['harga_satuan'].format(2, 3, '.', ',')+'</td><td>'+response.deleted[key]['panjang'].format(2, 3, '.', ',')+'</td><td>'+response.deleted[key]['lebar'].format(2, 3, '.', ',')+'</td><td>'+response.deleted[key]['banyak'].format(2, 3, '.', ',')+'</td><td>'+response.deleted[key]['finishing']+'</td><td style="width: 170px;word-break: break-all;">'+keterangan+'</td><td>'+response.deleted[key]['diskon'].format(2, 3, '.', ',')+'</td><td>'+response.deleted[key]['deleted_at']+'</td><td colspan="2" style="text-align:right">'+response.deleted[key]['subtotal'].format(2, 3, '.', ',')+'</td></tr>'
+                                    '<tr>\
+                                        <td>'+value.nama_produk+'</td>\
+                                        <td>'+value.harga_satuan.format(2, 3, '.', ',')+'</td>\
+                                        <td>'+value.panjang.format(2, 3, '.', ',')+'</td>\
+                                        <td>'+value.lebar.format(2, 3, '.', ',')+'</td>\
+                                        <td>'+value.banyak.format(2, 3, '.', ',')+'</td>\
+                                        <td>'+value.finishing+'</td>\
+                                        <td style="width: 170px;word-break: break-all;">'+keterangan+'</td>\
+                                        <td>'+value.diskon.format(2, 3, '.', ',')+'</td>\
+                                        <td style="text-align:right">'+value.subtotal.format(2, 3, '.', ',')+'</td>\
+                                        <td>'+value.Nama_Cabang+'</td>\
+                                        <td>'+value.username+'</td>\
+                                        <td>'+value.deleted_at+'</td>\
+                                        <td>Alasan</td>\
+                                    </tr>'
                                 );
-                                subtotal += parseInt(value.subtotal);
                             });
-                            $("#last-product").append("<tr>\
-                                <th colspan='8' class='text-right'>Total : </th>\
-                                <th colspan='2' class='text-right'>"+subtotal.format(2, 3, '.', ',')+"</th>\
-                            </tr>");
                         }
                     },
                 });
@@ -868,7 +877,7 @@
                                         <table class='table table-hover' style='background:#fcfcfc; margin-bottom: 0;'>\
                                             <thead>\
                                                 <tr style='background-color:#00a65a'>\
-                                                    <th colspan='8' class='text-center'>Angsuran</th>\
+                                                    <th colspan='9' class='text-center'>Angsuran</th>\
                                                 </tr>\
                                             </thead>\
                                             <thead>\
@@ -916,14 +925,13 @@
                         });
                         $("#showdata2").append("<tr>\
                             <th colspan='7' class='text-right'>Sisa : </th>\
-                            <th colspan='1' id='sisatagihanlabel' class='text-right'>"+sisatagihan+"</th>\
+                            <th colspan='2' id='sisatagihanlabel' class='text-right'>"+sisatagihan+"</th>\
                         </tr>");
                         if (response.deleted != null && response.deleted.length != 0) {
-                            var total = 0;
                             $('.detail_click.angsuran').find('table').append("\
                                 <thead>\
                                     <tr style='background-color:#dd4b39'>\
-                                        <th colspan='8' class='text-center'>Angsuran Sebelumnya</th>\
+                                        <th colspan='9' class='text-center'>Angsuran Sebelumnya</th>\
                                     </tr>\
                                 </thead>\
                                 <thead>\
@@ -935,6 +943,7 @@
                                     <th>Cabang</th>\
                                     <th>Pembuat</th>\
                                     <th>Dihapus Tanggal</th>\
+                                    <th>Alasan</th>\
                                 </thead>\
                                 <tbody  id='last-installment'>\
                                 </tbody>\
@@ -949,15 +958,11 @@
                                         <td><a href="/transaksi/report/'+v.id2+'" target="_blank">#'+v.transaksipenjualan_id+'</a></td>\
                                         <td>'+v.Nama_Cabang+'</td>\
                                         <td>'+v.username+'</td>\
-                                        <td style="text-align:right">'+v.deleted_at+'</td>\
+                                        <td>'+v.deleted_at+'</td>\
+                                        <td>alasan</td>\
                                     </tr>'
                                 );
-                                total += parseInt(v.nominal_angsuran);
                             });
-                            $("#last-installment").append("<tr>\
-                                <th colspan='7' class='text-right'>Total : </th>\
-                                <th colspan='1' class='text-right'>Rp. "+total+"</th>\
-                            </tr>");
                         }
                         // $('.labelnota').text(response.nonota);
                         // $('.labelpelanggan').text(response.nama_pelanggan);
