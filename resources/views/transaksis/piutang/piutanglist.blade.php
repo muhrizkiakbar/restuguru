@@ -832,7 +832,7 @@
                                         <td>'+value.Nama_Cabang+'</td>\
                                         <td>'+value.username+'</td>\
                                         <td>'+value.deleted_at+'</td>\
-                                        <td>Alasan</td>\
+                                        <td>'+value.reason_on_edit+'</td>\
                                     </tr>'
                                 );
                             });
@@ -959,7 +959,7 @@
                                         <td>'+v.Nama_Cabang+'</td>\
                                         <td>'+v.username+'</td>\
                                         <td>'+v.deleted_at+'</td>\
-                                        <td>alasan</td>\
+                                        <td>'+v.reason_on_delete+'</td>\
                                     </tr>'
                                 );
                             });
