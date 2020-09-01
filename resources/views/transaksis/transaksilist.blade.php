@@ -573,7 +573,7 @@
                     processData: false,
                     contentType: false,
                     success:function(response){
-                        console.log( response );
+                        // console.log( response );
                         $(rowselected).after(function() {
                             return "\
                                 <tr class='detail_click item'>\
@@ -732,7 +732,7 @@
                     processData: false,
                     contentType: false,
                     success:function(response){
-                        console.log( response );
+                        // console.log( response );
                         $(rowselected).after(function() {
                             return "\
                                 <tr class='detail_click angsuran'>\
@@ -988,14 +988,14 @@
                             }
                             else{
                                 // datasisa=0;
-                                console.log('succes' + response);
+                                // console.log('succes' + response);
                                 swal("Error !", "Gagal menghapus angsuran !", "error");
                                 $('#modal_delete_angsuran').modal('hide');
 
                             }
                     },
                     error:function(response){
-                                console.log('error');
+                                // console.log('error');
                                 swal("Error !", "Gagal menghapus angsuran !", "error");
                                 $('#modal_delete_angsuran').modal('hide');
                     }
