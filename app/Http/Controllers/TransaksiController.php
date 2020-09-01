@@ -1126,7 +1126,8 @@ class TransaksiController extends Controller
               
               $changeAngsuran->reason_on_edit = $request->json("reason_on_edit");
               $changeAngsuran->save();
-              $changeAngsuran->delete();
+
+              $deleteAngsuran = Angsuran::find($value->id)->delete();
               $sisaPaidAfter = 0;
             }
             else
@@ -1142,9 +1143,11 @@ class TransaksiController extends Controller
               $table->save();
 
               $sisaPaidAfter = $sisaPaidAfter - $changeAngsuran->nominal_angsuran;
+
               $changeAngsuran->reason_on_edit = $request->json("reason_on_edit");
               $changeAngsuran->save();
-              $changeAngsuran->delete();
+              $deleteAngsuran = Angsuran::find($value->id)->delete();
+              $sisaPaidAfter = 0;
             }
           }
           $paidOff = $dataAngsuran->sum('nominal_angsuran');
