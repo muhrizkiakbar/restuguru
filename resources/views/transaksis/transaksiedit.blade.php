@@ -1307,6 +1307,8 @@
       input.transaction.save.click(function() {
         var reason = $('#reason-edit').val();
         var token = "{{ csrf_token() }}";
+        var user = '{{Auth::user()->username}}';
+        var cabang = '{{Auth::user()->cabangs->Nama_Cabang}}';
         transaction.purchased.after.amount = convert.toNumber(input.transaction.amount.val()).toString();
         transaction.purchased.after.discount = convert.toNumber(input.transaction.discount.val()).toString();
         transaction.purchased.after.paidOff = convert.toNumber(input.transaction.paidOff.val()).toString();
@@ -1324,7 +1326,9 @@
           if (reason == '') {
             swal("Error !", "Alasan Wajib Diisi !", "error");
           } else {
-            transaction.purchased.after.reason_on_edit = reason;
+            transaction.purchased.reason_on_edit = reason;
+            transaction.purchased.user = user;
+            transaction.purchased.cabang = cabang;
             $.ajax({
               headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
