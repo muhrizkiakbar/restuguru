@@ -437,6 +437,8 @@ class AngsuranPenjualanController extends Controller
             $transaksi["deleted"][$key]['Nama_Cabang']=$value->Nama_Cabang;
             $transaksi["deleted"][$key]['username']=$value->username;
             $transaksi["deleted"][$key]['deleted_at']=date($value->deleted_at);
+            $transaksi["deleted"][$key]['reason_on_delete']=$value->reason_on_delete;
+            $transaksi["deleted"][$key]['reason_on_edit']=$value->reason_on_edit;
         }                            
         return $transaksi;
     }
@@ -663,8 +665,8 @@ class AngsuranPenjualanController extends Controller
         if ($tableangsuran->save()) {
           if ($tableangsuran->delete())
           {
-              $isi=Auth::user()->username." telah menghapus angsuran penjualan dengan No. Angsuran ".$tableangsuran->id." pada No. Transaksi Penjualan ".$idtrans." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-              $save=$this->createlog($isi,"delete");
+              $isi=Auth::user()->username." telah menghapus angsuran penjualan dengan No. Angsuran ".$tableangsuran->id." pada No. Transaksi Penjualan ".$idtrans." di Cabang ".Auth::user()->cabangs->Nama_Cabang." dengan alasan ".$request->json("reason_on_delete").".";
+              $save=$this->createlog($isi,"delete","telegram");
               return "{\"msg\":\"success\"}";
           }
         }

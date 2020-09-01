@@ -30,6 +30,11 @@ Route::get('/transaksi/report/{id}','TransaksiController@report');
 Route::get('/transaksi/report_to_image/{id}','TransaksiController@report_to_image');
 
 
+Route::post('/YHr1bq5qGFPYBzaWYc51ajt0sIQ2DcGQhNkPKMSjZ0DPzMLJlOOGUXxX0mbYZKxxF3ihX5dkMLtKo3t1JgJNSjhn6hv6ZqlryPBZcwNL2NsKrcQ8F3kMXRW8kCG64Nbd/webhook', function () {
+  $update = Telegram::commandsHandler(true);
+});
+
+
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {

@@ -987,11 +987,21 @@ class TransaksiController extends Controller
             $table->reason_on_delete = $request->json('reason_on_delete');
             if ($table->save()) {
                 if ($table->delete()){
-                    $tableangsuran=Angsuran::where('transaksipenjualan_id','=',$id)
-                                ->delete();
+
+                    $tableangsuran=Angsuran::where('transaksipenjualan_id','=',$id);
+                    
+                    foreach($tableangsuran->get() as $key => $value)
+                    {
+                      $changeAngsuran = Angsuran::find($value->id);
+                      $changeAngsuran->reason_on_delete = $request->json('reason_on_delete');
+                      $changeAngsuran->save();
+                    }
+
+                    $tableangsuran->delete();
+
         
-                    $isi=Auth::user()->username." telah menghapus transaksi penjualan dengan No. ".$id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-                    $save=$this->createlog($isi,"delete");
+                    $isi=Auth::user()->username." telah menghapus transaksi penjualan dengan No. ".$id." di Cabang ".Auth::user()->cabangs->Nama_Cabang." dengan alasan ".$request->json('reason_on_delete').".";
+                    $save=$this->createlog($isi,"delete","telegram");
                     return "{\"msg\":\"success\"}";
                 }
                 else
@@ -1010,7 +1020,9 @@ class TransaksiController extends Controller
     public function showsubtransaksi(Request $request){
         $request->id=decrypt($request->id);
         $showsubtransaksi=CSub_Tpenjualans::leftJoin('Produks','Sub_Tpenjualans.produk_id','=','Produks.id')
-                            ->select('Sub_Tpenjualans.*','Produks.nama_produk')
+                            ->leftJoin('Cabangs','Sub_Tpenjualans.cabang_id','=','Cabangs.id')
+                            ->leftJoin('Users','Sub_Tpenjualans.useredited_id','=','Users.id')
+                            ->select('Sub_Tpenjualans.*','Produks.nama_produk','Cabangs.Nama_Cabang','Users.username')
                             ->where('penjualan_id','=',$request->id);
         $data = [];
         $data["current"] = $showsubtransaksi->get();
@@ -1112,6 +1124,8 @@ class TransaksiController extends Controller
               $table->sisa_angsuran=$changeAngsuran->sisa_angsuran;
               $table->save();
               
+              $changeAngsuran->reason_on_edit = $request->json("reason_on_edit");
+              $changeAngsuran->save();
               $changeAngsuran->delete();
               $sisaPaidAfter = 0;
             }
@@ -1128,6 +1142,8 @@ class TransaksiController extends Controller
               $table->save();
 
               $sisaPaidAfter = $sisaPaidAfter - $changeAngsuran->nominal_angsuran;
+              $changeAngsuran->reason_on_edit = $request->json("reason_on_edit");
+              $changeAngsuran->save();
               $changeAngsuran->delete();
             }
           }
@@ -1150,6 +1166,7 @@ class TransaksiController extends Controller
           $sisaInvoice = $request->json("purchased")["after"]["amountItems"] - $paidOff;
         }
         #$transaksi->sisa_tagihan=$request->json("purchased")["after"]["debit"];
+        $transaksi->reason_on_edit = $request->json("reason_on_edit");
         $transaksi->sisa_tagihan=$sisaInvoice;
         $transaksi->pajak=$request->json("purchased")["after"]["tax"];        
         $transaksi->user_id=Auth::user()->id;
@@ -1157,8 +1174,8 @@ class TransaksiController extends Controller
         {
           $datareturn['status']="Success";
           $datareturn['id']=encrypt($transaksi->id);
-          $isi=Auth::user()->username." telah mengedit transaksi penjualan dengan No. ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang.".";
-          $save=$this->createlog($isi,"edit");
+          $isi=Auth::user()->username." telah mengedit transaksi penjualan dengan No. ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang." dengan alasan ".$request->json('reason_on_edit').".";
+          $save=$this->createlog($isi,"edit", "telegram");
         }    
         else
         {
@@ -1175,19 +1192,11 @@ class TransaksiController extends Controller
           //if  (array_search($detail_before["id"],$detail_afters[$key])=="id") 
           //{
           //  //change data
-          //  $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_afters[$key]["id"])->first();
-          //  $subtransaksi->produk_id=$detail_afters[$key]["productId"];
-          //  $subtransaksi->harga_satuan=$detail_afters[$key]["price"];
-          //  $subtransaksi->panjang=$detail_afters[$key]["width"];
-          //  $subtransaksi->lebar=$detail_afters[$key]["length"];
-          //  $subtransaksi->banyak=$detail_afters[$key]["quantity"];
-          //  $subtransaksi->keterangan=$detail_afters[$key]["info"];
-          //  $subtransaksi->user_id=Auth::user()->id;
-          //  $subtransaksi->subtotal=$detail_afters[$key]["totalPrice"];
-          //  $subtransaksi->finishing=$detail_afters[$key]["finishing"];
-          //  $subtransaksi->satuan=$detail_afters[$key]["metric"];
-          //  $subtransaksi->diskon=$detail_afters[$key]["discount"];
-          //  $subtransaksi->save();
+            $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_afters[$key]["id"])->first();
+            $subtransaksi->useredited_id=Auth::user()->id;
+            $subtransaksi->cabang_id=Auth::user()->cabang_id;
+            $subtransaksi->reason_on_edit = $request->json("reason_on_edit");
+            $subtransaksi->save();
           //}
           //else
           //{
