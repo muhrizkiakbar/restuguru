@@ -888,7 +888,7 @@
                                                 <th>Nota Penjualan</th>\
                                                 <th>Cabang</th>\
                                                 <th>Pembuat</th>\
-                                                <th style='text-align:right'>Tool</th>\
+                                                <th colspan='2' style='text-align:right'>Tool</th>\
                                             </thead>\
                                             <tbody  id='showdata2'>\
                                             </tbody>\
@@ -910,7 +910,7 @@
                                     <td>'+value.metode_pembayaran+'</td>\
                                     <td><a href="/transaksi/report/'+idbaris+'" target="_blank">#'+value.transaksipenjualan_id+'</a></td>\
                                     <td>'+value.Nama_Cabang+'</td><td>'+value.username+'</td>\
-                                    <td style="text-align:right">\
+                                    <td colspan"2" style="text-align:right">\
                                         <div class="btn-group">\
                                             <button type="button" class="deletebutton btn btn-danger btn-xs" data-toggle="modal"  data-id="'+value.id+'" data-target="#modal_delete" data-nominal="'+value.nominal_angsuran+'" data-backdrop="static" data-keyboard="false">\
                                                 <i class="fa fa-trash"></i>\
