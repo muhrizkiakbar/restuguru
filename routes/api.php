@@ -20,13 +20,3 @@ Route::post('/bot/getupdates', function() {
     $getChatId = $response[0]["message"]["chat"];
     return ($getChatId);
 });
-
-Route::post('setwebhook', function(){
-  $response = Telegram::setWebhook(['url' => 'https://8518ab26cff8.ngrok.io/YHr1bq5qGFPYBzaWYc51ajt0sIQ2DcGQhNkPKMSjZ0DPzMLJlOOGUXxX0mbYZKxxF3ihX5dkMLtKo3t1JgJNSjhn6hv6ZqlryPBZcwNL2NsKrcQ8F3kMXRW8kCG64Nbd/webhook']);
-  dd($response);
-});
-
-Route::post('deletewebhook', function(){
-  $response = Telegram::removeWebhook();
-  dd($response);
-});
