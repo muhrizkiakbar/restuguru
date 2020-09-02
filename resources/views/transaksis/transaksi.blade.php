@@ -798,7 +798,7 @@
                 kuantitas=numeral($('#add_kuantitas').val()).value();
                 var besardiskon=numeral($('#add_diskon').val()).value();
                 $('#add_subtotal').val(
-                    numeral(diskonitem(hitungsubtotal(hargasatuan, luas, kuantitas), besardiskon)).format('$ 0,0')
+                    numeral(diskonitem(hitungsubtotal(hargasatuan, (luas == undefined) ? 1 : luas, kuantitas), besardiskon)).format('$ 0,0')
                 );
                 console.log(luas, hargasatuan, kuantitas, besardiskon);
             });
@@ -809,7 +809,7 @@
                 kuantitas=numeral($('#add_kuantitas').val()).value();
                 var besardiskon=numeral($('#add_diskon').val()).value();
                 $('#add_subtotal').val(
-                    numeral(diskonitem(hitungsubtotal(hargasatuan, luas, kuantitas), besardiskon)).format('$ 0,0')
+                    numeral(diskonitem(hitungsubtotal(hargasatuan, (luas == undefined) ? 1 : luas, kuantitas), besardiskon)).format('$ 0,0')
                 );
                 console.log(luas, hargasatuan, kuantitas, besardiskon);
             });
