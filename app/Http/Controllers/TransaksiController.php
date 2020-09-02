@@ -1082,7 +1082,6 @@ class TransaksiController extends Controller
     {
         //
         
-        dd(Auth::user()->id);
         $detail_befores = $this->decrypt_attribute($request->json('purchased')["before"]["items"]);
         $detail_afters = $this->decrypt_attribute($request->json("purchased")["after"]["items"]);
 
