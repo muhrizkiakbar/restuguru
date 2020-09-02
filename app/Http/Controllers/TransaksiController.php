@@ -1173,20 +1173,6 @@ class TransaksiController extends Controller
         $transaksi->sisa_tagihan=$sisaInvoice;
         $transaksi->pajak=$request->json("purchased")["after"]["tax"];        
         $transaksi->user_id=Auth::user()->id;
-        if ($transaksi->save())
-        {
-          $datareturn['status']="Success";
-          $datareturn['id']=encrypt($transaksi->id);
-          $isi=Auth::user()->username." telah mengedit transaksi penjualan dengan No. ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang." dengan alasan ".$request->json('reason_on_edit').".";
-          $save=$this->createlog($isi,"edit", "telegram");
-        }    
-        else
-        {
-        
-          $datareturn['status']="Failed";
-          $datareturn['id']=encrypt($transaksi->id);
-          return $datareturn;
-        }
 
         $must_delete=[];
         foreach ($detail_befores as $key => $detail_before)
@@ -1264,6 +1250,20 @@ class TransaksiController extends Controller
 
         }
 
+        if ($transaksi->save())
+        {
+          $datareturn['status']="Success";
+          $datareturn['id']=encrypt($transaksi->id);
+          $isi=Auth::user()->username." telah mengedit transaksi penjualan dengan No. ".$transaksi->id." di Cabang ".Auth::user()->cabangs->Nama_Cabang." dengan alasan ".$request->json('reason_on_edit').".";
+          $save=$this->createlog($isi,"edit", "telegram");
+        }    
+        else
+        {
+        
+          $datareturn['status']="Failed";
+          $datareturn['id']=encrypt($transaksi->id);
+          return $datareturn;
+        }
 
         return $datareturn;
     }
