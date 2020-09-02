@@ -1195,7 +1195,7 @@ class TransaksiController extends Controller
           //if  (array_search($detail_before["id"],$detail_afters[$key])=="id") 
           //{
           //  //change data
-            $subtransaksi=CSub_Tpenjualans::find($detail_afters[$key]["id"]);
+            $subtransaksi=CSub_Tpenjualans::find($detail_befores[$key]["id"]);
             $subtransaksi->useredited_id=Auth::user()->id;
             $subtransaksi->cabang_id=Auth::user()->cabang_id;
             $subtransaksi->reason_on_edit = $request->json("reason_on_edit");
@@ -1209,8 +1209,7 @@ class TransaksiController extends Controller
           array_push($must_delete,$detail_before["id"]);
         }
 
-        CSub_Tpenjualans::whereIn('id', $must_delete)->delete();
-
+        $resultdelete = CSub_Tpenjualans::whereIn('id', $must_delete)->delete();
         foreach ($detail_afters as $detail_after)
         {
             $subtransaksi=new CSub_Tpenjualans;
