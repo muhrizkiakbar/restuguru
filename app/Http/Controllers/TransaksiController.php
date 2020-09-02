@@ -1195,7 +1195,7 @@ class TransaksiController extends Controller
           //if  (array_search($detail_before["id"],$detail_afters[$key])=="id") 
           //{
           //  //change data
-            $subtransaksi=CSub_Tpenjualans::where('id','=',$detail_afters[$key]["id"])->first();
+            $subtransaksi=CSub_Tpenjualans::find($detail_afters[$key]["id"]);
             $subtransaksi->useredited_id=Auth::user()->id;
             $subtransaksi->cabang_id=Auth::user()->cabang_id;
             $subtransaksi->reason_on_edit = $request->json("reason_on_edit");
