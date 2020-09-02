@@ -198,7 +198,21 @@
                                     <td>Rp. {{number_format(floatval($data->nominal_angsuran),2,',','.')}}</td>
                                     <td>{{$data->metode_pembayaran}}</td>
                                     <td><a href="/transaksi/report/{{encrypt($data->idtrans)}}" target="_blank">#{{$data->idtrans}}</td>
-                                    <td>Isi Alasan</td>
+                                    <td
+                                        style="background-color: 
+                                            @if ($data->reason_on_delete != null)
+                                                {{'#ffadad'}}
+                                            @elseif ($data->reason_on_edit != null)
+                                                {{'#caf0f8'}}
+                                            @endif
+                                        "
+                                    >
+                                        @if ($data->reason_on_delete != null)
+                                            {{$data->reason_on_delete}}
+                                        @elseif ($data->reason_on_edit != null)
+                                            {{$data->reason_on_edit}}
+                                        @endif
+                                    </td>
                                     <td>{{$data->Nama_Cabang}}</td>                                
                                     <td>{{$data->username}}</td>                                
                                     <td style="width: 150px;min-width:140px;">
