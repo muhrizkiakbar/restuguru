@@ -32,15 +32,15 @@ class Controller extends BaseController
         //    Mail::to('rizkiakbarzein@gmail.com')->queue(new NotificationDeletedEmail($log));
         //}
 
-        //if ((($category=="delete") || ($category=="edit")) && ($notif == "telegram"))
-        //{
-        //  $telegram = TelegramChat::first();
-        //  $chatId = $telegram->chat_id;
-        //  $messagetelegram = Telegram::sendMessage([
-        //      'chat_id' => $chatId,
-        //      'text' => $log
-        //  ]);
-        //}
+        if ((($category=="delete") || ($category=="edit")) && ($notif == "telegram"))
+        {
+          $telegram = TelegramChat::first();
+          $chatId = $telegram->chat_id;
+          $messagetelegram = Telegram::sendMessage([
+              'chat_id' => $chatId,
+              'text' => $log
+          ]);
+        }
 
 
         return true ;
