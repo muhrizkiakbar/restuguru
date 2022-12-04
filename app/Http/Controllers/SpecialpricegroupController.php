@@ -61,6 +61,11 @@ class SpecialpricegroupController extends Controller
                             data-harga="'.$tables->harga_khusus.'" 
                             data-id="'.encrypt($tables->id).'" 
                         data-target="#modal_edit"><i class="fa fa-fw fa-edit"></i></button>
+
+                        <button type="button" class="modal_show_range btn btn-info btn-sm" data-toggle="modal"
+                        data-id="'.encrypt($tables->id).'"
+                        data-target="#modal_show_range"><i class="fa fa-fw fa-gear"></i></button>
+
                         <button type="button" class="modal_hapus btn btn-danger btn-sm" data-toggle="modal" 
                             data-jenis="'.$tables->jenis_pelanggan.'"
                             data-produk="'.$tables->nama_produk.'"

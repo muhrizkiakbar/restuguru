@@ -33,7 +33,7 @@ class CreateStokbahanbakusTable extends Migration
             $table->foreign('cabang_id')->references('id')->on('Cabangs')
 						->onDelete('restrict')
                         ->onUpdate('cascade');
-		});
+        });
     }
 
     /**

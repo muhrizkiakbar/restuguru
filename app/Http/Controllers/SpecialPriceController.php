@@ -52,6 +52,10 @@ class SpecialPriceController extends Controller
                         data-id="'.encrypt($tables->id).'"
                         data-target="#modal_edit"><i class="fa fa-fw fa-edit"></i></button>
 
+                        <button type="button" class="modal_show_range btn btn-info btn-sm" data-toggle="modal"
+                        data-id="'.encrypt($tables->id).'"
+                        data-target="#modal_show_range"><i class="fa fa-fw fa-gear"></i></button>
+
                         <button type="button" class="modal_hapus btn btn-danger btn-sm" data-toggle="modal"
                         data-nama_perusahaan="'.$tables->nama_perusahaan.'"
                         data-nama_produk="'.$tables->nama_produk.'"

@@ -15,4 +15,8 @@ class CSpesialprices extends Model
 
     protected $dates = ['deleted_at'];
 
+    public function range_prices()
+    {
+        return $this->hasMany('App\RangePricePelanggan', 'special_price_pelanggan_id', 'id');
+    }
 }

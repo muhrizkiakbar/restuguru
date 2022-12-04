@@ -210,6 +210,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/specialprice/postspecialprice',['middleware' => ['permission:add-specialprice'], 'uses' => 'SpecialPriceController@store'])->name('storespecialprice');
         Route::post('/specialprice/updatespecialprice',['middleware' => ['permission:edit-specialprice'], 'uses' => 'SpecialPriceController@update'])->name('updatespecialprice');
         Route::post('/specialprice/deletespecialprice',['middleware' => ['permission:delete-specialprice'], 'uses' => 'SpecialPriceController@destroy'])->name('deletespecialprice');
+        Route::get('/specialprice/{id}/ranges',['middleware' => ['permission:manage-specialprice'], 'uses' => 'RangePricePelangganController@index'])->name('rangespecialprices');
+        Route::post('/specialprice/{id}/ranges',['middleware' => ['permission:add-specialprice'], 'uses' => 'RangePricePelangganController@create'])->name('createrangespecialprices');
+        Route::delete('/specialprice/{id}/ranges/{range_price_pelanggan_id}',['middleware' => ['permission:delete-specialprice'], 'uses' => 'RangePricePelangganController@destroy'])->name('deleterangespecialprices');
 
 
         //SpecialPriceGroup
@@ -218,6 +221,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/specialpricegroup/loaddata',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@loaddatatable'])->name('loaddata');
         Route::post('/specialpricegroup/updatespg',['middleware' => ['permission:edit-specialpricegroup'], 'uses' => 'SpecialpricegroupController@update'])->name('updatespg');
         Route::post('/specialpricegroup/deletespg',['middleware' => ['permission:delete-specialpricegroup'], 'uses' => 'SpecialpricegroupController@destroy'])->name('deletespg');
+        Route::get('/specialpricegroup/{id}/rangegroups',['middleware' => ['permission:manage-specialprice'], 'uses' => 'RangePriceGroupController@index'])->name('rangespecialpricegroups');
+        Route::post('/specialpricegroup/{id}/rangegroups',['middleware' => ['permission:add-specialprice'], 'uses' => 'RangePriceGroupController@create'])->name('createrangespecialgroups');
+        Route::delete('/specialpricegroup/{id}/rangegroups/{range_price_group_id}',['middleware' => ['permission:delete-specialprice'], 'uses' => 'RangePriceGroupController@destroy'])->name('deleterangespecialgroups');
 
         // Bahan Baku Route
         Route::get('/bahanbaku',['middleware' => ['permission:manage-bahanbaku'], 'uses' => 'BahanBakuController@index'])->name('managebahanbakuindex');

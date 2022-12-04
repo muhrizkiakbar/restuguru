@@ -585,6 +585,7 @@
         var luas=1;
         var hargasatuan=0;
         var kuantitas=0;
+        var range_prices = [];
 //
 //function
     //hitung luas
@@ -628,6 +629,16 @@
     //function hitung sisa
         function hitungsisa (total, bayardp, metodebayar){
             return total - bayardp;
+        }
+    //function check range price
+        function isInRange(start_value, end_value, given_value) {
+          if (end_value == 0) return true ;
+
+          if (given_value >= start_value && given_value <= end_value)
+            return true
+          else
+            return false
+          end
         }
     //
     //function metode
@@ -794,6 +805,16 @@
 
             $("#add_kuantitas").keyup(function(){
                 $(this).val(numeral($(this).val()).format('0'));
+                if (range_prices.length != 0) {
+                  for (let index in range_prices) {
+                    if (isInRange(range_prices[index]['nilai_awal'],range_prices[index]['nilai_akhir'],$(this).val())) {
+                      $('#add_harga').val(numeral(range_prices[index]['harga_khusus']).format('$ 0,0'))
+                      break;
+                    }
+                    $('#add_harga').val(numeral(range_prices.at(-1)['harga_khusus']).format('$ 0,0'))
+                  }
+                }
+
                 hargasatuan=numeral($('#add_harga').val()).value();
                 kuantitas=numeral($('#add_kuantitas').val()).value();
                 var besardiskon=numeral($('#add_diskon').val()).value();
@@ -835,19 +856,19 @@
             });
 
             $("#add_kuantitas").keydown(function (e) {
-                // Allow: backspace, delete, tab, escape, enter and .
-                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                    // Allow: Ctrl+A, Command+A
-                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
-                    // Allow: home, end, left, right, down, up
-                    (e.keyCode >= 35 && e.keyCode <= 40)) {
-                        // let it happen, don't do anything
-                        return;
-                }
-                // Ensure that it is a number and stop the keypress
-                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                    e.preventDefault();
-                }
+              // Allow: backspace, delete, tab, escape, enter and .
+              if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                  // Allow: Ctrl+A, Command+A
+                  (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+                  // Allow: home, end, left, right, down, up
+                  (e.keyCode >= 35 && e.keyCode <= 40)) {
+                      // let it happen, don't do anything
+                      return;
+              }
+              // Ensure that it is a number and stop the keypress
+              if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                  e.preventDefault();
+              }
             });
 
             $('input[type=radio][name=metode]').on('ifClicked',function () {
@@ -925,6 +946,15 @@
 
             $("#edit_kuantitas").keyup(function(){
                 $(this).val(numeral($(this).val()).format('0'));
+                if (range_prices.length != 0) {
+                  for (let index in range_prices) {
+                    if (isInRange(range_prices[index]['nilai_awal'],range_prices[index]['nilai_akhir'],$(this).val())) {
+                      $('#edit_harga').val(numeral(range_prices[index]['harga_khusus']).format('$ 0,0'))
+                      break;
+                    }
+                    $('#edit_harga').val(numeral(range_prices.at(-1)['harga_khusus']).format('$ 0,0'))
+                  }
+                }
                 hargasatuan=numeral($('#edit_harga').val()).value();
                 kuantitas=numeral($('#edit_kuantitas').val()).value();
                 var besardiskon=numeral($('#edit_diskon').val()).value();
@@ -1427,114 +1457,122 @@
 
 //bagian modal add
     //pencarian produk
-        $('#add_produk').on('select2:select', function (e) {
-            // alert($('add_produk').select2('val'));
-            // console.log(e.params.data.id);
-            // var id=e.params.data.id;
-            var id=e.params.data.id;
-            $('#add_produkid').val(id);
-            var pelanggan=$('#pelanggan').val();
-            console.log(pelanggan);
-            if (pelanggan==null)
-            {
-                namaproduk=e.params.data.text;
-                $.ajax({
-                    async: true, 
-                    type:'get',
-                    url:'{{route('produkharga')}}',
-                    data: 'id='+id,
-                    dataType:'json',
-                    async:false,
-                    processData: false,
-                    contentType: false,
-                    success:function(response){
-                        hitung_luas=response.hitung_luas;
-                        $('#add_harga').val('0'); 
-                        $('#add_diskon').val('0'); 
-                        $('#add_subtotal').val('0');
-                        $('#add_kuantitas').val('0');
-                        $('#add_panjang').val('0');
-                        $('#add_lebar').val('0');
-                        if (hitung_luas==1)
-                        {
-                            luas=0;
-                            $('#r2m').iCheck('uncheck');
-                            $('#r2cm').iCheck('uncheck');
-                            $('#r2m').iCheck('enable');
-                            $('#r2cm').iCheck('enable');
-                            $('#add_panjang').removeAttr('disabled');
-                            $('#add_lebar').removeAttr('disabled');
-                            satuandasar = response.satuan.toUpperCase();
-                        }
-                        else
-                        {
-                            luas = 1;
-                            $('#r2m').iCheck('uncheck');
-                            $('#r2cm').iCheck('uncheck');
-                            $('#r2m').iCheck('disable');
-                            $('#r2cm').iCheck('disable');
-                            $('#add_panjang').attr('disabled',true);
-                            $('#add_lebar').attr('disabled',true);
-                            satuan = response.satuan.toUpperCase();
-                        }
-                        
-                        $('#add_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
-                    },
-                });
-            }
-            else
-            {
-                // yang spesial price
-                namaproduk=e.params.data.text;
-                $.ajax({
-                    async: true, 
-                    type:'get',
-                    url:'{{route('priceprodukkhusus')}}',
-                    data: 'produkid='+id+'&pelanggan='+pelanggan,
-                    dataType:'json',
-                    async:false,
-                    processData: false,
-                    contentType: false,
-                    success:function(response){
-                        console.log(response.harga_jual);
-                        hitung_luas=response.hitung_luas;
-                        $('#add_harga').val('0'); 
-                        $('#add_diskon').val('0'); 
-                        $('#add_subtotal').val('0');
-                        $('#add_kuantitas').val('0');
-                        $('#add_panjang').val('0');
-                        $('#add_lebar').val('0');
-                        if (hitung_luas==1)
-                        {
-                            luas=0;
-                            $('#r2m').iCheck('uncheck');
-                            $('#r2cm').iCheck('uncheck');
-                            $('#r2m').iCheck('enable');
-                            $('#r2cm').iCheck('enable');
-                            $('#add_panjang').removeAttr('disabled');
-                            $('#add_lebar').removeAttr('disabled');
-                            satuandasar = response.satuan.toUpperCase();
-                        }
-                        else
-                        {
-                            luas=1;
-                            $('#r2m').iCheck('uncheck');
-                            $('#r2cm').iCheck('uncheck');
-                            $('#r2m').iCheck('disable');
-                            $('#r2cm').iCheck('disable');
-                            $('#add_panjang').attr('disabled',true);
-                            $('#add_lebar').attr('disabled',true);
-                            satuan = response.satuan.toUpperCase();
-                        }
-                        
-                        $('#add_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
-                    },
-                });
-            }
-        });
+    $('#add_produk').on('select2:select', function (e) {
+        // alert($('add_produk').select2('val'));
+        // console.log(e.params.data.id);
+        // var id=e.params.data.id;
+        var id=e.params.data.id;
+        $('#add_produkid').val(id);
+        var pelanggan=$('#pelanggan').val();
+        console.log(pelanggan);
+        if (pelanggan==null)
+        {
+            namaproduk=e.params.data.text;
+            $.ajax({
+                async: true, 
+                type:'get',
+                url:'{{route('produkharga')}}',
+                data: 'id='+id,
+                dataType:'json',
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    hitung_luas=response.hitung_luas;
+                    $('#add_harga').val('0'); 
+                    $('#add_diskon').val('0'); 
+                    $('#add_subtotal').val('0');
+                    $('#add_kuantitas').val('0');
+                    $('#add_panjang').val('0');
+                    $('#add_lebar').val('0');
+                    if (hitung_luas==1)
+                    {
+                        luas=0;
+                        $('#r2m').iCheck('uncheck');
+                        $('#r2cm').iCheck('uncheck');
+                        $('#r2m').iCheck('enable');
+                        $('#r2cm').iCheck('enable');
+                        $('#add_panjang').removeAttr('disabled');
+                        $('#add_lebar').removeAttr('disabled');
+                        satuandasar = response.satuan.toUpperCase();
+                    }
+                    else
+                    {
+                        luas = 1;
+                        $('#r2m').iCheck('uncheck');
+                        $('#r2cm').iCheck('uncheck');
+                        $('#r2m').iCheck('disable');
+                        $('#r2cm').iCheck('disable');
+                        $('#add_panjang').attr('disabled',true);
+                        $('#add_lebar').attr('disabled',true);
+                        satuan = response.satuan.toUpperCase();
+                    }
+                    
+                    $('#add_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
+                },
+            });
+        }
+        else
+        {
+            // yang spesial price
+          range_prices = [];
+          namaproduk=e.params.data.text;
+          $.ajax({
+              async: true, 
+              type:'get',
+              url:'{{route('priceprodukkhusus')}}',
+              data: 'produkid='+id+'&pelanggan='+pelanggan,
+              dataType:'json',
+              async:false,
+              processData: false,
+              contentType: false,
+              success:function(response){
+                range_prices = response.range_prices;
+                default_price = {};
+                default_price['nilai_awal'] = 0;
+                default_price['nilai_akhir'] = 0;
+                default_price['harga_khusus'] = response.harga_jual;
+                range_prices.push(default_price);
+                hitung_luas=response.hitung_luas;
+                $('#add_harga').val('0'); 
+                $('#add_diskon').val('0'); 
+                $('#add_subtotal').val('0');
+                $('#add_kuantitas').val('0');
+                $('#add_panjang').val('0');
+                $('#add_lebar').val('0');
+                if (hitung_luas==1)
+                {
+                    luas=0;
+                    $('#r2m').iCheck('uncheck');
+                    $('#r2cm').iCheck('uncheck');
+                    $('#r2m').iCheck('enable');
+                    $('#r2cm').iCheck('enable');
+                    $('#add_panjang').removeAttr('disabled');
+                    $('#add_lebar').removeAttr('disabled');
+                    satuandasar = response.satuan.toUpperCase();
+                }
+                else
+                {
+                    luas=1;
+                    $('#r2m').iCheck('uncheck');
+                    $('#r2cm').iCheck('uncheck');
+                    $('#r2m').iCheck('disable');
+                    $('#r2cm').iCheck('disable');
+                    $('#add_panjang').attr('disabled',true);
+                    $('#add_lebar').attr('disabled',true);
+                    satuan = response.satuan.toUpperCase();
+                }
+                
+                $('#add_harga').val(numeral(response.harga_jual).format('$ 0,0'));  
+              },
+          });
+        }
+    });
     //
     //tombol +item
         $('#buttonmodal_add').click(function (){
+            
+            range_prices = [];
 
             $('#r2m').iCheck('uncheck');
             $('#r2cm').iCheck('uncheck');
@@ -1631,6 +1669,7 @@
                 id: $(this).data('produk'),
                 text: $(this).data('namaproduk')
             };
+            range_prices = [];
             subtotalawal=$(this).data('subtotal');
             // var $search = $('#edit_produk').data('select2').dropdown.$search || $('#edit_produk').data('select2').selection.$search;
             // $('#edit_produk').on("select2:selecting", function(e) {
@@ -1703,6 +1742,12 @@
                     processData: false,
                     contentType: false,
                     success:function(response){
+                        range_prices = response.range_prices;
+                        default_price = {};
+                        default_price['nilai_awal'] = 0;
+                        default_price['nilai_akhir'] = 0;
+                        default_price['harga_khusus'] = response.harga_jual;
+                        range_prices.push(default_price);
                         hitung_luas=response.hitung_luas;
                         $('#edit_harga').val('0'); 
                         $('#edit_diskon').val('0'); 
@@ -1749,6 +1794,12 @@
                     processData: false,
                     contentType: false,
                     success:function(response){
+                        range_prices = response.range_prices;
+                        default_price = {};
+                        default_price['nilai_awal'] = 0;
+                        default_price['nilai_akhir'] = 0;
+                        default_price['harga_khusus'] = response.harga_jual;
+                        range_prices.push(default_price);
                         hitung_luas=response.hitung_luas;
                         $('#edit_harga').val('0'); 
                         $('#edit_diskon').val('0'); 

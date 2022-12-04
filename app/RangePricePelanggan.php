@@ -5,19 +5,18 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CSpesialpricesgroup extends Model 
+class RangePricePelanggan extends Model 
 {
 
-    protected $table = 'Spesialpricesgroups';
+    protected $table = 'RangePricePelanggans';
     public $timestamps = true;
 
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
-    public function range_prices()
+    public function specialpricepelanggan()
     {
-        return $this->hasMany('App\RangePriceGroup', 'special_price_group_id', 'id');
+        return $this->belongsTo('App\CSpecialprices');
     }
-
 }

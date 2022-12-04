@@ -21,6 +21,8 @@ use App\Exports\TransaksiPenjualan\TagihanTransaksi;
 use App\Exports\TransaksiPenjualan\TransaksiListReport;
 use Excel;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\RangePriceGroup;
+use App\RangePricePelanggan;
 
 class TransaksiController extends Controller
 {
@@ -1295,40 +1297,45 @@ class TransaksiController extends Controller
                                                 ->count();
             if ($carispecialprice > 0)
             {
-                $harga=CSpesialprices:: leftJoin('Produks', 'Spesialprices.produk_id','=','Produks.id')
-                                        ->select('Spesialprices.user_id','Spesialprices.produk_id','Spesialprices.harga_khusus','Produks.satuan','Produks.hitung_luas')
-                                        ->where('Spesialprices.pelanggan_id','=',$idpelanggan)
-                                        ->where('Spesialprices.produk_id','=',$idproduk)
-                                        ->first();
-                return response()->json([
-                    'user_id'       => $harga->user_id,
-                    'produk_id'     => $harga->produk_id,
-                    'harga_jual'    => $harga->harga_khusus,
-                    'hitung_luas'   => $harga->hitung_luas,
-                    'satuan'        => $harga->satuan
-                ]);
+              $harga = CSpesialprices:: leftJoin('Produks', 'Spesialprices.produk_id','=','Produks.id')
+                                      ->select('Spesialprices.id','Spesialprices.user_id','Spesialprices.produk_id','Spesialprices.harga_khusus','Produks.satuan','Produks.hitung_luas')
+                                      ->where('Spesialprices.pelanggan_id','=',$idpelanggan)
+                                      ->where('Spesialprices.produk_id','=',$idproduk)
+                                      ->first();
+              $range_prices =
+                RangePricePelanggan::where('special_price_pelanggan_id', '=', $harga->id)->get();
+              return response()->json([
+                  'user_id'       => $harga->user_id,
+                  'produk_id'     => $harga->produk_id,
+                  'harga_jual'    => $harga->harga_khusus,
+                  'hitung_luas'   => $harga->hitung_luas,
+                  'satuan'        => $harga->satuan,
+                  'range_prices' => $range_prices
+              ]);
             }      
             else
             {
                 $idjenispelanggan=CPelanggans::where('id','=',$idpelanggan)
                                     ->first();
                 $harga=CSpesialpricesgroup::leftJoin('Produks', 'Spesialpricesgroups.produk_id','=','Produks.id')
-                                            ->select('Spesialpricesgroups.user_id','Spesialpricesgroups.produk_id','Spesialpricesgroups.harga_khusus','Produks.satuan','Produks.hitung_luas')
+                                            ->select('Spesialpricesgroups.id', 'Spesialpricesgroups.user_id','Spesialpricesgroups.produk_id','Spesialpricesgroups.harga_khusus','Produks.satuan','Produks.hitung_luas')
                                             ->where('jenispelanggan_id','=',$idjenispelanggan->jenispelanggan_id)
                                             ->where('produk_id','=',$idproduk)
                                             ->first();
                 if ($harga == null){
-                    $harga=CProduks::where('id','=',$idproduk)
-                                    ->first();
-                    return $harga;
+                  $harga=CProduks::where('id','=',$idproduk)
+                                  ->first();
+                  return $harga;
                 }else if ($harga != null){
-                    return response()->json([
-                        'user_id'       => $harga->user_id,
-                        'produk_id'     => $harga->produk_id,
-                        'harga_jual'    => $harga->harga_khusus,
-                        'hitung_luas'   => $harga->hitung_luas,
-                        'satuan'        => $harga->satuan
-                    ]);
+                  $range_prices = RangePriceGroup::where('special_price_group_id', '=', $harga->id)->get();
+                  return response()->json([
+                      'user_id'       => $harga->user_id,
+                      'produk_id'     => $harga->produk_id,
+                      'harga_jual'    => $harga->harga_khusus,
+                      'hitung_luas'   => $harga->hitung_luas,
+                      'satuan'        => $harga->satuan,
+                      'range_prices' => $range_prices
+                  ]);
                 }
             }
         }

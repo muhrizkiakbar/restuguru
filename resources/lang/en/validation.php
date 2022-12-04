@@ -523,6 +523,21 @@ return [
         'banyakstok'=>[
             'required'=> 'Harus diisi !',
         ],
+        'tambah_range_nilai_awal' => [
+          'required' => "Nilai awal harus diisi!",
+          'numeric' => "Nilai harus angka.",
+          'min' => "Nilai harus lebih dari :min."
+        ],
+        'tambah_range_nilai_akhir' => [
+          'required' => "Nilai awal harus diisi!",
+          'numeric' => "Nilai harus angka.",
+          'min' => "Nilai harus lebih dari :min."
+        ],
+        'tambah_range_harga_khusus' => [
+          'required' => "Nilai awal harus diisi!",
+          'numeric' => "Nilai harus angka.",
+          'min' => "Nilai harus lebih dari :min."
+        ],
     ],
 
     /*
