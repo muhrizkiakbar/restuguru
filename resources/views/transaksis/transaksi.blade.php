@@ -804,8 +804,12 @@
             });
 
             $("#add_kuantitas").keyup(function(){
+                hargasatuan=numeral($('#add_harga').val()).value();
+                kuantitas=numeral($('#add_kuantitas').val()).value();
+                var besardiskon=numeral($('#add_diskon').val()).value();
+
                 $(this).val(numeral($(this).val()).format('0'));
-                if (range_prices.length != 0) {
+                if (range_prices == []) {
                   for (let index in range_prices) {
                     if (isInRange(range_prices[index]['nilai_awal'],range_prices[index]['nilai_akhir'],$(this).val())) {
                       $('#add_harga').val(numeral(range_prices[index]['harga_khusus']).format('$ 0,0'))
@@ -815,9 +819,6 @@
                   }
                 }
 
-                hargasatuan=numeral($('#add_harga').val()).value();
-                kuantitas=numeral($('#add_kuantitas').val()).value();
-                var besardiskon=numeral($('#add_diskon').val()).value();
                 $('#add_subtotal').val(
                     numeral(diskonitem(hitungsubtotal(hargasatuan, (luas == undefined) ? 1 : luas, kuantitas), besardiskon)).format('$ 0,0')
                 );
