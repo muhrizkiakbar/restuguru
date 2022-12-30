@@ -1325,7 +1325,13 @@ class TransaksiController extends Controller
                 if ($harga == null){
                   $harga=CProduks::where('id','=',$idproduk)
                                   ->first();
-                  return $harga;
+                  return response()->json([
+                      'user_id'       => $harga->user_id,
+                      'produk_id'     => $harga->produk_id,
+                      'harga_jual'    => $harga->harga_jual,
+                      'hitung_luas'   => $harga->hitung_luas,
+                      'satuan'        => $harga->satuan
+                  ]);
                 }else if ($harga != null){
                   $range_prices = RangePriceGroup::where('special_price_group_id', '=', $harga->id)->get();
                   return response()->json([
