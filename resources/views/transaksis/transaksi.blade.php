@@ -224,6 +224,7 @@
                               <label>Total
                                   <input id="total" name="total" disabled value="0" placeholder="Rp 0" class="form-control mata-uang" type="text">
                                   <input id="total2" name="total2" disabled hidden value="" placeholder="Rp 0" type="text">
+                                  <input id="total3" name="total3" disabled hidden value="" placeholder="Rp 0" type="text">
                               </label>                                  
                           </div>
                       </div>
@@ -1152,6 +1153,8 @@
             $('#pajak').val('0').removeAttr('disabled');
             $('#sisa').val('0');
             $('#total').val('0');
+            $('#total2').val('0');
+            $('#total3').val('0');
             $('#metodelunas').iCheck('enable');
             $('#metodelunas').iCheck('uncheck');
             $('#metodedp').iCheck('enable');
@@ -1408,6 +1411,8 @@
                                         $('#pajak').val('0').removeAttr('disabled');
                                         $('#sisa').val('0');
                                         $('#total').val('0');
+                                        $('#total2').val('0');
+                                        $('#total3').val('0');
                                         $('#metodedp').iCheck('enable');
                                         $('#metodedp').iCheck('uncheck');
                                         $('#metodelunas').iCheck('enable');
@@ -1620,11 +1625,14 @@
 
                 console.log(produk, produkid, harga, panjang, lebar, luas, kuantitas, subtotal, diskonnow, satuan);
 
-                total=numeral($('#total').val()).value();
+                total=numeral($('#total3').val()).value();
                 total=(subtotal)+total;
                 $('#total2').val(numeral(total).format('$ 0,0'));
-                
+                $('#total3').val(numeral(total).format('$ 0,0'));
                 $('#total').val(numeral(total).format('$ 0,0'));
+                $('#diskon').val(numeral(0).format('$ 0,0'));
+                $('#pajak').val(numeral(0).format('$ 0,0'));
+                $('#bayardp').val(numeral(0).format('$ 0,0'));
                 tdid=tdid+1;
                 $('#sisa').val(numeral(total).format('$ 0,0'));
                 $("tbody").append(
@@ -1862,10 +1870,11 @@
             }    
             console.log(produk, produkid, harga, panjang, lebar, luas, kuantitas, subtotal, diskonnow, satuan);
 
-            total=numeral($('#total').val()).value();
+            total=numeral($('#total3').val()).value();
             total=(subtotal)+(total-subtotalawal);
             
             $('#total2').val(numeral(total).format('$ 0,0'));
+            $('#total3').val(numeral(total).format('$ 0,0'));
             
             $('#total').val(numeral(total).format('$ 0,0'));
             $('#sisa').val(numeral(total).format('$ 0,0'));
@@ -1899,7 +1908,7 @@
         $('#deleteitem').click(function(){
             $('#'+tdidnow+'').remove();
             
-            total=numeral($('#total').val()).value();
+            total=numeral($('#total3').val()).value();
             total=(total-subtotaldelete);
             if (total==0){
                 $('#submittransaksi').attr('disabled',true);
@@ -1907,8 +1916,12 @@
             sisa=numeral($('#sisa').val()).value();
             sisa=(sisa-subtotaldelete);
             $('#total2').val(numeral(total).format('$ 0,0'));
+            $('#total3').val(numeral(total).format('$ 0,0'));
             $('#sisa').val(numeral(total).format('$ 0,0'));
             $('#total').val(numeral(total).format('$ 0,0'));
+            $('#diskon').val(numeral(0).format('$ 0,0'));
+            $('#pajak').val(numeral(0).format('$ 0,0'));
+            $('#bayardp').val(numeral(0).format('$ 0,0'));
 
             $('#modal_delete').modal('hide');
         });
