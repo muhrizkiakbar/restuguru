@@ -1308,7 +1308,7 @@
         var reason = $('#reason-edit').val();
         var token = "{{ csrf_token() }}";
         transaction.purchased.after.amount = convert.toNumber(input.transaction.amount.val()).toString();
-        transaction.purchased.after.discount = convert.toNumber(input.transaction.discount.val()).toString();
+        transaction.purchased.after.discount = convert.toNumber(input.transaction.discount.val().split(' ')[0]).toString();
         transaction.purchased.after.paidOff = convert.toNumber(input.transaction.paidOff.val()).toString();
         transaction.purchased.after.debit = convert.toNumber(input.transaction.debit.val()).toString();
         transaction.purchased.after.tax = convert.toNumber(input.transaction.tax.val()).toString();
