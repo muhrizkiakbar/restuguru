@@ -1433,6 +1433,8 @@
                                         $('#pajak').val('0').removeAttr('disabled');
                                         $('#sisa').val('0');
                                         $('#total').val('0');
+                                        $('#total2').val('0');
+                                        $('#total3').val('0');
                                         $('#pelanggan').removeAttr('disabled');
                                         $('#metodedp').iCheck('enable');
                                         $('#metodedp').iCheck('uncheck');
