@@ -171,7 +171,7 @@ kami mengucapkan terima kasih.</td></tr>
             <td></td>
             <td></td>
             <td></td>
-            <td colspan="2">Beti Susilawati</td>
+            <td colspan="2">Khairil Anwar</td>
         </tr>
     </tbody>
 </table>
