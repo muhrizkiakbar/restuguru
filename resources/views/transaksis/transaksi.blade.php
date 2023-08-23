@@ -1096,10 +1096,10 @@
                                         else
                                         {
                                             $('tbody').empty();
-                                            $('#diskon').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
-                                            $('#bayardp').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
+                                            //$('#diskon').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
                                             $('#pembayaran').removeAttr('disabled');
-                                            $('#pajak').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true}).removeAttr('disabled');
+                                            $('#pajak').val(0);
+                                            $('#bayardp').val(0);
                                             $('#sisa').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
                                             $('#total').val('0,00').maskMoney({thousands:'.', decimal:',',allowZero:true});
                                             $('#metodedp').iCheck('enable');
@@ -1671,8 +1671,8 @@
                 $('#total2').val(numeral(total).format('$ 0,0'));
                 $('#total3').val(numeral(total).format('$ 0,0'));
                 $('#total').val(numeral(total).format('$ 0,0'));
-                $('#diskon').val(numeral(0).format('$ 0,0'));
-                $('#pajak').val(numeral(0).format('$ 0,0'));
+                $('#diskon').val(0);
+                $('#pajak').val(0);
                 $('#bayardp').val(numeral(0).format('$ 0,0'));
                 tdid=tdid+1;
                 $('#sisa').val(numeral(total).format('$ 0,0'));
@@ -1972,8 +1972,8 @@
             $('#total3').val(numeral(total).format('$ 0,0'));
             $('#sisa').val(numeral(total).format('$ 0,0'));
             $('#total').val(numeral(total).format('$ 0,0'));
-            $('#diskon').val(numeral(0).format('$ 0,0'));
-            $('#pajak').val(numeral(0).format('$ 0,0'));
+            $('#diskon').val(0);
+            $('#pajak').val(0);
             $('#bayardp').val(numeral(0).format('$ 0,0'));
 
             $('#modal_delete').modal('hide');
