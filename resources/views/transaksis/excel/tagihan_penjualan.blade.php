@@ -171,7 +171,7 @@ kami mengucapkan terima kasih.</td></tr>
             <td></td>
             <td></td>
             <td></td>
-            <td colspan="2">Khairil Anwar</td>
+            <td colspan="2">Hairil Anwar</td>
         </tr>
     </tbody>
 </table>
