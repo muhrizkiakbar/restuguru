@@ -396,7 +396,7 @@
                                   <div class="col-md-12">
                                       <div class="form-group ui-widget">
                                           <label>Produk</label>
-                                          <select id="edit_produk" name="edit_produk"  class="form-control select2" style="width:100%;" type="text">
+                                          <select id="edit_produk" name="edit_produk"  class="form-control select2" disabled=true style="width:100%;" type="text">
                                                 @foreach ($produks as $produk))
                                                     <option value="{{$produk->id}}">{{$produk->nama_produk}}</option>
                                                 @endforeach
@@ -708,6 +708,34 @@
 
             $("input.addbesaran").focus(function(){
                 $(this).val(0);
+            });
+
+            $("#add_panjang").blur(function(){
+                var panjang=numeral($('#add_panjang').val()).value();
+                var lebar=numeral($('#add_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,$('input[name=r2]:checked').val());
+                hargasatuan=numeral($('#add_harga').val()).value();
+                kuantitas=numeral($('#add_kuantitas').val()).value();
+                var besardiskon=numeral($('#add_diskon').val()).value();
+                $('#add_subtotal').val(
+                    numeral(diskonitem(hitungsubtotal(hargasatuan, (luas == undefined) ? 1 : luas, kuantitas), besardiskon)).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas, besardiskon);
+                
+            });
+
+            $("#add_lebar").blur(function(){
+                var panjang=numeral($('#add_panjang').val()).value();
+                var lebar=numeral($('#add_lebar').val()).value();
+                luas=hitungluas(panjang,lebar,satuandasar,$('input[name=r2]:checked').val());
+                hargasatuan=numeral($('#add_harga').val()).value();
+                kuantitas=numeral($('#add_kuantitas').val()).value();
+                var besardiskon=numeral($('#add_diskon').val()).value();
+                $('#add_subtotal').val(
+                    numeral(diskonitem(hitungsubtotal(hargasatuan, (luas == undefined) ? 1 : luas, kuantitas), besardiskon)).format('$ 0,0')
+                );
+                console.log(luas, hargasatuan, kuantitas, besardiskon);
+                
             });
             
             $("#add_harga").blur(function(){
@@ -1603,8 +1631,19 @@
         $('#additem').click(function(){
             
             if ($('#add_produk').val() == null){
-                swal("Gagal", "Produk Belum Dipilih atau subtotal 0 !", "error");
-            }else{
+              swal("Gagal", "Produk Belum Dipilih atau subtotal 0 !", "error");
+            }
+            else if ($('#add_kuantitas').val() == 0) {
+              swal("Gagal", "Kuantitas belum diisi !", "error");
+            }
+            else{
+                if (hitung_luas == 1) {
+                  radio_satuan = $('#r2cm').is(':checked') || $('#r2m').is(':checked')
+                  if ( radio_satuan != true ) {
+                    swal("Gagal", "Pilih jenis satuan !", "error");
+                    return
+                  }
+                }
                 var produk=$('#add_produk').val();
                 var produkid=$('#add_produkid').val();
                 var harga=numeral($('#add_harga').val()).value();
@@ -1666,6 +1705,8 @@
                     'data-target="#modal_edit"><i class="fa fa-edit"></i></button><button type="button" class="modal_delete btn btn-danger btn-sm" data-toggle="modal" data-namaproduk="'+namaproduk+'" data-produk="'+produk+'" data-harga="'+harga+'" data-panjang="'+panjang+'" data-lebar="'+lebar+'" data-tdid="'+tdid+'" data-kuantitas="'+kuantitas+'" data-finishing="'+finishing+'" data-keterangan="'+keterangan+'" data-subtotal="'+subtotal+'" data-tdid="'+tdid+'" data-hitungluas="'+hitung_luas+'" data-target="#modal_delete"><i class="fa fa-trash"></i></button></div></td></tr>'
                 );
                 $('#submittransaksi').removeAttr('disabled');
+                $('#metodelunas').iCheck('uncheck');
+                $('#metodedp').iCheck('uncheck');
                 $('#modal_add').modal('hide');
             }
             
@@ -1763,7 +1804,7 @@
                         $('#edit_harga').val('0'); 
                         $('#edit_diskon').val('0'); 
                         $('#edit_subtotal').val('0');
-                        $('#edit_kuantitas').val('0');
+                        $('#edit_kuantitas').val('1');
                         $('#edit_panjang').val('0');
                         $('#edit_lebar').val('0');
                         if (hitung_luas==1)
@@ -1815,7 +1856,7 @@
                         $('#edit_harga').val('0'); 
                         $('#edit_diskon').val('0'); 
                         $('#edit_subtotal').val('0');
-                        $('#edit_kuantitas').val('0');
+                        $('#edit_kuantitas').val('1');
                         $('#edit_panjang').val('0');
                         $('#edit_lebar').val('0');
                         if (hitung_luas==1)
@@ -1850,6 +1891,16 @@
     //
     //tombol simpan edit
         $('#edititem').click(function(){
+            if ($('#edit_kuantitas').val() == 0) {
+              return swal("Gagal", "Kuantitas belum diisi !", "error");
+            }
+            if (hitung_luas == 1) {
+              radio_satuan = $('#r2editcm').is(':checked') || $('#r2editm').is(':checked')
+              if ( radio_satuan != true ) {
+                swal("Gagal", "Pilih jenis satuan !", "error");
+                return
+              }
+            }
 
             var produk=$('#edit_produk').val();
             var produkid=$('#edit_produkid').val();

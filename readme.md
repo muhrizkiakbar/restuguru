@@ -6,3 +6,10 @@ numeral(#value).format('0[.]00') ->mengubah number jadi 1,3 jadi desimal
 numeral(#value).value() -> mengambil data value yg telah terformat
 dokumentasi:
 numeraljs.com
+
+
+
+rm -rf vendor
+rm -rf composer.lock
+composer self-update --1
+composer install --ignore-install-reqs
