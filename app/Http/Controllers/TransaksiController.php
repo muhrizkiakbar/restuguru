@@ -243,10 +243,11 @@ class TransaksiController extends Controller
         $transaksi->diskon=$request->json('inputdiskon');
         $transaksi->metode_pembayaran=$request->json('inputpembayaran');
         $transaksi->jumlah_pembayaran=$request->json('inputbayardp');
-        $transaksi->sisa_tagihan=$request->json('inputsisa');
         $transaksi->pajak=$request->json('inputpajak');        
         $transaksi->user_id=Auth::user()->id;
         $transaksi->cabang_id=Auth::user()->cabangs->id;
+        $sisa_tagihan = $transaksi->total_harga - $transaksi->jumlah_pembayaran;
+        $transaksi->sisa_tagihan = $sisa_tagihan;
         $transaksi->save();
             
 
