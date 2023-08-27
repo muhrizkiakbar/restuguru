@@ -247,7 +247,8 @@
                                             <li>
                                                 <ul class="nav nav-stacked">
                                                     <li><a href="#"> - Pembayaran Penjualan<span id="c_Pembayaran_Penjualan" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
-                                                    <li><a href="#"> - Pencairan Piutang<span id="c_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang Dengan Nota<span id="c_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang Diluar Nota<span id="c_Pencairan_Piutang_Bukan_Nota" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
                                                 </ul>
                                             <li><a href="#">Kas Keluar <span id="c_Kas_Keluar" class="pull-right badge bg-blue">5</span></a></li>
                                             <li>
@@ -278,7 +279,8 @@
                                             <li>
                                                 <ul class="nav nav-stacked">
                                                     <li><a href="#"> - Pembayaran Penjualan<span id="t_Pembayaran_Penjualan" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
-                                                    <li><a href="#"> - Pencairan Piutang<span id="t_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang Dengan Nota<span id="t_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang Diluar Nota<span id="t_Pencairan_Piutang_Bukan_Nota" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
                                                 </ul>
                                             <li><a href="#">Kas Keluar <span id="t_Kas_Keluar" class="pull-right badge bg-blue">Rp. 0,-</span></a></li>
                                             <li>
@@ -460,12 +462,14 @@
                 //Cash In
                 c_Pembayaran_Penjualan,
                 c_Pencairan_Piutang,
+                c_Pencairan_Piutang_Bukan_Nota,
                 //Cash Out
                 c_Pembayaran_Hutang,
                 c_value_Jenis_Pengeluaran,
                 //Tansfer In
                 t_Pembayaran_Penjualan,
                 t_Pencairan_Piutang,
+                t_Pencairan_Piutang_Bukan_Nota,
                 //Transfer Out
                 t_Pembayaran_Hutang,
                 t_value_Jenis_Pengeluaran
@@ -519,6 +523,7 @@
                 $('#c_Kas_Masuk').text('Rp. '+(c_Pembayaran_Penjualan + c_Pencairan_Piutang).format(0, 3, '.', ','));
                 $('#c_Pembayaran_Penjualan').text('Rp. '+c_Pembayaran_Penjualan.format(0, 3, '.', ','));
                 $('#c_Pencairan_Piutang').text('Rp. '+c_Pencairan_Piutang.format(0, 3, '.', ','));
+                $('#c_Pencairan_Piutang_Bukan_Nota').text('Rp. '+c_Pencairan_Piutang_Bukan_Nota.format(0, 3, '.', ','));
                 
                 $('#c_Pembayaran_Hutang').text('Rp. '+c_Pembayaran_Hutang.format(0, 3, '.', ','));
                 for (i = 0; i < label_Jenis_Pengeluaran.length; i++) {
@@ -537,6 +542,7 @@
                 $('#t_Kas_Masuk').text('Rp. '+(t_Pembayaran_Penjualan + t_Pencairan_Piutang).format(0, 3, '.', ','));
                 $('#t_Pembayaran_Penjualan').text('Rp. '+t_Pembayaran_Penjualan.format(0, 3, '.', ','));
                 $('#t_Pencairan_Piutang').text('Rp. '+t_Pencairan_Piutang.format(0, 3, '.', ','));
+                $('#t_Pencairan_Piutang_Bukan_Nota').text('Rp. '+t_Pencairan_Piutang_Bukan_Nota.format(0, 3, '.', ','));
                 
                 $('#t_Pembayaran_Hutang').text('Rp. '+t_Pembayaran_Hutang.format(0, 3, '.', ','));
                 for (i = 0; i < label_Jenis_Pengeluaran.length; i++) {
@@ -641,10 +647,12 @@
                     response['jenispengeluaran'],
                     response['c_Pembayaran_Penjualan'],
                     response['c_Pencairan_Piutang'],
+                    response['c_Pencairan_Piutang_Bukan_Nota'],
                     response['c_Pembayaran_Hutang'],
                     response['cvalue_jenispengeluaran'],
                     response['t_Pembayaran_Penjualan'],
                     response['t_Pencairan_Piutang'],
+                    response['t_Pencairan_Piutang_Bukan_Nota'],
                     response['t_Pembayaran_Hutang'],
                     response['tvalue_jenispengeluaran']
                 );
@@ -710,10 +718,12 @@
                         response['jenispengeluaran'],
                         response['c_Pembayaran_Penjualan'],
                         response['c_Pencairan_Piutang'],
+                        response['c_Pencairan_Piutang_Bukan_Nota'],
                         response['c_Pembayaran_Hutang'],
                         response['cvalue_jenispengeluaran'],
                         response['t_Pembayaran_Penjualan'],
                         response['t_Pencairan_Piutang'],
+                        response['t_Pencairan_Piutang_Bukan_Nota'],
                         response['t_Pembayaran_Hutang'],
                         response['tvalue_jenispengeluaran']
                     );

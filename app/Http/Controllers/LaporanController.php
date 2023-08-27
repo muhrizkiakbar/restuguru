@@ -108,16 +108,37 @@ class LaporanController extends Controller
         //                                             ->groupBy('Transaksi_Penjualans.id')
         //                                             ->get();
 
-        //Pembeli Yang Bayar Hutang pada tanggal xxxx - xxxx
-        $c_Pencairan_Piutang=Angsuran::where('cabang_id',$cabangId)
-                                    ->where('metode_pembayaran', 'Cash')
-                                    ->whereBetween('tanggal_angsuran', [$request->startDate, $request->endDate])
-                                    ->sum('nominal_angsuran');
+        //Pembeli Yang Bayar Hutang pada tanggal xxxx - xxxx by nota penjualan
+        $c_Pencairan_Piutang=Angsuran::leftJoin('Transaksi_Penjualans', 'Transaksi_Penjualans.id','=', 'Angsurans.transaksipenjualan_id')
+                                    ->where('Angsurans.cabang_id',$cabangId)
+                                    ->where('Angsurans.metode_pembayaran', 'Cash')
+                                    ->whereBetween('Transaksi_Penjualans.tanggal', [$request->startDate, $request->endDate])
+                                    ->whereBetween('Angsurans.tanggal_angsuran', [$request->startDate, $request->endDate])
+                                    ->sum('Angsurans.nominal_angsuran');
 
-        $t_Pencairan_Piutang=Angsuran::where('cabang_id',$cabangId)
-                                    ->where('metode_pembayaran', 'Transfer')
-                                    ->whereBetween('tanggal_angsuran', [$request->startDate, $request->endDate])
-                                    ->sum('nominal_angsuran');
+        $t_Pencairan_Piutang=Angsuran::leftJoin('Transaksi_Penjualans', 'Transaksi_Penjualans.id','=', 'Angsurans.transaksipenjualan_id')
+                                    ->where('Angsurans.cabang_id',$cabangId)
+                                    ->where('Angsurans.metode_pembayaran', 'Transfer')
+                                    ->whereBetween('Transaksi_Penjualans.tanggal', [$request->startDate, $request->endDate])
+                                    ->whereBetween('Angsurans.tanggal_angsuran', [$request->startDate, $request->endDate])
+                                    ->sum('Angsurans.nominal_angsuran');
+
+        //Pembeli Yang Bayar Hutang pada tanggal xxxx - xxxx
+        $c_Pencairan_Piutang_Bukan_Nota =
+          Angsuran::leftJoin('Transaksi_Penjualans', 'Transaksi_Penjualans.id','=', 'Angsurans.transaksipenjualan_id')
+                    ->where('Angsurans.cabang_id',$cabangId)
+                    ->where('Angsurans.metode_pembayaran', 'Cash')
+                    ->whereNotBetween('Transaksi_Penjualans.tanggal', [$request->startDate, $request->endDate])
+                    ->whereBetween('Angsurans.tanggal_angsuran', [$request->startDate, $request->endDate])
+                    ->sum('Angsurans.nominal_angsuran');
+
+        $t_Pencairan_Piutang_Bukan_Nota =
+          Angsuran::leftJoin('Transaksi_Penjualans', 'Transaksi_Penjualans.id','=', 'Angsurans.transaksipenjualan_id')
+                    ->where('Angsurans.cabang_id',$cabangId)
+                    ->where('Angsurans.metode_pembayaran', 'Transfer')
+                    ->whereNotBetween('Transaksi_Penjualans.tanggal', [$request->startDate, $request->endDate])
+                    ->whereBetween('Angsurans.tanggal_angsuran', [$request->startDate, $request->endDate])
+                    ->sum('Angsurans.nominal_angsuran');
 
         //Perusahaan Membayar Hutang pada tanggal xxxx - xxxx
         $c_Pembayaran_Hutang=Angsuran_Pengeluarans::where('cabang_id',$cabangId)
@@ -228,6 +249,8 @@ class LaporanController extends Controller
             // 't_Pembayaran_Penjualan'    => $t_Pembayaran_Penjualan->sum('total'),
             'c_Pencairan_Piutang'       => $c_Pencairan_Piutang,
             't_Pencairan_Piutang'       => $t_Pencairan_Piutang,
+            'c_Pencairan_Piutang_Bukan_Nota' => $c_Pencairan_Piutang_Bukan_Nota,
+            't_Pencairan_Piutang_Bukan_Nota' => $t_Pencairan_Piutang_Bukan_Nota,
             'c_Pembayaran_Hutang'       => $c_Pembayaran_Hutang,
             't_Pembayaran_Hutang'       => $t_Pembayaran_Hutang,
             'charttitle'                => $charttitle,
