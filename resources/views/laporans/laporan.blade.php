@@ -247,8 +247,8 @@
                                             <li>
                                                 <ul class="nav nav-stacked">
                                                     <li><a href="#"> - Pembayaran Penjualan<span id="c_Pembayaran_Penjualan" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
-                                                    <li><a href="#"> - Pencairan Piutang Dengan Nota<span id="c_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
-                                                    <li><a href="#"> - Pencairan Piutang Diluar Nota<span id="c_Pencairan_Piutang_Bukan_Nota" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang Hari Ini<span id="c_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang Kemarin<span id="c_Pencairan_Piutang_Bukan_Nota" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
                                                 </ul>
                                             <li><a href="#">Kas Keluar <span id="c_Kas_Keluar" class="pull-right badge bg-blue">5</span></a></li>
                                             <li>
@@ -279,8 +279,8 @@
                                             <li>
                                                 <ul class="nav nav-stacked">
                                                     <li><a href="#"> - Pembayaran Penjualan<span id="t_Pembayaran_Penjualan" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
-                                                    <li><a href="#"> - Pencairan Piutang Dengan Nota<span id="t_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
-                                                    <li><a href="#"> - Pencairan Piutang Diluar Nota<span id="t_Pencairan_Piutang_Bukan_Nota" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang Hari Ini<span id="t_Pencairan_Piutang" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
+                                                    <li><a href="#"> - Pencairan Piutang Kemarin<span id="t_Pencairan_Piutang_Bukan_Nota" class="pull-right badge bg-teal">Rp. 0,-</span></a></li>
                                                 </ul>
                                             <li><a href="#">Kas Keluar <span id="t_Kas_Keluar" class="pull-right badge bg-blue">Rp. 0,-</span></a></li>
                                             <li>
