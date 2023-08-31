@@ -131,7 +131,7 @@
                                     <select id="pelanggan" name="pelanggan" class="form-control select2" style="width:100%;" type="text"></select>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control " id="pembayaran2" name="pembayaran2" style="width: 100%;">
+                                        <select class="form-control " id="pembayaran" name="pembayaran" style="width: 100%;">
 
                                             @if ($pembayaran=="semua")
                                                 <option value="semua" selected>Semua Metode Pembayaran</option>
