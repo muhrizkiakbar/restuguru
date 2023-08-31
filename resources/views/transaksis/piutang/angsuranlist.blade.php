@@ -117,6 +117,7 @@
                   <div class="col-md-12">
                     <div class="box-body">
                     <form action="{{route('listangsuranpenjualan')}}" method="post">
+                      @csrf
                       <div class="form-group">
                         <input type="text" class="form-control" id="nonota" name="nonota" value="{{$nonota}}" placeholder="Nomor Nota">
                       </div>
