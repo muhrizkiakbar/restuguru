@@ -122,7 +122,6 @@
                                     <div class="form-group">
                                     <input type="text" class="form-control" id="nonota" name="nonota" value="{{$nonota}}" placeholder="Nomor Nota">
                                     </div>
-                                    @csrf
                                     <div class="form-group">
                                     <input type="text" class="form-control" id="namapelanggan" name="namapelanggan" value="{{$namapelanggan}}" placeholder="Nama Pelanggan">
                                     </div>
