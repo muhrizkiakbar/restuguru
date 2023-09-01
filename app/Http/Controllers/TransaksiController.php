@@ -228,13 +228,10 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $nonow=CTransaksi_Penjualans::withTrashed()->latest()->first();
         
-        // dd($nonota);
-        // dd($request->json('inputpelanggan'));
+    DB::beginTransaction();
+      try {
         $transaksi= new CTransaksi_Penjualans;
-        // $transaksi->nomor_nota=$nonota;
         $transaksi->hp_pelanggan=$request->json('inputnomorpelanggan');
         $transaksi->nama_pelanggan=$request->json('inputnamapelanggan');
         $transaksi->pelanggan_id=$request->json('inputpelanggan');
@@ -420,7 +417,17 @@ class TransaksiController extends Controller
         $datareturn=[];
         $datareturn['status']=$status;
         $datareturn['id']=encrypt($transaksi->id);
+        DB::commit();
         return $datareturn;
+      } catch (\Exception $e) {
+        //jika ada error, maka akan dirollback sehingga tidak ada data yang tersimpan 
+        DB::rollback();
+        //pesan gagal akan di-return
+        return response()->json([
+            'status' => 'failed',
+            'message' => $e->getMessage()
+        ], 400);
+      }
     }
 
     /**

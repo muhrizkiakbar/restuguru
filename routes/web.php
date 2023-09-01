@@ -213,6 +213,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/specialprice/{id}/ranges',['middleware' => ['permission:manage-specialprice'], 'uses' => 'RangePricePelangganController@index'])->name('rangespecialprices');
         Route::post('/specialprice/{id}/ranges',['middleware' => ['permission:add-specialprice'], 'uses' => 'RangePricePelangganController@create'])->name('createrangespecialprices');
         Route::delete('/specialprice/{id}/ranges/{range_price_pelanggan_id}',['middleware' => ['permission:delete-specialprice'], 'uses' => 'RangePricePelangganController@destroy'])->name('deleterangespecialprices');
+        Route::post('/specialprice/pelanggans/detail',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@price_khusus_pelanggans'])->name('price_khusus_pelanggans_detail');
+        Route::get('/specialprice/pelanggan/{id}/{produk_id}',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@price_khusus_pelanggan'])->name('price_khusus_pelanggan');
+        Route::get('/specialprice/pelanggans/new',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@new_price_khusus_pelanggans'])->name('new_price_khusus_pelanggans');
+        Route::post('/specialprice/pelanggans',['middleware' => ['permission:manage-specialprice'], 'uses' => 'SpecialPriceController@create_price_khusus_pelanggans'])->name('create_price_khusus_pelanggans');
 
 
         //SpecialPriceGroup

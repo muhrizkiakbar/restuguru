@@ -191,4 +191,97 @@ class SpecialPriceController extends Controller
             return response()->json("Failed");
         }
     }
+
+    // onchange produk
+    public function price_khusus_pelanggans(Request $request)
+    {
+        $produk_id = decrypt($request->produk_id);
+        $pelanggan_ids = $request->pelanggan_ids;
+      
+        $specialprices = DB::table('Spesialprices')
+                   ->select('pelanggan_id', 'harga_khusus')
+                   ->where('produk_id', '=', $produk_id)
+                   ->groupBy('pelanggan_id');
+        $pelanggans = DB::table('Pelanggans')
+                        ->leftJoinSub($specialprices, 'specialprices', function($join) {
+                            $join->on('Pelanggans.id', '=', 'specialprices.pelanggan_id');
+                        })
+                        ->whereIn('Pelanggans.id', $pelanggan_ids)
+                        ->select(
+                          'Pelanggans.id', 'Pelanggans.nama_perusahaan', 'Pelanggans.nama_pemilik',
+                          'specialprices.harga_khusus')
+                        ->get();
+                
+        return response()->json($pelanggans);
+    }
+
+    // on add pelanggan of produk
+    public function price_khusus_pelanggan($pelanggan_id, $produk_id)
+    {
+      $produk_id = $produk_id;
+      $pelanggan_id = $pelanggan_id;
+      
+      $specialprice = DB::table('Spesialprices')
+                 ->select('pelanggan_id', 'harga_khusus')
+                 ->where('produk_id', '=', $produk_id)
+                 ->groupBy('pelanggan_id');
+      $pelanggan = DB::table('Pelanggans')
+                      ->leftJoinSub($specialprice, 'specialprices', function($join) {
+                          $join->on('Pelanggans.id', '=', 'specialprices.pelanggan_id');
+                      })
+                      ->where('Pelanggans.id', '=', $pelanggan_id)
+                      ->select(
+                        'Pelanggans.id', 'Pelanggans.nama_perusahaan', 'Pelanggans.nama_pemilik',
+                        'specialprices.harga_khusus')
+                      ->first();
+                
+        return response()->json($pelanggan);
+    }
+
+    public function new_price_khusus_pelanggans()
+    {
+      $produks=CProduks::all();
+      return view ('specialprices.specialpricepelanggans',
+                      ['produks'=>$produks]
+                  );
+    }
+
+    public function create_price_khusus_pelanggans(Request $request)
+    {
+      DB::beginTransaction();
+      try {
+        $produk_id = decrypt($request->json('produk_id'));
+        $harga_khusus = intval($request->json('harga_khusus'));
+        foreach ($request->json('pelanggan_ids') as $key => $pelanggan_id){
+          $pelanggan_id = intval($pelanggan_id);
+          $specialprice =
+            CSpesialprices::where('pelanggan_id','=', $pelanggan_id)
+                          ->where('produk_id','=', $produk_id)
+                          ->first();
+          if ($specialprice == null) {
+            $specialprice = new CSpesialprices;
+            $specialprice->produk_id = $produk_id;
+            $specialprice->user_id=Auth::user()->id;
+            $specialprice->pelanggan_id = $pelanggan_id;
+            $specialprice->harga_khusus = $harga_khusus;
+            $specialprice->saveOrFail();
+          } else {
+            $specialprice->harga_khusus = $harga_khusus;
+            $specialprice->user_id=Auth::user()->id;
+            $specialprice->saveOrFail();
+          }
+        }
+        DB::commit();
+        return response()->json([
+            'data' => "done"
+        ], 200);
+      } catch (\Exception $e) {
+        DB::rollback();
+        //pesan gagal akan di-return
+        return response()->json([
+            'status' => 'failed',
+            'message' => $e->getMessage()
+        ], 400);
+      }
+    }
 }
