@@ -257,6 +257,7 @@ class SpecialPriceController extends Controller
           $specialprice =
             CSpesialprices::where('pelanggan_id','=', $pelanggan_id)
                           ->where('produk_id','=', $produk_id)
+                          ->withTrashed()
                           ->first();
           if ($specialprice == null) {
               $specialprice = new CSpesialprices;
@@ -267,6 +268,8 @@ class SpecialPriceController extends Controller
               $specialprice->saveOrFail();
           } else {
             if ($harga_khusus == 0) {
+              $specialprice->harga_khusus = $harga_khusus;
+              $specialprice->saveOrFail();
               $specialprice->delete();
             } else {
               $specialprice->harga_khusus = $harga_khusus;
