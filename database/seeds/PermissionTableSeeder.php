@@ -416,6 +416,13 @@ class PermissionTableSeeder extends Seeder
 						'urlindex'=>'managespecialprice'
 					],
 					[
+        		'name' => 'manage-specialprice-many-customer',
+        		'display_name' => 'Harga Khusus Customer',
+        		'description' => 'Manajemen Harga Khusus Banyak Customer',
+						'index'=>'1',
+						'urlindex'=>'new_price_khusus_pelanggans'
+					],
+					[
         		'name' => 'add-specialprice',
         		'display_name' => 'Tambah Harga Khusus',
         		'description' => 'Menambah Harga Khusus',

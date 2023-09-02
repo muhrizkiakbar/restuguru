@@ -259,16 +259,20 @@ class SpecialPriceController extends Controller
                           ->where('produk_id','=', $produk_id)
                           ->first();
           if ($specialprice == null) {
-            $specialprice = new CSpesialprices;
-            $specialprice->produk_id = $produk_id;
-            $specialprice->user_id=Auth::user()->id;
-            $specialprice->pelanggan_id = $pelanggan_id;
-            $specialprice->harga_khusus = $harga_khusus;
-            $specialprice->saveOrFail();
+              $specialprice = new CSpesialprices;
+              $specialprice->produk_id = $produk_id;
+              $specialprice->user_id=Auth::user()->id;
+              $specialprice->pelanggan_id = $pelanggan_id;
+              $specialprice->harga_khusus = $harga_khusus;
+              $specialprice->saveOrFail();
           } else {
-            $specialprice->harga_khusus = $harga_khusus;
-            $specialprice->user_id=Auth::user()->id;
-            $specialprice->saveOrFail();
+            if ($harga_khusus == 0) {
+              $specialprice->delete();
+            } else {
+              $specialprice->harga_khusus = $harga_khusus;
+              $specialprice->user_id=Auth::user()->id;
+              $specialprice->saveOrFail();
+            }
           }
         }
         DB::commit();
