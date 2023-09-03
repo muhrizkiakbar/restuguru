@@ -274,6 +274,7 @@ class SpecialPriceController extends Controller
             } else {
               $specialprice->harga_khusus = $harga_khusus;
               $specialprice->user_id=Auth::user()->id;
+              $specialprice->deleted_at = null;
               $specialprice->saveOrFail();
             }
           }

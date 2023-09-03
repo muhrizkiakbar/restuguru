@@ -211,4 +211,62 @@ class SpecialpricegroupController extends Controller
             return response()->json("Failed");
         } 
     }
+
+    public function new_price_khusus_jenis_pelanggans()
+    {
+      $produks=CProduks::all();
+      $pelanggans = CJenispelanggans::all();
+      return view ('specialprices.specialpricejenispelanggans',
+                      ['produks'=>$produks, 'jenispelanggans' => $pelanggans]
+                  );
+    }
+
+    public function create_price_khusus_jenis_pelanggans(Request $request)
+    {
+      DB::beginTransaction();
+      try {
+        $produk_ids = $request->json('produk_ids');
+        $harga_khusus = $request->json('harga_khusus');
+        foreach ($request->json('jenispelanggan_ids') as $key => $jenispelanggan_id){
+          $jenispelanggan_id = intval($jenispelanggan_id);
+          foreach ($produk_ids as $key_produk_id => $produk_id) {
+            $specialprice =
+              CSpesialpricesgroup::where('jenispelanggan_id','=', $jenispelanggan_id)
+                            ->where('produk_id','=', $produk_id)
+                            ->withTrashed()
+                            ->first();
+            if ($specialprice == null) {
+                $specialprice = new CSpesialpricesgroup;
+                $specialprice->produk_id = $produk_id;
+                $specialprice->user_id=Auth::user()->id;
+                $specialprice->jenispelanggan_id = $jenispelanggan_id;
+                $specialprice->harga_khusus = $harga_khusus[$key_produk_id];
+                $specialprice->saveOrFail();
+            } else {
+              if (intval($harga_khusus[$key_produk_id]) == 0) {
+                $specialprice->harga_khusus = $harga_khusus[$key_produk_id];
+                $specialprice->saveOrFail();
+                $specialprice->delete();
+              } else {
+                $specialprice->harga_khusus = $harga_khusus[$key_produk_id];
+                $specialprice->user_id=Auth::user()->id;
+                $specialprice->deleted_at = null;
+                $specialprice->saveOrFail();
+              }
+            }
+          }
+        }
+        DB::commit();
+        return response()->json([
+            'data' => "done"
+        ], 200);
+      } catch (\Exception $e) {
+        DB::rollback();
+        //pesan gagal akan di-return
+        return response()->json([
+            'status' => 'failed',
+            'message' => $e->getMessage()
+        ], 400);
+      }
+    }
 }

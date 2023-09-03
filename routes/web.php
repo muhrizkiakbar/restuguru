@@ -228,6 +228,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/specialpricegroup/{id}/rangegroups',['middleware' => ['permission:manage-specialprice'], 'uses' => 'RangePriceGroupController@index'])->name('rangespecialpricegroups');
         Route::post('/specialpricegroup/{id}/rangegroups',['middleware' => ['permission:add-specialprice'], 'uses' => 'RangePriceGroupController@create'])->name('createrangespecialgroups');
         Route::delete('/specialpricegroup/{id}/rangegroups/{range_price_group_id}',['middleware' => ['permission:delete-specialprice'], 'uses' => 'RangePriceGroupController@destroy'])->name('deleterangespecialgroups');
+        Route::get('/specialpricegroup/pelanggans/new',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@new_price_khusus_jenis_pelanggans'])->name('new_price_khusus_jenis_pelanggans');
+        Route::post('/specialpricegroup/pelanggans',['middleware' => ['permission:manage-specialpricegroup'], 'uses' => 'SpecialpricegroupController@create_price_khusus_jenis_pelanggans'])->name('create_price_khusus_jenis_pelanggans');
 
         // Bahan Baku Route
         Route::get('/bahanbaku',['middleware' => ['permission:manage-bahanbaku'], 'uses' => 'BahanBakuController@index'])->name('managebahanbakuindex');
