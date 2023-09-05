@@ -22,7 +22,7 @@ class CSub_Tpenjualans extends Model
 
     public function produk()
     {
-        return $this->belongsTo('App\CProduks');
+        return $this->belongsTo('App\CProduks', 'produk_id', 'id');
     }
 
 }
