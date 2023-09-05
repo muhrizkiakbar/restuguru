@@ -12,4 +12,4 @@ numeraljs.com
 rm -rf vendor
 rm -rf composer.lock
 composer self-update --1
-composer install --ignore-install-reqs
+composer install --ignore-platform-reqs
