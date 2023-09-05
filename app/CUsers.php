@@ -17,10 +17,10 @@ class CUsers extends Model
     protected $dates = ['deleted_at'];
 
     public function roles(){
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class)->withTrashed();
     }
 
     public function cabangs(){
-        return $this->belongsTo(CCabangs::class);
+        return $this->belongsTo(CCabangs::class)->withTrashed();
     }
 }

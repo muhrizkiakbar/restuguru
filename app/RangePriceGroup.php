@@ -17,6 +17,6 @@ class RangePriceGroup extends Model
 
     public function specialpricepelanggan()
     {
-        return $this->belongsTo('App\CSpesialpricesgroup');
+        return $this->belongsTo('App\CSpesialpricesgroup')->withTrashed();
     }
 }

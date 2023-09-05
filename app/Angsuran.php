@@ -17,6 +17,6 @@ class Angsuran extends Model
 
     public function penjualan()
     {
-      $this->belongsTo("App\CTransaksi_Penjualans");
+      $this->belongsTo("App\CTransaksi_Penjualans")->withTrashed();
     }
 }

@@ -17,11 +17,11 @@ class CRelasiBahanBakus extends Model
 
     public function produk()
     {
-        return $this->belongsTo('App\CProduks', 'id', 'produk_id');
+        return $this->belongsTo('App\CProduks', 'id', 'produk_id')->withTrashed();
     }
 
     public function bahanbaku()
     {
-        return $this->belongsTo('App\CBahanBakus', 'id', 'bahanbaku_id');
+        return $this->belongsTo('App\CBahanBakus', 'id', 'bahanbaku_id')->withTrashed();
     }
 }
