@@ -98,7 +98,7 @@ RUN  docker-php-ext-install \
     docker-php-ext-enable \
     # imagick \
     # mongodb \
-    pdo_mysql
+    pdo_mysql \
     redis \
     && \
     # Remove the build deps
