@@ -26,7 +26,6 @@ RUN chown www-data:www-data /app
 COPY --chown=www-data:www-data . .
 COPY --from=composer:1.6 /usr/bin/composer /usr/bin/composer
 USER www-data
-RUN composer self-update --1
 RUN composer install --nodev --ignore-platform-reqs
 # [END BASE STAGE]
 
