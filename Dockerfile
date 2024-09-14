@@ -68,8 +68,8 @@ RUN pecl install \
     mongodb \
     redis
 # Configure PHP extensions
-RUN docker-php-ext-configure \
-    gd --enable-gd --with-freetype --with-jpeg --with-webp
+#RUN docker-php-ext-configure \
+    #gd --enable-gd --with-freetype --with-jpeg --with-webp
 # Install PHP extensions
 RUN  docker-php-ext-install \
     bcmath \
