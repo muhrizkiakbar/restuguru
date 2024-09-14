@@ -10,7 +10,8 @@ COPY . .
 RUN apk add --no-progress --quiet --no-cache git \
     && git config --global url."https://".insteadOf git:// \
     && yarn cache clean \
-    && yarn install \
+    && yarn add file:/dependency \
+    && yarn install --force \
     && yarn build
 
 # Stage 2: PHP-FPM and Nginx setup
