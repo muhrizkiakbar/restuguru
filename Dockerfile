@@ -2,24 +2,23 @@ FROM php:7.2-fpm-alpine
 
 RUN apk update && apk upgrade
 
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions \
+    bcmath \
+    ctype \
+    dom \
+    fileinfo \
+    mbstring \
+    pdo pdo_mysql \
+    tokenizer \
+    pcntl \
+    redis-stable
+
 # Essentials
 RUN echo "UTC" > /etc/timezone
 RUN apk add git zip unzip curl sqlite nginx supervisor
 
 RUN apk add nodejs npm
-
-RUN apk add php7.2-gd \
-    php7.2-imap \
-    php7.2-redis \
-    php7.2-cgi \
-    php7.2-bcmath \
-    php7.2-mysqli \
-    php7.2-zlib \
-    php7.2-curl \
-    php7.2-zip \
-    php7.2-mbstring \
-    php7.2-iconv \
-    gmp-dev
 
 # dependencies required for running "phpize"
 # these get automatically installed and removed by "docker-php-ext-*" (unless they're already installed)
