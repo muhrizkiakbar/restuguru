@@ -1,0 +1,24 @@
+# .dockerignore
+docker-compose.yml
+Dockerfile
+/.phpunit.cache
+/node_modules
+/public/hot
+/public/storage
+/public/bucket
+/vendor
+.env
+.env.example
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+yarn.lock
+/.fleet
+/.idea
+/.vscode
+.git
