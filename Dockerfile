@@ -40,9 +40,9 @@ WORKDIR /var/www/html
 COPY . .
 
 # Clean npm cache and install dependencies
-RUN npm cache clean --force
-RUN rm -rf node_modules package-lock.json
-RUN npm install
+#RUN npm cache clean --force
+#RUN rm -rf node_modules package-lock.json
+#RUN npm install
 
 # Build frontend assets (if necessary)
 #RUN npm run prod
