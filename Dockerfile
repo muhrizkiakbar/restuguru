@@ -47,18 +47,15 @@ RUN composer update
 RUN php artisan optimize:clear
 RUN php artisan view:cache
 # Setup nginx & supervisor as root user
-#USER root
+USER root
 RUN apk add --no-progress --quiet --no-cache nginx supervisor
 COPY .docker/nginx-default.conf /etc/nginx/http.d/default.conf
 COPY .docker/supervisord.conf /etc/supervisord.conf
 # Apply the required changes to run nginx as www-data user
 RUN chown -R www-data:www-data /run/nginx /var/lib/nginx /var/log/nginx && \
     sed -i '/user nginx;/d' /etc/nginx/nginx.conf
-# Switch to www-user
-USER www-data
+# Keep running services as root
+USER root
 EXPOSE 8000 8443
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 # [END APP STAGE]
-
-# DEFAULT STAGE
-FROM base
