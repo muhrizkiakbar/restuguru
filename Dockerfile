@@ -27,7 +27,8 @@ COPY . /var/www
 COPY --chown=www-data:www-data . /var/www
 
 # Install Laravel dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer self-update --1
+RUN composer install --ignore-platform-reqs
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www \
