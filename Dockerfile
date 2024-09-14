@@ -7,9 +7,7 @@ WORKDIR /app
 # Install dependencies
 WORKDIR /app
 COPY . .
-RUN apk add --no-progress --quiet --no-cache git \
-    && git config --global url."https://".insteadOf git:// \
-    && yarn cache clean \
+RUN  yarn cache clean \
     && yarn install --force \
     && yarn build
 
