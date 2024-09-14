@@ -33,7 +33,9 @@ FROM node:16-alpine AS frontend
 WORKDIR /app
 COPY . .
 # Install git and python2 for node-sass
-RUN apk add --no-progress --quiet --no-cache git python3 make g++ \
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.13/main" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.13/community" >> /etc/apk/repositories \
+    && apk add --no-cache python2 git make g++ \
     && git config --global url."https://".insteadOf git:// \
     && yarn cache clean \
     && yarn install \
