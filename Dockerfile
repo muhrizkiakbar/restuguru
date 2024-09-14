@@ -1,6 +1,5 @@
-# ./Dockerfile
 # [BASE STAGE]
-FROM php:7.2-fpm-alpine as base
+FROM php:7.2-fpm-alpine AS base
 # Install the php extension installer from its image
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 # Install dependencies
@@ -30,7 +29,7 @@ RUN composer install --no-dev --ignore-platform-reqs
 # [END BASE STAGE]
 
 # [FRONTEND STAGE]
-FROM node:16-alpine as frontend
+FROM node:16-alpine AS frontend
 WORKDIR /app
 COPY . .
 RUN apk add --no-progress --quiet --no-cache git \
@@ -41,7 +40,7 @@ RUN apk add --no-progress --quiet --no-cache git \
 # [END FRONTEND STAGE]
 
 # [APP STAGE]
-FROM base as app
+FROM base AS app
 # Prepare the frontend files & caching
 COPY --from=frontend --chown=www-data:www-data /app/public /app/public
 RUN composer update
@@ -60,5 +59,6 @@ USER www-data
 EXPOSE 8000 8443
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 # [END APP STAGE]
+
 # DEFAULT STAGE
 FROM base
