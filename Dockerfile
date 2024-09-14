@@ -45,7 +45,7 @@ RUN rm -rf node_modules package-lock.json
 RUN npm install
 
 # Build frontend assets (if necessary)
-RUN npm run prod
+#RUN npm run prod
 
 # Stage 2: Final image with Nginx and Supervisor
 FROM php:7.2-fpm
