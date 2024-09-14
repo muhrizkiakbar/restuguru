@@ -1,18 +1,17 @@
 # Stage 1: Build the application
-FROM node:18 AS node
+FROM node:22-alpine AS node
 
 # Set working directory
 WORKDIR /app
 
 # Install dependencies
-COPY package*.json ./
-RUN npm install --silent
-
-# Copy application files
+WORKDIR /app
 COPY . .
-
-# Build the application
-RUN npm run build
+RUN apk add --no-progress --quiet --no-cache git \
+    && git config --global url."https://".insteadOf git:// \
+    && yarn cache clean \
+    && yarn install \
+    && yarn build
 
 # Stage 2: PHP-FPM and Nginx setup
 FROM php:7.2-fpm
