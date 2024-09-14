@@ -19,9 +19,9 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
     libpq-dev \
-    libjpeg-dev \
-    libpng-dev \
-    libwebp-dev \
+    build-essential \
+    python2 \
+    npm \
     nginx \
     supervisor
 
@@ -39,10 +39,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
 WORKDIR /var/www/html
 COPY . .
 
-# Install PHP dependencies with Composer (no-dev, ignoring platform requirements)
-RUN composer install --no-dev --ignore-platform-reqs --no-scripts --no-progress --prefer-dist --optimize-autoloader
-
-# Install npm dependencies for the project
+# Clean npm cache and install dependencies
+RUN npm cache clean --force
+RUN rm -rf node_modules package-lock.json
 RUN npm install
 
 # Build frontend assets (if necessary)
