@@ -32,7 +32,7 @@ RUN composer install --no-dev --ignore-platform-reqs
 FROM node:16-alpine AS frontend
 WORKDIR /app
 COPY . .
-RUN apk add --no-progress --quiet --no-cache git \
+RUN apk add --no-progress --quiet --no-cache git python2 make g++ \
     && git config --global url."https://".insteadOf git:// \
     && yarn cache clean \
     && yarn install \
