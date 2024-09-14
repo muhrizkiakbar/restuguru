@@ -2,26 +2,27 @@ FROM php:7.2-fpm-alpine
 
 RUN apk update && apk upgrade
 
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions \
-    bcmath \
-    ctype \
-    dom \
-    fileinfo \
-    mbstring \
-    pdo pdo_mysql \
-    tokenizer \
-    pcntl \
-    redis-stable
-
 # Essentials
 RUN echo "UTC" > /etc/timezone
 RUN apk add git zip unzip curl sqlite nginx supervisor
 
 RUN apk add nodejs npm
 
+# Install PHP extensions
+RUN apk add php7-gd \
+    php7-imap \
+    php7-redis \
+    php7-cgi \
+    php7-bcmath \
+    php7-mysqli \
+    php7-zlib \
+    php7-curl \
+    php7-zip \
+    php7-mbstring \
+    php7-iconv \
+    gmp-dev
+
 # dependencies required for running "phpize"
-# these get automatically installed and removed by "docker-php-ext-*" (unless they're already installed)
 ENV PHPIZE_DEPS \
     autoconf \
     dpkg-dev \
@@ -45,7 +46,7 @@ RUN set -eux; \
 RUN apk add --no-cache linux-headers
 
 # Packages to install
-RUN apk add  curl \
+RUN apk add curl \
     freetype-dev \
     gettext-dev \
     libmcrypt-dev \
@@ -63,13 +64,11 @@ RUN apk add  curl \
     unzip 
 
 # pecl PHP extensions
-#RUN pecl install \
-    ## imagick-3.4.4 \
-    #mongodb \
-    #redis
+RUN pecl install \
+    mongodb \
+    redis
 # Configure PHP extensions
 RUN docker-php-ext-configure \
-    # ref: https://github.com/docker-library/php/issues/920#issuecomment-562864296
     gd --enable-gd --with-freetype --with-jpeg --with-webp
 # Install PHP extensions
 RUN  docker-php-ext-install \
@@ -79,7 +78,6 @@ RUN  docker-php-ext-install \
     ftp \
     gettext \
     gd \
-    # iconv \
     intl \
     gmp \
     mbstring \
@@ -95,9 +93,7 @@ RUN  docker-php-ext-install \
     && \
     # Enable PHP extensions
     docker-php-ext-enable \
-    # imagick \
-    # mongodb \
-    pdo_mysql \
+    mongodb \
     redis \
     && \
     # Remove the build deps
@@ -106,14 +102,7 @@ RUN  docker-php-ext-install \
     # Clean out directories that don't need to be part of the image
     rm -rf /tmp/* /var/tmp/*
 
-# fix work iconv library with alphine for PHP 8.1 broken
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
-
-# # Installing bash
-# RUN apk add bash
-# RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
-
-# Installing composer
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN rm -rf composer-setup.php
@@ -138,7 +127,6 @@ RUN touch /run/nginx/nginx.pid
 
 COPY ./docker-compose/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker-compose/nginx/conf.d/app.conf /etc/nginx/http.d/default.conf
-#/etc/nginx/modules
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
