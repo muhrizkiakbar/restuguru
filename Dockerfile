@@ -47,7 +47,7 @@ RUN composer update
 RUN php artisan optimize:clear
 RUN php artisan view:cache
 # Setup nginx & supervisor as root user
-USER root
+#USER root
 RUN apk add --no-progress --quiet --no-cache nginx supervisor
 COPY .docker/nginx-default.conf /etc/nginx/http.d/default.conf
 COPY .docker/supervisord.conf /etc/supervisord.conf
