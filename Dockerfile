@@ -1,64 +1,70 @@
-# [BASE STAGE]
-FROM php:7.2-fpm-alpine AS base
-# Install the php extension installer from its image
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-# Install dependencies
-RUN apk add --no-cache \
-    openssl \
-    ca-certificates \
+# Stage 1: Base PHP image with dependencies
+FROM php:7.2-fpm as base
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install necessary system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    zip \
+    unzip \
+    libpng-dev \
+    libonig-dev \
     libxml2-dev \
-    oniguruma-dev
-# Install php extensions
-RUN install-php-extensions \
-    bcmath \
-    ctype \
-    dom \
-    fileinfo \
-    mbstring \
-    pdo pdo_mysql \
-    tokenizer \
-    pcntl \
-    redis-stable
-# Install the composer packages using www-data user
-WORKDIR /app
-RUN chown www-data:www-data /app
-COPY --chown=www-data:www-data . .
-COPY --from=composer:1.6 /usr/bin/composer /usr/bin/composer
-USER www-data
-RUN composer install --no-dev --ignore-platform-reqs
-# [END BASE STAGE]
+    libzip-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libmcrypt-dev \
+    libpq-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libwebp-dev \
+    nginx \
+    supervisor
 
-# [FRONTEND STAGE]
-FROM node:16-alpine AS frontend
-WORKDIR /app
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl
+
+# Install Composer globally
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install Node.js v16 and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
+
+# Copy application code
+WORKDIR /var/www/html
 COPY . .
-# Install git and python2 for node-sass
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.13/main" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.13/community" >> /etc/apk/repositories \
-    && apk add --no-cache python2 git make g++ \
-    && git config --global url."https://".insteadOf git:// \
-    && yarn cache clean \
-    && yarn install \
-    && yarn build
-# [END FRONTEND STAGE]
 
-# [APP STAGE]
-FROM base AS app
-# Prepare the frontend files & caching
-COPY --from=frontend --chown=www-data:www-data /app/public /app/public
-RUN composer update
-RUN php artisan optimize:clear
-RUN php artisan view:cache
-# Setup nginx & supervisor as root user
-USER root
-RUN apk add --no-progress --quiet --no-cache nginx supervisor
-COPY .docker/nginx-default.conf /etc/nginx/http.d/default.conf
-COPY .docker/supervisord.conf /etc/supervisord.conf
-# Apply the required changes to run nginx as www-data user
-RUN chown -R www-data:www-data /run/nginx /var/lib/nginx /var/log/nginx && \
-    sed -i '/user nginx;/d' /etc/nginx/nginx.conf
-# Keep running services as root
-USER root
-EXPOSE 8000 8443
+# Install PHP dependencies with Composer (no-dev, ignoring platform requirements)
+RUN composer install --no-dev --ignore-platform-reqs --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
+# Install npm dependencies for the project
+RUN npm install
+
+# Build frontend assets (if necessary)
+RUN npm run prod
+
+# Stage 2: Final image with Nginx and Supervisor
+FROM php:7.2-fpm
+
+# Copy over the built app from the previous stage
+COPY --from=base /var/www/html /var/www/html
+COPY --from=base /etc/nginx /etc/nginx
+COPY --from=base /etc/supervisor /etc/supervisor
+
+# Copy custom nginx configuration
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Ensure the nginx service is started with PHP-FPM and Supervisor
+COPY ./supervisor/supervisord.conf /etc/supervisord.conf
+
+# Expose HTTP and HTTPS ports
+EXPOSE 80
+EXPOSE 443
+
+# Start services with Supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
-# [END APP STAGE]
