@@ -1,5 +1,5 @@
 # Stage 1: Base PHP image with dependencies
-FROM php:7.2-fpm as base
+FROM php:7.2-fpm
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
