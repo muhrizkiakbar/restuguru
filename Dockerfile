@@ -37,7 +37,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
 WORKDIR /var/www/html
 COPY . .
 
-RUN composer install --no-dev --prefer-dist --ignore-platform-reqs
+RUN composer self-update --1
+RUN composer install --ignore-platform-reqs
 
 # Clean npm cache and install dependencies
 # Uncomment if needed for a Laravel project
