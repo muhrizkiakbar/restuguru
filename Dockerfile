@@ -1,5 +1,5 @@
 # Stage 1: Base PHP image with dependencies
-FROM php:7.2-fpm
+FROM php:7.2-fpm AS base
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -47,13 +47,18 @@ COPY . .
 # Build frontend assets (if necessary)
 #RUN npm run prod
 
-# Copy over the built app from the previous stage
-COPY --from=base /var/www/html /var/www/html
-COPY --from=base /etc/nginx /etc/nginx
-COPY --from=base /etc/supervisor /etc/supervisor
+# Stage 2: Nginx and Supervisor setup
+FROM nginx:alpine AS nginx
 
 # Copy custom nginx configuration
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Stage 3: Final application setup with Supervisor
+FROM php:7.2-fpm
+
+# Copy over the built app and configuration from previous stages
+COPY --from=base /var/www/html /var/www/html
+COPY --from=nginx /etc/nginx /etc/nginx
 
 # Ensure the nginx service is started with PHP-FPM and Supervisor
 COPY ./supervisor/supervisord.conf /etc/supervisord.conf
@@ -61,7 +66,6 @@ COPY ./supervisor/supervisord.conf /etc/supervisord.conf
 # Expose HTTP and HTTPS ports
 EXPOSE 80
 EXPOSE 443
-
 
 # Start services with Supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
