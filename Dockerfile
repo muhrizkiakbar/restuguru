@@ -29,8 +29,6 @@ RUN docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl
 # Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer install --no-dev --prefer-dist --ignore-platform-reqs
-
 # Install Node.js v16 and npm
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs
@@ -38,6 +36,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
 # Copy application code
 WORKDIR /var/www/html
 COPY . .
+
+RUN composer install --no-dev --prefer-dist --ignore-platform-reqs
 
 # Clean npm cache and install dependencies
 # Uncomment if needed for a Laravel project
