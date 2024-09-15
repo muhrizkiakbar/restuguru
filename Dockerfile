@@ -47,9 +47,6 @@ COPY . .
 # Build frontend assets (if necessary)
 #RUN npm run prod
 
-# Stage 2: Final image with Nginx and Supervisor
-FROM php:7.2-fpm
-
 # Copy over the built app from the previous stage
 COPY --from=base /var/www/html /var/www/html
 COPY --from=base /etc/nginx /etc/nginx
