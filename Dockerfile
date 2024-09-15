@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
-    libmcrypt-dev \
     libpq-dev \
     build-essential \
     python2 \
@@ -40,12 +39,13 @@ WORKDIR /var/www/html
 COPY . .
 
 # Clean npm cache and install dependencies
-#RUN npm cache clean --force
-#RUN rm -rf node_modules package-lock.json
-#RUN npm install
+# Uncomment if needed for a Laravel project
+# RUN npm cache clean --force
+# RUN rm -rf node_modules package-lock.json
+# RUN npm install
 
 # Build frontend assets (if necessary)
-#RUN npm run prod
+# RUN npm run prod
 
 # Stage 2: Nginx and Supervisor setup
 FROM nginx:alpine AS nginx
@@ -60,12 +60,18 @@ FROM php:7.2-fpm
 COPY --from=base /var/www/html /var/www/html
 COPY --from=nginx /etc/nginx /etc/nginx
 
-# Ensure the nginx service is started with PHP-FPM and Supervisor
+# Install Supervisor (needed in the final stage too)
+RUN apt-get update && apt-get install -y supervisor
+
+# Copy Supervisor configuration
 COPY ./supervisor/supervisord.conf /etc/supervisord.conf
 
 # Expose HTTP and HTTPS ports
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443
 
-# Start services with Supervisor
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+# Copy startup script to ensure services start correctly
+COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Start services with Supervisor (Nginx + PHP-FPM)
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
