@@ -62,5 +62,6 @@ COPY ./supervisor/supervisord.conf /etc/supervisord.conf
 EXPOSE 80
 EXPOSE 443
 
+
 # Start services with Supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
