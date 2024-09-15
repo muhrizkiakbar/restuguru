@@ -56,12 +56,12 @@ COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 # Stage 3: Final application setup with Supervisor
 FROM php:7.2-fpm
 
+# Install Nginx and Supervisor in the final stage
+RUN apt-get update && apt-get install -y nginx supervisor
+
 # Copy over the built app and configuration from previous stages
 COPY --from=base /var/www/html /var/www/html
 COPY --from=nginx /etc/nginx /etc/nginx
-
-# Install Supervisor (needed in the final stage too)
-RUN apt-get update && apt-get install -y supervisor
 
 # Copy Supervisor configuration
 COPY ./supervisor/supervisord.conf /etc/supervisord.conf
