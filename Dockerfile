@@ -21,7 +21,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     python2 \
     npm \
-    nginx \
     supervisor
 
 # Install PHP extensions
@@ -47,7 +46,7 @@ COPY . .
 # Build frontend assets (if necessary)
 # RUN npm run prod
 
-# Stage 2: Nginx and Supervisor setup
+# Stage 2: Nginx setup
 FROM nginx:alpine AS nginx
 
 # Copy custom nginx configuration
@@ -56,8 +55,8 @@ COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 # Stage 3: Final application setup with Supervisor
 FROM php:7.2-fpm
 
-# Install Nginx and Supervisor in the final stage
-RUN apt-get update && apt-get install -y nginx supervisor
+# Install Supervisor in the final stage
+RUN apt-get update && apt-get install -y supervisor
 
 # Copy over the built app and configuration from previous stages
 COPY --from=base /var/www/html /var/www/html
