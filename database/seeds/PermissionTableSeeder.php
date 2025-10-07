@@ -13,13 +13,13 @@ class PermissionTableSeeder extends Seeder
     {
         //
         $permission = [
-            [
-        		'name' => 'index-home',
-        		'display_name' => 'Halaman Utama',
-						'description' => 'Halaman Utama',
-						'index'=>'1',
-						'urlindex'=>'homeindex'
-            ],
+          [
+      		'name' => 'index-home',
+      		'display_name' => 'Halaman Utama',
+  				'description' => 'Halaman Utama',
+  				'index'=>'1',
+  				'urlindex'=>'homeindex'
+          ],
         	[
         		'name' => 'manage-users',
         		'display_name' => 'Manajemen User/Karyawan',
