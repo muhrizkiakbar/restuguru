@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\CActivityLog;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -12,16 +11,18 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Mail;
 use App\Mail\NotificationDeletedEmail;
-use Telegram;
 use App\TelegramChat;
+use GuzzleHttp\Client;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
-    public function createlog($log,$category, $notif = "activity")
+    public function createlog($log, $category, $notif = "activity")
     {
-        $table = new CActivityLog;
+        $table = new CActivityLog();
         $table->log = $log;
         $table->category = $category;
         $table->save();
@@ -32,14 +33,24 @@ class Controller extends BaseController
         //    Mail::to('rizkiakbarzein@gmail.com')->queue(new NotificationDeletedEmail($log));
         //}
 
-        if ((($category=="delete") || ($category=="edit")) && ($notif == "telegram"))
-        {
-          $telegram = TelegramChat::first();
-          $chatId = $telegram->chat_id;
-          $messagetelegram = Telegram::sendMessage([
-              'chat_id' => $chatId,
-              'text' => $log
-          ]);
+        if ((($category == "delete") || ($category == "edit")) && ($notif == "telegram")) {
+            $telegram = TelegramChat::first();
+            $chatId = $telegram->chat_id;
+
+            //$messagetelegram = Telegram::sendMessage([
+            //    'chat_id' => $chatId,
+            //    'text' => $log
+            //]);
+
+
+            $token = env('TELEGRAM_BOT_TOKEN', "1260628438:AAF4RRb1D4BMRtN0xDjZbMzUsqVk-rFfSYY");
+            $client = new Client();
+            $response = $client->post("https://api.telegram.org/bot{$token}/sendMessage", [
+                'form_params' => [
+                  'chat_id' => $chatId,
+                  'text' => $log,
+                ]
+            ]);
         }
 
 
